@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Models\DemandeAthentification;
+use App\Models\DemandeAuthentification;
 use App\Repositories\BaseRepository;
 
 /**
@@ -11,7 +11,7 @@ use App\Repositories\BaseRepository;
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class DemandeAthentificationRepository extends BaseRepository
+class DemandeAuthentificationRepository extends BaseRepository
 {
     /**
      * @var array
@@ -39,6 +39,6 @@ class DemandeAthentificationRepository extends BaseRepository
      **/
     public function model()
     {
-        return DemandeAthentification::class;
+        return DemandeAuthentification::class;
     }
 }

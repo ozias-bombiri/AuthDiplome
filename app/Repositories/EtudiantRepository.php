@@ -11,7 +11,7 @@ use App\Repositories\BaseRepository;
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class vRepository extends BaseRepository
+class EtudiantRepository extends BaseRepository
 {
     /**
      * @var array
