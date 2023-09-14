@@ -18,7 +18,6 @@
                         {{$dataTable->table()}}
                     </div>
 
-                    <i class="fa fa-trash"></i>
                 </div>
             </div>
         </div>
