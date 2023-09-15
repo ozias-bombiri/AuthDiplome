@@ -18,7 +18,17 @@ class UserSeeder extends Seeder
             'name' => 'admin',
             'email' => 'obombiri@gmail.com',
             'statut' => 'Active',
-            'profile_id' => 1,
+            //'profile_id' => 1,
+            'etablissement_id' => 1,
+            'password' => Hash::make('admin'),
+
+        ]);
+
+        DB::table('users')->insert([
+            'name' => 'tebda',
+            'email' => 'tebda@gmail.com',
+            'statut' => 'Active',
+            //'profile_id' => 1,
             'etablissement_id' => 1,
             'password' => Hash::make('admin'),
 
@@ -28,7 +38,7 @@ class UserSeeder extends Seeder
             'name' => 'STD user1',
             'email' => 'user1@exemple.com',
             'statut' => 'Active',
-            'profile_id' => 2,
+            //'profile_id' => 2,
             'etablissement_id' => 1,
             'password' => Hash::make('admin'),
 
@@ -38,7 +48,7 @@ class UserSeeder extends Seeder
             'name' => 'AUTH user2',
             'email' => 'user2@exemple.com',
             'statut' => 'Active',
-            'profile_id' => 3,
+            //'profile_id' => 3,
             'etablissement_id' => 1,
             'password' => Hash::make('admin'),
 
@@ -48,7 +58,7 @@ class UserSeeder extends Seeder
             'name' => 'STD user3',
             'email' => 'user3@exemple.com',
             'statut' => 'Active',
-            'profile_id' => 2,
+            //'profile_id' => 2,
             'etablissement_id' => 2,
             'password' => Hash::make('admin'),
 
@@ -58,7 +68,7 @@ class UserSeeder extends Seeder
             'name' => 'AUTH user4',
             'email' => 'user4@exemple.com',
             'statut' => 'Active',
-            'profile_id' => 3,
+            //'profile_id' => 3,
             'etablissement_id' => 2,
             'password' => Hash::make('admin'),
 
