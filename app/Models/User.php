@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;	//Spatie laravel
+
 
 /**
  * Class User
@@ -35,7 +37,7 @@ use Laravel\Sanctum\HasApiTokens;
  */
 class User extends Authenticatable
 {	
-	use HasApiTokens, HasFactory, Notifiable ;
+	use HasApiTokens, HasFactory, Notifiable,  HasRoles ;
 
 	protected $table = 'users';
 
@@ -66,8 +68,8 @@ class User extends Authenticatable
 		return $this->belongsTo(Etablissement::class);
 	}
 
-	public function profile()
+	/*public function profile()
 	{
 		return $this->belongsTo(Profile::class);
-	}
+	}*/
 }

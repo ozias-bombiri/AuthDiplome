@@ -23,6 +23,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('index');
+        //if($user->hasRole(['Admin']))
+        {
+            return view('dashboard.visiteur');
+        }
+        
     }
 }

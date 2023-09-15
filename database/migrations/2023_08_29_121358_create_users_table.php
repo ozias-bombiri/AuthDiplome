@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('password', 100);
             $table->rememberToken();
             $table->enum('statut', ['Attente', 'Active', 'Desactive'])->default('Attente');
-            $table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade')->onUpdate('cascade');
+            //$table->foreignId('profile_id')->constrained('profiles')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('etablissement_id')->constrained('etablissements')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
