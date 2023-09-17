@@ -11,7 +11,7 @@ class StoreAnneeAcademiqueRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreAnneeAcademiqueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'intitule' => 'required|string|unique:annee_academiques|max:50|min:4',
+		    'debut' => 'required|max:50|min:4',
+		    'fin' => 'required|max:50|min:4',
         ];
     }
 }

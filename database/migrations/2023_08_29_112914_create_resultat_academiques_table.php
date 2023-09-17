@@ -23,7 +23,6 @@ return new class extends Migration
             $table->foreignId('etudiant_id')->constrained('etudiants')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('parcours_id')->constrained('parcours')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('anneeAcademique_id')->constrained('annee_academiques')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('document_id')->constrained('documents')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

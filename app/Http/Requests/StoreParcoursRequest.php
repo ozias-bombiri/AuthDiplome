@@ -11,7 +11,7 @@ class StoreParcoursRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class StoreParcoursRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'intitule' => 'required|string',
+            'credit'  => 'required|string',
+            'domaine'  => 'required|string',
+            'mention'  => 'required|string',
+            'specialite'  => 'required|string',
+            'description'  => 'nullable',
+            'etablissement_id'  => 'required',
+            'niveauEtude_id'  => 'required'
         ];
     }
 }

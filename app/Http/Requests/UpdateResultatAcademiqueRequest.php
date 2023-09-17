@@ -11,7 +11,7 @@ class UpdateResultatAcademiqueRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,16 @@ class UpdateResultatAcademiqueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'reference' => 'required|string',
+            'soutenance' => 'required|string',
+            'dateSignaure' => 'required|string',
+            'moyenne' => 'required|string',
+            'cote' => 'required|string',
+            'session' => 'required|string',
+            'dateSoutenance' => 'required|string',
+            'etudiant_id' => 'required|string',
+            'parcours_id' => 'required|string',
+            'anneeAcademique_id' => 'required|string',
         ];
     }
 }

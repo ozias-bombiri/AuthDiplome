@@ -11,7 +11,7 @@ class StoreAttestationDefinitiveRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreAttestationDefinitiveRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'resultatAcademique_id' => 'required',
+            'signataire_id' => 'required',
+            'document_id' => 'nullable'
         ];
     }
 }

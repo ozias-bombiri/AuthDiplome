@@ -22,7 +22,7 @@ class AttestationDefinitiveDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'attestationdefinitive.action')
+            ->addColumn('action', 'attestationdefinitives.action')
             ->setRowId('id');
     }
 
@@ -48,9 +48,9 @@ class AttestationDefinitiveDataTable extends DataTable
                     ->selectStyleSingle()
                     ->buttons([
                         Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
+                        //Button::make('csv'),
+                        //Button::make('pdf'),
+                        //Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
                     ]);
@@ -62,15 +62,16 @@ class AttestationDefinitiveDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            
+            Column::make('intitule')->title('Intitule'),
+            Column::make('reference')->title('Référence'),
+            Column::make('dateSignature')->title('Date de signature'),
+            Column::make('signataire_id')->title('Signataire'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

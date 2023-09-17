@@ -1,58 +1,64 @@
-@extends('layouts.app')
+@extends('includes.master')
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+@section('contenu')
+<div class="row justify-content-center">
+    <div class="col-md-8">
 
-                <div class="card-body">
-                    @if (session('status'))
-                    <div class="alert alert-success" role="alert">
-                        {{ session('status') }}
+        <div class="card">
+            <div class="card-header">{{ __('Ajouter une academiques') }}</div>
+
+            <div class="card-body">
+
+                <div class="table-responsive">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
-
-                    <div class="card">
-                        <div class="card-header">
-                            Formulaires
+                    <form method="post" action="{{ route('annee_academiques.store') }}">
+                        @csrf
+                        <div class="form-group row py-2">
+                            <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="intitule" name="intitule" placeholder="Intitule" required>
+                            </div>
                         </div>
-                        <div class="card-body">
-                            
-                            <form>
-                                <div class="form-group row">
-                                    <label for="intitule" class="col-auto col-form-label col-form-label">Intitule</label>
-                                    <div class="col">
-                                        <input type="text" class="form-control form-control" id="intitule" placeholder="Intitule">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="debut" class="col-auto col-form-label">Début</label>
-                                    <div class="col">
-                                        <input type="text" class="form-control" id="debut" placeholder="Début">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label for="fin" class="col-auto col-form-label col-form-label">Fin</label>
-                                    <div class="col">
-                                        <input type="text" class="form-control form-control" id="fin" placeholder="Fin">
-                                    </div>
-                                </div>
+                        <div class="form-group row py-2">
+                            <label for="debut" class="col-sm-2 col-form-label">Début</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="debut" name="debut" placeholder="Début" required>
+                            </div>
                         </div>
-                        <div class="card-footer">
+                        <div class="form-group row py-2">
+                            <label for="fin" class="col-sm-2 col-form-label">Fin</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="fin" name="fin" placeholder="Fin" required>
+                            </div>
+                        </div>
+                        <div class="row py-4">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col">
+                                <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                            </div>
+                            <div class="col">
+                                <a href="{{ route('annee_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            </div>
 
                         </div>
+                    </form>
 
-                    </div>
-
-                    <i class="fa fa-trash"></i>
                 </div>
+
             </div>
         </div>
     </div>
 </div>
 @endsection
+
 @push('costum-scripts')
 
 @endpush

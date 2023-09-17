@@ -11,7 +11,7 @@ class StoreSignataireEtablissementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,17 @@ class StoreSignataireEtablissementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'nom' => 'required|string',
+            'prenom'  => 'required|string',
+            'nip'  => 'required|string',
+            'sexe'  => 'required|string',
+            'typeDocument'  => 'required|string',
+            'fonction'  => 'required|string',
+            'fonctionLongue'  => 'required|string',
+            'grade' => 'required|string',
+            'titreAcademique'  => 'required|string',
+            'titreHonorifique'  => 'required|string',
+            'etablissement_id'  => 'required'
         ];
     }
 }

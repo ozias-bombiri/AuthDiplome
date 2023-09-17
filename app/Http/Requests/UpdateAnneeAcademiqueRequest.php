@@ -11,7 +11,7 @@ class UpdateAnneeAcademiqueRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateAnneeAcademiqueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'intitule' => 'required|string|max:50',
+		    'debut' => 'required',
+		    'fin' => 'required',
+            'created_at' => 'nullable',
+            'updated_at' => 'nullable',
         ];
     }
 }

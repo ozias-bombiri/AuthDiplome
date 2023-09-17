@@ -6,8 +6,8 @@ use App\Http\Controllers\Controller;
 
 use App\DataTables\AnneeAcademiqueDataTable;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\http\Requests\StoreAnneeAcademiqueRequest ;
-use App\http\Requests\UpdateAnneeAcademiqueRequest ;
+use App\Http\Requests\StoreAnneeAcademiqueRequest ;
+use App\Http\Requests\UpdateAnneeAcademiqueRequest ;
 use Flash;
 class AnneeacademiqueController extends Controller
 {
@@ -103,7 +103,7 @@ class AnneeacademiqueController extends Controller
         $this->modelRepository->delete($id);
 
         $message = "Année supprimé avec succès";
-        return $this->sendSuccessDialogResponse($message);
+        return redirect(route('annee_academiques.index'));
     }
 
 }

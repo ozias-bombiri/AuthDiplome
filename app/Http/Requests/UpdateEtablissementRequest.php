@@ -11,7 +11,7 @@ class UpdateEtablissementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,15 @@ class UpdateEtablissementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'sigle' =>'required|string',
+            'denomination' =>'required|string',
+            'telephone' =>'required|string',
+            'adresse' =>'required|string',
+            'email' =>'required|string',
+            'type' =>'required|string',
+            'logo' =>'required|string',
+            'description' =>'nullable',
+            'iesr_id' =>'nullable'
         ];
     }
 }

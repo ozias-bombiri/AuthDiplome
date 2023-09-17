@@ -5,7 +5,12 @@
     <a data-tooltip="Modifier" href="{{ route('annee_academiques.edit', $id) }}" class='data-tooltip btn btn-info'>
        <i class="bi bi-pencil"></i>
     </a>
-    <a class = "btn btn-danger delete-btn data-tooltip delete-btn" data-tooltip="Supprimer" href="{{ route('annee_academiques.destroy', $id) }}">
-        <i class="bi bi-trash"></i>
+    <form method="POST" action="{{ route('annee_academiques.destroy', $id) }}">
+        @csrf
+        @method('delete')
+        <button type="submit" class = "btn btn-danger delete-btn data-tooltip delete-btn" data-tooltip="Supprimer" href="{{ route('annee_academiques.destroy', $id) }}"  >
+            <i class="bi bi-trash"></i>
+        </button>
+    </form>
     </a>
 </div>

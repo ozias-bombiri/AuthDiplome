@@ -38,13 +38,6 @@ require __DIR__.'/auth.php';
 
 Auth::routes();
 
-
-
-Auth::routes();
-
-Auth::routes();
-  
-//Route::get('/home', [HomeController::class, 'index'])->name('home');
   
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);

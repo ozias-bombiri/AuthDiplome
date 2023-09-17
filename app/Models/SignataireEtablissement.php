@@ -48,6 +48,7 @@ class SignataireEtablissement extends Model
 		'typeDocument',
 		'fonction',
 		'fonctionLongue',
+		'grade',
 		'titreAcademique',
 		'titreHonorifique',
 		'etablissement_id'

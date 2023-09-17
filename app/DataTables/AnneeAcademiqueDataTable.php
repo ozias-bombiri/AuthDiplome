@@ -63,10 +63,9 @@ class AnneeAcademiqueDataTable extends DataTable
     {
         return [
             
-            Column::make('id'),
-            Column::make('intitule'),
-            Column::make('debut'),
-            Column::make('fin'),
+            Column::make('intitule')->title('Intitule'),
+            Column::make('debut')->title('Debut'),
+            Column::make('fin')->title('Fin'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)

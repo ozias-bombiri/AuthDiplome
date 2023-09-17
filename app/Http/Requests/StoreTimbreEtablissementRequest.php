@@ -11,7 +11,7 @@ class StoreTimbreEtablissementRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class StoreTimbreEtablissementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'intitule' => 'required|string',
+            'type' => 'required|string',
+            'ministere' => 'required|string',
+            'denomMinistere' => 'required|string',
+            'description' => 'required|string',
+            'etablissement_id' => 'required'
         ];
     }
 }

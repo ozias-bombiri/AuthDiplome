@@ -20,6 +20,7 @@ return new class extends Migration
             $table->enum('typeDocument', ['Provisoire', 'Definitive', 'Diplome']);
             $table->string('fonction', 30);
             $table->string('fonctionLongue', 100);
+            $table->string('grade', 50);
             $table->string('titreAcademique', 100);
             $table->string('titreHonorifique', 100);
             $table->foreignId('iesr_id')->constrained('iesrs')->onDelete('cascade')->onUpdate('cascade');

@@ -11,7 +11,7 @@ class UpdateEtudiantRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,14 @@ class UpdateEtudiantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'identifiant' => 'required|string',
+            'typeIdentifiant' => 'required|string',
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'sexe' => 'required|string',
+            'dateNaissance' => 'required',
+            'lieuNaissance' => 'required|string',
+            'paysNaissance' => 'required|string'
         ];
     }
 }

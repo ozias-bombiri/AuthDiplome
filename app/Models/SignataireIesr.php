@@ -49,6 +49,7 @@ class SignataireIesr extends Model
 		'typeDocument',
 		'fonction',
 		'fonctionLongue',
+		'grade',
 		'titreAcademique',
 		'titreHonorifique',
 		'iesr_id'
