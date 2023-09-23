@@ -5,7 +5,7 @@
     <div class="col-md-8">
 
         <div class="card">
-            <div class="card-header">{{ __('Ajouter un établissement') }}</div>
+            <div class="card-header">{{ __('Ajouter un IESR') }}</div>
 
             <div class="card-body">
 
@@ -19,7 +19,7 @@
                         </ul>
                     </div>
                     @endif
-                    <form method="post" action="{{ route('etablissements.store') }}">
+                    <form method="post" action="{{ route('iesrs.store') }}">
                         @csrf
                         <div class="form-group row py-2">
                             <label for="sigle" class="col-sm-2 col-form-label">Sigle</label>
@@ -31,27 +31,6 @@
                             <label for="denomination" class="col-sm-2 col-form-label">Dénomination</label>
                             <div class="col">
                                 <input type="text" class="form-control" id="denomination" name="denomination" placeholder="Université ..." required>
-                            </div>
-                        </div>
-                        <div class="form-group row py-2">
-                            <label for="type" class="col-sm-2 col-form-label">Type </label>
-                            <div class="col">
-                                <select  class="form-control" id="type" name="type" required>
-                                    <option value="UFR">UFR</option>
-                                    <option value="Institut">Institut</option>
-                                    <option value="Ecole">Ecole</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row py-2">
-                            <label for="iesr" class="col-sm-2 col-form-label">IESR parent </label>
-                            <div class="col">
-                                <select  class="form-control" id="iesr" name="iesr_id" required>
-                                    <option value="1">Aucun</option>
-                                    @foreach( $iesrs as $iesr)
-                                        <option value="{{ $iesr->id}}">{{ $iesr->sigle }}</option>                                    
-                                    @endforeach
-                                </select>
                             </div>
                         </div>
                         <div class="form-group row py-2">
@@ -96,7 +75,7 @@
                                 <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                             </div>
                             <div class="col">
-                                <a href="{{ route('etablissements.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                                <a href="{{ route('iesrs.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                             </div>
 
                         </div>

@@ -49,6 +49,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::resource('annee_academiques', App\Http\Controllers\Backend\AnneeAcademiqueController::class);
 Route::resource('niveau_etudes', App\Http\Controllers\Backend\NiveauEtudeController::class);
+Route::resource('iesrs', App\Http\Controllers\Backend\IesrController::class);
 Route::resource('etablissements', App\Http\Controllers\Backend\EtablissementController::class);
 Route::resource('diplomes', App\Http\Controllers\Backend\DiplomeController::class);
 Route::resource('attestation_provisoires', App\Http\Controllers\Backend\AttestationProvisoireController::class);

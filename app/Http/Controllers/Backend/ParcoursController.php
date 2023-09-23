@@ -7,15 +7,21 @@ use App\DataTables\ParcoursDataTable;
 use App\Repositories\ParcoursRepository;
 use App\Http\Requests\StoreParcoursRequest;
 use App\Http\Requests\UpdateParcoursRequest;
+use App\Repositories\EtablissementRepository;
+use App\Repositories\NiveauEtudeRepository;
 
 class ParcoursController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $etablissementRepository;
+    private $niveauEtudeRepository;
 
-    public function __construct(ParcoursRepository $parcoursRepo)
+    public function __construct(ParcoursRepository $parcoursRepo, EtablissementRepository $etablissementRepo, NiveauEtudeRepository $niveauRepo)
     {
+        $this->etablissementRepository = $etablissementRepo;
         $this->modelRepository = $parcoursRepo;
+        $this->niveauEtudeRepository = $niveauRepo;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +36,9 @@ class ParcoursController extends Controller
      */
     public function create()
     {
-        return view('backend.parcours.create') ;
+        $etablissements = $this->etablissementRepository->all();
+        $niveaux = $this->niveauEtudeRepository->all();
+        return view('backend.parcours.create', compact('etablissements', 'niveaux')) ;
     }
 
     /**

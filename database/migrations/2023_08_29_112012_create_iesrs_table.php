@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('iesrs', function (Blueprint $table) {
             $table->id();
-            $table->string('sigle', 20)->unique();
+            $table->string('sigle', 20)->unique('iesrs');
             $table->string('denomination', 100);
             $table->string('telephone', 20);
             $table->string('email', 50);

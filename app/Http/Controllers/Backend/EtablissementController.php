@@ -7,16 +7,18 @@ use App\DataTables\EtablissementDataTable;
 use App\Repositories\EtablissementRepository;
 use App\Http\Requests\StoreEtablissementRequest;
 use App\Http\Requests\UpdateEtablissementRequest;
-use Flash;
+use App\Repositories\IesrRepository;
 
 
 class EtablissementController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $iesrRepository;
 
-    public function __construct(EtablissementRepository $etablissementRepo)
+    public function __construct(EtablissementRepository $etablissementRepo, IesrRepository $iesrRepo)
     {
+        $this->iesrRepository = $iesrRepo;
         $this->modelRepository = $etablissementRepo;
     }
     /**
@@ -32,7 +34,8 @@ class EtablissementController extends Controller
      */
     public function create()
     {
-        return view('backend.etablissements.create');
+        $iesrs = $this->iesrRepository->all();
+        return view('backend.etablissements.create', compact('iesrs'));
     }
 
     /**

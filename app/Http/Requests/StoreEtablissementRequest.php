@@ -28,9 +28,9 @@ class StoreEtablissementRequest extends FormRequest
             'adresse' =>'required|string',
             'email' =>'required|string',
             'type' =>'required|string',
-            'logo' =>'required|string',
+            //'logo' =>'string',
             'description' =>'nullable',
-            'iesr_id' =>'nullable'
+            'iesr' =>'nullable'
         ];
     }
 }
