@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Etablissement;
+use App\Models\Iesr;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -12,7 +12,7 @@ use Yajra\DataTables\Html\Editor\Editor;
 use Yajra\DataTables\Html\Editor\Fields;
 use Yajra\DataTables\Services\DataTable;
 
-class EtablissementDataTable extends DataTable
+class IesrDataTable extends DataTable
 {
     /**
      * Build the DataTable class.
@@ -22,17 +22,14 @@ class EtablissementDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->editColumn('iesr_id', function($eta){
-                return $eta->iesr->sigle ;
-            })
-            ->addColumn('action', 'backend.etablissements.actions')
+            ->addColumn('action', 'backend.iesrs.actions')
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Etablissement $model): QueryBuilder
+    public function query(Iesr $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -43,7 +40,7 @@ class EtablissementDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         return $this->builder()
-                    ->setTableId('etablissement-table')
+                    ->setTableId('iesr-table')
                     ->columns($this->getColumns())
                     ->minifiedAjax()
                     //->dom('Bfrtip')
@@ -65,11 +62,9 @@ class EtablissementDataTable extends DataTable
     public function getColumns(): array
     {
         return [
-            Column::make('iesr_id')->title('IESR'),
+            
             Column::make('sigle'),
             Column::make('denomination'),
-            Column::make('type'),
-            Column::make('description'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
@@ -83,6 +78,6 @@ class EtablissementDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Etablissement_' . date('YmdHis');
+        return 'Iesr_' . date('YmdHis');
     }
 }

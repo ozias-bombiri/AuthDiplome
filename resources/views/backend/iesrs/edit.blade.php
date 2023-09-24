@@ -2,5 +2,6 @@
 
 @section('contenu')
 
-@endsection
 
+
+@endsection

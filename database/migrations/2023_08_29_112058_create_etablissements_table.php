@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('adresse', 20);
             $table->string('email', 30);
             $table->string('type', 10);
-            $table->string('logo', 50);
+            $table->string('logo', 50)->nullable();
             $table->text('description');
             $table->foreignId('iesr_id')->constrained('iesrs')->onDelete('cascade')
-            ->onUpdate('cascade');
+            ->onUpdate('cascade')->default(1);
             $table->timestamps();
         });
     }

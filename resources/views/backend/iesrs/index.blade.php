@@ -3,7 +3,7 @@
 @section('contenu')
 
 <div class="card">
-    <div class="card-header">{{ __('Niveau d\'étude') }}</div>
+    <div class="card-header">{{ __('Institutions d\'enseignements et de recherche') }}</div>
 
     <div class="card-body">
 

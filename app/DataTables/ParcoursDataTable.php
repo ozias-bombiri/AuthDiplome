@@ -2,7 +2,7 @@
 
 namespace App\DataTables;
 
-use App\Models\Parcour;
+use App\Models\Parcours;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -22,14 +22,17 @@ class ParcoursDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'parcours.action')
+            ->editColumn('etablissement', function($parcours){
+                return $parcours->etablissement->sigle. ' (' .$parcours->etablissement->iesr->sigle. ' )' ;
+            })
+            ->addColumn('action', 'backend.parcours.actions')
             ->setRowId('id');
     }
 
     /**
      * Get the query source of dataTable.
      */
-    public function query(Parcour $model): QueryBuilder
+    public function query(Parcours $model): QueryBuilder
     {
         return $model->newQuery();
     }
@@ -47,10 +50,10 @@ class ParcoursDataTable extends DataTable
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
+                        Button::make('add'),
+                        //Button::make('csv'),
+                        //Button::make('pdf'),
+                        //Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
                     ]);
@@ -62,15 +65,17 @@ class ParcoursDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            Column::make('etablissement')->title('Etablissement'),
+            Column::make('intitule')->title('Parcours'),
+            Column::make('domaine'),
+            Column::make('mention'),
+            Column::make('specialite')->title('Spécialité'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
+            
         ];
     }
 

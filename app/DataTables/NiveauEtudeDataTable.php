@@ -22,7 +22,7 @@ class NiveauEtudeDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'niveauetude.action')
+            ->addColumn('action', 'backend.niveau_etudes.actions')
             ->setRowId('id');
     }
 
@@ -47,10 +47,10 @@ class NiveauEtudeDataTable extends DataTable
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
+                        Button::make('add'),
+                        //Button::make('csv'),
+                        //Button::make('pdf'),
+                        //Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
                     ]);
@@ -62,15 +62,14 @@ class NiveauEtudeDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            
+            Column::make('intitule'),
+            Column::make('description'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 

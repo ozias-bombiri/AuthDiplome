@@ -47,7 +47,7 @@ class AttestationDefinitiveDataTable extends DataTable
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
+                        Button::make('add'),
                         //Button::make('csv'),
                         //Button::make('pdf'),
                         //Button::make('print'),
