@@ -7,15 +7,18 @@ use App\DataTables\TimbreEtablissementDataTable;
 use App\Repositories\TimbreEtablissementRepository;
 use App\Http\Requests\StoreTimbreEtablissementRequest;
 use App\Http\Requests\UpdateTimbreEtablissementRequest;
+use App\Repositories\EtablissementRepository;
 
 class TimbreEtablissementController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $etablissementRepository;
 
-    public function __construct(TimbreEtablissementRepository $timbreRepo)
+    public function __construct(TimbreEtablissementRepository $timbreRepo, EtablissementRepository $etablissementRepo)
     {
         $this->modelRepository = $timbreRepo;
+        $this->etablissementRepository = $etablissementRepo;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +33,8 @@ class TimbreEtablissementController extends Controller
      */
     public function create()
     {
-        return view('backend.timbre_etablissements.create') ;
+        $etablissements = $this->etablissementRepository->all();
+        return view('backend.timbre_etablissements.create', compact('etablissements')) ;
     }
 
     /**

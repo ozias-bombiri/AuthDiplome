@@ -7,15 +7,24 @@ use App\DataTables\ResultatAcademiqueDataTable;
 use App\Repositories\ResultatAcademiqueRepository;
 use App\Http\Requests\StoreResultatAcademiqueRequest;
 use App\Http\Requests\UpdateResultatAcademiqueRequest;
+use App\Repositories\AnneeAcademiqueRepository;
+use App\Repositories\EtudiantRepository;
+use App\Repositories\ParcoursRepository;
 
 class ResultatAcademiqueController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $etudiantRepository;
+    private $pacoursRepository;
+    private $anneeAcademiqueRepository;
 
-    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo)
+    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, EtudiantRepository $etudiantRepo,ParcoursRepository $pacoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
     {
         $this->modelRepository = $ResultatAcademiqueRepo;
+        $this->etudiantRepository = $etudiantRepo;
+        $this->parcoursRepository = $pacoursRepo;
+        $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +39,10 @@ class ResultatAcademiqueController extends Controller
      */
     public function create()
     {
-        return view('backend.ResultatAcademique.create') ;
+        $etudiants = $this->etudiantRepository->all();
+        $parcours = $this->parcoursRepository->all();
+        $anneeAcademiques = $this->anneeAcademiqueRepository->all();
+        return view('backend.resultat_academiques.create', compact('etudiants', 'parcours', 'anneeAcademiques')) ;
     }
 
     /**

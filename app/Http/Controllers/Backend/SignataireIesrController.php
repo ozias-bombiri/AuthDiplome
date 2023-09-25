@@ -7,21 +7,26 @@ use App\DataTables\SignataireIesrDataTable;
 use App\Repositories\SignataireIesrRepository;
 use App\Http\Requests\StoreSignataireIesrRequest;
 use App\Http\Requests\UpdateSignataireIesrRequest;
+use App\Repositories\IesrRepository;
 
 class SignataireIesrController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $iesrRepository;
 
-    public function __construct(SignataireIesrRepository $signataireRepo)
+    public function __construct(SignataireIesrRepository $signataireRepo, IesrRepository $iesrRepo)
     {
+        
         $this->modelRepository = $signataireRepo;
+        $this->iesrRepository = $iesrRepo;
     }
     /**
      * Display a listing of the resource.
      */
     public function index(SignataireIesrDataTable $dataTable)
     {
+       
         return $dataTable->render('backend.signataire_iesrs.index');
     }
 
@@ -30,7 +35,8 @@ class SignataireIesrController extends Controller
      */
     public function create()
     {
-        return view('backend.signataire_iesrs.create') ;
+        $iesrs = $this->iesrRepository->all();
+        return view('backend.signataire_iesrs.create', compact('iesrs')) ;
     }
 
     /**

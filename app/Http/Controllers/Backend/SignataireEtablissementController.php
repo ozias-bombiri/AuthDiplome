@@ -7,15 +7,18 @@ use App\DataTables\SignataireEtablissementDataTable;
 use App\Repositories\SignataireEtablissementRepository;
 use App\Http\Requests\StoreSignataireEtablissementRequest;
 use App\Http\Requests\UpdateSignataireEtablissementRequest;
+use App\Repositories\EtablissementRepository;
 
 class SignataireEtablissementController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $etablissementRepository;
 
-    public function __construct(SignataireEtablissementRepository $signataireRepo)
+    public function __construct(SignataireEtablissementRepository $signataireRepo, EtablissementRepository $etablissementRepo)
     {
         $this->modelRepository = $signataireRepo;
+        $this->etablissementRepository = $etablissementRepo;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +33,8 @@ class SignataireEtablissementController extends Controller
      */
     public function create()
     {
-        return view('backend.signataire_etablissements.create') ;
+        $etablissements = $this->etablissementRepository->all();
+        return view('backend.signataire_etablissements.create', compact('etablissements')) ;
     }
 
     /**

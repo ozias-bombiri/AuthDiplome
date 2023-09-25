@@ -7,15 +7,19 @@ use App\DataTables\TimbreIesrDataTable;
 use App\Repositories\TimbreIesrRepository;
 use App\Http\Requests\StoreTimbreIesrRequest;
 use App\Http\Requests\UpdateTimbreIesrRequest;
+use App\Repositories\IesrRepository;
+
 
 class TimbreIesrController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $iesrRepository;
 
-    public function __construct(TimbreIesrRepository $timbreRepo)
+    public function __construct(TimbreIesrRepository $timbreRepo, IesrRepository $iesrRepo)
     {
         $this->modelRepository = $timbreRepo;
+        $this->iesrRepository = $iesrRepo;
     }
     /**
      * Display a listing of the resource.
@@ -30,7 +34,8 @@ class TimbreIesrController extends Controller
      */
     public function create()
     {
-        return view('backend.timbre_iesrs.create') ;
+        $iesrs = $this->iesrRepository->all();
+        return view('backend.timbre_iesrs.create', compact('iesrs'));
     }
 
     /**
