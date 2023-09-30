@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\DocumentDataTable;
 use App\Repositories\DocumentRepository;
 use App\http\Requests\StoreDocumentRequest ;
 use App\http\Requests\UpdateDocumentRequest ;
@@ -21,9 +20,9 @@ class DocumentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(DocumentDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.documents.index');
+        return view('backend.documents.index');
     }
     
     /**

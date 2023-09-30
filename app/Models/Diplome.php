@@ -21,14 +21,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $dateSignature
  * @property Carbon $dateCreation
  * @property int $resultatAcademique_id
- * @property int $signataireIesr_id
+ * @property int $signataire_id
  * @property int $document_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Document $document
  * @property ResultatAcademique $resultat_academique
- * @property SignataireIesr $signataire_iesr
+ * @property SignataireIesr $signataire
  * @property Collection|Visa[] $visas
  *
  * @package App\Models
@@ -41,7 +41,7 @@ class Diplome extends Model
 		'dateSignature' => 'datetime',
 		'dateCreation' => 'datetime',
 		'resultatAcademique_id' => 'int',
-		'signataireIesr_id' => 'int',
+		'signataire_id' => 'int',
 		'document_id' => 'int'
 	];
 
@@ -53,7 +53,7 @@ class Diplome extends Model
 		'dateSignature',
 		'dateCreation',
 		'resultatAcademique_id',
-		'signataireIesr_id',
+		'signataire_id',
 		'document_id'
 	];
 
@@ -69,7 +69,7 @@ class Diplome extends Model
 
 	public function signataire_iesr()
 	{
-		return $this->belongsTo(SignataireIesr::class, 'signataireIesr_id');
+		return $this->belongsTo(Signataire::class, 'signataire_id');
 	}
 
 	public function visas()

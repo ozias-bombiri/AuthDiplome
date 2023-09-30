@@ -19,7 +19,7 @@ class UserSeeder extends Seeder
             'email' => 'obombiri@gmail.com',
             'statut' => 'Active',
             //'profile_id' => 1,
-            'etablissement_id' => 1,
+            'institution_id' => 1,
             'password' => Hash::make('admin'),
 
         ]);
@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
             'email' => 'tebda@gmail.com',
             'statut' => 'Active',
             //'profile_id' => 1,
-            'etablissement_id' => 1,
+            'institution_id' => 1,
             'password' => Hash::make('admin'),
 
         ]);
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'email' => 'user1@exemple.com',
             'statut' => 'Active',
             //'profile_id' => 2,
-            'etablissement_id' => 1,
+            'institution_id' => 1,
             'password' => Hash::make('admin'),
 
         ]);
@@ -49,7 +49,7 @@ class UserSeeder extends Seeder
             'email' => 'user2@exemple.com',
             'statut' => 'Active',
             //'profile_id' => 3,
-            'etablissement_id' => 1,
+            'institution_id' => 1,
             'password' => Hash::make('admin'),
 
         ]);
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
             'email' => 'user3@exemple.com',
             'statut' => 'Active',
             //'profile_id' => 2,
-            'etablissement_id' => 2,
+            'institution_id' => 2,
             'password' => Hash::make('admin'),
 
         ]);
@@ -69,7 +69,7 @@ class UserSeeder extends Seeder
             'email' => 'user4@exemple.com',
             'statut' => 'Active',
             //'profile_id' => 3,
-            'etablissement_id' => 2,
+            'institution_id' => 2,
             'password' => Hash::make('admin'),
 
         ]);

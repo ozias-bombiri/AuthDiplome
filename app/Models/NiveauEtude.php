@@ -25,7 +25,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class NiveauEtude extends Model
 {
-	protected $table = 'niveau_etudes';
+    protected $table = 'niveau_etudes';
 
 	protected $fillable = [
 		'intitule',

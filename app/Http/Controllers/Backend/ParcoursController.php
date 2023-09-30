@@ -3,32 +3,31 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\ParcoursDataTable;
 use App\Repositories\ParcoursRepository;
 use App\Http\Requests\StoreParcoursRequest;
 use App\Http\Requests\UpdateParcoursRequest;
-use App\Repositories\EtablissementRepository;
+use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
 
 class ParcoursController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
-    private $etablissementRepository;
+    private $institutionRepository;
     private $niveauEtudeRepository;
 
-    public function __construct(ParcoursRepository $parcoursRepo, EtablissementRepository $etablissementRepo, NiveauEtudeRepository $niveauRepo)
+    public function __construct(ParcoursRepository $parcoursRepo, InstitutionRepository $institutionRepo, NiveauEtudeRepository $niveauRepo)
     {
-        $this->etablissementRepository = $etablissementRepo;
+        $this->institutionRepository = $institutionRepo;
         $this->modelRepository = $parcoursRepo;
         $this->niveauEtudeRepository = $niveauRepo;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index(ParcoursDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.parcours.index');
+        return view('backend.parcours.index');
     }
 
     /**
@@ -36,7 +35,7 @@ class ParcoursController extends Controller
      */
     public function create()
     {
-        $etablissements = $this->etablissementRepository->all();
+        $etablissements = $this->institutionRepository->all();
         $niveaux = $this->niveauEtudeRepository->all();
         return view('backend.parcours.create', compact('etablissements', 'niveaux')) ;
     }

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('dateSignature');
             $table->date('dateCreation');
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('signataireIesr_id')->constrained('signataire_iesrs')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('document_id')->constrained('documents')->onDelete('cascade')->onUpdate('cascade');           
             $table->timestamps();
         });

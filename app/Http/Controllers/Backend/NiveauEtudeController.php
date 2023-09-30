@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\NiveauEtudeDataTable;
 use App\Repositories\NiveauEtudeRepository;
 use App\Http\Requests\StoreNiveauEtudeRequest;
 use App\Http\Requests\UpdateNiveauEtudeRequest;
@@ -20,9 +19,9 @@ class NiveauEtudeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(NiveauEtudeDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.niveau_etudes.index');
+        return view('backend.niveau_etudes.index');
     }
 
     /**

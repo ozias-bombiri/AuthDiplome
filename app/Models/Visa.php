@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Visa extends Model
 {
-	protected $table = 'visas';
+    protected $table = 'visas';
 
 	protected $casts = [
 		'datesignaure' => 'datetime'

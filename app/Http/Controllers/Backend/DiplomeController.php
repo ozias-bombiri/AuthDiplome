@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\DiplomeDataTable;
 use App\Repositories\DiplomeRepository;
 use App\http\Requests\StoreDiplomeRequest ;
 use App\http\Requests\UpdateDiplomeRequest ;
@@ -21,9 +20,9 @@ class DiplomeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(DiplomeDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.diplomes.index');
+        return view('backend.diplomes.index');
     }
     
     /**

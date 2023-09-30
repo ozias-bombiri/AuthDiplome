@@ -26,7 +26,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class AnneeAcademique extends Model
 {
-	protected $table = 'annee_academiques';
+    protected $table = 'annee_academiques';
 
 	protected $fillable = [
 		'intitule',

@@ -20,12 +20,12 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $mention
  * @property string $specialite
  * @property string $description
- * @property int $etablissement_id
+ * @property int $institution_id
  * @property int $niveauEtude_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
- * @property Etablissement $etablissement
+ * @property Institution $institution
  * @property NiveauEtude $niveau_etude
  * @property Collection|ResultatAcademique[] $resultat_academiques
  *
@@ -33,10 +33,10 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Parcours extends Model
 {
-	protected $table = 'parcours';
+    protected $table = 'parcours';
 
 	protected $casts = [
-		'etablissement_id' => 'int',
+		'institution_id' => 'int',
 		'niveauEtude_id' => 'int'
 	];
 
@@ -47,13 +47,13 @@ class Parcours extends Model
 		'mention',
 		'specialite',
 		'description',
-		'etablissement_id',
+		'institution_id',
 		'niveauEtude_id'
 	];
 
-	public function etablissement()
+	public function institution()
 	{
-		return $this->belongsTo(Etablissement::class);
+		return $this->belongsTo(Institution::class);
 	}
 
 	public function niveau_etude()
@@ -65,4 +65,6 @@ class Parcours extends Model
 	{
 		return $this->hasMany(ResultatAcademique::class, 'parcours_id');
 	}
+
+	
 }

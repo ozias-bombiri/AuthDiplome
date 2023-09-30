@@ -8,7 +8,7 @@
     <div class="card-body">
 
         <div class="table-responsive">
-            {{$dataTable->table()}}
+            
         </div>
 
     </div>
@@ -16,5 +16,5 @@
 @endsection
 
 @push('costum-scripts')
-{{$dataTable->scripts()}}
+
 @endpush

@@ -19,14 +19,14 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon $dateSignature
  * @property bool $statutGeneration
  * @property int $resultatAcademique_id
- * @property int $signataireEtablissement_id
+ * @property int $signataire_id
  * @property int $document_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * 
  * @property Document $document
  * @property ResultatAcademique $resultat_academique
- * @property SignataireEtablissement $signataire_etablissement
+ * @property SignataireEtablissement $signataire
  *
  * @package App\Models
  */
@@ -39,7 +39,7 @@ class AttestationProvisoire extends Model
 		'dateSignature' => 'datetime',
 		'statutGeneration' => 'bool',
 		'resultatAcademique_id' => 'int',
-		'signataireEtablissement_id' => 'int',
+		'signataire_id' => 'int',
 		'document_id' => 'int'
 	];
 
@@ -50,7 +50,7 @@ class AttestationProvisoire extends Model
 		'dateSignature',
 		'statutGeneration',
 		'resultatAcademique_id',
-		'signataireEtablissement_id',
+		'signataire_id',
 		'document_id'
 	];
 
@@ -66,6 +66,6 @@ class AttestationProvisoire extends Model
 
 	public function signataire_etablissement()
 	{
-		return $this->belongsTo(SignataireEtablissement::class, 'signataireEtablissement_id');
+		return $this->belongsTo(Signataire::class, 'signataire_id');
 	}
 }
