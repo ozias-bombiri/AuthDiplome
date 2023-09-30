@@ -22,7 +22,8 @@ class TimbreIesrDataTable extends DataTable
     public function dataTable(QueryBuilder $query): EloquentDataTable
     {
         return (new EloquentDataTable($query))
-            ->addColumn('action', 'timbreiesr.action')
+            ->addColumn('action', 'backend.timbre_iesrs.actions')
+            //->addColumn('action', 'timbreiesr.action')
             ->setRowId('id');
     }
 
@@ -47,13 +48,21 @@ class TimbreIesrDataTable extends DataTable
                     ->orderBy(1)
                     ->selectStyleSingle()
                     ->buttons([
-                        Button::make('excel'),
-                        Button::make('csv'),
-                        Button::make('pdf'),
-                        Button::make('print'),
+                        
+                        Button::make('add'),
+                      
+                        //Button::make('excel'),
+                        // Button::make('csv'),
+                        // Button::make('pdf'),
+                        // Button::make('print'),
                         Button::make('reset'),
                         Button::make('reload')
                     ]);
+    }
+
+    public function addCus()
+    {
+        
     }
 
     /**
@@ -62,15 +71,17 @@ class TimbreIesrDataTable extends DataTable
     public function getColumns(): array
     {
         return [
+            
+            Column::make('id'),
+            Column::make('intitule')->title('Intitule'),
+            Column::make('type'), 
+            Column::make('denomMinistere')->title('Denomination ministère'),
+            Column::make('iesr_id')->title('Sigle Iesr'),
             Column::computed('action')
                   ->exportable(false)
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('id'),
-            Column::make('add your columns'),
-            Column::make('created_at'),
-            Column::make('updated_at'),
         ];
     }
 
