@@ -6,6 +6,16 @@
     <div class="card-header">{{ __('Années academiques') }}</div>
 
     <div class="card-body">
+        <div class="pull-right">
+
+            <a class="btn btn-success" href="{{ route('annee_academiques.create') }}"> Ajouter</a>
+
+        </div>
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
 
         <div class="table-responsive">
             <table class="table table-striped">
@@ -33,14 +43,14 @@
                                 <a data-tooltip="Modifier" href="{{ route('annee_academiques.edit', $annee->id) }}" class='data-tooltip btn btn-info mx-1'>
                                     <i class="bi bi-pencil"></i>
                                 </a>
-                                <form method="POST" action="{{ route('annee_academiques.destroy', $annee->id) }}" >
+                                <form method="POST" action="{{ route('annee_academiques.destroy', $annee->id) }}">
                                     @csrf
                                     @method('delete')
                                     <button type="submit" class="btn btn-danger delete-btn data-tooltip delete-btn mx-1" data-tooltip="Supprimer" href="{{ route('annee_academiques.destroy', $annee->id) }}">
                                         <i class="bi bi-trash"></i>
                                     </button>
                                 </form>
-                            </div>   
+                            </div>
                         </td>
                     </tr>
                     @endforeach
