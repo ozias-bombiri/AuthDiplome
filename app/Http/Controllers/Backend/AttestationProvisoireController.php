@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\AttestationProvisoireDataTable;
 use App\Repositories\AttestationProvisoireRepository;
 use App\http\Requests\StoreAttestationProvisoireRequest ;
 use App\http\Requests\UpdateAttestationProvisoireRequest ;
@@ -22,9 +21,9 @@ class AttestationProvisoireController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(AttestationProvisoireDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.attestation_provisoires.index');
+        return view('backend.attestation_provisoires.index');
     }
     
     /**

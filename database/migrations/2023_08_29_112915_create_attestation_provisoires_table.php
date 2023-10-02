@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('dateSignature');
             $table->boolean('statutGeneration');
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('signataireEtablissement_id')->constrained('signataire_etablissements')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('document_id')->constrained('documents')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

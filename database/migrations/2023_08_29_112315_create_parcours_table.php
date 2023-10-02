@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('mention', 20);
             $table->string('specialite', 100);
             $table->text('description');
-            $table->foreignId('etablissement_id')->constrained('etablissements')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('niveauEtude_id')->constrained('niveau_etudes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });

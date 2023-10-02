@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\DemandeAuthentificationDataTable;
 use App\Repositories\DemandeAuthentificationRepository;
 use App\http\Requests\StoreDemandeAuthentificationRequest ;
 use App\http\Requests\UpdateDemandeAuthentificationRequest ;
@@ -21,9 +20,9 @@ class DemandeAuthentificationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(DemandeAuthentificationDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.demande_authentifications.index');
+        return view('backend.demande_authentifications.index');
     }
     
     /**

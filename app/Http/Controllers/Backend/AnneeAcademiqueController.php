@@ -4,11 +4,9 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 
-use App\DataTables\AnneeAcademiqueDataTable;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Http\Requests\StoreAnneeAcademiqueRequest ;
 use App\Http\Requests\UpdateAnneeAcademiqueRequest ;
-use Flash;
 class AnneeacademiqueController extends Controller
 {
     /** @var  modelRepository */
@@ -19,9 +17,11 @@ class AnneeacademiqueController extends Controller
         $this->modelRepository = $anneeRepo;
     }
 
-    public function index(AnneeAcademiqueDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.annee_academiques.index');
+        $annees = $this->modelRepository->paginate(4);
+        
+        return view('backend.annee_academiques.index', compact('annees'));
     }
     
     /**

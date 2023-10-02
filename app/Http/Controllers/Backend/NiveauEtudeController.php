@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\NiveauEtudeDataTable;
 use App\Repositories\NiveauEtudeRepository;
 use App\Http\Requests\StoreNiveauEtudeRequest;
 use App\Http\Requests\UpdateNiveauEtudeRequest;
@@ -22,6 +21,7 @@ class NiveauEtudeController extends Controller
     /**
      * Display a listing of the resource.
      */
+<<<<<<< HEAD
     // public function index(NiveauEtudeDataTable $dataTable)
     // {
     //     return $dataTable->render('backend.niveau_etudes.index');
@@ -32,6 +32,11 @@ class NiveauEtudeController extends Controller
         $niveaux = $this->niveauEtudeRepository->all();
         return $dataTable->render('backend.niveau_etudes.index',  compact('niveaux'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
+=======
+    public function index()
+    {
+        return view('backend.niveau_etudes.index');
+>>>>>>> bozi2
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\AttestationDefinitiveDataTable;
 use App\Repositories\AttestationDefinitiveRepository;
 use App\http\Requests\StoreAttestationDefinitiveRequest ;
 use App\http\Requests\UpdateAttestationDefinitiveRequest ;
@@ -21,9 +20,9 @@ class AttestationDefinitiveController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(AttestationDefinitiveDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.attestation_definitives.index');
+        return view('backend.attestation_definitives.index');
     }
     
     /**
@@ -96,8 +95,7 @@ class AttestationDefinitiveController extends Controller
 
         $attestation = $this->modelRepository->update($request->all(), $id);
 
-        Flash::success('Attestation définitive modifié avec succès.');
-
+        
         return redirect(route('attestation_definitives.index'));
     }
 

@@ -22,7 +22,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property string $cote
  * @property string $session
  * @property Carbon $dateSoutenance
- * @property int $etudiant_id
+ * @property int $impetrant_id
  * @property int $parcours_id
  * @property int $anneeAcademique_id
  * @property int $document_id
@@ -31,7 +31,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * 
  * @property AnneeAcademique $annee_academique
  * @property Document $document
- * @property Etudiant $etudiant
+ * @property Impetrant $impetrant
  * @property Parcour $parcour
  * @property Collection|AttestationDefinitive[] $attestation_definitives
  * @property Collection|AttestationProvisoire[] $attestation_provisoires
@@ -48,7 +48,7 @@ class ResultatAcademique extends Model
 		'dateSignaure' => 'datetime',
 		'moyenne' => 'float',
 		'dateSoutenance' => 'datetime',
-		'etudiant_id' => 'int',
+		'impetrant_id' => 'int',
 		'parcours_id' => 'int',
 		'anneeAcademique_id' => 'int',
 		'document_id' => 'int'
@@ -62,7 +62,7 @@ class ResultatAcademique extends Model
 		'cote',
 		'session',
 		'dateSoutenance',
-		'etudiant_id',
+		'impetrant_id',
 		'parcours_id',
 		'anneeAcademique_id',
 		'document_id'
@@ -78,12 +78,12 @@ class ResultatAcademique extends Model
 		return $this->belongsTo(Document::class);
 	}
 
-	public function etudiant()
+	public function impetrant()
 	{
-		return $this->belongsTo(Etudiant::class);
+		return $this->belongsTo(Impetrant::class);
 	}
 
-	public function parcour()
+	public function parcours()
 	{
 		return $this->belongsTo(Parcour::class, 'parcours_id');
 	}

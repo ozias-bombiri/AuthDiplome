@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\DataTables\UsersDataTable;
 use App\Repositories\UserRepository;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use Spatie\Permission\Models\Role;
-use DB;
-use Hash;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Arr;
 use App\Models\User;
 
@@ -32,11 +31,6 @@ class UserController extends Controller
         return view('backend.users.index',compact('data'))
             ->with('i', ($request->input('page', 1) - 1) * 5);
     }
-
-    // public function index(UsersDataTable $dataTable)
-    // {
-    //     return $dataTable->render('backend.users.index');
-    // }
 
     /**
      * Show the form for creating a new resource.

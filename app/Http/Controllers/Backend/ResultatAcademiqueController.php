@@ -3,35 +3,34 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\ResultatAcademiqueDataTable;
 use App\Repositories\ResultatAcademiqueRepository;
 use App\Http\Requests\StoreResultatAcademiqueRequest;
 use App\Http\Requests\UpdateResultatAcademiqueRequest;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Repositories\EtudiantRepository;
+use App\Repositories\ImpetrantRepository;
 use App\Repositories\ParcoursRepository;
 
 class ResultatAcademiqueController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
-    private $etudiantRepository;
-    private $pacoursRepository;
+    private $impetrantRepository;
+    private $parcoursRepository;
     private $anneeAcademiqueRepository;
 
-    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, EtudiantRepository $etudiantRepo,ParcoursRepository $pacoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
+    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, ImpetrantRepository $impetrantRepo,ParcoursRepository $pacoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
     {
         $this->modelRepository = $ResultatAcademiqueRepo;
-        $this->etudiantRepository = $etudiantRepo;
+        $this->impetrantRepository = $impetrantRepo;
         $this->parcoursRepository = $pacoursRepo;
         $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index(ResultatAcademiqueDataTable $dataTable)
+    public function index()
     {
-        return $dataTable->render('backend.resultat_academiques.index');
+        return view('backend.resultat_academiques.index');
     }
 
     /**
@@ -39,7 +38,7 @@ class ResultatAcademiqueController extends Controller
      */
     public function create()
     {
-        $etudiants = $this->etudiantRepository->all();
+        $etudiants = $this->impetrantRepository->all();
         $parcours = $this->parcoursRepository->all();
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
         return view('backend.resultat_academiques.create', compact('etudiants', 'parcours', 'anneeAcademiques')) ;
