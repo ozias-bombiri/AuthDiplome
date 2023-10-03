@@ -24,7 +24,8 @@ class NiveauEtudeController extends Controller
 
     public function index()
     {
-        return view('backend.niveau_etudes.index');
+        $niveaux = $this->modelRepository->paginate(10);
+        return view('backend.niveau_etudes.index', compact('niveaux'));
 
     }
 
