@@ -21,12 +21,22 @@ class NiveauEtudeController extends Controller
     /**
      * Display a listing of the resource.
      */
+<<<<<<< HEAD
+    // public function index(NiveauEtudeDataTable $dataTable)
+    // {
+    //     return $dataTable->render('backend.niveau_etudes.index');
+    // }
 
-    public function index()
+    public function index(NiveauEtudeDataTable $dataTable)
     {
         $niveaux = $this->niveauEtudeRepository->all();
-        return view('backend.niveau_etudes.index', compact('niveaux'))
+        return $dataTable->render('backend.niveau_etudes.index',  compact('niveaux'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
+=======
+    public function index()
+    {
+        return view('backend.niveau_etudes.index');
+>>>>>>> bozi2
     }
 
     /**
