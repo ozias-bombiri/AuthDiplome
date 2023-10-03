@@ -1,8 +1,6 @@
 @extends('includes.master')
 
-
 @section('contenu')
-<<<<<<< HEAD
     <div class="row">
         <div class="col-lg-12 margin-tb">
             <div class="pull-left">
@@ -13,20 +11,10 @@
                 <a class="btn btn-success" href="{{ route('niveau_etudes.create') }}"> Ajouter</a>
              
             </div>
-=======
-
-<div class="card">
-    <div class="card-header">{{ __('Niveau d\'étude') }}</div>
-
-    <div class="card-body">
-
-        <div class="table-responsive">
-            
->>>>>>> bozi2
         </div>
+
     </div>
 
-<<<<<<< HEAD
 
     @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -68,8 +56,3 @@
 
 
 @endsection
-=======
-@push('costum-scripts')
-
-@endpush
->>>>>>> bozi2
