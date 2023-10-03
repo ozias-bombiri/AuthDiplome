@@ -16,13 +16,7 @@ class NiveauEtudeController extends Controller
     {
         $this->modelRepository = $niveauRepo;
     }
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(NiveauEtudeDataTable $dataTable)
-    // {
-    //     return $dataTable->render('backend.niveau_etudes.index');
-    // }
+  
 
     public function index(NiveauEtudeDataTable $dataTable)
     {

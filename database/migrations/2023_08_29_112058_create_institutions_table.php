@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('siteWeb', 50)->nullable();
             $table->string('logo', 50)->nullable();
             $table->text('description');
-            $table->foreignId('parent_id')->constrained('institutions')->onDelete('cascade')
+            $table->foreignId('parent_id')->nullable()->constrained('institutions')->onDelete('cascade')
             ->onUpdate('cascade')->default(1);
             $table->timestamps();
         });
