@@ -33,6 +33,13 @@
                         </div>
 
                         <div class="form-group row py-2">
+                            <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="intitule" name="intitule"  required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
                             <label for="type" class="col-sm-2 col-form-label">Type</label>
                             <div class="col">
                                 <select class="form-control" id="type" name="type">
