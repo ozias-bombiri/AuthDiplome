@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('logo', 50)->nullable();
             $table->text('description');
             $table->foreignId('parent_id')->constrained('institutions')->onDelete('cascade')
-            ->onUpdate('cascade')->default(1);
+            ->onUpdate('cascade')->default(1)->nullable();
             $table->timestamps();
         });
     }
