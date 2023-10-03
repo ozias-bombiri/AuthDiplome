@@ -11,17 +11,21 @@ class NiveauEtudeController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
+    private $niveauEtudeRepository;
 
-    public function __construct(NiveauetudeRepository $niveauRepo)
+    public function __construct(NiveauetudeRepository $niveauRepo, NiveauEtudeRepository $niveauEtudeRepo)
     {
         $this->modelRepository = $niveauRepo;
+        $this->niveauEtudeRepository = $niveauEtudeRepo;
     }
-  
+    /**
+     * Display a listing of the resource.
+     */
 
-    public function index(NiveauEtudeDataTable $dataTable)
+    public function index()
     {
         $niveaux = $this->niveauEtudeRepository->all();
-        return $dataTable->render('backend.niveau_etudes.index',  compact('niveaux'))
+        return view('backend.niveau_etudes.index', compact('niveaux'))
         ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
@@ -113,7 +117,9 @@ class NiveauEtudeController extends Controller
 
         $this->modelRepository->delete($id);
 
-        $message = "Niveau supprimé avec succès";
-        return $this->sendSuccessDialogResponse($message);
+        // $message = "Niveau supprimé avec succès";
+        // return $this->sendSuccessDialogResponse($message);
+        
+        return redirect(route('niveau_etudes.index'));
     }
 }
