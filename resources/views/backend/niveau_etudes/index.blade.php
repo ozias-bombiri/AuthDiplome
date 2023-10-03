@@ -1,16 +1,14 @@
 @extends('includes.master')
 
 @section('contenu')
-    <div class="row">
-        <div class="col-lg-12 margin-tb">
-            <div class="pull-left">
-                <h2>Products</h2>
-            </div>
-            <div class="pull-right">
-               
-                <a class="btn btn-success" href="{{ route('niveau_etudes.create') }}"> Ajouter</a>
-             
-            </div>
+
+<div class="card">
+    <div class="card-header">{{ __('Niveau d\'étude') }}</div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+            {{$dataTable->table()}}
         </div>
 
     </div>
