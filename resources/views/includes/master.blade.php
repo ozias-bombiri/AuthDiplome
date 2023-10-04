@@ -105,20 +105,9 @@
             </div>
         </div>
     </div>
-    <!-- Bootstrap core JS-->
-    <script src="{{URL::asset('/assets/js/bootstrap.bundle.min.js')}}"></script>
     
-    <!-- Core theme JS-->
-    <script src="{{URL::asset('/assets/js/scripts.js')}}"></script>
-    <script src="{{URL::asset('/assets/datatables.js/datatable.min.js')}}"></script>
-    <script src="{{URL::asset('/assets/datatables.js/jquery31.js')}}"></script>
     @stack('costum-scripts')
 
-    <script>
-        $(document).ready(function () {
-            $('#data').DataTable();
-        });
-    </script>
 </body>
 
 </html>
