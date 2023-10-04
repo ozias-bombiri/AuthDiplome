@@ -19,9 +19,7 @@ class AnneeacademiqueController extends Controller
 
     public function index()
     {
-        $annees = $this->modelRepository->paginate(4);
-        
-        return view('backend.annee_academiques.index', compact('annees'));
+        return view('backend.annee_academiques.index');
     }
     
     /**
