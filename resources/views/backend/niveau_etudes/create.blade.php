@@ -2,14 +2,17 @@
 
 @section('contenu')
 <div class="row justify-content-center">
-    <div class="col-md-8">
+    <div class="col-md-10">
 
-        <div class="card">
-            <div class="card-header">{{ __('Ajouter un niveau d\'étude') }}</div>
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>{{ __('Ajouter un niveau d\'étude') }}</h4>
+
+                </div>
 
             <div class="card-body">
 
-                <div class="table-responsive">
+                <div class="row my-3">
                     @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -19,6 +22,9 @@
                         </ul>
                     </div>
                     @endif
+                </div>
+
+                <div class="row my-3">
                     <form method="post" action="{{ route('niveau_etudes.store') }}">
                         @csrf
                         <div class="form-group row py-2">

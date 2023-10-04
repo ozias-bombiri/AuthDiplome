@@ -18,48 +18,7 @@
 <body>
     <div class="d-flex" id="wrapper">
         <!-- Sidebar-->
-        <div class="border-end bg-white" id="sidebar-wrapper">
-            <div class="sidebar-heading border-bottom bg-light">AuthDiplome</div>
-            <h4>Gestion attestations provisoire</h4>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="#!">Attestations provisoire</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Impétrants</a>                
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Niveau d'étude</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Parcours d'étude</a>
-            </div>
-            <hr class="hr hr-blurry" />
-            <h4>Gestion attestations définitives</h4>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Attestations définitives</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Impétrants</a>                
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Niveau d'étude</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Parcours d'étude</a>
-            </div>
-            <hr class="hr hr-blurry" />
-            <h4>Gestion diplômes</h4>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Diplômes</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Impétrants</a>                
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Niveau d'étude</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Parcours d'étude</a>
-            </div>
-            <h4>Gestion authentification</h4>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="#!">Authentification</a>
-            </div>
-            <hr class="hr hr-blurry" />
-            <h4>Parametrages</h4>
-            <div class="list-group list-group-flush">
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">IESR</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Etablissements</a>                
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Année accademiques</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Niveau détudes</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Parcours</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Signatires</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Timbres</a>
-                <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Visas</a>
-            </div>
-        </div>
+        @include('includes.navbar')
         <!-- Page content wrapper-->
         <div id="page-content-wrapper">
             <!-- Top navigation-->
