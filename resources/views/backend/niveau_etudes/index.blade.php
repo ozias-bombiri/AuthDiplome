@@ -74,9 +74,7 @@
 @push('costum-scripts')
 
 <!-- Core theme JS-->
-<script src="{{URL::asset('/assets/datatables.js/jquery31.js')}}"></script>
-<script src="{{URL::asset('/assets/js/scripts.js')}}"></script>
-<script src="{{URL::asset('/assets/datatables.js/datatable.min.js')}}"></script>
+<script type="module" src="{{URL::asset('/assets/datatables.js/datatable.min.js')}}"></script>
 
 <script type="module">
     $(document).ready(function() {

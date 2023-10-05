@@ -6,17 +6,18 @@ use App\Http\Controllers\Controller;
 use App\Repositories\NiveauEtudeRepository;
 use App\Http\Requests\StoreNiveauEtudeRequest;
 use App\Http\Requests\UpdateNiveauEtudeRequest;
+use Flash ;
+
 
 class NiveauEtudeController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
-    private $niveauEtudeRepository;
-
-    public function __construct(NiveauetudeRepository $niveauRepo, NiveauEtudeRepository $niveauEtudeRepo)
+    
+    public function __construct(NiveauEtudeRepository $niveauRepo)
     {
         $this->modelRepository = $niveauRepo;
-        $this->niveauEtudeRepository = $niveauEtudeRepo;
+        
     }
     /**
      * Display a listing of the resource.
@@ -24,9 +25,8 @@ class NiveauEtudeController extends Controller
 
     public function index()
     {
-        $niveaux = $this->niveauEtudeRepository->all();
-        return view('backend.niveau_etudes.index', compact('niveaux'))
-        ->with('i', (request()->input('page', 1) - 1) * 5);
+        $niveaux = $this->modelRepository->all();
+        return view('backend.niveau_etudes.index', compact('niveaux'));
     }
 
     /**
@@ -42,12 +42,10 @@ class NiveauEtudeController extends Controller
      */
     public function store(StoreNiveauEtudeRequest $request)
     {
+        $validated = $request->validated();
         $input = $request->all();
 
-        $niveau = $this->modelRepository->create($input);
-
-        //Flash::success('Niveau enregistré avec succès.');
-
+        $this->modelRepository->create($input);
         return redirect(route('niveau_etudes.index'));
     }
 
@@ -75,8 +73,7 @@ class NiveauEtudeController extends Controller
         $niveau = $this->modelRepository->find($id);
 
         if (empty($niveau)) {
-            //Flash::error('Niveau not found');
-
+            
             return redirect(route('niveau_etudes.index'));
         }
 
@@ -91,14 +88,11 @@ class NiveauEtudeController extends Controller
         $niveau = $this->modelRepository->find($id);
 
         if (empty($niveau)) {
-            //Flash::error('Niveau not found');
-
+            
             return redirect(route('niveau_etudes.index'));
         }
 
         $niveau = $this->modelRepository->update($request->all(), $id);
-
-        //Flash::success('Niveau modifié avec succès.');
 
         return redirect(route('niveau_etudes.index'));
     }
@@ -117,9 +111,6 @@ class NiveauEtudeController extends Controller
 
         $this->modelRepository->delete($id);
 
-        // $message = "Niveau supprimé avec succès";
-        // return $this->sendSuccessDialogResponse($message);
-        
         return redirect(route('niveau_etudes.index'));
     }
 }

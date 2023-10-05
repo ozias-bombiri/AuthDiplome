@@ -39,6 +39,11 @@ class InstitutionRepository extends BaseRepository
         return $this->fieldSearchable;
     }
 
+    public function findByType($type)
+    {
+        return Institution::where('type', $type)->get();
+    }
+
     /**
      * Configure the Model
      **/

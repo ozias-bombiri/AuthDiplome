@@ -185,6 +185,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'Example' => App\Facades\Example::class,
+        'Flash' => Laracasts\Flash\Flash::class,
     ])->toArray(),
 
 ];

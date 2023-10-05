@@ -25,7 +25,8 @@
                 </div>
 
                 <div class="row my-3">
-                    <form method="post" action="{{ route('niveau_etudes.store') }}">
+                    <form method="post" action="{{ route('niveau_etudes.update', $niveau->id) }}">
+                        @method('PUT')
                         @csrf
                         <div class="form-group row py-2">
                             <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>

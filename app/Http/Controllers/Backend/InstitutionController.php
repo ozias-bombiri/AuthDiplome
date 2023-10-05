@@ -22,7 +22,8 @@ class InstitutionController extends Controller
      */
     public function index()
     {
-        return view('backend.institutions.index');
+        $institutions = $this->modelRepository->all();
+        return view('backend.institutions.index', compact('institutions'));
     }
 
     /**
@@ -39,12 +40,18 @@ class InstitutionController extends Controller
      */
     public function store(StoreInstitutionRequest $request)
     {
+        $validated = $request->validated();
         $input = $request->all();
-
-        $institution = $this->modelRepository->create($input);
-
-        //Flash::success('institution enregistré avec succès.');
-
+        if($request->file()) {
+            $file = $request->file('logo');
+            $fileName = 'logo_'.str_replace(array('/', '%', '@', '\'', ';', '<', '>' ), '-', $input['sigle']).'-'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('uploads/logos'), $fileName);
+            $input['logo'] = $fileName;
+        }
+        if($input['type'] === 'IESR' || $input['parent_id'] === 'Aucun'){
+            $input['parent_id'] = null;
+        }
+        $this->modelRepository->create($input);
         return redirect(route('institutions.index'));
     }
 
@@ -60,8 +67,15 @@ class InstitutionController extends Controller
 
             return redirect(route('institutions.index'));
         }
-
-        return view('backend.institutions.show')->with('institution', $institution);
+        $path = 'uploads/logos/'.$institution->logo;
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $logo_base64 = "";
+        if(file_exists($path)) {
+            $data = file_get_contents($path);
+            $logo_base64 = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        }
+        
+        return view('backend.institutions.show', compact('institution', 'logo_base64') );
     }
 
     /**
@@ -76,14 +90,14 @@ class InstitutionController extends Controller
 
             return redirect(route('institutions.index'));
         }
-
-        return view('backend.institutions.edit')->with('institution', $institution);
+        $iesrs = $this->modelRepository->findByType('IESR');
+        return view('backend.institutions.edit', compact('institution', 'iesrs'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateinstitutionRequest $request, string $id)
+    public function update(UpdateInstitutionRequest $request, $id)
     {
         $institution = $this->modelRepository->find($id);
 
@@ -92,8 +106,18 @@ class InstitutionController extends Controller
 
             return redirect(route('institutions.index'));
         }
-
-        $institution = $this->modelRepository->update($request->all(), $id);
+        $validated = $request->validated();
+        $input = $request->all();
+        if($request->file()) {
+            $file = $request->file('logo');
+            $fileName = 'logo_'.str_replace(array('/', '%', '@', '\'', ';', '<', '>' ), '-', $input['sigle']).'-'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('uploads/logos'), $fileName);
+            $input['logo'] = $fileName;
+        }
+        if($input['type'] === 'IESR' || $input['parent_id'] === "Aucun"){
+            $input['parent_id'] = null;
+        }
+        $institution = $this->modelRepository->update($input, $id);
         
         return redirect(route('institutions.index'));
     }

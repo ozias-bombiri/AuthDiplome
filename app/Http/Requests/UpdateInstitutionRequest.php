@@ -23,14 +23,15 @@ class UpdateInstitutionRequest extends FormRequest
     {
         return [
             'sigle' =>'required|string',
-            'denomination' =>'required|string',
-            'telephone' =>'required|string',
-            'adresse' =>'required|string',
-            'email' =>'required|string',
-            'type' =>'required|string',
-            //'logo' =>'required|string',
-            'description' =>'nullable',
-            'iesr_id' =>'nullable'
+            'denomination' =>   'required|string',
+            'telephone'    =>   'required|string',
+            'adresse'      =>   'required|string',
+            'email'        =>   'required|string',
+            'type'         =>   'required|string',
+            'siteWeb'      =>   'string|max:30|min:5',
+            'logo'         =>   'required|max:2048',
+            'description'  =>   'nullable',
+            'parent_id'    =>   'nullable'
         ];
     }
 }
