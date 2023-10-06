@@ -24,7 +24,9 @@ class TimbreController extends Controller
      */
     public function index()
     {
-        return view('backend.timbres.index');
+        $timbres = $this->modelRepository->all();
+
+        return view('backend.timbres.index', compact('timbres'));
     }
 
     /**
@@ -41,8 +43,16 @@ class TimbreController extends Controller
      */
     public function store(StoreTimbreRequest $request)
     {
+        $validated = $request->validated();
         $input = $request->all();
-
+        $input['type'] = "";
+        $institution = $this->institutionRepository->find($input['institution_id']);
+        if($institution->type === 'IESR'){
+            $input['type'] = 'IESR';
+        }
+        else {
+            $input['type'] = 'ETABLISSEMENT';
+        }
         $timbre = $this->modelRepository->create($input);
 
         //Flash::success('timbre enregistré avec succès.');
@@ -78,8 +88,8 @@ class TimbreController extends Controller
 
             return redirect(route('timbres.index'));
         }
-
-        return view('backend.timbres.edit')->with('timbre', $timbre);
+        $institutions = $this->institutionRepository->all();
+        return view('backend.timbres.edit', compact('timbre', 'institutions'));
     }
 
     /**

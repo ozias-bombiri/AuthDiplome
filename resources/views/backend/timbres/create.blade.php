@@ -5,7 +5,7 @@
     <div class="col-md-12">
 
         <div class="card">
-            <div class="card-header">{{ __('Ajouter un timbre établissement') }}</div>
+            <div class="card-header">{{ __('Ajouter un timbre') }}</div>
 
             <div class="card-body">
 
@@ -19,14 +19,14 @@
                         </ul>
                     </div>
                     @endif
-                    <form method="post" action="{{ route('timbre_etablissements.store') }}">
+                    <form method="post" action="{{ route('timbres.store') }}">
                         @csrf
                         <div class="form-group row py-2">
-                            <label for="etablissement" class="col-sm-2 col-form-label">Etablissement</label>
+                            <label for="institution" class="col-sm-2 col-form-label">Institution</label>
                             <div class="col">
-                                <select  class="form-control" id="etablissement" name="etablissement_id" required>
-                                    @foreach( $etablissements as $etablissement)
-                                        <option value="{{ $etablissement->id}}">{{ $etablissement->sigle }}</option>                                    
+                                <select  class="form-control" id="institution" name="institution_id" required>
+                                    @foreach( $institutions as $institution)
+                                        <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>                                    
                                     @endforeach
                                 </select>
                             </div>
@@ -38,18 +38,6 @@
                                 <input type="text" class="form-control" id="intitule" name="intitule"  required>
                             </div>
                         </div>
-
-                        <div class="form-group row py-2">
-                            <label for="type" class="col-sm-2 col-form-label">Type</label>
-                            <div class="col">
-                                <select class="form-control" id="type" name="type">
-                                    <option value="" disabled selected>choisir ...</option>
-                                    <option value="iesr">iesr</option>
-                                    <option value="etablissement">etablissement</option>
-                                </select>                            
-                            </div>
-                        </div>
-
 
                         <div class="form-group row py-2">
                             <label for="ministere" class="col-sm-2 col-form-label">Ministere</label>
@@ -77,7 +65,7 @@
                                 <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                             </div>
                             <div class="col">
-                                <a href="{{ route('timbre_etablissements.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                                <a href="{{ route('timbres.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                             </div>
 
                         </div>

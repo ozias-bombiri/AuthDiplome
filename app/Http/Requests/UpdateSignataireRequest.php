@@ -29,9 +29,9 @@ class UpdateSignataireRequest extends FormRequest
             'typeDocument'  => 'required|string',
             'fonction'  => 'required|string',
             'fonctionLongue'  => 'required|string',
-            'grade' => 'required|string',
-            'titreAcademique'  => 'required|string',
-            'titreHonorifique'  => 'required|string',
+            'grade' => 'string',
+            'titreAcademique'  => 'string',
+            'titreHonorifique'  => 'string',
             'institution_id'  => 'required'
         ];
     }

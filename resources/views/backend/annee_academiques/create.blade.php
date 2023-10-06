@@ -30,13 +30,13 @@
                         <div class="form-group row py-2">
                             <label for="debut" class="col-sm-2 col-form-label">Début</label>
                             <div class="col">
-                                <input type="text" class="form-control" id="debut" name="debut" placeholder="Début" required>
+                                <input type="date" class="form-control" id="debut" name="debut" placeholder="Début" required>
                             </div>
                         </div>
                         <div class="form-group row py-2">
                             <label for="fin" class="col-sm-2 col-form-label">Fin</label>
                             <div class="col">
-                                <input type="text" class="form-control form-control" id="fin" name="fin" placeholder="Fin" required>
+                                <input type="date" class="form-control form-control" id="fin" name="fin" placeholder="Fin" required>
                             </div>
                         </div>
                         <div class="row py-4">

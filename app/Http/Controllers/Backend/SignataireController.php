@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\DataTables\SignataireDataTable;
 use App\Repositories\SignataireRepository;
 use App\Http\Requests\StoreSignataireRequest;
 use App\Http\Requests\UpdateSignataireRequest;
@@ -25,7 +24,8 @@ class SignataireController extends Controller
      */
     public function index()
     {
-        return view('backend.signataires.index');
+        $signataires = $this->modelRepository->all();
+        return view('backend.signataires.index', compact(('signataires')));
     }
 
     /**
@@ -72,15 +72,15 @@ class SignataireController extends Controller
      */
     public function edit(string $id)
     {
-        $Signataire = $this->modelRepository->find($id);
+        $signataire = $this->modelRepository->find($id);
 
         if (empty($signataire)) {
             //Flash::error('signataire not found');
 
             return redirect(route('signataires.index'));
         }
-
-        return view('backend.signataires.edit')->with('signataire', $signataire);
+        $institutions = $this->institutionRepository->all();
+        return view('backend.signataires.edit', compact('signataire', 'institutions'));
     }
 
     /**
@@ -88,6 +88,7 @@ class SignataireController extends Controller
      */
     public function update(UpdateSignataireRequest $request, string $id)
     {
+        $valididated = $request->validated();
         $signataire = $this->modelRepository->find($id);
 
         if (empty($signataire)) {

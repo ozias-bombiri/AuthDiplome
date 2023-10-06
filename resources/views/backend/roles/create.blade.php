@@ -1,55 +1,74 @@
 @extends('includes.master')
 
-
 @section('contenu')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Create New Role</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>{{ __('Créer un role') }}</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row my-3">
+
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+                <div class="row my-3">
+                    <div class="col-3 offset-1">
+                    <a class="btn btn-primary" href="{{ route('roles.index') }}"> Back</a>
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-10 offset-1">
+                    <form method="post" action="{{ route('roles.store') }}">
+                        @csrf
+                        <div class="form-group row py-2">
+                            <label for="name" class="col-sm-2 col-form-label">Nom du role</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="name" name="name" required>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="debut" class="col-sm-2 col-form-label">Permissions</label>
+                            <div class="col">
+                                @foreach($permissions as $permission)
+                                    <input type="checkbox" id="name" name="permissions" value="{{ $permission->id}}">
+                                    <label> {{ $permission->name }}</label> 
+                                    
+                                    @endforeach
+                            </div>
+                        </div>
+                        
+                        <div class="row py-4">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col">
+                                <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                            </div>
+                            <div class="col">
+                                <a href="{{ route('niveau_etudes.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            </div>
+
+                        </div>
+    
+                    </form>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>
-
-
-@if (count($errors) > 0)
-    <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.<br><br>
-        <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-        </ul>
-    </div>
-@endif
-
-
-{!! Form::open(array('route' => 'roles.store','method'=>'POST')) !!}
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Name:</strong>
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Permission:</strong>
-            <br/>
-            @foreach($permission as $value)
-                <label>{{ Form::checkbox('permission[]', $value->id, false, array('class' => 'name')) }}
-                {{ $value->name }}</label>
-            <br/>
-            @endforeach
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</div>
-{!! Form::close() !!}
-
 
 @endsection
+@push('costum-scripts')
+
+@endpush

@@ -1,70 +1,102 @@
 @extends('includes.master')
 
-
 @section('contenu')
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Create New User</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('users.index') }}"> Back</a>
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>{{ __('Ajouter un utilisateur') }}</h4>
+            </div>
+
+            <div class="card-body">
+                <div class="row my-3">
+
+                    @if (count($errors) > 0)
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+                <div class="row my-3">
+                    <div class="col-10 offset-1">
+                        <form method="post" action="{{ route('users.store') }}">
+                            @csrf
+                            <div class="form-group row py-2">
+                                <label for="iesr" class="col-sm-2 col-form-label">Institution</label>
+                                <div class="col">
+                                    <select class="form-control" id="iesr" name="institution_id" required>
+                                        <option value="">Choisir</option>
+                                        @foreach( $institutions as $institution)
+                                        <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row py-2">
+                                <label for="nom" class="col-sm-2 col-form-label">Name</label>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="nom" name="name" placeholder=" ..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row py-2">
+                                <label for="prenom" class="col-sm-2 col-form-label">Email</label>
+                                <div class="col">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder=" ..." required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row py-2">
+                                <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
+                                <div class="col">
+                                    <input type="password" class="form-control" id="password" name="password" required>
+                                </div>
+                            </div>
+                            <div class="form-group row py-2">
+                                <label for="password" class="col-sm-2 col-form-label">Confimer mot de passe</label>
+                                <div class="col">
+                                    <input type="password" class="form-control" id="confirm-password" name="password" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row py-2">
+                                <label for="type" class="col-sm-2 col-form-label">Role</label>
+                                <div class="col">
+                                    <select class="form-control" id="role" name="role">
+                                        <option value="" disabled selected>choisir ...</option>
+                                        @foreach( $roles as $role)
+                                            <option value="{{ $role}}">{{ $role }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row py-4">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col">
+                                    <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                                </div>
+                                <div class="col">
+                                    <a href="{{ route('users.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                                </div>
+
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>
 
-
-@if (count($errors) > 0)
-  <div class="alert alert-danger">
-    <strong>Whoops!</strong> There were some problems with your input.<br><br>
-    <ul>
-       @foreach ($errors->all() as $error)
-         <li>{{ $error }}</li>
-       @endforeach
-    </ul>
-  </div>
-@endif
-
-
-
-{!! Form::open(array('route' => 'users.store','method'=>'POST')) !!}
-<div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Name:</strong>
-            {!! Form::text('name', null, array('placeholder' => 'Name','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Email:</strong>
-            {!! Form::text('email', null, array('placeholder' => 'Email','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Password:</strong>
-            {!! Form::password('password', array('placeholder' => 'Password','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Confirm Password:</strong>
-            {!! Form::password('confirm-password', array('placeholder' => 'Confirm Password','class' => 'form-control')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12">
-        <div class="form-group">
-            <strong>Role:</strong>
-            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-        </div>
-    </div>
-    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div>
-</div>
-{!! Form::close() !!}
-
-
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
 @endsection
+@push('costum-scripts')
+
+@endpush

@@ -19,7 +19,8 @@ class AnneeacademiqueController extends Controller
 
     public function index()
     {
-        return view('backend.annee_academiques.index');
+        $annees = $this->modelRepository->all();
+        return view('backend.annee_academiques.index', compact('annees'));
     }
     
     /**
@@ -35,6 +36,7 @@ class AnneeacademiqueController extends Controller
      */
     public function store(StoreAnneeAcademiqueRequest $request)
     {
+        $validated = $request->validated();
         $input = $request->all();
 
         $annee = $this->modelRepository->create($input);
@@ -76,13 +78,15 @@ class AnneeacademiqueController extends Controller
      */
     public function update(UpdateAnneeAcademiqueRequest $request, string $id)
     {
+        $validated = $request->validated();
+        $input = $request->all();
         $annee = $this->modelRepository->find($id);
 
         if (empty($annee)) {
             return redirect(route('annee_academiques.index'));
         }
-
-        $annee = $this->modelRepository->update($request->all(), $id);
+        
+        $annee = $this->modelRepository->update($input, $id);
         return redirect(route('annee_academiques.index'));
     }
 

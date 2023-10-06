@@ -19,9 +19,10 @@
                         </ul>
                     </div>
                     @endif
-                    <form  action="{{ route('annee_academiques.update' ,$annee->id) }}">
+                    <form method="post"  action="{{ route('annee_academiques.update' ,$annee->id) }}">
+                    @method('PUT')
                     @csrf
-                    @method('post')
+                    
                         <div class="form-group row py-2">
                             <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
                             <div class="col">
@@ -31,13 +32,13 @@
                         <div class="form-group row py-2">
                             <label for="debut" class="col-sm-2 col-form-label">Début</label>
                             <div class="col">
-                                <input type="text" class="form-control" id="debut" name="debut" value="{{ $annee->debut }}" required>
+                                <input type="date" class="form-control" id="debut" name="debut" value="{{ $annee->debut }}" required>
                             </div>
                         </div>
                         <div class="form-group row py-2">
                             <label for="fin" class="col-sm-2 col-form-label">Fin</label>
                             <div class="col">
-                                <input type="text" class="form-control form-control" id="fin" name="fin" value="{{ $annee->fin }}" required>
+                                <input type="date" class="form-control form-control" id="fin" name="fin" value="{{ $annee->fin }}" required>
                             </div>
                         </div>
                         <div class="row py-4">

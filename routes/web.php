@@ -40,8 +40,8 @@ Auth::routes();
 
   
 Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
+    //Route::resource('roles', RoleController::class);
+    //Route::resource('users', UserController::class);
     Route::resource('products', ProductController::class);
 });
 
@@ -62,7 +62,7 @@ Route::resource('signataires', App\Http\Controllers\Backend\SignataireController
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
 Route::resource('users', App\Http\Controllers\Backend\UserController::class);
-
+Route::resource('roles', RoleController::class);
 
 
 

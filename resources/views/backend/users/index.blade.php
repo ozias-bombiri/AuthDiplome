@@ -1,61 +1,93 @@
 @extends('includes.master')
 
-
 @section('contenu')
+<div class="row justify-content-center">
+    <div class="col-md-10">
+        <div class="card mt-3">
+            <div class="card-header">
+                <h4>{{ __('Utilisateurs') }}</h4>
+            </div>
 
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Users Management</h2>
-        </div>
-        <div class="pull-right">
-            <a class="btn btn-success" href="{{ route('users.create') }}"> Create New User</a>
+            <div class="card-body">
+                <div class="row my-3">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+                </div>
+                <div class="row my-3">
+                    <div class="col-8 offset-1">
+                        <a class="btn btn-success" href="{{ route('users.create') }}"> Créer un utilisateur </a> 
+                        <a class="btn btn-success" href="{{ route('roles.create') }}"> Voir les roles</a> 
+                        <a class="btn btn-success" href="{{ route('roles.create') }}"> Ajouter un role utilisateur</a> <br /><br />
+                    </div>
+                </div>
+                <div class="row my-3">
+                    <div class="col-10 offset-1">
+                        <table id="data" class="table table-bordered table-responsive">
+                            <tr>
+                                <th>No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Roles</th>
+                                <th width="280px">Action</th>
+                            </tr>
+                            @foreach ($utilisateurs as $utilisateur)
+                            <tr>
+                                <td>{{ $loop->index +1 }}</td>
+                                <td>{{ $utilisateur->name }}</td>
+                                <td>{{ $utilisateur->email }}</td>
+                                <td>
+                                    @if(!empty($utilisateur->getRoleNames()))
+                                        @foreach($utilisateur->getRoleNames() as $v)
+                                        <label class="badge badge-success">{{ $v }}</label>
+                                        @endforeach
+                                    @endif
+                                </td>
+                                <td>{{ $utilisateur->statut }}</td>
+                                <td>
+                                    <form action="{{ route('users.destroy',$utilisateur->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a class="btn btn-info" title="Détails" href="{{ route('users.show',$utilisateur->id) }}">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                        <a class="btn btn-primary" title="Modifier" href="{{ route('users.edit',$utilisateur->id) }}">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <button type="submit" class="btn btn-danger" title="Supprimer">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+
+                                    </form>
+
+                                </td>
+                            </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
         </div>
     </div>
 </div>
 
-
-@if ($message = Session::get('success'))
-<div class="alert alert-success">
-  <p>{{ $message }}</p>
-</div>
-@endif
-
-
-<table class="table table-bordered">
- <tr>
-   <th>No</th>
-   <th>Name</th>
-   <th>Email</th>
-   <th>Roles</th>
-   <th width="280px">Action</th>
- </tr>
- @foreach ($data as $key => $user)
-  <tr>
-    <td>{{ ++$i }}</td>
-    <td>{{ $user->name }}</td>
-    <td>{{ $user->email }}</td>
-    <td>
-      @if(!empty($user->getRoleNames()))
-        @foreach($user->getRoleNames() as $v)
-           <label class="badge badge-success">{{ $v }}</label>
-        @endforeach
-      @endif
-    </td>
-    <td>
-       <a class="btn btn-info" href="{{ route('users.show',$user->id) }}">Show</a>
-       <a class="btn btn-primary" href="{{ route('users.edit',$user->id) }}">Edit</a>
-        {!! Form::open(['method' => 'DELETE','route' => ['users.destroy', $user->id],'style'=>'display:inline']) !!}
-            {!! Form::submit('Delete', ['class' => 'btn btn-danger']) !!}
-        {!! Form::close() !!}
-    </td>
-  </tr>
- @endforeach
-</table>
-
-
-{!! $data->render() !!}
-
-
-<p class="text-center text-primary"><small>Tutorial by ItSolutionStuff.com</small></p>
 @endsection
+@push('costum-scripts')
+
+<!-- Core theme JS-->
+<script type="module" src="{{URL::asset('/assets/datatables.js/datatable.min.js')}}"></script>
+
+<script type="module">
+    $(document).ready(function() {
+        $('#data').DataTable();
+    });
+</script>
+@endpush

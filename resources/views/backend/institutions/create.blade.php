@@ -10,14 +10,17 @@
 
             <div class="card-body">
                 <div class="row my-3">
-
-                    @if ($message = Session::get('success'))
-                    <div class="alert alert-success">
-                        <p>{{ $message }}</p>
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
                     @endif
                 </div>
-                
+
                 <div class="row my-3">
                     <div class="col-10 offset-1">
                         <form method="post" action="{{ route('institutions.store') }}" enctype="multipart/form-data">
