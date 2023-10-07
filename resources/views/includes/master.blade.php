@@ -11,7 +11,8 @@
     <link rel="icon" type="image/x-icon" href="{{URL::asset('/assets/favicon.ico')}}" />
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="{{URL::asset('/assets/css/styles.css')}}" rel="stylesheet" />
-    <!-- Scripts -->
+    <link href="{{URL::asset('/assets/css/bootstrap.min.css')}}" rel="stylesheet" />
+    <!-- Scripts --> 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
     @stack('custom-styles')

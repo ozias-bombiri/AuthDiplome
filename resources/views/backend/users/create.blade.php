@@ -67,12 +67,21 @@
                             <div class="form-group row py-2">
                                 <label for="type" class="col-sm-2 col-form-label">Role</label>
                                 <div class="col">
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            
+                                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                                        </div>
+                                    </div>
+                                    <!--
                                     <select class="form-control" id="role" name="role">
                                         <option value="" disabled selected>choisir ...</option>
                                         @foreach( $roles as $role)
                                             <option value="{{ $role}}">{{ $role }}</option>
                                         @endforeach
                                     </select>
+                                  -->
                                 </div>
                             </div>
                             <div class="row py-4">

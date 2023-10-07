@@ -24,8 +24,9 @@
                 
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                    <form method="post" action="{{ route('users.update', $user->id) }}">
-                            @csrf
+                    <form action="{{ route('users.update', $user->id) }}">
+                        {{ csrf_field() }}
+                        {{ method_field('PUT') }}
                             <div class="form-group row py-2">
                                 <label for="iesr" class="col-sm-2 col-form-label">Institution</label>
                                 <div class="col">
@@ -41,14 +42,14 @@
                             <div class="form-group row py-2">
                                 <label for="nom" class="col-sm-2 col-form-label">Name</label>
                                 <div class="col">
-                                    <input type="text" class="form-control" id="nom" name="name" placeholder=" ..." required>
+                                    <input type="text" class="form-control" id="nom" name="name" value="{{ $user->name}}" required>
                                 </div>
                             </div>
 
                             <div class="form-group row py-2">
                                 <label for="prenom" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder=" ..." required>
+                                    <input type="email" class="form-control" id="email" name="email" value="{{ $user->email}}" required>
                                 </div>
                             </div>
 
@@ -68,12 +69,15 @@
                             <div class="form-group row py-2">
                                 <label for="type" class="col-sm-2 col-form-label">Role</label>
                                 <div class="col">
-                                    <select class="form-control" id="role" name="role">
-                                        <option value="" disabled selected>choisir ...</option>
-                                        @foreach( $roles as $role)
-                                            <option value="{{ $role}}">{{ $role }}</option>
-                                        @endforeach
-                                    </select>
+                                   
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            
+                                            {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
+                                        </div>
+                                    </div>
+                                   
+                                   
                                 </div>
                             </div>
                             <div class="row py-4">

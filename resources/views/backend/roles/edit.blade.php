@@ -53,7 +53,7 @@
                                 <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                             </div>
                             <div class="col">
-                                <a href="{{ route('niveau_etudes.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                                <a href="{{ route('roles.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                             </div>
 
                         </div>

@@ -32,6 +32,14 @@
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                             <li class="nav-item active"><a class="nav-link" href="/">Accueil</a></li>
                             <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
+                            
+                            @guest
+                            <li class="nav-item">
+                                <a id="color-nav" class="nav-link" href="{{route('login')}}">Se connecter</a>
+                            </li>
+                            @endguest
+                            
+                            @auth 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">username</a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -51,6 +59,7 @@
                                     <a class="dropdown-item" href="#!">Modifier le profil</a>
                                 </div>
                             </li>
+                            @endauth
                         </ul>
                     </div>
                 </div>
