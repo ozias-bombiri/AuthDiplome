@@ -69,6 +69,8 @@ class UserRepository extends BaseRepository
         }
         $user = User::find($id);
         $user->update($input);
+
+        return $user;
     }
 
 

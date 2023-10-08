@@ -24,7 +24,7 @@
                 
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                    <form action="{{ route('users.update', $user->id) }}">
+                    <form method="POST" action="{{ route('users.update', $user->id) }}">
                         {{ csrf_field() }}
                         {{ method_field('PUT') }}
                             <div class="form-group row py-2">
@@ -62,7 +62,7 @@
                             <div class="form-group row py-2">
                                 <label for="password" class="col-sm-2 col-form-label">Confimer mot de passe</label>
                                 <div class="col">
-                                    <input type="password" class="form-control" id="confirm-password" name="password" required>
+                                    <input type="password" class="form-control" id="confirm-password" name="password_confirmation" required>
                                 </div>
                             </div>
 

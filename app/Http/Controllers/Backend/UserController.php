@@ -60,11 +60,13 @@ class UserController extends Controller
          $this->validate($request, [
              'name' => 'required',
              'email' => 'required|email|unique:users,email',
-             'password' => 'required|same:confirm-password',
+             //'password' => 'required|same:confirm-password',
+             'password' => ['required', 'string', 'min:5', 'confirmed'],
              'roles' => 'required'
          ]);
      
          $input = $request->all();
+         
          $user = $this->modelRepository->create($input);
          $user->assignRole($request->input('roles'));
          return redirect()->route('users.index')
@@ -145,11 +147,13 @@ class UserController extends Controller
          $this->validate($request, [
              'name' => 'required',
              'email' => 'required|email|unique:users,email,'.$id,
-             'password' => 'same:confirm-password',
+             'password' => ['required', 'string', 'min:5', 'confirmed'],
+             //'password' => 'same:confirm-password',
              'roles' => 'required'
          ]);
      
-         $input = $request->all();         
+         $input = $request->all(); 
+                 
      
          $user = $this->modelRepository->update($input, $id);
          
