@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="row my-3">
-                    <div class="col-10 offset-1">
+                    <div class="col-12 ">
                         <table id="data" class="table table-bordered ">
                             <thead>
                                 <tr>
