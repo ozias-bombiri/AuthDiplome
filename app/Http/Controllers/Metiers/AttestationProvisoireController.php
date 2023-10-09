@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\AttestationProvisoireRepository;
 use App\Repositories\NiveauEtudeRepository;
 use App\Repositories\ParcoursRepository;
+use App\Repositories\SignataireRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -14,15 +15,19 @@ class AttestationProvisoireController extends Controller
     protected $attestationRepository ;
     protected $parcoursRepository;
     protected $niveauRepository;
+    protected $signataireRepository;
 
     public function __construct(
         AttestationProvisoireRepository $attestationRepo,
         ParcoursRepository $parcoursRepo,
-        NiveauEtudeRepository $niveauRepo )
+        NiveauEtudeRepository $niveauRepo,
+        SignataireRepository $signataireRepo,
+         )
     {
         $this->attestationRepository = $attestationRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->niveauRepository = $niveauRepo;
+        $this->signataireRepository = $signataireRepo;
     }
     /** 
     * Afficher les parcours de son etablissement
@@ -30,7 +35,13 @@ class AttestationProvisoireController extends Controller
     public function listParcours()
     {
         $institution = Auth ::user()->institution;
-        $parcours = $institution->parcours;
+        $parcours = null;
+        if($institution && $institution->type !='IESR'){
+            $parcours = $institution->parcours;
+        }
+        else {
+            $parcours = $this->parcoursRepository->all();
+        }
         return view('metiers.etablissements.list_parcours', compact('parcours'));
     }
 
@@ -55,7 +66,7 @@ class AttestationProvisoireController extends Controller
     /**
      * Lister les attestations provisoires à partir du parcours de formation choisi
      **/
-    public function listAttestation($parcours_id)
+    public function listAttestation()
     {
         return view('metiers.etablissements.list_attestations');
     }
@@ -108,7 +119,15 @@ class AttestationProvisoireController extends Controller
      **/
     public function listSignataires()
     {
-        return view('metiers.etablissements.list_signataires');
+        $institution = Auth ::user()->institution;
+        $signataires = null;
+        if($institution && $institution->type !='IESR'){
+            $signataires = $institution->signataires;
+        }
+        else {
+            $signataires = $this->signataireRepository->all();
+        }
+        return view('metiers.etablissements.list_signataires', compact('signataires'));
     }
 
     /**
