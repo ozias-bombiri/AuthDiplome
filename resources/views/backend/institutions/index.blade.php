@@ -32,7 +32,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                        <table id="data" class="table table-bordered table-responsive">
+                        <table id="data" class="table  table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>

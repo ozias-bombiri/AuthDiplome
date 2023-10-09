@@ -29,7 +29,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-12 ">
-                        <table id="data" class="table table-bordered ">
+                        <table id="data" class="table-bordered ">
                             <thead>
                                 <tr>
                                     <th>No</th>
