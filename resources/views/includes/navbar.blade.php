@@ -2,10 +2,10 @@
     <div class="sidebar-heading border-bottom bg-light">AuthDiplome</div>
     <ul class="mb-5">
         @hasrole(['direction', 'admin'])
-        <li class="dropdown">
-            <a class="nav-link" data-toggle="collapse" data-bs-toggle="dropdown"  href="#gapSubmenu" role="button" aria-expanded="false" aria-controls="gapSubmenu">Gestion attestion provisoire</a>
+        <li>
+            <a  href="#gapSubmenu" >Gestion attestion provisoire</a>
             
-            <ul class="dropdown-menu" id="gapSubmenu">
+            <ul id="gapSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.etablissements.attestations-list')}}">Attestations provisoire</a>
                 </li>
@@ -23,9 +23,9 @@
         @endhasrole
 
         @hasrole(['daoi', 'admin'])
-        <li class="btn-group dropdown">
-            <a href="#gadSubmenu" data-toggle="collapse" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">Gestion attestation définitive</a>
-            <ul class="dropdown-menu" id="gadSubmenu">
+        <li>
+            <a href="#gadSubmenu" >Gestion attestation définitive</a>
+            <ul id="gadSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Attestations définitives</a>
                 </li>
@@ -38,9 +38,9 @@
             </ul>
         </li>
         <li class="dropdown">
-            <a href="#gdipSubmenu" data-bs-toggle="dropdown" aria-expanded="false" class="dropdown-toggle">Gestion diplome</a>
+            <a href="#gdipSubmenu">Gestion diplome</a>
             
-            <ul class="dropdown-menu" id="gadSubmenu">
+            <ul id="gadSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Diplômes</a>
                 </li>
@@ -55,9 +55,9 @@
         @endhasrole
 
         @hasrole(['authentification', 'admin'])
-        <li class="dropdown">
-            <a href="#authSubmenu" data-bs-toggle="dropdown" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Authentification</a>
-            <ul class="dropdown-menu" id="authSubmenu">
+        <li >
+            <a href="#authSubmenu">Authentification</a>
+            <ul id="authSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="#!">Authentification</a>
                 </li>
@@ -66,9 +66,9 @@
         @endhasrole
 
         @hasrole(['daoi', 'admin'])
-        <li class="dropdown">
-            <a href="#adminSubmenu" data-bs-toggle="dropdown" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Parametrage</a>
-            <ul class="dropdown-menu" id="adminSubmenu">
+        <li >
+            <a href="#adminSubmenu">Parametrage</a>
+            <ul id="adminSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('institutions.index') }}" active>Institutions</a>
                 </li>
