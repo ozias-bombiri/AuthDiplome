@@ -25,7 +25,7 @@ class HomeController extends Controller
     {
         //if($user->hasRole(['Admin']))
         {
-            return view('dashboard.visiteur');
+            return view('dashboard.test_template');
         }
         
     }

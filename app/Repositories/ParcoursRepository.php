@@ -44,4 +44,12 @@ class ParcoursRepository extends BaseRepository
     {
         return Parcours::class;
     }
+
+    /**
+     * Selectionner les parcours d'une institution
+     **/
+    public function findByInstitution($institution_id)
+    {
+        return Parcours::where('institution_id', $institution_id);
+    }
 }

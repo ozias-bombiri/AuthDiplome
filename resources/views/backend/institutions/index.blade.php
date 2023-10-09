@@ -1,5 +1,9 @@
 @extends('includes.master')
 
+@push('custom-styles')
+    <link href="DataTables/datatables.min.css" rel="stylesheet">    
+@endpush
+
 @section('contenu')
 <div class="row justify-content-center">
     <div class="col-md-10">
