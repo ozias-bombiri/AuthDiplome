@@ -13,7 +13,7 @@
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.parcours-list')}}">Parcours</a>
                 </li>
                 <li>
-                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.parcours-list')}}">Parcours</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.etudiant-list')}}">Etudiants</a>
                 </li>
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.signataire-list')}}">Signataires</a>

@@ -1,7 +1,7 @@
 @extends('includes.master')
 
 @push('custom-styles')
-    <link href="DataTables/datatables.min.css" rel="stylesheet">    
+    <link href="{{ URL::asset('/assets/css/datatables.min.css')}}" rel="stylesheet">    
 @endpush
 
 @section('contenu')
@@ -32,7 +32,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                        <table id="data" class="table  table-bordered">
+                        <table id="data" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>

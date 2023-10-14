@@ -55,7 +55,7 @@ class AttestationProvisoireController extends Controller
     }
 
     /** 
-    * Ajouter un parcours de son etablissement
+    * Enregistrer les données saisi dans le formulaire
     **/
     public function storeParcours(Request $request)
     {

@@ -21,7 +21,7 @@ use App\Http\Controllers\ProductController;
 //     return view('index');
 // });
 
-Route::get('/test', [App\Http\Controllers\HomeController::class, 'index'])->name('test');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('test');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
