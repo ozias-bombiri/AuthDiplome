@@ -74,7 +74,7 @@ Route::group(['middleware' => ['auth', 'role:direction|admin']], function() {
     Route::post('etablissement/parcours/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeParcours'])
     ->name('metiers.etablissements.parcours-store');
 
-    Route::get('etablissement/attestations', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listAttestation'])
+    Route::get('etablissement/{institution_id}/attestations', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listAttestation'])
     ->name('metiers.etablissements.attestations-list');
     Route::get('etablissement/attestations/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addAttestation'])
     ->name('metiers.etablissements.attestation-add');
