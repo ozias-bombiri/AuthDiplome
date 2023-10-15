@@ -7,42 +7,73 @@ use App\Repositories\AttestationProvisoireRepository;
 use App\Repositories\NiveauEtudeRepository;
 use App\Repositories\ParcoursRepository;
 use App\Repositories\SignataireRepository;
+use App\Repositories\InstitutionRepository;
+use App\Repositories\ImpetrantRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use DataTables;
+
 
 class AttestationProvisoireController extends Controller
 {
+    private $modelParcoursRepository;
+    private $modelEtudiantRepository;
     protected $attestationRepository ;
     protected $parcoursRepository;
     protected $niveauRepository;
     protected $signataireRepository;
+    protected $institutionRepository;
+    protected $impetrantRepository;
 
     public function __construct(
         AttestationProvisoireRepository $attestationRepo,
         ParcoursRepository $parcoursRepo,
         NiveauEtudeRepository $niveauRepo,
         SignataireRepository $signataireRepo,
+        InstitutionRepository $institutionRepo,
+        ImpetrantRepository $impetrantRepo,
+        
          )
     {
+        $this->modelParcoursRepository = $parcoursRepo;
+        $this->modelEtudiantRepository = $impetrantRepo;
         $this->attestationRepository = $attestationRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->niveauRepository = $niveauRepo;
         $this->signataireRepository = $signataireRepo;
+        $this->institutionRepository = $institutionRepo;
     }
     /** 
     * Afficher les parcours de son etablissement
     **/
-    public function listParcours()
+    public function listParcours(Request $request)
     {
-        $institution = Auth ::user()->institution;
-        $parcours = null;
-        if($institution && $institution->type !='IESR'){
-            $parcours = $institution->parcours;
+
+        if ($request->ajax()) {
+            
+            $institution = Auth ::user()->institution;
+            $data = null;
+            if($institution && $institution->type !='IESR'){
+                $data = $institution->parcours;
+            }
+            else {
+                $data = $this->parcoursRepository->all();
+                // $data = $this->parcoursRepository->with('niveau_etude', 'institution')
+                // ->select('intitule','credit','domaine','mention','specialite','description','sigle', 'intitule')
+                // ->get();
+            }
+           
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="#" class="edit btn btn-success btn-sm">Edit</a> 
+                                  <a href="#" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
         }
-        else {
-            $parcours = $this->parcoursRepository->all();
-        }
-        return view('metiers.etablissements.list_parcours', compact('parcours'));
+        return view('metiers.etablissements.list_parcours'/*, compact('parcours')*/);
     }
 
     /** 
@@ -51,7 +82,8 @@ class AttestationProvisoireController extends Controller
     public function addParcours()
     {
         $niveaux = $this->niveauRepository->all();
-        return view('metiers.etablissements.add_parcours', compact('niveaux'));
+        $institutions = $this->institutionRepository->all();
+        return view('metiers.etablissements.add_parcours', compact('niveaux', 'institutions'));
     }
 
     /** 
@@ -59,9 +91,13 @@ class AttestationProvisoireController extends Controller
     **/
     public function storeParcours(Request $request)
     {
+        $input = $request->all();
+
+        $parcours = $this->modelRepository->create($input);
+
+        return redirect(route('metiers.etablissements.parcours-list'));
         
-        return redirect(route('metiers.etablissements.parours-list'));
-    }
+    } 
 
     /**
      * Lister les attestations provisoires à partir du parcours de formation choisi
@@ -91,8 +127,24 @@ class AttestationProvisoireController extends Controller
     /**
      * Lister les étudiants inscrits  dans l'établissement
      **/
-    public function listEtudiants()
+    public function listEtudiants(Request $request)
     {
+        if ($request->ajax()) {
+
+            $data = $this->modelEtudiantRepository->all();
+
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="#" class="edit btn btn-success btn-sm">Edit</a> 
+                                  <a href="#" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        
+        
         return view('metiers.etablissements.list_etudiants');
     }
 
@@ -107,8 +159,12 @@ class AttestationProvisoireController extends Controller
     /**
      * enregistrer les données du formulaire d'ajout d'étudiant
      **/
-    public function storeEtudiant()
+    public function storeEtudiant(Request $request)
     {
+        $input = $request->all();
+
+        $etudiants = $this->modelEtudiantRepository->create($input);
+
         return redirect(route('metiers.etablissements.etudiant-list'));
     }
 
