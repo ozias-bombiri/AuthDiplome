@@ -74,9 +74,9 @@
                                 <div class="col">
                                     <select class="form-control" id="typeDocument" name="typeDocument">
                                         <option value="" disabled selected>choisir ...</option>
-                                        <option value="provisoire">Attestation Provisoire</option>
-                                        <option value="definitive">Attestation Definitive</option>
-                                        <option value="diplome">Diplome</option>
+                                        <option value="Attestation Provisoire">Attestation Provisoire</option>
+                                        <option value="Attestation Definitive">Attestation Definitive</option>
+                                        <option value="Diplome">Diplome</option>
                                     </select>
                                 </div>
                             </div>
