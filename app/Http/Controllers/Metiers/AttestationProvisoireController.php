@@ -103,9 +103,15 @@ class AttestationProvisoireController extends Controller
     /**
      * Lister les attestations provisoires à partir du parcours de formation choisi
      **/
-    public function listAttestation()
+    public function listAttestation($institution_id)
     {
-        return view('metiers.etablissements.list_attestations');
+        //$institution = Auth ::user()->institution;
+        $institution = $this->institutionRepository->find($institution_id);
+        $attestations = null;
+        if($institution && $institution->type !='IESR'){
+            $attestations = $this->attestationRepository->findByInstitution($institution_id);
+        }
+        return view('metiers.etablissements.list_attestations', compact('attestations'));
     }
 
     /**

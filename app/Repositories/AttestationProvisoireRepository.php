@@ -41,4 +41,8 @@ class AttestationProvisoireRepository extends BaseRepository
     {
         return AttestationProvisoire::class;
     }
+
+    public function findByInstitution($institution_id){
+        
+    }
 }
