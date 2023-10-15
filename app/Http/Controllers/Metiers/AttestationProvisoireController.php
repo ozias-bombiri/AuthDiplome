@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Metiers;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\AttestationProvisoireRepository;
+use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
 use App\Repositories\ParcoursRepository;
 use App\Repositories\SignataireRepository;
@@ -16,18 +17,21 @@ class AttestationProvisoireController extends Controller
     protected $parcoursRepository;
     protected $niveauRepository;
     protected $signataireRepository;
+    protected $institutionRepository ;
 
     public function __construct(
         AttestationProvisoireRepository $attestationRepo,
         ParcoursRepository $parcoursRepo,
         NiveauEtudeRepository $niveauRepo,
         SignataireRepository $signataireRepo,
+        InstitutionRepository $institutionRepo
          )
     {
         $this->attestationRepository = $attestationRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->niveauRepository = $niveauRepo;
         $this->signataireRepository = $signataireRepo;
+        $this->institutionRepository = $institutionRepo;
     }
     /** 
     * Afficher les parcours de son etablissement
@@ -117,9 +121,10 @@ class AttestationProvisoireController extends Controller
     /**
      * Lister les signaitaires de l'établissement
      **/
-    public function listSignataires()
+    public function listSignataires($institution_id)
     {
-        $institution = Auth ::user()->institution;
+        //$institution = Auth ::user()->institution;
+        $institution = $this->institutionRepository->find($institution_id);
         $signataires = null;
         if($institution && $institution->type !='IESR'){
             $signataires = $institution->signataires;
@@ -131,7 +136,7 @@ class AttestationProvisoireController extends Controller
     }
 
     /**
-     * Ajouter un étudiant
+     * Ajouter un signataire
      **/
     public function addSignataire()
     {
@@ -139,11 +144,16 @@ class AttestationProvisoireController extends Controller
     }
 
     /**
-     * enregistrer les données du formulaire d'ajout d'étudiant
+     * enregistrer les données du formulaire d'ajout de signataire
      **/
-    public function storeSignataire()
+    public function storeSignataire(Request $request)
     {
-        return redirect(route('metiers.etablissements.signataire-list'));
+        $institution = Auth ::user()->institution;
+        $input = $request->all();
+        $input['institution_id'] = $institution->id ;
+        $input['typeDocument'] = "Attestation Provisoire" ;
+        $signataire = $this->signataireRepository->create($input);
+        return redirect(route('metiers.etablissements.signataire-list', $institution->id));
     }
 
 }

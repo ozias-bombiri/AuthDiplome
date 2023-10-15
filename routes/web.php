@@ -88,9 +88,9 @@ Route::group(['middleware' => ['auth', 'role:direction|admin']], function() {
     Route::post('etablissement/etudiants/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeEtudiant'])
     ->name('metiers.etablissements.etudiant-store');
 
-    Route::get('etablissement/signataires', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listSignataires'])
+    Route::get('etablissement/{institution_id}/signataires', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listSignataires'])
     ->name('metiers.etablissements.signataire-list');
-    Route::get('etablissement/signataires/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addSignaitaire'])
+    Route::get('etablissement/signataires/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addSignataire'])
     ->name('metiers.etablissements.signataire-add');
     Route::post('etablissement/signataires/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeSignataire'])
     ->name('metiers.etablissements.signataire-store');
