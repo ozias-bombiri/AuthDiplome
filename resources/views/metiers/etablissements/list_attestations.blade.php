@@ -23,7 +23,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-3 offset-1">
-                        <a class="btn btn-success" href="{{ route('metiers.etablissements.attestation-add', auth()->user()->institution_id) }}"> Ajouter</a> <br />
+                        
                     </div>
                 </div>
                 <div class="row my-3">
