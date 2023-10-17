@@ -42,4 +42,15 @@ class TimbreRepository extends BaseRepository
     {
         return Timbre::class;
     }
+
+    /**
+     * FindByIntitution and type
+     **/
+    public function findByInstitutionAndType($institution_id, $type)
+    {
+       $timbre = Timbre::where('institution_id', '=', $institution_id)
+                        ->where('type', '=', $type)
+                        ->first();
+        return $timbre;
+    }
 }

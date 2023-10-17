@@ -49,7 +49,7 @@ class Diplome extends Model
 		'intitule',
 		'reference',
 		'numeroEnregistrement',
-		'cote',
+		'lieuCreation',
 		'dateSignature',
 		'dateCreation',
 		'resultatAcademique_id',
@@ -67,7 +67,7 @@ class Diplome extends Model
 		return $this->belongsTo(ResultatAcademique::class, 'resultatAcademique_id');
 	}
 
-	public function signataire_iesr()
+	public function signataire()
 	{
 		return $this->belongsTo(Signataire::class, 'signataire_id');
 	}

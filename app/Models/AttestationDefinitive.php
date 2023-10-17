@@ -46,6 +46,7 @@ class AttestationDefinitive extends Model
 		'dateSignaure',
 		'reference',
 		'dateCreation',
+		'lieuCreation',
 		'resultatAcademique_id',
 		'signataire_id',
 		'document_id'
@@ -61,7 +62,7 @@ class AttestationDefinitive extends Model
 		return $this->belongsTo(ResultatAcademique::class, 'resultatAcademique_id');
 	}
 
-	public function signataire_iesr()
+	public function signataire()
 	{
 		return $this->belongsTo(Signataire::class, 'signataire_id');
 	}

@@ -171,6 +171,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Spatie
         Spatie\Permission\PermissionServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
 
     /*

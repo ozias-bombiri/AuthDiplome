@@ -47,6 +47,7 @@ class AttestationProvisoire extends Model
 		'intitule',
 		'reference',
 		'dateCreation',
+		'lieuCreation',
 		'dateSignature',
 		'statutGeneration',
 		'resultatAcademique_id',
@@ -64,7 +65,7 @@ class AttestationProvisoire extends Model
 		return $this->belongsTo(ResultatAcademique::class, 'resultatAcademique_id');
 	}
 
-	public function signataire_etablissement()
+	public function signataire()
 	{
 		return $this->belongsTo(Signataire::class, 'signataire_id');
 	}

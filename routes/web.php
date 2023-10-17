@@ -76,11 +76,15 @@ Route::group(['middleware' => ['auth', 'role:direction|admin']], function() {
 
     Route::get('d/provisoires/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listAttestation'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.attestation-list');
-    Route::get('d/provisoires/add/{etudiant_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addAttestation'])
-    ->where('etudiant_id', '[0-9]+')->name('metiers.etablissements.attestation-add');
+    Route::get('d/provisoires/add/{institution_id}/{etudiant_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addAttestation'])
+    ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.etablissements.attestation-add');
     Route::post('d/provisoires/store', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeAttestation'])
     ->name('metiers.etablissements.attestation-store');
-
+    Route::get('d/provisoires/view/{id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'viewAttestation'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-view');
+    Route::get('d/provisoires/pdf/{id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'pdfAttestation'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-pdf');
+   
     Route::get('d/impetrants/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listEtudiants'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.etudiant-list');
     Route::get('d/impetrants/add/', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addEtudiant'])
