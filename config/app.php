@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -170,6 +171,8 @@ return [
         App\Providers\RouteServiceProvider::class,
         //Spatie
         Spatie\Permission\PermissionServiceProvider::class,
+        SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
+        Barryvdh\DomPDF\ServiceProvider::class,
         SimpleSoftwareIO\QrCode\QrCodeServiceProvider::class,
         Barryvdh\DomPDF\ServiceProvider::class,
     ])->toArray(),
