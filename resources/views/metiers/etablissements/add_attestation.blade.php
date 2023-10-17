@@ -80,11 +80,11 @@
                         <div class="form-group row py-2">
                             <label for="lieuNaissance" class="col-sm-2 col-form-label">Moyenne</label>
                             <div class="col">
-                                <input type="number" class="form-control form-control" id="moyenne" name="moyenne"  required>
+                                <input type="number" step="0.01" class="form-control form-control" id="moyenne" name="moyenne"  required>
                             </div>
                         </div>
                         <div class="form-group row py-2">
-                            <label for="paysNaissance" class="col-sm-2 col-form-label">Côte</label>
+                            <label for="cote" class="col-sm-2 col-form-label">Côte</label>
                             <div class="col">
                                 <input type="text" class="form-control form-control" id="cote" name="cote" placeholder="cote" required>
                             </div>
@@ -98,6 +98,12 @@
                                         <option value="{{ $signataire->id }}">{{ $signataire->nom }} {{ $signataire->prenom }} </option>
                                     @endforeach
                                 </select>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="lieu" class="col-sm-2 col-form-label">Lieu</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="lieu" name="lieuCreation" required>
                             </div>
                         </div>
                         <input type="hidden" class="form-control form-control" id="impetrant" name="impetrant" value="{{ $etudiant->id }}">

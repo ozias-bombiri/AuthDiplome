@@ -50,10 +50,10 @@
                                     <td>{{ $attestation->resultat_academique->impetrant->nom }} {{ $attestation->resultat_academique->impetrant->prenom }}</td>
                                     <td>{{ $attestation->resultat_academique->parcours->intitule }} ({{ $attestation->resultat_academique->parcours->niveau_etude->intitule }})</td>
                                     <td>
-                                        <a class="btn btn-info" title="Détails" href="#">
+                                        <a class="btn btn-info" title="Détails" href="{{ route('metiers.etablissements.attestation-view', $attestation->id) }}">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <a class="btn btn-primary" title="Modifier" href="#">
+                                        <a class="btn btn-primary" title="Modifier" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
                                             <i class="bi bi-pencil"></i>
                                         </a>                                           
                                     </td>

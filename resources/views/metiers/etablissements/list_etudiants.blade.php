@@ -55,7 +55,7 @@
                                         <a class="btn btn-info" title="Voir attestations provisoire" href="{{ route('impetrants.show',$etudiant->id) }}">
                                                 <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <a class="btn btn-primary" title="Ajouter une attestation" href="{{ route('metiers.etablissements.attestation-add',['etudiant_id' => $etudiant->id]) }}">
+                                        <a class="btn btn-primary" title="Ajouter une attestation" href="{{ route('metiers.etablissements.attestation-add',['institution_id' => $institution->id, 'etudiant_id' => $etudiant->id]) }}">
                                             <i class="bi bi-plus"></i>
                                         </a>
 

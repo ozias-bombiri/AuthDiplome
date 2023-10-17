@@ -14,8 +14,11 @@ use App\Repositories\NiveauEtudeRepository;
 use App\Repositories\ParcoursRepository;
 use App\Repositories\ResultatAcademiqueRepository;
 use App\Repositories\SignataireRepository;
+use App\Repositories\TimbreRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use QrCode;
+use PDF;
 
 class AttestationProvisoireController extends Controller
 {
@@ -27,6 +30,7 @@ class AttestationProvisoireController extends Controller
     protected $etudiantRepository;
     protected $anneeRepository;
     protected $resultatRepository ;
+    protected $timbreRepository;
 
     public function __construct(
         AttestationProvisoireRepository $attestationRepo,
@@ -36,7 +40,8 @@ class AttestationProvisoireController extends Controller
         InstitutionRepository $institutionRepo,
         ImpetrantRepository $etudtiantRepo,
         AnneeAcademiqueRepository $anneeRepo,
-        ResultatAcademiqueRepository $resultatRepo
+        ResultatAcademiqueRepository $resultatRepo,
+        TimbreRepository $timbreRepo
          )
     {
         $this->attestationRepository = $attestationRepo;
@@ -47,6 +52,7 @@ class AttestationProvisoireController extends Controller
         $this->etudiantRepository = $etudtiantRepo;
         $this->anneeRepository = $anneeRepo;
         $this->resultatRepository = $resultatRepo;
+        $this->timbreRepository = $timbreRepo;
     }
     /** 
     * Afficher les parcours de son etablissement
@@ -104,13 +110,14 @@ class AttestationProvisoireController extends Controller
     /**
      * Ajouter une attestation provisoire à partir du parcours de formation choisi
      **/
-    public function addAttestation($etudiant_id)
+    public function addAttestation($institution_id, $etudiant_id)
     {
-        $signataires = $this->signataireRepository->all();
+        $institution = $this->institutionRepository->find($institution_id);
+        $signataires = $institution->signataires;
         $annees = $this->anneeRepository->all();
-        $parcours = $this->parcoursRepository->all();
+        $parcours = $institution->parcours;
         $etudiant = $this->etudiantRepository->find($etudiant_id);
-        return view('metiers.etablissements.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant'));
+        return view('metiers.etablissements.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant', 'institution'));
     }
 
     /**
@@ -132,20 +139,77 @@ class AttestationProvisoireController extends Controller
         $input_resultat['parcours_id'] = $inputs['parcours_id'];
         $input_resultat['anneeAcademique_id'] = $inputs['annee_id'];
         $resultat = $this->resultatRepository->create($input_resultat);
-
+        $parcours = $this->parcoursRepository->find($inputs['parcours_id']);
         $input_attestation = [];
         $input_attestation['reference'] = "AP".time(); 
-        $input_attestation['intitule'] = "Attestation Provisoire";
+        $input_attestation['intitule'] = "ATTESTATION PROVISOIRE DE ".strtoupper($parcours->niveau_etude->intitule);
         $input_attestation['dateSignature'] = date('Y-m-d');
         $input_attestation['dateCreation'] = date('Y-m-d');
         $input_attestation['statutGeneration'] = false;
         $input_attestation['resultatAcademique_id'] = $resultat->id;
         $input_attestation['signataire_id'] = $inputs['signataire'];
+        $input_attestation['lieuCreation'] = $inputs['lieuCreation'];
         $attestation = $this->attestationRepository->create($input_attestation);
 
         return redirect(route('metiers.etablissements.attestation-list', $institution->id ));
     }
-    
+
+    /**
+     * Afficher les informations détaillées d'une attestation provisoire
+     **/
+    public function pdfAttestation($id)
+    {
+        $attestation = $this->attestationRepository->find($id);
+
+        $institution = $attestation->signataire->institution;
+        $timbre = $institution->timbre ;
+        $impetrant = $attestation->resultat_academique->impetrant;
+        $parcours = $attestation->resultat_academique->parcours;
+        $resultat = $attestation->resultat_academique ;
+        $signataire = $attestation->signataire;
+        $path = 'img/logo_unz.jpg';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
+
+        $path = 'img/qrcode/' ;
+
+
+        if(!\File::exists(public_path($path))) {
+                \File::makeDirectory(public_path($path));
+        }
+
+        $file_path = $path . time() . '.png';
+        QrCode::generate('Welcome to bozi app', public_path($file_path) );
+        $type = pathinfo($file_path, PATHINFO_EXTENSION);
+        $image = file_get_contents($file_path);
+
+        $qrcode = 'data:image/' . $type . ';base64,' . base64_encode($image);
+       
+        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+        
+        // set the PDF rendering options
+        $pdf->setPaper('A4', 'portrait');
+        $pdf->setOptions([
+            'isRemoteEnabled' => true,
+        ]);
+        
+        return $pdf->stream(); 
+        
+        
+        //return view('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+    }
+
+    /**
+     * Afficher les informations détaillées d'une attestation provisoire
+     **/
+    public function viewAttestation($id)
+    {
+        $attestation = $this->attestationRepository->find($id);
+        
+        return view('metiers.etablissements.view_attestation', compact('attestation'));
+    }
 
     /**
      * Lister les étudiants inscrits  dans l'établissement
@@ -156,7 +220,7 @@ class AttestationProvisoireController extends Controller
         
         $etudiants = $this->etudiantRepository->findByInstitution($institution->id);
         //$etudiants = $this->etudiantRepository->all();
-        return view('metiers.etablissements.list_etudiants', compact('etudiants'));
+        return view('metiers.etablissements.list_etudiants', compact('etudiants', 'institution'));
     }
 
     /**
@@ -175,7 +239,7 @@ class AttestationProvisoireController extends Controller
     {
         $input = $request->all();
         $institution = $this->institutionRepository->find($input['institution_id']);
-        
+        $input['nom'] = strtoupper($input['nom']);
         $etudiant = $this->etudiantRepository->create($input);
 
         $inscription = new InstitutionImpetrant();
@@ -222,6 +286,7 @@ class AttestationProvisoireController extends Controller
     {
         $institution = Auth ::user()->institution;
         $input = $request->all();
+        $input['nom'] = strtoupper($input['nom']);
         $input['institution_id'] = $institution->id ;
         $input['typeDocument'] = "Attestation Provisoire" ;
         $signataire = $this->signataireRepository->create($input);

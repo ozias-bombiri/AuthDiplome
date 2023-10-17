@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('intitule', 100);
             $table->string('reference', 50);
             $table->date('dateCreation');
+            $table->string('lieuCreation');
             $table->date('dateSignature');
             $table->boolean('statutGeneration');
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
