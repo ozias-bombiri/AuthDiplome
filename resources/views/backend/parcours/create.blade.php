@@ -5,7 +5,7 @@
     <div class="col-md-8">
 
         <div class="card">
-            <div class="card-header">{{ __('Ajouter un établissement') }}</div>
+            <div class="card-header">{{ __('Ajouter un parcours de formation') }}</div>
 
             <div class="card-body">
 
@@ -22,9 +22,9 @@
                     <form method="post" action="{{ route('parcours.store') }}">
                         @csrf
                         <div class="form-group row py-2">
-                            <label for="etablissement" class="col-sm-2 col-form-label">Etablissement</label>
+                            <label for="etablissement" class="col-sm-2 col-form-label">Institution</label>
                             <div class="col">
-                                <select  class="form-control" id="etablissement" name="etablissement_id" required>
+                                <select  class="form-control" id="institution" name="institution_id" required>
                                     @foreach( $etablissements as $etablissement)
                                         <option value="{{ $etablissement->id}}">{{ $etablissement->sigle }}</option>                                    
                                     @endforeach

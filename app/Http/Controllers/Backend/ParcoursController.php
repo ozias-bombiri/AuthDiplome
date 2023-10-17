@@ -27,7 +27,8 @@ class ParcoursController extends Controller
      */
     public function index()
     {
-        return view('backend.parcours.index');
+        $parcours = $this->modelRepository->all();
+        return view('backend.parcours.index', compact('parcours'));
     }
 
     /**

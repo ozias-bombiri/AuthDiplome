@@ -43,6 +43,13 @@ class AttestationProvisoireRepository extends BaseRepository
     }
 
     public function findByInstitution($institution_id){
+        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultat_academique_id', '=', 'resultat_academiques.id')
+                		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
+                        ->where('parcours.institution_id', '=', $institution_id)
+                        ->select('attestation_provisoires.*')
+                        ->get();
+
+        return $attestations;
         
     }
 }

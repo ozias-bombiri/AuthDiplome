@@ -45,7 +45,7 @@ class ResultatAcademique extends Model
 
 	protected $casts = [
 		'soutenance' => 'bool',
-		'dateSignaure' => 'datetime',
+		'dateSignature' => 'datetime',
 		'moyenne' => 'float',
 		'dateSoutenance' => 'datetime',
 		'impetrant_id' => 'int',
@@ -57,7 +57,7 @@ class ResultatAcademique extends Model
 	protected $fillable = [
 		'reference',
 		'soutenance',
-		'dateSignaure',
+		'dateSignature',
 		'moyenne',
 		'cote',
 		'session',
@@ -85,7 +85,7 @@ class ResultatAcademique extends Model
 
 	public function parcours()
 	{
-		return $this->belongsTo(Parcour::class, 'parcours_id');
+		return $this->belongsTo(Parcours::class, 'parcours_id');
 	}
 
 	public function attestation_definitive():HasOne

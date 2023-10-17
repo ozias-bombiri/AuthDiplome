@@ -5,7 +5,7 @@
     <div class="col-md-10">
         <div class="card mt-3">
             <div class="card-header">
-                <h4>{{ __('List des signataires') }}</h4>
+                <h4>{{ __('Attestations provisoires') }}</h4>
             </div>
 
             <div class="card-body">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-3 offset-1">
-                        <a class="btn btn-success" href="{{ route('metiers.etablissements.attestation-add') }}"> Ajouter</a> <br />
+                        <a class="btn btn-success" href="{{ route('metiers.etablissements.attestation-add', auth()->user()->institution_id) }}"> Ajouter</a> <br />
                     </div>
                 </div>
                 <div class="row my-3">
@@ -32,10 +32,11 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Nom</th>
-                                    <th>Prénom</th>
-                                    <th>Fonction</th> 
-                                    <th>Tyde de document signé</th>                                    
+                                    <th>Référence</th>
+                                    <th>Intitule</th>
+                                    <th>Identifiant de l'impétrant</th>
+                                    <th>Nom Prénom </th> 
+                                    <th>Parcours (Niveau d'étude)</th> 
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -43,27 +44,18 @@
                                 @foreach ($attestations as $attestation)
                                 <tr>
                                     <td>{{ $loop->index +1 }}</td>
-                                    <td>{{ $attestation->nom }}</td>
-                                    <td>{{ $attestation->prenom }}</td>
-                                    <td>{{ $attestation->fonction }}</td>
-                                    <td>{{ $attestation->typeDocument }}</td>
+                                    <td>{{ $attestation->reference }}</td>
+                                    <td>{{ $attestation->intitule }}</td>
+                                    <td>{{ $attestation->resultat_academique->impetrant->identifiant }} </td>
+                                    <td>{{ $attestation->resultat_academique->impetrant->nom }} {{ $attestation->resultat_academique->impetrant->prenom }}</td>
+                                    <td>{{ $attestation->resultat_academique->parcours->intitule }} ({{ $attestation->resultat_academique->parcours->niveau_etude->intitule }})</td>
                                     <td>
-                                        <form action="{{ route('attestations.destroy',$attestation->id) }}" method="POST">
-                                            <a class="btn btn-info" title="Détails" href="{{ route('attestations.show',$attestation->id) }}">
-                                                <i class="bi bi-eye-fill"></i>
-                                            </a>
-                                            <a class="btn btn-primary" title="Modifier" href="{{ route('attestations.edit',$attestation->id) }}">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
-
-                                            @csrf
-                                            @method('DELETE')
-
-                                            <button type="submit" class="btn btn-danger" title="Supprimer">
-                                                <i class="bi bi-trash"></i>
-                                            </button>
-
-                                        </form>
+                                        <a class="btn btn-info" title="Détails" href="#">
+                                            <i class="bi bi-eye-fill"></i>
+                                        </a>
+                                        <a class="btn btn-primary" title="Modifier" href="#">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>                                           
                                     </td>
                                 </tr>
                                 @endforeach
