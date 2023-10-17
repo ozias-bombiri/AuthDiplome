@@ -44,4 +44,14 @@ class ImpetrantRepository extends BaseRepository
     {
         return Impetrant::class;
     }
+
+    public function findByInstitution($institution_id){
+        $impetrants = Impetrant::join('institutions_impetrants', 'institutions_impetrants.impetrant_id', '=', 'impetrants.id')
+                		->where('institutions_impetrants.institution_id', '=', $institution_id)
+                        ->select('impetrants.*')
+                        ->get();
+
+        return $impetrants;
+        
+    }
 }

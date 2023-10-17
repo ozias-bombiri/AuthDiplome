@@ -7,13 +7,13 @@
             
             <ul id="gapSubmenu">
                 <li>
-                    <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.etablissements.attestations-list')}}">Attestations provisoire</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.etablissements.attestation-list', auth()->user()->institution_id)}}">Attestations provisoire</a>
                 </li>
                 <li>
-                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.parcours-list')}}">Parcours</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.parcours-list', auth()->user()->institution_id)}}">Parcours</a>
                 </li>
                 <li>
-                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.etudiant-list')}}">Etudiants</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.etudiant-list', auth()->user()->institution_id)}}">Etudiants</a>
                 </li>
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.signataire-list', auth()->user()->institution_id)}}">Signataires</a>

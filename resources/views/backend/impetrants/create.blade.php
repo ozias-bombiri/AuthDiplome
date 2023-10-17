@@ -19,7 +19,7 @@
                         </ul>
                     </div>
                     @endif
-                    <form method="post" action="{{ route('etudiants.store') }}">
+                    <form method="post" action="{{ route('impetrants.store') }}">
                         @csrf
                         <div class="form-group row py-2">
                             <label for="identifiant" class="col-sm-2 col-form-label">Identifiant</label>
@@ -29,7 +29,7 @@
                         </div>
                        
                         <div class="form-group row py-2">
-                            <label for="typeIdentifiant" class="col-sm-2 col-form-label">Type de l\'identifiant </label>
+                            <label for="typeIdentifiant" class="col-sm-2 col-form-label">Type de l'identifiant </label>
                             <div class="col">
                                 <select  class="form-control" id="typeIdentifiant" name="typeIdentifiant" required>
                                     <option value="INE">INE</option>
@@ -91,7 +91,7 @@
                                 <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                             </div>
                             <div class="col">
-                                <a href="{{ route('etudiants.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                                <a href="{{ route('impetrants.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                             </div>
 
                         </div>

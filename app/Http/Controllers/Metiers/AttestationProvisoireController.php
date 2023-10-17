@@ -3,10 +3,16 @@
 namespace App\Http\Controllers\Metiers;
 
 use App\Http\Controllers\Controller;
+use App\Models\AttestationProvisoire;
+use App\Models\InstitutionImpetrant;
+use App\Models\ResultatAcademique;
+use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\AttestationProvisoireRepository;
+use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
 use App\Repositories\ParcoursRepository;
+use App\Repositories\ResultatAcademiqueRepository;
 use App\Repositories\SignataireRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,13 +24,19 @@ class AttestationProvisoireController extends Controller
     protected $niveauRepository;
     protected $signataireRepository;
     protected $institutionRepository ;
+    protected $etudiantRepository;
+    protected $anneeRepository;
+    protected $resultatRepository ;
 
     public function __construct(
         AttestationProvisoireRepository $attestationRepo,
         ParcoursRepository $parcoursRepo,
         NiveauEtudeRepository $niveauRepo,
         SignataireRepository $signataireRepo,
-        InstitutionRepository $institutionRepo
+        InstitutionRepository $institutionRepo,
+        ImpetrantRepository $etudtiantRepo,
+        AnneeAcademiqueRepository $anneeRepo,
+        ResultatAcademiqueRepository $resultatRepo
          )
     {
         $this->attestationRepository = $attestationRepo;
@@ -32,13 +44,16 @@ class AttestationProvisoireController extends Controller
         $this->niveauRepository = $niveauRepo;
         $this->signataireRepository = $signataireRepo;
         $this->institutionRepository = $institutionRepo;
+        $this->etudiantRepository = $etudtiantRepo;
+        $this->anneeRepository = $anneeRepo;
+        $this->resultatRepository = $resultatRepo;
     }
     /** 
     * Afficher les parcours de son etablissement
     **/
-    public function listParcours()
+    public function listParcours($institution_id)
     {
-        $institution = Auth ::user()->institution;
+        $institution = $this->institutionRepository->find($institution_id);
         $parcours = null;
         if($institution && $institution->type !='IESR'){
             $parcours = $institution->parcours;
@@ -54,8 +69,9 @@ class AttestationProvisoireController extends Controller
     **/
     public function addParcours()
     {
+        $institution = Auth::user()->institution;
         $niveaux = $this->niveauRepository->all();
-        return view('metiers.etablissements.add_parcours', compact('niveaux'));
+        return view('metiers.etablissements.add_parcours', compact('niveaux', 'institution'));
     }
 
     /** 
@@ -63,8 +79,9 @@ class AttestationProvisoireController extends Controller
     **/
     public function storeParcours(Request $request)
     {
-        
-        return redirect(route('metiers.etablissements.parours-list'));
+        $input = $request->all();
+        $parcours = $this->parcoursRepository->create($input);
+        return redirect(route('metiers.etablissements.parcours-list'));
     }
 
     /**
@@ -78,32 +95,68 @@ class AttestationProvisoireController extends Controller
         if($institution && $institution->type !='IESR'){
             $attestations = $this->attestationRepository->findByInstitution($institution_id);
         }
+        else {
+            $attestations = $this->attestationRepository->all();
+        }
         return view('metiers.etablissements.list_attestations', compact('attestations'));
     }
 
     /**
      * Ajouter une attestation provisoire à partir du parcours de formation choisi
      **/
-    public function addAttestation($parcours_id)
+    public function addAttestation($etudiant_id)
     {
-        return view('metiers.etablissements.add_attestation');
+        $signataires = $this->signataireRepository->all();
+        $annees = $this->anneeRepository->all();
+        $parcours = $this->parcoursRepository->all();
+        $etudiant = $this->etudiantRepository->find($etudiant_id);
+        return view('metiers.etablissements.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant'));
     }
 
     /**
      * enregistrer les données du formulaire d'ajout d'une attestation provisoire à partir du parcours de formation choisi
      **/
-    public function storeAttestation($parcours_id)
+    public function storeAttestation(Request $request)
     {
-        return redirect(route('metiers.etablissements.attestation-list'));
-    }
+        $institution = Auth ::user()->institution;
+        $inputs = $request->all();
+        $input_resultat = [];
+        $input_resultat['reference'] = "RES".time();
+        $input_resultat['soutenance'] = false;
+        $input_resultat['dateSignature'] = date('Y-m-d');
+        $input_resultat['cote'] = $inputs['cote'];
+        $input_resultat['moyenne'] = $inputs['moyenne'];
+        $input_resultat['session'] = $inputs['sessionr'];
+        $input_resultat['dateSoutenance'] = $inputs['dateSoutenance'];
+        $input_resultat['impetrant_id'] = $inputs['impetrant'];
+        $input_resultat['parcours_id'] = $inputs['parcours_id'];
+        $input_resultat['anneeAcademique_id'] = $inputs['annee_id'];
+        $resultat = $this->resultatRepository->create($input_resultat);
 
+        $input_attestation = [];
+        $input_attestation['reference'] = "AP".time(); 
+        $input_attestation['intitule'] = "Attestation Provisoire";
+        $input_attestation['dateSignature'] = date('Y-m-d');
+        $input_attestation['dateCreation'] = date('Y-m-d');
+        $input_attestation['statutGeneration'] = false;
+        $input_attestation['resultatAcademique_id'] = $resultat->id;
+        $input_attestation['signataire_id'] = $inputs['signataire'];
+        $attestation = $this->attestationRepository->create($input_attestation);
+
+        return redirect(route('metiers.etablissements.attestation-list', $institution->id ));
+    }
+    
 
     /**
      * Lister les étudiants inscrits  dans l'établissement
      **/
-    public function listEtudiants()
+    public function listEtudiants($institution_id)
     {
-        return view('metiers.etablissements.list_etudiants');
+        $institution = $this->institutionRepository->find($institution_id);
+        
+        $etudiants = $this->etudiantRepository->findByInstitution($institution->id);
+        //$etudiants = $this->etudiantRepository->all();
+        return view('metiers.etablissements.list_etudiants', compact('etudiants'));
     }
 
     /**
@@ -111,15 +164,28 @@ class AttestationProvisoireController extends Controller
      **/
     public function addEtudiant()
     {
-        return view('metiers.etablissements.add_etudiant');
+        $institution = Auth ::user()->institution;
+        return view('metiers.etablissements.add_etudiant', compact('institution'));
     }
 
     /**
      * enregistrer les données du formulaire d'ajout d'étudiant
      **/
-    public function storeEtudiant()
+    public function storeEtudiant(Request $request)
     {
-        return redirect(route('metiers.etablissements.etudiant-list'));
+        $input = $request->all();
+        $institution = $this->institutionRepository->find($input['institution_id']);
+        
+        $etudiant = $this->etudiantRepository->create($input);
+
+        $inscription = new InstitutionImpetrant();
+        $inscription->institution_id = $institution->id;
+        $inscription->impetrant_id = $etudiant->id;
+        $inscription->referenceInscription = $input['reference'];
+        $inscription->annee = $input['annee'];
+        $inscription->save();
+
+        return redirect(route('metiers.etablissements.etudiant-list', $institution->id));
     }
 
 

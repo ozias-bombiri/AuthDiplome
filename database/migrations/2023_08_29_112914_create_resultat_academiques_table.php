@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('reference', 50);
             $table->boolean('soutenance');
-            $table->date('dateSignaure');
+            $table->date('dateSignature');
             $table->double('moyenne');
             $table->string('cote', 20);
             $table->string('session', 100);
