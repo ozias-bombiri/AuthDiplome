@@ -4,15 +4,25 @@ namespace App\Http\Controllers\Backend;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreVisaRequest;
+use App\Http\Requests\UpdateVisaRequest;
+use App\Repositories\VisaRepository;
 
 class VisaController extends Controller
 {
+    protected $modelRepository ;
+
+    public function __construct(VisaRepository $visaRepo)
+    {
+        $this->modelRepository = $visaRepo;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('backend.visas.index');
+        $visas = $this->modelRepository->all();
+        return view('backend.visas.index', compact('visas'));
     }
 
     /**
@@ -26,9 +36,12 @@ class VisaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreVisaRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $input = $request->all();
+        $visa = $this->modelRepository->create($input);
+        return redirect(route('visas.index'));
     }
 
     /**
@@ -36,7 +49,8 @@ class VisaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $visa = $this->modelRepository->find($id);
+        return view('backend.visas.show', compact('visa'));
     }
 
     /**
@@ -44,15 +58,19 @@ class VisaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $visa = $this->modelRepository->find($id);
+        return view('backend.visas.edit', compact('visa'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateVisaRequest $request, string $id)
     {
-        //
+        $validated = $request->validated();
+        $input = $request->all();
+        $visa = $this->modelRepository->update($input, $id);
+        return redirect(route('visas.index'));
     }
 
     /**
@@ -60,6 +78,11 @@ class VisaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       
+        $visa = $this->modelRepository->find($id);
+        if(!empty($visa)) {
+            $this->modelRepository->delete($id);
+        }
+        return redirect(route('visas.index'));
     }
 }

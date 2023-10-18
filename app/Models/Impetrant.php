@@ -6,7 +6,9 @@
 
 namespace App\Models;
 
+
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
@@ -34,7 +36,8 @@ class Impetrant extends Model
     protected $table = 'impetrants';
 
 	protected $casts = [
-		'dateNaissance' => 'datetime'
+		'dateNaissance' => 'datetime',
+		'nevers' => 'boolean'
 	];
 
 	protected $fillable = [
@@ -44,9 +47,18 @@ class Impetrant extends Model
 		'prenom',
 		'sexe',
 		'dateNaissance',
+		'nevers',
 		'lieuNaissance',
 		'paysNaissance'
 	];
+
+	protected function nom():Attribute
+	{
+		return Attribute::make(
+            get: fn (string $value) => strtoupper($value),
+			set: fn (string $value) => strtoupper($value),
+        );
+	}
 
 	public function resultat_academiques()
 	{
@@ -57,4 +69,6 @@ class Impetrant extends Model
 	{
 		return $this->belongsToMany(Institution::class, 'institutions_impetrants', 'impetrant_id', 'institution_id');
 	}
+
+
 }

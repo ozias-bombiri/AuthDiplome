@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $id
  * @property string $numero
  * @property string $intitule
- * @property Carbon $datesignaure
+ * @property Carbon $dateSignature
  * @property string $texte
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
@@ -30,13 +30,13 @@ class Visa extends Model
     protected $table = 'visas';
 
 	protected $casts = [
-		'datesignaure' => 'datetime'
+		'dateSignature' => 'datetime'
 	];
 
 	protected $fillable = [
 		'numero',
 		'intitule',
-		'datesignaure',
+		'dateSignature',
 		'texte'
 	];
 

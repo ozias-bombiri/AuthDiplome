@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('visas', function (Blueprint $table) {
             $table->id();
-            $table->string('numero', 20);
+            $table->string('numero', 100);
             $table->string('intitule', 100);
-            $table->date('datesignaure');
+            $table->date('dateSignature');
             $table->text('texte');
             $table->timestamps();
         });

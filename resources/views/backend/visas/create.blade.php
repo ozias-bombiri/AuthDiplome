@@ -5,7 +5,7 @@
     <div class="col-md-12">
 
         <div class="card">
-            <div class="card-header">{{ __('Ajouter un timbre établissement') }}</div>
+            <div class="card-header">{{ __('Ajouter un visa') }}</div>
 
             <div class="card-body">
 
@@ -19,48 +19,33 @@
                         </ul>
                     </div>
                     @endif
-                    <form method="post" action="{{ route('timbre_etablissements.store') }}">
+                    <form method="post" action="{{ route('visas.store') }}">
                         @csrf
+
                         <div class="form-group row py-2">
-                            <label for="etablissement" class="col-sm-2 col-form-label">Etablissement</label>
+                            <label for="numero" class="col-sm-2 col-form-label">Numéro</label>
                             <div class="col">
-                                <select  class="form-control" id="etablissement" name="etablissement_id" required>
-                                    @foreach( $etablissements as $etablissement)
-                                        <option value="{{ $etablissement->id}}">{{ $etablissement->sigle }}</option>                                    
-                                    @endforeach
-                                </select>
+                                <input type="text" class="form-control" id="numero" name="numero" placeholder=" ..." required>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="intitule" name="intitule" placeholder="..." required>
                             </div>
                         </div>
 
                         <div class="form-group row py-2">
-                            <label for="type" class="col-sm-2 col-form-label">Type</label>
+                            <label for="dateSignature" class="col-sm-2 col-form-label">Date de signature</label>
                             <div class="col">
-                                <select class="form-control" id="type" name="type">
-                                    <option value="" disabled selected>choisir ...</option>
-                                    <option value="iesr">iesr</option>
-                                    <option value="etablissement">etablissement</option>
-                                </select>                            
-                            </div>
-                        </div>
-
-
-                        <div class="form-group row py-2">
-                            <label for="ministere" class="col-sm-2 col-form-label">Ministere</label>
-                            <div class="col">
-                                <input type="text" class="form-control" id="ministere" name="ministere" placeholder=" ..." required>
-                            </div>
-                        </div>
-                        <div class="form-group row py-2">
-                            <label for="denomMinistere" class="col-sm-2 col-form-label">Denomination du Ministere</label>
-                            <div class="col">
-                                <input type="text" class="form-control form-control" id="denomMinistere" name="denomMinistere" placeholder="..." required>
+                                <input type="date" class="form-control form-control" id="dateSignature" name="dateSignature" placeholder="..." required>
                             </div>
                         </div>
                         
                         <div class="form-group row py-2">
-                            <label for="description" class="col-sm-2 col-form-label">Description</label>
+                            <label for="texte" class="col-sm-2 col-form-label">Texte</label>
                             <div class="col">
-                                <textarea class="form-control" id="description" name="description" rows="4" cols="50" placeholder="..." required></textarea>
+                                <textarea class="form-control" id="texte" name="texte" rows="4" cols="50" placeholder="..." required></textarea>
                             </div>
                         </div>
                        
@@ -70,7 +55,7 @@
                                 <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                             </div>
                             <div class="col">
-                                <a href="{{ route('timbre_etablissements.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                                <a href="{{ route('visas.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                             </div>
 
                         </div>

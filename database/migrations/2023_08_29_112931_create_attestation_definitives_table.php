@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('intitule', 100);
             $table->date('dateSignaure');
-            $table->string('reference', 50);
+            $table->string('reference', 50)->unique();
             $table->date('dateCreation');
             $table->string('lieuCreation');
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');

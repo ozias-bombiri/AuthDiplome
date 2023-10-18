@@ -17,8 +17,9 @@ use App\Repositories\SignataireRepository;
 use App\Repositories\TimbreRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use QrCode;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
+use File;
 
 class AttestationProvisoireController extends Controller
 {
@@ -176,24 +177,24 @@ class AttestationProvisoireController extends Controller
         $path = 'img/qrcode/' ;
 
 
-        if(!\File::exists(public_path($path))) {
-                \File::makeDirectory(public_path($path));
+        if(!File::exists(public_path($path))) {
+                File::makeDirectory(public_path($path));
         }
 
-        $file_path = $path . time() . '.png';
-        QrCode::generate('Welcome to bozi app', public_path($file_path) );
+        $file_path = $path . $attestation->reference. '.png';
+        $qr_infos = $attestation->intitule."\nRef :".$attestation->reference ;
+        QrCode::generate($qr_infos, public_path($file_path) );
         $type = pathinfo($file_path, PATHINFO_EXTENSION);
         $image = file_get_contents($file_path);
 
         $qrcode = 'data:image/' . $type . ';base64,' . base64_encode($image);
        
-        $pdf = Pdf::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+                    ->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
         $pdf->setPaper('A4', 'portrait');
-        $pdf->setOptions([
-            'isRemoteEnabled' => true,
-        ]);
+        
         
         return $pdf->stream(); 
         

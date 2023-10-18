@@ -1,16 +1,20 @@
 @extends('includes.master')
 
-@section('contenu')
+@push('custom-styles')
+<link href="{{ URL::asset('/assets/css/datatables.min.css')}}" rel="stylesheet">
+@endpush
 
+@section('contenu')
 <div class="row justify-content-center">
-    <div class="col-md-12">
+    <div class="col-md-10">
         <div class="card mt-3">
             <div class="card-header">
                 <h4>{{ __('Utilisateurs') }}</h4>
             </div>
 
-            <div >
+            <div class="card-body">
                 <div class="row my-3">
+
                     @if ($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -23,13 +27,13 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-8 offset-1">
-                        <a class="btn btn-success" href="{{ route('users.create') }}"> Créer un utilisateur </a> 
-                        <a class="btn btn-success" href="{{ route('roles.index') }}"> Voir les roles</a> 
+                        <a class="btn btn-success" href="{{ route('users.create') }}"> Créer un utilisateur </a>
+                        <a class="btn btn-success" href="{{ route('roles.index') }}"> Voir les roles</a>
                     </div>
                 </div>
                 <div class="row my-3">
-                    <div class="col-12 ">
-                        <table id="data" class="table-bordered ">
+                    <div class="col-10 offset-1">
+                        <table id="data" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -37,7 +41,7 @@
                                     <th>Email</th>
                                     <th>Roles</th>
                                     <th>Statut</th>
-                                    <th width="120px">Action</th>
+                                    <th width="200px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,12 +51,12 @@
                                     <td>{{ $utilisateur->name }}</td>
                                     <td>{{ $utilisateur->email }}</td>
                                     <td>
-                                        
+
                                         @if(!empty($utilisateur->getRoleNames()))
-                                            @foreach($utilisateur->getRoleNames() as $v)
-                                            
-                                            <label class="badge badge-success">{{ $v }}</label>
-                                            @endforeach
+                                        @foreach($utilisateur->getRoleNames() as $v)
+
+                                        <label class="bg-success badge">{{ $v }}</label>
+                                        @endforeach
                                         @endif
                                     </td>
                                     <td>{{ $utilisateur->statut }}</td>
@@ -97,5 +101,4 @@
         $('#data').DataTable();
     });
 </script>
-
 @endpush

@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('diplomes', function (Blueprint $table) {
             $table->id();
             $table->string('intitule', 100);
-            $table->string('reference', 50);
-            $table->string('numeroEnregistrement', 50);
+            $table->string('reference', 50)->unique();
+            $table->string('numeroEnregistrement', 50)->unique();
             $table->date('dateSignature');
             $table->date('dateCreation');
             $table->string('lieuCreation');

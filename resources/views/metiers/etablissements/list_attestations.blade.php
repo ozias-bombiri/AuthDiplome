@@ -53,8 +53,8 @@
                                         <a class="btn btn-info" title="Détails" href="{{ route('metiers.etablissements.attestation-view', $attestation->id) }}">
                                             <i class="bi bi-eye-fill"></i>
                                         </a>
-                                        <a class="btn btn-primary" title="Modifier" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
-                                            <i class="bi bi-pencil"></i>
+                                        <a class="btn btn-primary" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
+                                            <i class="bi bi-file-pdf"></i>
                                         </a>                                           
                                     </td>
                                 </tr>

@@ -27,14 +27,14 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                        <table id="data" class="table-bordered">
+                        <table id="data" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>No</th>
                                     <th>Intitule</th>
                                     <th>Type</th>
                                     <th>Institution</th>
-                                    <th width="280px">Action</th>
+                                    <th width="200px">Action</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -49,7 +49,7 @@
                                     <td>{{ $loop->index +1 }}</td>
                                     <td>{{ $etudiant->identifiant }}</td>
                                     <td>{{ $etudiant->nom }} {{ $etudiant->prenom }}</td>
-                                    <td>{{ $etudiant->dateNaissance }}</td>
+                                    <td>{{ \Carbon\Carbon::parse($etudiant->dateNaissance)->translatedFormat('d F Y') }}</td>
                                     
                                     <td>
                                         <a class="btn btn-info" title="Voir attestations provisoire" href="{{ route('impetrants.show',$etudiant->id) }}">

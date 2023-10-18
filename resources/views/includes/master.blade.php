@@ -9,10 +9,8 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{URL::asset('/assets/favicon.ico')}}" />
-    <!-- Core theme CSS (includes Bootstrap)-->
-    <!-- <link href="{{URL::asset('/assets/css/styles.css')}}" rel="stylesheet" /> -->
-    <link href="{{URL::asset('/assets/css/bootstrap.min.css')}}" rel="stylesheet" /> 
-    <!-- Scripts --> 
+    @yield('styles')
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
 </head>
@@ -31,7 +29,6 @@
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
                             <li class="nav-item active"><a class="nav-link" href="/">Accueil</a></li>
-                            <li class="nav-item"><a class="nav-link" href="#!">Link</a></li>
                             
                             @guest
                             <li class="nav-item">
@@ -41,7 +38,7 @@
                             
                             @auth
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">username</a>
+                                <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ auth()->user()->name}}</a>
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
 
                                     <a class="dropdown-item" href="{{ route('logout') }}"
