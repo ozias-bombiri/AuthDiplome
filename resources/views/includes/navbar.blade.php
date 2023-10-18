@@ -1,10 +1,10 @@
 <div class="border-end bg-white px-3" id="sidebar-wrapper">
     <div class="sidebar-heading border-bottom bg-light">AuthDiplome</div>
     <ul class="mb-5">
-        @hasrole(['direction', 'admin'])
+        @hasrole(['direction'])
         <li>
             <a  href="#gapSubmenu" >Gestion attestion provisoire</a>
-            
+            <!--@if(auth()->user()->institution_id)-->
             <ul id="gapSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.etablissements.attestation-list', auth()->user()->institution_id)}}">Attestations provisoire</a>
@@ -19,10 +19,11 @@
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('metiers.etablissements.signataire-list', auth()->user()->institution_id)}}">Signataires</a>
                 </li>
             </ul>
+            <!--@endif-->
         </li>
         @endhasrole
 
-        @hasrole(['daoi', 'admin'])
+        @hasrole(['daoi'])
         <li>
             <a href="#gadSubmenu" >Gestion attestation définitive</a>
             <ul id="gadSubmenu">
@@ -54,7 +55,7 @@
         </li>
         @endhasrole
 
-        @hasrole(['authentification', 'admin'])
+        @hasrole(['authentification'])
         <li >
             <a href="#authSubmenu">Authentification</a>
             <ul id="authSubmenu">
@@ -65,7 +66,7 @@
         </li>
         @endhasrole
 
-        @hasrole(['daoi', 'admin'])
+        @hasrole(['admin'])
         <li >
             <a href="#adminSubmenu">Parametrage</a>
             <ul id="adminSubmenu">
