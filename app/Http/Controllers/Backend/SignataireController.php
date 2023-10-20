@@ -7,6 +7,7 @@ use App\Repositories\SignataireRepository;
 use App\Http\Requests\StoreSignataireRequest;
 use App\Http\Requests\UpdateSignataireRequest;
 use App\Repositories\InstitutionRepository;
+use Illuminate\Http\Request;
 
 class SignataireController extends Controller
 {
@@ -70,7 +71,7 @@ class SignataireController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Request $request, string $id)
     {
         $signataire = $this->modelRepository->find($id);
 
@@ -80,6 +81,20 @@ class SignataireController extends Controller
             return redirect(route('signataires.index'));
         }
         $institutions = $this->institutionRepository->all();
+        if ($request->ajax()) {
+            $data = [];
+            if(empty($signataire)){
+                $data = "Nothing";
+            }
+            else {
+                $data = [
+                    'institutions' => $institutions,
+                    'signataire' => $signataire                
+                ];
+            }
+            return response()->json(['result' =>$data]);
+        }
+        
         return view('backend.signataires.edit', compact('signataire', 'institutions'));
     }
 

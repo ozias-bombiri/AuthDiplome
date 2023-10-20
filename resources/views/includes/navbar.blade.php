@@ -3,9 +3,9 @@
     <ul class="mb-5">
         @hasrole(['direction'])
         <li>
-            <a  href="#gapSubmenu" >Gestion attestion provisoire</a>
+            <a  href="#gapSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="adminSubmenu" >Gestion attestion provisoire</a>
             <!--@if(auth()->user()->institution_id)-->
-            <ul id="gapSubmenu">
+            <ul class="collapse" id="gapSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.etablissements.attestation-list', auth()->user()->institution_id)}}">Attestations provisoire</a>
                 </li>
@@ -68,8 +68,8 @@
 
         @hasrole(['admin'])
         <li >
-            <a href="#adminSubmenu">Parametrage</a>
-            <ul id="adminSubmenu">
+            <a data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">Parametrage</a>
+            <ul class="collapse" id="adminSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('institutions.index') }}" active>Institutions</a>
                 </li>

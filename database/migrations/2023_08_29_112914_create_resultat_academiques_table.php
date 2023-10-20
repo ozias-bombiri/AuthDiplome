@@ -23,6 +23,7 @@ return new class extends Migration
             $table->foreignId('impetrant_id')->constrained('impetrants')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('parcours_id')->constrained('parcours')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('anneeAcademique_id')->constrained('annee_academiques')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique('impetrant_id', 'parcours_id');
             $table->timestamps();
         });
     }

@@ -111,13 +111,31 @@ class AttestationProvisoireController extends Controller
     /**
      * Ajouter une attestation provisoire à partir du parcours de formation choisi
      **/
-    public function addAttestation($institution_id, $etudiant_id)
+    public function addAttestation(Request $request, $institution_id, $etudiant_id)
     {
         $institution = $this->institutionRepository->find($institution_id);
         $signataires = $institution->signataires;
         $annees = $this->anneeRepository->all();
         $parcours = $institution->parcours;
         $etudiant = $this->etudiantRepository->find($etudiant_id);
+
+        if ($request->ajax()) {
+            $data = [];
+            if(empty($etudiant)){
+                $data = "Nothing";
+            }
+            else {
+            $data = [
+                'annees' => $this->anneeRepository->all(),
+                'parcours' => $institution->parcours,
+                'signataires' => $institution->signataires,
+                'etudiant' => $this->etudiantRepository->find($etudiant_id),
+                'institution' => $institution
+            ];
+        }
+            return response()->json(['result' =>$data]);
+        }
+        
         return view('metiers.etablissements.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant', 'institution'));
     }
 
@@ -205,9 +223,31 @@ class AttestationProvisoireController extends Controller
     /**
      * Afficher les informations détaillées d'une attestation provisoire
      **/
-    public function viewAttestation($id)
+    public function viewAttestation(Request $request, $id)
     {
         $attestation = $this->attestationRepository->find($id);
+        if ($request->ajax()) {
+            $data = [];
+            if(empty($attestation)){
+                $data = "Nothing";
+            }
+            else {
+            $data = [
+                'reference' => $attestation->reference,
+                'intitule' => $attestation->intitule,
+                'impetrant' => $attestation->resultat_academique->impetrant->identifiant."\n ".$attestation->resultat_academique->impetrant->nom. " ".$attestation->resultat_academique->impetrant->prenom,
+                'parcours' => $attestation->resultat_academique->parcours->intitule. " (".$attestation->resultat_academique->parcours->institution->sigle .")",
+                'niveau' => $attestation->resultat_academique->parcours->niveau_etude->intitule,
+                'institution' => $attestation->resultat_academique->parcours->institution->denomination,
+                'sessionr' => "Session : ".$attestation->resultat_academique->session. "\n Moyenne : ".$attestation->resultat_academique->moyenne."\n Côte :".$attestation->resultat_academique->cote,
+                'moyenne' => $attestation->resultat_academique->moyenne,
+                'cote' => $attestation->resultat_academique->cote,
+                'id' => $attestation->id,
+            ];
+        }
+            return response()->json(['result' =>$data]);
+        }
+        
         
         return view('metiers.etablissements.view_attestation', compact('attestation'));
     }

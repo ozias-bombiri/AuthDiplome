@@ -35,7 +35,9 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-Auth::routes(['register' => false]);
+// Auth::routes(['register' => false,
+//                 'password.request' =>false
+//                 ]);
 
   
 Route::group(['middleware' => ['auth']], function() {

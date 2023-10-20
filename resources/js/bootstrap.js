@@ -1,9 +1,14 @@
 
-// import * as Popper from '@popperjs/core'
-// window.Popper = Popper
+import loadash from 'lodash'
+window._ = loadash
 
-import 'bootstrap';
 
+import * as Popper from '@popperjs/core'
+window.Popper = Popper
+
+import * as bootstrap from 'bootstrap';
+
+window.bootstrap = bootstrap;
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
@@ -39,4 +44,3 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 import $ from 'jquery';
 window.$ = $;
 window.jQuery = $;
-window.JQuery = $;

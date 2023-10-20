@@ -262,7 +262,7 @@
         <div id="nine" class="zone">
 
             <div class="col-4">
-                Fait le {{ \Carbon\Carbon::parse($attestation->dateSignature)->translatedFormat('d F Y') }} à ............. <br /><br /><br />
+                Fait le {{ \Carbon\Carbon::parse($attestation->dateSignature)->translatedFormat('d F Y') }} à {{ $attestation->lieuCreation}} <br /><br /><br />
             </div>
         </div>
 

@@ -9,9 +9,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{URL::asset('/assets/favicon.ico')}}" />
-    @yield('styles')
+    @stack('styles')
 
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @vite(['resources/js/app.js'])
 
 </head>
 

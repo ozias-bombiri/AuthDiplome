@@ -57,10 +57,10 @@
                                     <td>{{ $par->specialite }}</td>
                                     
                                     <td>
-                                           <a class="btn btn-info" title="Voir attestations provisoire" href="{{ route('impetrants.show',$par->id) }}">
+                                           <a class="btn btn-info" title="Voir attestations provisoire" href="#">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
-                                            <a class="btn btn-primary" title="Ajouter une attestation" href="{{ route('metiers.etablissements.attestation-list',$par->id) }}">
+                                            <a class="btn btn-primary" title="Ajouter une attestation" href="#">
                                                 <i class="bi bi-plus"></i>
                                             </a>
 
