@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
     <!-- Favicon-->
     <link rel="icon" type="image/x-icon" href="{{URL::asset('/assets/favicon.ico')}}" />
-    @stack('styles')
+    @stack('custom-styles')
 
     @vite(['resources/js/app.js'])
 

@@ -83,6 +83,21 @@
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('parcours.index') }}">Parcours</a>
                 </li>
                 <li>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('impetrants.index') }}">Impétrants</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('resultat_academiques.index') }}">Résultats académiques</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('attestation_provisoires.index') }}">Attestations provisoires</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('attestation_definitives.index') }}">Attestations définitives</a>
+                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('diplomes.index') }}">Diplômes</a>
+                </li>
+                <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('signataires.index') }}">Signataires</a>
                 </li>
                 <li>
@@ -90,11 +105,11 @@
                 </li>
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('visas.index') }}">Visas</a>
-
                 </li>
-                <li><a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('users.index') }}">Utilisateurs</a>
-
-                </li>
+                <li>
+                    <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('users.index') }}">Utilisateurs</a>
+                </li>               
+                
             </ul>
         </li>
         @endhasrole

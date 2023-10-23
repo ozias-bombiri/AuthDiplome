@@ -1,5 +1,7 @@
 @extends('includes.master')
-
+@push('custom-styles')
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">  
+@endpush
 @section('contenu')
 <div class="row justify-content-center">
     <div class="col-md-10">
@@ -77,8 +79,10 @@
 @endsection
 @push('costum-scripts')
 
-<!-- Core theme JS-->
-<script type="module" src="{{URL::asset('/assets/datatables.js/datatable.min.js')}}"></script>
+
+<!-- SCRIPT FOR DATATABLE-->
+<script type="module" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script type="module" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
 <script type="module">
     $(document).ready(function() {

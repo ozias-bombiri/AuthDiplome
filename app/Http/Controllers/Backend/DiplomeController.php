@@ -22,7 +22,8 @@ class DiplomeController extends Controller
      */
     public function index()
     {
-        return view('backend.diplomes.index');
+        $diplomes = $this->modelRepository->all();
+        return view('backend.diplomes.index', compact('diplomes'));
     }
     
     /**

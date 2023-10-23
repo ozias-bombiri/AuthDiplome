@@ -21,7 +21,8 @@ class ImpetrantController extends Controller
      */
     public function index()
     {
-        return view('backend.impetrants.index');
+        $impetrants = $this->modelRepository->all();
+        return view('backend.impetrants.index', compact('impetrants'));
     }
     
     /**

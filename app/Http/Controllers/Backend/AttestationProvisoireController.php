@@ -23,7 +23,8 @@ class AttestationProvisoireController extends Controller
      */
     public function index()
     {
-        return view('backend.attestation_provisoires.index');
+        $attestations = $this->modelRepository->all();
+        return view('backend.attestation_provisoires.index', compact('attestations'));
     }
     
     /**

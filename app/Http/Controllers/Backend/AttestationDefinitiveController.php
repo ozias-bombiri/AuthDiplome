@@ -22,7 +22,8 @@ class AttestationDefinitiveController extends Controller
      */
     public function index()
     {
-        return view('backend.attestation_definitives.index');
+        $attestations = $this->modelRepository->all();
+        return view('backend.attestation_definitives.index', compact('attestations'));
     }
     
     /**

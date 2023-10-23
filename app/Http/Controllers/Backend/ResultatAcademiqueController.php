@@ -30,7 +30,8 @@ class ResultatAcademiqueController extends Controller
      */
     public function index()
     {
-        return view('backend.resultat_academiques.index');
+        $resultats = $this->modelRepository->all();
+        return view('backend.resultat_academiques.index', compact('resultats'));
     }
 
     /**
