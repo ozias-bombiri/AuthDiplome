@@ -1,10 +1,14 @@
 @extends('includes.master')
 
+@push('custom-styles')
+    <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">  
+@endpush
+
 @section('contenu')
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card mt-3">
-            <div class="card-header">
+            <div class="card-header bg-info">
                 <h4>{{ __('List des signataires') }}</h4>
             </div>
 
@@ -32,7 +36,7 @@
                     <div class="modal fade" id="exampleModal1" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header bg-info">
                                     <h5 class="modal-title" id="exampleModalLabel1">Informations étudiants</h5>
                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -163,10 +167,10 @@
                                     <td>{{ $signataire->typeDocument }}</td>
                                     <td>
 
-                                        <button class="btn btn-info view" title="Détails" data="{{ $signataire->id }}">
+                                        <button class="btn btn-info view action-btn" title="Détails" data="{{ $signataire->id }}">
                                             <i class="bi bi-eye-fill"></i>
                                         </button>
-                                        <button class="btn btn-primary edit" title="Modifier" data="{{ $signataire->id }}">
+                                        <button class="btn btn-primary edit action-btn" title="Modifier" data="{{ $signataire->id }}">
                                             <i class="bi bi-pencil"></i>
                                         </button>
 
@@ -184,7 +188,7 @@
                     <div class="modal fade" id="exampleModal2" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header bg-info">
                                     <h5 class="modal-title" id="exampleModalLabel2">Informations Signataire</h5>
                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -204,7 +208,7 @@
                     <div class="modal fade" id="exampleModal3" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header bg-info">
                                     <h5 class="modal-title" id="exampleModalLabel3">Modifier Signataire</h5>
                                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">&times;</span>
@@ -329,10 +333,24 @@
 </div>
 
 @endsection
+
+
 @push('costum-scripts')
+
+
+<!-- SCRIPT FOR DATATABLE-->
+<script type="module" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script type="module" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 <script type="module">
     $(document).ready(function() {
-        //Formulaire d'ajout d'étudiant
+        $('#data').DataTable();
+    });
+</script>
+
+<script type="module">
+    $(document).ready(function() {
+        //Formulaire d'ajout de signataire
         $(document).on('click', '#add', function() {
             var myModal = new bootstrap.Modal($("#exampleModal1"), {});
             myModal.show();

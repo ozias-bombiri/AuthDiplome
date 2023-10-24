@@ -1,10 +1,14 @@
 @extends('includes.master')
 
+@push('custom-styles')
+<link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
+@endpush
+
 @section('contenu')
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card mt-3">
-            <div class="card-header">
+            <div class="card-header bg-info">
                 <h4>{{ __('Attestations provisoires') }}</h4>
             </div>
 
@@ -22,13 +26,62 @@
                     @endif
                 </div>
                 <div class="row my-3">
-                    <div class="col-3 offset-1">
+                    <div class="col-10 offset-1">
+                        <form method="post" action="{{ route('metiers.etablissements.etudiant-store') }}">
+                            @csrf
+                            <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
 
+                            <div class="row border border-secondary">
+
+                                <div class="form-group col-4 py-2">
+                                    <label for="parcours" class="col-sm-10 col-form-label">Niveau </label>
+                                    <div class="col">
+                                        <select class="form-control" id="niveau" name="niveau" required>
+                                            <option value="">Choisir</option>
+                                            @foreach ($niveaux as $niveau)
+                                            <option value="{{ $niveau->id}}">{{ $niveau->intitule}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group col-4 py-2">
+                                    <label for="parcours" class="col-sm-10 col-form-label">Parcours </label>
+                                    <div class="col">
+                                        <select class="form-control" id="parcours" name="parcours" required>
+                                            <option value="">Choisir</option>
+                                            @foreach ($institution->parcours as $parc)
+                                            <option value="{{ $parc->id}}">{{ $parc->intitule}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-4 py-2">
+                                    <label for="annee" class="col-sm-10 col-form-label">Année acedémique</label>
+                                    <div class="col">
+                                        <select class="form-control" id="annee" name="annne" required>
+                                            <option value="">Choisir</option>
+                                            @foreach ($annees as $annee)
+                                            <option value="{{ $annee->id}}">{{ $annee->intitule}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-4 py-4">
+                                    <label class="col-sm-6 col-form-label"></label>
+                                    <div class="col-sm-6">
+                                        <button type=" submit button" class="btn btn-success">Afficher</button>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </form>
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                        <table id="data" class="table table-striped table-bordered">
+                        <table id="data" class="table table-striped table-bordered table-responsible fs-6">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -50,10 +103,10 @@
                                     <td>{{ $attestation->resultat_academique->impetrant->nom }} {{ $attestation->resultat_academique->impetrant->prenom }}</td>
                                     <td>{{ $attestation->resultat_academique->parcours->intitule }} ({{ $attestation->resultat_academique->parcours->niveau_etude->intitule }})</td>
                                     <td>
-                                        <button id="{{ $attestation->id }}" class="btn btn-info view" title="Détails">
+                                        <button id="{{ $attestation->id }}" class="btn btn-info view action-btn" title="Détails">
                                             <i class="bi bi-eye-fill"></i>
                                         </button>
-                                        <a class="btn btn-primary" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
+                                        <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
                                             <i class="bi bi-file-pdf"></i>
                                         </a>
                                     </td>
@@ -116,9 +169,9 @@
                                                 <tr>
                                                     <td>Résultats académiques </td>
                                                     <td id="sessionr">
-                                                        Session :  <br />
-                                                        Moyenne :  <br />
-                                                        Cote :  <br />
+                                                        Session : <br />
+                                                        Moyenne : <br />
+                                                        Cote : <br />
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -152,44 +205,57 @@
 
 @endsection
 @push('costum-scripts')
+
+
+<!-- SCRIPT FOR DATATABLE-->
+<script type="module" src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script type="module" src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
 <script type="module">
-    $(document).ready(function(){
+    $(document).ready(function() {
+        $('#data').DataTable();
+    });
+</script>
 
-    $(document).on('click', '.view', function() {
-        $.ajaxSetup({
-            headers: {
-                'X_CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-            }
-        });
-        var id = $(this).attr('id');
-        $.ajax({
-            // Our sample url to make request 
-            url: "/d/provisoires/view/" + id,
-            method: "GET",
-            dataType: "json",
-            
-            // Function to call when to
-            // request is ok 
-            success: function(data) {      
-                
-                
-                $("#reference").text(data.result.reference);
-                $("#intitule").text(data.result.intitule);
-                $("#identifiant").text(data.result.impetrant);
-                $("#parcours").text(data.result.parcours);
-                $("#niveau").text(data.result.niveau);
-                $("#institution").text(data.result.institution);
-                $("#sessionr").text(data.result.sessionr);
-                var myModal = new bootstrap.Modal($("#exampleModal"), {});
-                myModal.show();
-            },
 
-            // Error handling 
-            error: function(error) {
-                console.log("Error ${error}");
-            }
+<script type="module">
+    $(document).ready(function() {
+
+        $(document).on('click', '.view', function() {
+            $.ajaxSetup({
+                headers: {
+                    'X_CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+                }
+            });
+            var id = $(this).attr('id');
+            $.ajax({
+                // Our sample url to make request 
+                url: "/d/provisoires/view/" + id,
+                method: "GET",
+                dataType: "json",
+
+                // Function to call when to
+                // request is ok 
+                success: function(data) {
+
+
+                    $("#reference").text(data.result.reference);
+                    $("#intitule").text(data.result.intitule);
+                    $("#identifiant").text(data.result.impetrant);
+                    $("#parcours").text(data.result.parcours);
+                    $("#niveau").text(data.result.niveau);
+                    $("#institution").text(data.result.institution);
+                    $("#sessionr").text(data.result.sessionr);
+                    var myModal = new bootstrap.Modal($("#exampleModal"), {});
+                    myModal.show();
+                },
+
+                // Error handling 
+                error: function(error) {
+                    console.log("Error ${error}");
+                }
+            });
         });
     });
-});
 </script>
 @endpush

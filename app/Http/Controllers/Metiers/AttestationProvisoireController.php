@@ -61,6 +61,7 @@ class AttestationProvisoireController extends Controller
     public function listParcours($institution_id)
     {
         $institution = $this->institutionRepository->find($institution_id);
+        $niveaux = $this->niveauRepository->all();
         $parcours = null;
         if($institution && $institution->type !='IESR'){
             $parcours = $institution->parcours;
@@ -68,7 +69,7 @@ class AttestationProvisoireController extends Controller
         else {
             $parcours = $this->parcoursRepository->all();
         }
-        return view('metiers.etablissements.list_parcours', compact('parcours'));
+        return view('metiers.etablissements.list_parcours', compact('parcours', 'institution', 'niveaux'));
     }
 
     /** 
@@ -87,8 +88,9 @@ class AttestationProvisoireController extends Controller
     public function storeParcours(Request $request)
     {
         $input = $request->all();
+        $institution = Auth::user()->institution;
         $parcours = $this->parcoursRepository->create($input);
-        return redirect(route('metiers.etablissements.parcours-list'));
+        return redirect(route('metiers.etablissements.parcours-list', $institution->id));
     }
 
     /**
@@ -98,6 +100,8 @@ class AttestationProvisoireController extends Controller
     {
         //$institution = Auth ::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
+        $annees = $this->anneeRepository->all();
+        $niveaux = $this->niveauRepository->all();
         $attestations = null;
         if($institution && $institution->type !='IESR'){
             $attestations = $this->attestationRepository->findByInstitution($institution_id);
@@ -105,7 +109,7 @@ class AttestationProvisoireController extends Controller
         else {
             $attestations = $this->attestationRepository->all();
         }
-        return view('metiers.etablissements.list_attestations', compact('attestations'));
+        return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux'));
     }
 
     /**

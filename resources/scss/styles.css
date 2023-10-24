@@ -1,0 +1,12 @@
+/* Datatables */
+#data {
+    font-size: 12px !important;
+}
+
+/* Datatables action buttons */
+
+.action-btn {
+    width: 30px;
+    height: 25px;
+    padding: 0px;
+}

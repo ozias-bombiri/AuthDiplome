@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card mt-3">
-            <div class="card-header">
+            <div class="card-header bg-info">
                 <h4>{{ __('Ajouter une institution') }}</h4>
             </div>
 
