@@ -22,8 +22,33 @@ class VerificationController extends Controller
         
     }
 
-    public function rechercher(){
+    public function index(){
 
         return view('metiers.authentification.recherche');
+    }
+
+    public function rechercher(Request $request){
+        $input = $request->all();
+        $reference = $input['reference'];
+        $categorie = $input['categorie'];
+        $document =null;
+        if ($categorie === "provisoire") {
+            $document  = $this->attestationProvisoireRepository->findByReference($reference);
+        }
+        else if($categorie === "definitive"){
+            $document = $this->attestationDefinitiveRepository->findByReference($reference);
+        }
+        else if($categorie === "diplome"){
+            $document = $this->diplomeRepository->findByReference($reference);
+        }
+        else {
+
+        }
+        if(empty($document)){
+            $message = "Aucun document trouvé !";
+            return view('metiers.authentification.recherche', compact('message'));
+        }
+
+        return view('metiers.authentification.recherche', compact('categorie', 'document'));
     }
 }

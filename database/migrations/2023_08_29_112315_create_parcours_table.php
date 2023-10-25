@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('parcours', function (Blueprint $table) {
             $table->id();
+            $table->string('code', 20);
             $table->string('intitule', 50);
             $table->string('credit', 20);
             $table->string('domaine', 100);

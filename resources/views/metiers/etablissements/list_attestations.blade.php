@@ -27,14 +27,14 @@
                 </div>
                 <div class="row my-3">
                     <div class="col-10 offset-1">
-                        <form method="post" action="{{ route('metiers.etablissements.etudiant-store') }}">
+                        <form method="post" action="{{ route('metiers.etablissements.attestation-filtre') }}">
                             @csrf
                             <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
-
+                                        
                             <div class="row border border-secondary">
 
                                 <div class="form-group col-4 py-2">
-                                    <label for="parcours" class="col-sm-10 col-form-label">Niveau </label>
+                                    <label for="niveau" class="col-sm-10 col-form-label">Niveau </label>
                                     <div class="col">
                                         <select class="form-control" id="niveau" name="niveau" required>
                                             <option value="">Choisir</option>
@@ -59,7 +59,7 @@
                                 <div class="form-group col-4 py-2">
                                     <label for="annee" class="col-sm-10 col-form-label">Année acedémique</label>
                                     <div class="col">
-                                        <select class="form-control" id="annee" name="annne" required>
+                                        <select class="form-control" id="annee" name="annee" required>
                                             <option value="">Choisir</option>
                                             @foreach ($annees as $annee)
                                             <option value="{{ $annee->id}}">{{ $annee->intitule}}</option>
@@ -67,15 +67,17 @@
                                         </select>
                                     </div>
                                 </div>
-                                <div class="col-4 py-4">
-                                    <label class="col-sm-6 col-form-label"></label>
-                                    <div class="col-sm-6">
-                                        <button type=" submit button" class="btn btn-success">Afficher</button>
+                                <div class="row py-4">
+                                    <label class="col-sm-2 col-form-label"></label>
+                                    <div class="col-sm-3">
+                                        <button id="filtre" type="submit" class="btn btn-success">Afficher</button>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <a class="btn btn-danger" href="{{ route('metiers.etablissements.attestation-list', $institution->id) }}"> Annuler filtre </a>
                                     </div>
 
                                 </div>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -85,6 +87,7 @@
                             <thead>
                                 <tr>
                                     <th>No</th>
+                                    <th>Année</th>
                                     <th>Référence</th>
                                     <th>Intitule</th>
                                     <th>Identifiant</th>
@@ -97,6 +100,7 @@
                                 @foreach ($attestations as $attestation)
                                 <tr>
                                     <td>{{ $loop->index +1 }}</td>
+                                    <td> {{ $attestation->resultat_academique->annee_academique->intitule }}</td>
                                     <td>{{ $attestation->reference }}</td>
                                     <td>{{ $attestation->intitule }}</td>
                                     <td>{{ $attestation->resultat_academique->impetrant->identifiant }} </td>
@@ -116,9 +120,9 @@
                         </table>
                     </div>
                 </div>
-
+                <!-- Modal Details-->
                 <div class="row my-3">
-                    <!-- Modal -->
+                    
                     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
@@ -140,23 +144,20 @@
                                             <tbody>
                                                 <tr>
                                                     <td>Référence </td>
-                                                    <td id="reference">{{ $attestation->reference }}</td>
+                                                    <td id="reference"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Intitulé</td>
-                                                    <td id="intitule">{{ $attestation->intitule }}</td>
+                                                    <td id="intitule"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Impétrant</td>
-                                                    <td id="identifiant">
-                                                        Identifiant : {{ $attestation->resultat_academique->impetrant->identifiant }} <br />
-                                                        Nom et Prénom : {{ $attestation->resultat_academique->impetrant->nom }} {{ $attestation->resultat_academique->impetrant->prenom }}
-                                                    </td>
+                                                    <td id="identifiant"></td>
                                                 </tr>
 
                                                 <tr>
                                                     <td>Parcours de formation </td>
-                                                    <td id="parcours">{{ $attestation->resultat_academique->parcours->intitule }} </td>
+                                                    <td id="parcours"></td>
                                                 </tr>
                                                 <tr>
                                                     <td>Niveau d'étude </td>
@@ -169,6 +170,7 @@
                                                 <tr>
                                                     <td>Résultats académiques </td>
                                                     <td id="sessionr">
+                                                        Année académique : <br/>
                                                         Session : <br />
                                                         Moyenne : <br />
                                                         Cote : <br />
@@ -177,7 +179,7 @@
                                                 <tr>
                                                     <td> </td>
                                                     <td>
-                                                        <a class="btn btn-info" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
+                                                        <a class="btn btn-info" title="Voir pdf" href="#">
                                                             <i class="bi bi-file-pdf"></i>
                                                         </a>
 
@@ -217,6 +219,47 @@
     });
 </script>
 
+<script type="module">
+    $(document).ready(function() {
+        $(document).on('click', '#filtre0', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X_CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+                }
+            });
+            var selectNiveau = $('#niveau')[0];
+            var niveau = selectNiveau.options[selectNiveau.selectedIndex].value;
+            var selectAnnee = $('#annee')[0];
+            var annee = selectAnnee.options[selectAnnee.selectedIndex].value;
+            var selectParcours = $('#parcours')[0];
+            var parcours = selectParcours.options[selectParcours.selectedIndex].value;
+            $.ajax({
+                // Our sample url to make request 
+                url: "/d/provisoires/filtre/" +niveau+ "/" +parcours+ "/" +annee,
+                method: "GET",
+                dataType: "json",
+
+                // Function to call when to
+                // request is ok 
+                success: function(data) {
+                    console.log("ok");
+                    var data_table = $('#data')[0];
+                    if($.fn.dataTable.isDataTable( '#data' )){
+                        $.fn.dataTable.destroy('#data');
+                    }                     
+                    $('#data').DataTable( {data: data.result.attestations  });
+                                       
+                },
+
+                // Error handling 
+                error: function(error) {
+                    console.log("Error ${error}");
+                }
+            });
+        });
+    });
+</script>
+
 
 <script type="module">
     $(document).ready(function() {
@@ -237,8 +280,6 @@
                 // Function to call when to
                 // request is ok 
                 success: function(data) {
-
-
                     $("#reference").text(data.result.reference);
                     $("#intitule").text(data.result.intitule);
                     $("#identifiant").text(data.result.impetrant);

@@ -41,4 +41,10 @@ class AttestationDefinitiveRepository extends BaseRepository
     {
         return AttestationDefinitive::class;
     }
+
+    public function findByReference($reference){
+        $attestation = AttestationDefinitive::where('reference', '=', $reference)
+                        ->first();
+        return $attestation;        
+    }
 }

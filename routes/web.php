@@ -86,6 +86,8 @@ Route::group(['middleware' => ['auth', 'role:direction|admin']], function() {
     ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-view');
     Route::get('d/provisoires/pdf/{id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'pdfAttestation'])
     ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-pdf');
+    Route::post('d/provisoires/filtre/', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'filtreAttestation'])
+    ->name('metiers.etablissements.attestation-filtre');
    
     Route::get('d/impetrants/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listEtudiants'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.etudiant-list');
@@ -102,5 +104,12 @@ Route::group(['middleware' => ['auth', 'role:direction|admin']], function() {
     ->name('metiers.etablissements.signataire-store');
     
     
+});
+
+Route::group(['middleware' =>['auth', 'role:authentification']], function(){
+    Route::get('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'index'])
+    ->name('metiers.auth.index');
+    Route::post('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'rechercher'])
+    ->name('metiers.auth.recherche');
 });
 

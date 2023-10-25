@@ -42,4 +42,10 @@ class DiplomeRepository extends BaseRepository
     {
         return Diplome::class;
     }
+
+    public function findByReference($reference){
+        $attestation = Diplome::where('reference', '=', $reference)
+                        ->first();
+        return $attestation;        
+    }
 }

@@ -16,49 +16,135 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        
-        $roles = [
-            'admin',
-            'direction',
-            'daoi',
-            'authentification'
-        ];
+        //Création des permissions
 
-        foreach ($roles as $role) {
-            Role::create(['name' => $role]);
-       }
-        
-        $permissions = [
-            'role-list',
-            'role-create',
-            'role-edit',
-            'role-delete',
-            'permission-list',
-            'permission-create',
-            'permission-edit',
-            'permission-delete',
-            'user-list',
-            'user-create',
-            'user-edit',
-            'user-delete'
+        $permissions = [            
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'disable-users',
+            'create-institutions',
+            'edit-institutions',
+            'delete-institutions',
+            'create-annees',
+            'edit-annees',
+            'delete-annees',
+            'create-niveaux',
+            'edit-niveaux',
+            'delete-niveaux',
+            'create-signataires',
+            'edit-signataires',
+            'delete-signataires',
+            'disable-signataires',
+            'create-parcours',
+            'edit-parcours',
+            'delete-parcours',
+            'create-resultats',
+            'edit-resultats',
+            'delete-resultats',
+            'create-attestation-provisoires',
+            'edit-attestation-provisoires',
+            'delete-attestation-provisoires',
+            'generate-attestation-provisoires',
+            'create-attestation-definitives',
+            'edit-attestation-definitives',
+            'delete-attestation-definitives',
+            'generate-attestation-definitives',
+            'create-diplomes',
+            'edit-diplomes',
+            'delete-diplomes',
+            'generate-diplomes',
+            'check-attestation-provisoires',
+            'check-attestation-definitives',
+            'check-attestation-diplome',
+            'generate-rapport'
          ];
       
          foreach ($permissions as $permission) {
               Permission::create(['name' => $permission]);
          }
         
-        $role_admin = Role::where('name', 'admin')->first();
+        $roles = [
+            'SuperAdmin',
+            'Admin',
+            'Direction',
+            'Daoi',
+            'Authentification'
+        ];
+        //Role admin         
+        $adminRole = Role::create(['name' => 'Admin']);
+        $adminRole->givePermissionTo([
+            'create-users',
+            'edit-users',
+            'delete-users',
+            'disable-users',
+            'create-institutions',
+            'edit-institutions',
+            'delete-institutions',
+            'create-annees',
+            'edit-annees',
+            'delete-annees',
+            'create-niveaux',
+            'edit-niveaux',
+            'delete-niveaux',
+            'create-signataires',
+            'edit-signataires',
+            'delete-signataires',
+            'disable-signataires',
+        ]);
+
+        //Role direction pour l'émission des attestation provisoires
+        $directionRole = Role::create(['name' => 'Direction']);
+        $directionRole->givePermissionTo([
+            'create-parcours',
+            'edit-parcours',
+            'delete-parcours',
+            'create-resultats',
+            'edit-resultats',
+            'delete-resultats',
+            'create-attestation-provisoires',
+            'edit-attestation-provisoires',
+            'delete-attestation-provisoires',
+            'generate-attestation-provisoires'
+        ]);
+
+        //Role daoi pour l'émission des attestations définitives et des diplômes
+        $daoiRole = Role::create(['name' => 'Daoi']);
+        $daoiRole->givePermissionTo([
+
+            'create-attestation-definitives',
+            'edit-attestation-definitives',
+            'delete-attestation-definitives',
+            'generate-attestation-definitives',
+            'create-diplomes',
+            'edit-diplomes',
+            'delete-diplomes',
+            'generate-diplomes'
+        ]);
+
+        // Role authentification pour l'authentification des documents
+        $authentificationRole = Role::create(['name' => 'Authentification']);
+        $authentificationRole->givePermissionTo([
+
+            'check-attestation-provisoires',
+            'check-attestation-definitives',
+            'check-attestation-diplome',
+            'generate-rapport'
+        ]);
+        
+        
+        $role_superadmin = Role::where('name', 'SuperAdmin')->first();
      
         $all_permissions = Permission::pluck('id','id')->all();
    
-        $role_admin->syncPermissions($all_permissions);
+        $role_superadmin->syncPermissions($all_permissions);
 
         $admin = User::create([
             'name' => 'Admin admin', 
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin')
         ]);
-        $admin->assignRole([$role_admin->id]);
+        $admin->assignRole([$role_superadmin->id]);
 
         
     }

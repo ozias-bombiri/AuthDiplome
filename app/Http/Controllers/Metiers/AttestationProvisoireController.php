@@ -112,6 +112,33 @@ class AttestationProvisoireController extends Controller
         return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux'));
     }
 
+    public function filtreAttestation(Request $request)
+    {
+        $data = [];
+        $inputs = $request->all();
+        $niveau = $inputs['niveau'];
+        $annee = $inputs['annee'];
+        $parcours = $inputs['parcours']; 
+        $institution = $this->institutionRepository->find($inputs['institution_id']);
+        $annees = $this->anneeRepository->all();
+        $niveaux = $this->niveauRepository->all();           
+        $attestations = $this->attestationRepository->findByNiveauParcoursAnnee($niveau, $parcours, $annee); 
+
+        if ($request->ajax()) {            
+            if(empty($attestations)){
+                $data = "Nothing";
+            }
+            else {
+            $data = [
+                'attestations' => $attestations,
+            ];
+            }
+            return response()->json(['result' =>$data]);
+        }
+        
+        return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux'));
+    }
+
     /**
      * Ajouter une attestation provisoire à partir du parcours de formation choisi
      **/
@@ -243,9 +270,10 @@ class AttestationProvisoireController extends Controller
                 'parcours' => $attestation->resultat_academique->parcours->intitule. " (".$attestation->resultat_academique->parcours->institution->sigle .")",
                 'niveau' => $attestation->resultat_academique->parcours->niveau_etude->intitule,
                 'institution' => $attestation->resultat_academique->parcours->institution->denomination,
-                'sessionr' => "Session : ".$attestation->resultat_academique->session. "\n Moyenne : ".$attestation->resultat_academique->moyenne."\n Côte :".$attestation->resultat_academique->cote,
-                'moyenne' => $attestation->resultat_academique->moyenne,
-                'cote' => $attestation->resultat_academique->cote,
+                'sessionr' => "Année académique : ". $attestation->resultat_academique->annee_academique->intitule
+                    ."\n Session : ".$attestation->resultat_academique->session. 
+                    "\n Moyenne : ".$attestation->resultat_academique->moyenne.
+                    "\n Côte :".$attestation->resultat_academique->cote,
                 'id' => $attestation->id,
             ];
         }

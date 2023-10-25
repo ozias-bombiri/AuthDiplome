@@ -1,11 +1,11 @@
 <div class="border-end bg-white px-3" id="sidebar-wrapper">
     <div class="sidebar-heading border-bottom bg-light">AuthDiplome</div>
-    <ul class="accordion accordion-flush mb-5">
+    <ul class=" mb-5">
         @hasrole(['direction'])
-        <li class="accordion-item">
-            <a class="accordion-button"  href="#gapSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="adminSubmenu" >Gestion attestion provisoire</a>
+        <li class="">
+            <a class=""  href="#gapSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="adminSubmenu" >GESTION ATTESTATION PROVISOIRE</a>
             <!--@if(auth()->user()->institution_id)-->
-            <ul class="accordion-collapse collapse" id="gapSubmenu">
+            <ul class="collapse" id="gapSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.etablissements.attestation-list', auth()->user()->institution_id)}}">Attestations provisoire</a>
                 </li>
@@ -24,9 +24,9 @@
         @endhasrole
 
         @hasrole(['daoi'])
-        <li class="accordion-item">
-            <a class="accordion-button" href="#gadSubmenu" >Gestion attestation définitive</a>
-            <ul class="accordion-collapse collapse" id="gadSubmenu">
+        <li class="">
+            <a class="" href="#gadSubmenu"  data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="gadSubmenu">Gestion attestation définitive</a>
+            <ul class="collapse" id="gadSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Attestations définitives</a>
                 </li>
@@ -38,10 +38,10 @@
                 </li>
             </ul>
         </li>
-        <li class="accordion-item">
-            <a class="accordion-button" href="#gdipSubmenu">Gestion diplome</a>
+        <li class="">
+            <a class="" href="#gdipSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="gdipSubmenu">Gestion diplome</a>
             
-            <ul class="accordion-collapse collapse" id="gadSubmenu">
+            <ul class="collapse" id="gdipSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="#!">Diplômes</a>
                 </li>
@@ -56,20 +56,21 @@
         @endhasrole
 
         @hasrole(['authentification'])
-        <li class="accordion-item">
-            <a class="accordion-button" href="#authSubmenu">Authentification</a>
-            <ul class="accordion-collapse collapse" id="authSubmenu">
+        <li class="">
+            <a class="" href="#authSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="authSubmenu">Authentification</a>
+            <ul class="collapse" id="authSubmenu">
                 <li>
-                    <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="#!">Authentification</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light py-1 px-3" href="{{ route('metiers.auth.index')}}">Authentification</a>
                 </li>
             </ul>
         </li>
         @endhasrole
 
         @hasrole(['admin'])
-        <li class="accordion-item" >
-            <a class="accordion-button" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">Parametrage</a>
-            <ul class="accordion-collapse collapse" id="adminSubmenu">
+        <li class="" >
+            <a class="" data-bs-toggle="collapse" href="#adminSubmenu" role="button" aria-expanded="false" aria-controls="adminSubmenu">PARAMETRAGE</a>
+
+            <ul class="collapse" id="adminSubmenu">
                 <li>
                     <a class="list-group-item list-group-item-action list-group-item-light px-3 py-1" href="{{ route('institutions.index') }}" active>Institutions</a>
                 </li>

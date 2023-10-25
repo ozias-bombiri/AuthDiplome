@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('institutions', function (Blueprint $table) {
             $table->id();
+            $table->string('code', 20);
             $table->string('sigle', 30)->unique();
             $table->string('denomination', 100);
             $table->string('type', 30);

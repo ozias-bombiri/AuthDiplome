@@ -41,7 +41,7 @@
                                 <label for="type" class="col-sm-2 col-form-label">Type </label>
                                 <div class="col">
                                     <select class="form-control" id="type" name="type" required>
-                                        <option value="IESR">Université</option>
+                                        <option value="IESR">IESR</option>
                                         <option value="UFR">UFR</option>
                                         <option value="Institut">Institut</option>
                                         <option value="Ecole">Ecole</option>
@@ -51,7 +51,7 @@
                             <div class="form-group row py-2">
                                 <label for="parent" class="col-sm-2 col-form-label">IESR parent </label>
                                 <div class="col">
-                                    <select class="form-control" id="parent" name="parent_id" required>
+                                    <select class="form-control" id="parent" name="parent_id" disabled>
                                         <option>Aucun</option>
                                         @foreach( $iesrs as $iesr)
                                         <option value="{{ $iesr->id}}">{{ $iesr->sigle }}</option>
@@ -92,7 +92,7 @@
                             <div class="form-group row py-2">
                                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col">
-                                    <input type="text" class="form-control form-control" id="description" name="description" required>
+                                    <textarea class="form-control form-control" id="description" name="description" required> </textarea>
                                 </div>
                             </div>
                             <div class="row py-4">
@@ -116,5 +116,20 @@
 
 @endsection
 @push('costum-scripts')
+<script type="module">
+    $(document).on('change', '#type', function parent_type(){
+            var selecthtml = $('#type');
+            var selected = this.options[this.selectedIndex].value;
+            if(selected == 'IESR'){
+                $('#parent').val="";
+                $('#parent').prop('disabled', true)               
+            }
+            else {
+                $('#parent').prop('disabled', false);
+                $('#parent').prop('required', true);
+            }
 
+        });
+
+</script>
 @endpush

@@ -26,14 +26,47 @@
                     @endif
                 </div>
                 <div class="row my-3">
-                    <div class="col-3 offset-1">
+                    <div class="col-10 offset-1">
+                    <form method="post" action="{{ route('metiers.auth.recherche') }}" enctype="multipart/form-data">
+                            @csrf
+                            <div class="form-group row py-2">
+                                <label for="sigle" class="col-sm-4 col-form-label">Référence à chercher</label>
+                                <div class="col">
+                                    <input type="text" class="form-control form-control" id="reference" name="reference" required>
+                                </div>
+                            </div>
 
+                            <div class="form-group row py-2">
+                                <label for="sigle" class="col-sm-4 col-form-label">Catégorie</label>
+                                <div class="col">
+                                    <select class="form-control" id="categorie" name="categorie" required>
+                                        <option value="provisoire">Attestation provisoire</option>
+                                        <option value="definitive">Attestation définitive</option>
+                                        <option value="diplome">Diplôme</option>
+                                        
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row py-4">
+                                <label class="col-sm-2 col-form-label"></label>
+                                <div class="col">
+                                    <button type=" submit button" class="btn btn-success">Rechercher</button>
+                                </div>
+                                <div class="col">
+                                    <a href="{{ route('metiers.auth.index') }}"> <button type="button" class="btn btn-secondary">Retour</button> </a>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="row my-3">
                     <div class="col-10 offset-1">                      
-                            
-                        
+                            @if(isset($message))
+                                <p class="text-danger"> {{ $message }}</p>
+                            @else
+                                --
+                            @endif
                     </div>
                 </div>
             </div>
