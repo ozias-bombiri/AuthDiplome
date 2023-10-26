@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('niveau_etudes', function (Blueprint $table) {
             $table->id();
             $table->enum('intitule', ['L1', 'L2', 'Licence', 'M1', 'Master', 'Doctorat'])->unique('niveau_etudes');
-            $table->string('description');
+            $table->string('credit', 10);
+            $table->text('description');
             $table->timestamps();
         });
     }

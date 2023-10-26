@@ -26,9 +26,15 @@
                         <form method="post" action="{{ route('institutions.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="form-group row py-2">
+                                <label for="code" class="col-sm-2 col-form-label">Code</label>
+                                <div class="col">
+                                    <input type="text" class="form-control" id="code" name="code" required>
+                                </div>
+                            </div>
+                            <div class="form-group row py-2">
                                 <label for="sigle" class="col-sm-2 col-form-label">Sigle</label>
                                 <div class="col">
-                                    <input type="text" class="form-control form-control" id="sigle" name="sigle" placeholder="UTS" required>
+                                    <input type="text" class="form-control" id="sigle" name="sigle" placeholder="UTS" required>
                                 </div>
                             </div>
                             <div class="form-group row py-2">
@@ -62,37 +68,37 @@
                             <div class="form-group row py-2">
                                 <label for="telephone" class="col-sm-2 col-form-label">Téléphone</label>
                                 <div class="col">
-                                    <input type="number" class="form-control form-control" id="telephone" name="telephone" placeholder="700000" required>
+                                    <input type="number" class="form-control" id="telephone" name="telephone" placeholder="700000" required>
                                 </div>
                             </div>
                             <div class="form-group row py-2">
                                 <label for="email" class="col-sm-2 col-form-label">Email</label>
                                 <div class="col">
-                                    <input type="email" class="form-control form-control" id="email" name="email" placeholder="email" required>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="email" required>
                                 </div>
                             </div>
                             <div class="form-group row py-2">
                                 <label for="adresse" class="col-sm-2 col-form-label">Adresse postale</label>
                                 <div class="col">
-                                    <input type="text" class="form-control form-control" id="adresse" name="adresse" placeholder="BP" required>
+                                    <input type="text" class="form-control" id="adresse" name="adresse" placeholder="BP" required>
                                 </div>
                             </div>
                             <div class="form-group row py-2">
                                 <label for="siteweb" class="col-sm-2 col-form-label">Adresse site web</label>
                                 <div class="col">
-                                    <input type="text" class="form-control form-control" id="siteWeb" name="siteWeb" placeholder="Adresse site web" required>
+                                    <input type="text" class="form-control" id="siteWeb" name="siteWeb" placeholder="Adresse site web" required>
                                 </div>
                             </div>
                             <div class="form-group row py-2">
                                 <label for="logo" class="col-sm-2 col-form-label">Logo</label>
                                 <div class="col">
-                                    <input type="file" class="form-control form-control" id="logo" name="logo">
+                                    <input type="file" class="form-control" id="logo" name="logo">
                                 </div>
                             </div>
                             <div class="form-group row py-2">
                                 <label for="description" class="col-sm-2 col-form-label">Description</label>
                                 <div class="col">
-                                    <textarea class="form-control form-control" id="description" name="description" required> </textarea>
+                                    <textarea class="form-control" id="description" name="description" required> </textarea>
                                 </div>
                             </div>
                             <div class="row py-4">

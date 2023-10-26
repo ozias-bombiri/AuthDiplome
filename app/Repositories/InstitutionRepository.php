@@ -17,6 +17,7 @@ class InstitutionRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
+        'code',
         'sigle',
         'parent_id',
 		'denomination',
@@ -50,5 +51,10 @@ class InstitutionRepository extends BaseRepository
     public function model()
     {
         return Institution::class;
+    }
+
+    public function findEtablissement()
+    {
+        return Institution::whereIn('type', ['Institut', 'UFR', 'Ecole'])->get();
     }
 }

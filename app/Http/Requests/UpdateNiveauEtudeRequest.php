@@ -23,6 +23,7 @@ class UpdateNiveauEtudeRequest extends FormRequest
     {
         return [
             'intitule' => 'required|string',
+            'credit' => 'required',
 		    'description'=> 'required|string'
         ];
     }

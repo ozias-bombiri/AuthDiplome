@@ -44,6 +44,7 @@ class Institution extends Model
 	];
 
 	protected $fillable = [
+		'code',
 		'sigle',
 		'denomination',
 		'telephone',

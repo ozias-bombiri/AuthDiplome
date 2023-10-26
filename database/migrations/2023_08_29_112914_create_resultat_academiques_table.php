@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('resultat_academiques', function (Blueprint $table) {
             $table->id();
             $table->string('reference', 50)->unique();
-            $table->boolean('soutenance');
             $table->date('dateSignature');
             $table->double('moyenne');
             $table->string('cote', 20);

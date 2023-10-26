@@ -9,7 +9,7 @@
     <div class="col-md-10">
         <div class="card mt-3">
             <div class="card-header bg-info">
-                <h4>{{ __('List des signataires') }}</h4>
+                <h4>{{ __('Liste des signataires') }}</h4>
             </div>
 
             <div class="card-body">
@@ -30,9 +30,8 @@
                         <button id="add" class="btn btn-success"> Ajouter</button>
                     </div>
                 </div>
-
-                <div class="row my-3">
-                    <!-- Modal Ajouter-->
+                <!-- Modal Ajouter-->
+                <div class="row my-3">                    
                     <div class="modal fade" id="exampleModal1" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
@@ -75,20 +74,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group row py-2">
-                                            <label for="type" class="col-sm-2 col-form-label">Type de document</label>
-                                            <div class="col">
-                                                <select class="form-control" id="typeDocument" name="typeDocument">
-                                                    <option value="" disabled selected>choisir ...</option>
-                                                    <option value="Attestation Provisoire">Attestation Provisoire</option>
-                                                    <option value="Attestation Definitive">Attestation Definitive</option>
-                                                    <option value="Diplome">Diplome</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-
                                         <div class="form-group row py-2">
                                             <label for="fonction" class="col-sm-2 col-form-label">Fonction</label>
                                             <div class="col">
@@ -144,6 +129,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="row my-3">
                     <div class="col-10 offset-1">
                         <table id="data" class="table table-striped table-bordered">
@@ -183,8 +169,9 @@
                         </table>
                     </div>
                 </div>
+                <!-- Modal afficher-->
                 <div class="row my-3">
-                    <!-- Modal afficher-->
+                    
                     <div class="modal fade" id="exampleModal2" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
@@ -202,9 +189,9 @@
                         </div>
                     </div>
                 </div>
-
+                <!-- Modal Editer-->
                 <div class="row my-3">
-                    <!-- Modal Editer-->
+                    
                     <div class="modal fade" id="exampleModal3" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
@@ -218,16 +205,6 @@
                                     <form method="post" action="{{ route('signataires.update', $signataire->id) }}">
                                         @method('PUT')
                                         @csrf
-                                        <div class="form-group row py-2">
-                                            <label for="institution" class="col-sm-2 col-form-label">Institution</label>
-                                            <div class="col">
-                                                <select class="form-control" id="institution3" name="institution_id" required>
-                                                    <option value="">Choisir</option>
-
-                                                </select>
-                                            </div>
-                                        </div>
-
                                         <div class="form-group row py-2">
                                             <label for="nom3" class="col-sm-2 col-form-label">Nom</label>
                                             <div class="col">
@@ -258,20 +235,6 @@
                                                 </select>
                                             </div>
                                         </div>
-
-                                        <div class="form-group row py-2">
-                                            <label for="type" class="col-sm-2 col-form-label">Type de document</label>
-                                            <div class="col">
-                                                <select class="form-control" id="typeDocument" name="typeDocument">
-                                                    <option value="" disabled selected>choisir ...</option>
-                                                    <option value="provisoire">Attestation Provisoire</option>
-                                                    <option value="definitive">Attestation Definitive</option>
-                                                    <option value="diplome">Diplome</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-
                                         <div class="form-group row py-2">
                                             <label for="fonction" class="col-sm-2 col-form-label">Fonction</label>
                                             <div class="col">
@@ -390,16 +353,7 @@
                     $("#fonctionLongue3").val(data.result.signataire.fonctionLongue);
                     $("#titreAcademique3").val(data.result.signataire.titreAcademique);
                     $("#titreHonorifique3").val(data.result.signataire.titreHonorifique);
-                    var institutionList = $("#institution3")[0];
-                    institutionList.innerHTML = "";
-                    data.result.institutions.forEach((institution) => {
-                        const newOption = document.createElement('option');
-                        const optionText = document.createTextNode(institution.sigle);
-                        newOption.appendChild(optionText);
-                        newOption.setAttribute('value', institution.id);
-                        institutionList.appendChild(newOption);
-
-                    });
+                    
                     var myModal = new bootstrap.Modal($("#exampleModal3"), {});
                     myModal.show();
                 },

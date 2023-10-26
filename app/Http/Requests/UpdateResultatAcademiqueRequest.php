@@ -23,12 +23,11 @@ class UpdateResultatAcademiqueRequest extends FormRequest
     {
         return [
             'reference' => 'required|string',
-            'soutenance' => 'required|string',
-            'dateSignaure' => 'required|string',
+            'dateSignature' => 'required|string',
             'moyenne' => 'required|string',
             'cote' => 'required|string',
             'session' => 'required|string',
-            'dateSoutenance' => 'required|string',
+            'dateSoutenance' => 'required',
             'etudiant_id' => 'required|string',
             'parcours_id' => 'required|string',
             'anneeAcademique_id' => 'required|string',

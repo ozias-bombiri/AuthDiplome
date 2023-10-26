@@ -9,7 +9,7 @@
     <div class="col-md-10">
         <div class="card mt-3">
             <div class="card-header bg-info">
-                <h4>{{ __('Parcours de formation') }}</h4>
+                <h4>{{ __('Liste des parcours de formation') }}</h4>
             </div>
 
             <div class="card-body">

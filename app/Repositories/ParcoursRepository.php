@@ -17,8 +17,9 @@ class ParcoursRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
+        'code',
         'intitule',
-		'credit',
+		'soutenance',
 		'domaine',
 		'mention',
 		'specialite',

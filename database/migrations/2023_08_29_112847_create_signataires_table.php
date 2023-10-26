@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('fonction', 30);
             $table->string('fonctionLongue', 100);
             $table->string('grade', 50);
-            $table->string('titreAcademique', 100);
-            $table->string('titreHonorifique', 100);
+            $table->string('titreAcademique', 100)->nullable();
+            $table->string('titreHonorifique', 100)->nullable();
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
             
             $table->timestamps();

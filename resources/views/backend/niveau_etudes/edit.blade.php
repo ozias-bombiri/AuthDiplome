@@ -31,13 +31,19 @@
                         <div class="form-group row py-2">
                             <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
                             <div class="col">
-                                <input type="text" class="form-control form-control" id="intitule" name="intitule" value="{{ $niveau->intitule}}" required>
+                                <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $niveau->intitule }}" required>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="credit" class="col-sm-2 col-form-label">Nombre de crédit</label>
+                            <div class="col">
+                                <input type="number" class="form-control" id="credit" name="credit" value="{{ $niveau->credit }}" required>
                             </div>
                         </div>
                         <div class="form-group row py-2">
                             <label for="debut" class="col-sm-2 col-form-label">Description</label>
                             <div class="col">
-                                <input type="text" class="form-control" id="description" name="description" value="{{ $niveau->description}}" required>
+                                <textarea class="form-control" id="description" name="description" value="{{ $niveau->description }}" required> </textarea>
                             </div>
                         </div>
                         

@@ -9,7 +9,7 @@
     <div class="col-md-10">
         <div class="card mt-3">
             <div class="card-header bg-info">
-                <h4>{{ __('Etudiants') }}</h4>
+                <h4>{{ __('Liste des étudiants') }}</h4>
             </div>
 
             <div class="card-body">
@@ -195,9 +195,9 @@
                         </div>
                     </div>
                 </div>
-
+                 <!-- Modal Attestation-->
                 <div class="row my-3">
-                    <!-- Modal Attestation-->
+                   
                     <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                             <div class="modal-content">
@@ -231,9 +231,9 @@
                                         <fieldset class="border border-secondary px-4 py-4 my-2">
                                             <legend>Information résultats académiques</legend>
                                             <div class="form-group row py-2">
-                                                <label for="prenom" class="col-sm-2 col-form-label">Année académique</label>
+                                                <label for="annee" class="col-sm-2 col-form-label">Année académique</label>
                                                 <div class="col">
-                                                    <select class="form-control" id="annee" name="annee_id" required>
+                                                    <select class="form-control" id="annee2" name="annee_id" required>
                                                         <option value="" disabled>Choisir </option>
 
                                                     </select>
@@ -243,9 +243,8 @@
                                             <div class="form-group row py-2">
                                                 <label for="prenom" class="col-sm-2 col-form-label">Parcours</label>
                                                 <div class="col">
-                                                    <select class="form-control" id="parcours" name="parcours_id" required>
-                                                        <option value="" disabled selected>Choisir </option>
-
+                                                    <select class="form-control" id="parcours2" name="parcours_id" required>
+                                                        <option value="" selected>Choisir </option>
                                                     </select>
                                                 </div>
                                             </div>
@@ -253,10 +252,13 @@
                                             <div class="form-group row py-2">
                                                 <label for="sexe" class="col-sm-2 col-form-label">Session </label>
                                                 <div class="col">
-                                                    <input type="text" class="form-control form-control" id="sessionr" name="sessionr" placeholder="Session" required>
-
+                                                    <select class="form-control" id="sessionr" name="sessionr" required>
+                                                        <option value="Normale" >Normale </option>
+                                                        <option value="Rattrapage" >Rattrapage </option>
+                                                        <option value="Spéciale" >Spéciale </option>
+                                                    </select>
                                                 </div>
-                                            </div>
+                                            </div>                    
                                             <div class="form-group row py-2">
                                                 <label for="dateNaissance" class="col-sm-2 col-form-label">Date de soutenance</label>
                                                 <div class="col">
@@ -282,10 +284,16 @@
                                             <div class="form-group row py-2">
                                                 <label for="prenom" class="col-sm-2 col-form-label">Signataire</label>
                                                 <div class="col">
-                                                    <select class="form-control" id="signataire" name="signataire" required>
+                                                    <select class="form-control" id="signataire2" name="signataire" required>
                                                         <option value="" disabled>Choisir </option>
 
                                                     </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group row py-2">
+                                                <label for="dateSignature" class="col-sm-2 col-form-label">Date de signature</label>
+                                                <div class="col">
+                                                    <input type="date" class="form-control form-control" id="dateSignature" name="dateSignature" required>
                                                 </div>
                                             </div>
                                             <div class="form-group row py-2">
@@ -349,6 +357,7 @@
             myModal.show();
 
         });
+        //Ajouter une attestation provisoire
         $(document).on('click', '.add', function() {
             $.ajaxSetup({
                 headers: {
@@ -371,7 +380,7 @@
                     //console.log(data.result);
                     $("#identifiant").val(data.result.etudiant.identifiant);
                     $("#nom").val(data.result.etudiant.nom + " " + data.result.etudiant.prenom);
-                    var anneeList = $("#annee")[0];
+                    var anneeList = $("#annee2")[0];
                     anneeList.innerHTML = "";
                     data.result.annees.forEach((annee) => {
                         const newOption = document.createElement('option');
@@ -380,12 +389,11 @@
                         newOption.appendChild(optionText);
                         // and option value
                         newOption.setAttribute('value', annee.id);
-                        //console.log(anneeList);
                         anneeList.appendChild(newOption);
 
                     });
 
-                    var parcoursList = $("#parcours")[0];
+                    var parcoursList = $("#parcours2")[0];
                     parcoursList.innerHTML = "";
                     data.result.parcours.forEach((parc) => {
                         const newOption = document.createElement('option');
@@ -394,12 +402,12 @@
                         newOption.appendChild(optionText);
                         // and option value
                         newOption.setAttribute('value', parc.id);
-                        //console.log(anneeList);
+                        newOption.setAttribute('data', parc.soutenance);
                         parcoursList.appendChild(newOption);
 
                     });
 
-                    var signataireList = $("#signataire")[0];
+                    var signataireList = $("#signataire2")[0];
                     signataireList.innerHTML = "";
                     data.result.signataires.forEach((signataire) => {
                         const newOption = document.createElement('option');
@@ -420,5 +428,23 @@
             });
         });
     });
+</script>
+
+<script type="module">
+    $(document).on('change', '#parcours2', function (){
+            var selecthtml = $('#dateSoutenance');
+            var selected = this.options[this.selectedIndex];
+            console.log(this.options[this.selectedIndex].data);
+            if(this.options[this.selectedIndex].data == false){
+                $('#dateSoutenance').val="";
+                $('#dateSoutenance').prop('disabled', true)               
+            }
+            else {
+                $('#dateSoutenance').prop('disabled', false);
+                $('#dateSoutenance').prop('required', true);
+            }
+
+        });
+
 </script>
 @endpush

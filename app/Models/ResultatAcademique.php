@@ -44,7 +44,6 @@ class ResultatAcademique extends Model
 	protected $table = 'resultat_academiques';
 
 	protected $casts = [
-		'soutenance' => 'bool',
 		'dateSignature' => 'datetime',
 		'moyenne' => 'float',
 		'dateSoutenance' => 'datetime',
@@ -56,7 +55,6 @@ class ResultatAcademique extends Model
 
 	protected $fillable = [
 		'reference',
-		'soutenance',
 		'dateSignature',
 		'moyenne',
 		'cote',

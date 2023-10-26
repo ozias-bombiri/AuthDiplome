@@ -37,12 +37,15 @@ class Parcours extends Model
 
 	protected $casts = [
 		'institution_id' => 'int',
-		'niveauEtude_id' => 'int'
+		'niveauEtude_id' => 'int',
+		'soutenance' => 'bool'
+		
 	];
 
 	protected $fillable = [
 		'intitule',
-		'credit',
+		'code',
+		'soutenance',
 		'domaine',
 		'mention',
 		'specialite',

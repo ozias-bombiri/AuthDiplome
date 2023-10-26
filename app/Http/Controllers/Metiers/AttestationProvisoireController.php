@@ -177,23 +177,33 @@ class AttestationProvisoireController extends Controller
     {
         $institution = Auth ::user()->institution;
         $inputs = $request->all();
+
+        //Enregistrement du résultat académique
         $input_resultat = [];
         $input_resultat['reference'] = "RES".time();
         $input_resultat['soutenance'] = false;
         $input_resultat['dateSignature'] = date('Y-m-d');
+        $input_resultat['dateSignature'] = $inputs['dateSignature'];
         $input_resultat['cote'] = $inputs['cote'];
         $input_resultat['moyenne'] = $inputs['moyenne'];
         $input_resultat['session'] = $inputs['sessionr'];
-        $input_resultat['dateSoutenance'] = $inputs['dateSoutenance'];
+        $parcours = $this->parcoursRepository->find($inputs['parcours_id']);
+        if($parcours->soutenance){
+            $input_resultat['dateSoutenance'] = $inputs['dateSoutenance'];
+        }
+        else {
+            $input_resultat['dateSoutenance'] = null;
+        }
         $input_resultat['impetrant_id'] = $inputs['impetrant'];
         $input_resultat['parcours_id'] = $inputs['parcours_id'];
         $input_resultat['anneeAcademique_id'] = $inputs['annee_id'];
         $resultat = $this->resultatRepository->create($input_resultat);
-        $parcours = $this->parcoursRepository->find($inputs['parcours_id']);
+
+        //Création de l'attestation
         $input_attestation = [];
         $input_attestation['reference'] = "AP".time(); 
         $input_attestation['intitule'] = "ATTESTATION PROVISOIRE DE ".strtoupper($parcours->niveau_etude->intitule);
-        $input_attestation['dateSignature'] = date('Y-m-d');
+        $input_attestation['dateSignature'] = $inputs['dateSignature'];
         $input_attestation['dateCreation'] = date('Y-m-d');
         $input_attestation['statutGeneration'] = false;
         $input_attestation['resultatAcademique_id'] = $resultat->id;
@@ -242,6 +252,7 @@ class AttestationProvisoireController extends Controller
                     ->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
+        $customPaper = array(0,0,600.00,310.80);
         $pdf->setPaper('A4', 'portrait');
         
         

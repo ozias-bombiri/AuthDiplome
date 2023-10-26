@@ -29,6 +29,7 @@ class NiveauEtude extends Model
 
 	protected $fillable = [
 		'intitule',
+		'credit',
 		'description'
 	];
 

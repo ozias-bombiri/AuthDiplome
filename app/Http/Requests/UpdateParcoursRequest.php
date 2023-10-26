@@ -22,8 +22,9 @@ class UpdateParcoursRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code'=> 'required|string',
             'intitule' => 'required|string',
-            'credit'  => 'required|string',
+            'soutenance'  => 'required',
             'domaine'  => 'required|string',
             'mention'  => 'required|string',
             'specialite'  => 'required|string',

@@ -22,6 +22,7 @@ class StoreInstitutionRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'code'=> 'required|string',
             'sigle' =>'required|string',
             'denomination' =>   'required|string',
             'telephone'    =>   'required|string',

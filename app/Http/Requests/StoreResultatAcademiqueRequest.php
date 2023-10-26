@@ -23,8 +23,7 @@ class StoreResultatAcademiqueRequest extends FormRequest
     {
         return [
             'reference' => 'required|string',
-            'soutenance' => 'required|string',
-            'dateSignaure' => 'required|string',
+            'dateSignature' => 'required|string',
             'moyenne' => 'required|string',
             'cote' => 'required|string',
             'session' => 'required|string',

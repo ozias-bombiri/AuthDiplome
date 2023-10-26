@@ -34,7 +34,7 @@ class AttestationDefinitive extends Model
 	protected $table = 'attestation_definitives';
 
 	protected $casts = [
-		'dateSignaure' => 'datetime',
+		'dateSignature' => 'datetime',
 		'dateCreation' => 'datetime',
 		'resultatAcademique_id' => 'int',
 		'signataire_id' => 'int',
@@ -43,7 +43,7 @@ class AttestationDefinitive extends Model
 
 	protected $fillable = [
 		'intitule',
-		'dateSignaure',
+		'dateSignature',
 		'reference',
 		'dateCreation',
 		'lieuCreation',
