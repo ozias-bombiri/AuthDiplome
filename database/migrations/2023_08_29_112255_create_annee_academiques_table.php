@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('intitule', 20);
             $table->string('debut', 20);
             $table->string('fin', 20);
+            $table->enum('statut', ['encours', 'active', 'archive'])->default('active');
             $table->timestamps();
         });
     }

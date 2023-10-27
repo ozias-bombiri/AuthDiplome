@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('signataires', function (Blueprint $table) {
             $table->id();
+            $table->enum('statut', ['active', 'desactive'])->default('desactive');
+            $table->date('debut')->nullable();
+            $table->date('fin')->nullable();
             $table->string('nom', 30);
             $table->string('prenom', 100);
             $table->string('nip', 50);

@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Institution;
+use App\Models\Timbre;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class InstitutionPolicy
+class TimbrePolicy
 {
     /**
      * Determine whether the user can view any models.
@@ -19,11 +19,9 @@ class InstitutionPolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Institution $institution): bool
+    public function view(User $user, Timbre $timbre): bool
     {
-        return $user->hasRole(['admin', 'superAdmin']) 
-            || $user->institution_id ===  $institution->id 
-            || $user->institution_id ===  $institution->parent_id;
+        return $user->hasRole(['admin', 'superAdmin']) || $user->institution_id === $timbre->institution_id;
     }
 
     /**
@@ -37,23 +35,23 @@ class InstitutionPolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Institution $institution): bool
+    public function update(User $user, Timbre $timbre): bool
     {
-        return $user->hasRole(['admin', 'superAdmin']) or $user->institution_id ===  $institution->id;
+        return $user->hasRole(['admin', 'superAdmin']) || $user->institution_id === $timbre->institution_id;
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Institution $institution): bool
+    public function delete(User $user, Timbre $timbre): bool
     {
-        return $user->hasRole(['admin', 'superAdmin']);
+        return $user->hasRole(['admin', 'superAdmin']) || $user->institution_id === $timbre->institution_id;
     }
 
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Institution $institution): bool
+    public function restore(User $user, Timbre $timbre): bool
     {
         return $user->hasRole(['superAdmin']);
     }
@@ -61,7 +59,7 @@ class InstitutionPolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Institution $institution): bool
+    public function forceDelete(User $user, Timbre $timbre): bool
     {
         return $user->hasRole(['superAdmin']);
     }

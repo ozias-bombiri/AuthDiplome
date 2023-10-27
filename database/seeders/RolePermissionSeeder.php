@@ -65,14 +65,14 @@ class RolePermissionSeeder extends Seeder
          }
         
         $roles = [
-            'SuperAdmin',
-            'Admin',
-            'Direction',
-            'Daoi',
-            'Authentification'
+            'superAdmin',
+            'admin',
+            'direction',
+            'daoi',
+            'authentification'
         ];
         //Role admin         
-        $adminRole = Role::create(['name' => 'Admin']);
+        $adminRole = Role::create(['name' => 'admin']);
         $adminRole->givePermissionTo([
             'create-users',
             'edit-users',
@@ -94,7 +94,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         //Role direction pour l'émission des attestation provisoires
-        $directionRole = Role::create(['name' => 'Direction']);
+        $directionRole = Role::create(['name' => 'direction']);
         $directionRole->givePermissionTo([
             'create-parcours',
             'edit-parcours',
@@ -109,7 +109,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         //Role daoi pour l'émission des attestations définitives et des diplômes
-        $daoiRole = Role::create(['name' => 'Daoi']);
+        $daoiRole = Role::create(['name' => 'daoi']);
         $daoiRole->givePermissionTo([
 
             'create-attestation-definitives',
@@ -123,7 +123,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Role authentification pour l'authentification des documents
-        $authentificationRole = Role::create(['name' => 'Authentification']);
+        $authentificationRole = Role::create(['name' => 'authentification']);
         $authentificationRole->givePermissionTo([
 
             'check-attestation-provisoires',
@@ -133,7 +133,7 @@ class RolePermissionSeeder extends Seeder
         ]);
         
         
-        $role_superadmin = Role::where('name', 'SuperAdmin')->first();
+        $role_superadmin = Role::where('name', 'superAdmin')->first();
      
         $all_permissions = Permission::pluck('id','id')->all();
    

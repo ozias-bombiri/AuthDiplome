@@ -13,16 +13,17 @@ class AttestationProvisoirePolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true ;
     }
 
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, AttestationProvisoire $attestation): bool
+    public function view(User $user, AttestationProvisoire $attestationProvisoire): bool
     {
         //seul les utilisateurs de l'etablissement emetteur et ceux ayant le role admin ou authentification peuvent voir
-        return ($user->hasRole(['admin', 'authentification']) or $user->institution->id === $attestation->signataire->institution_id );
+        return ($user->hasRole(['admin', 'authentification']) ||
+            $user->institution->id === $attestationProvisoire->signataire->institution_id );
     }
 
     /**
@@ -30,7 +31,7 @@ class AttestationProvisoirePolicy
      */
     public function create(User $user): bool
     {
-        return $user->hasRole(['direction']) ;
+        return $user->hasRole(['direction', 'admin', 'superAdmin']) ;
     }
 
     /**
@@ -38,7 +39,8 @@ class AttestationProvisoirePolicy
      */
     public function update(User $user, AttestationProvisoire $attestationProvisoire): bool
     {
-        //
+        return ($user->hasRole(['daoi', 'admin', 'superAdmin', 'authentification']) ||
+            $user->institution->id === $attestationProvisoire->signataire->institution_id );
     }
 
     /**
@@ -46,7 +48,7 @@ class AttestationProvisoirePolicy
      */
     public function delete(User $user, AttestationProvisoire $attestationProvisoire): bool
     {
-        //
+        return $user->hasRole(['direction', 'admin', 'superAdmin']) ;
     }
 
     /**
@@ -54,7 +56,7 @@ class AttestationProvisoirePolicy
      */
     public function restore(User $user, AttestationProvisoire $attestationProvisoire): bool
     {
-        //
+        return $user->hasRole(['superAdmin']) ;
     }
 
     /**
@@ -62,6 +64,6 @@ class AttestationProvisoirePolicy
      */
     public function forceDelete(User $user, AttestationProvisoire $attestationProvisoire): bool
     {
-        //
+        return $user->hasRole(['superAdmin']) ;
     }
 }
