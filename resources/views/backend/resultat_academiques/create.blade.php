@@ -34,9 +34,9 @@
                     <div class="form-group row py-2">
                         <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
                         <div class="col">
-                            <select class="form-control" id="etablissement" name="etudiant_id" required>
+                            <select class="form-control" id="impetrant_id" name="impetrant_id" required>
                                 @foreach( $etudiants as $etudiant)
-                                <option value="{{ $etudiant->id}}">{{ $etudiant->sigle }}</option>
+                                <option value="{{ $etudiant->id}}">{{ $etudiant->nom }} {{ $etudiant->prenom }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -54,11 +54,11 @@
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Année académique</label>
                         <div class="col">
                             <select class="form-control" id="parcour" name="anneeAcademique_id" required>
                                 @foreach( $anneeAcademiques as $anneeAcademique)
-                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->sigle }}</option>
+                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->intitule }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -80,9 +80,9 @@
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="dateSignaure" class="col-sm-2 col-form-label">Date de signature</label>
+                        <label for="dateSignature" class="col-sm-2 col-form-label">Date de signature</label>
                         <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSignaure" name="dateSignaure" placeholder="..." required>
+                            <input type="date" class="form-control form-control" id="dateSignature" name="dateSignature" placeholder="..." required>
                         </div>
                     </div>
 
