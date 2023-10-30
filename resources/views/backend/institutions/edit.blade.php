@@ -1,29 +1,35 @@
-@extends('includes.master')
+@extends('layouts.ample')
 
-@section('contenu')
-<div class="row justify-content-center">
-    <div class="col-md-10">
-        <div class="card mt-3">
-            <div class="card-header">
-                <h4>{{ __('Modifier une institution') }}</h4>
-            </div>
+@section('page-title')
+{{ __('Modifier une institution') }}
+@endsection
 
-            <div class="card-body">
-                <div class="row my-3">
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
+@section('content')
+
+<div class="row my-3">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            <div class="d-md-flex mb-3">
+                <h3 class="box-title mb-0">{{ __('Modifier une institution') }}</h3>
+                <div class="">
+
                 </div>
-                
-                <div class="row my-3">
-                    <div class="col-10 offset-1">
-                        <form method="post"  action="{{ route('institutions.update', $institution->id) }}" enctype="multipart/form-data">
+            </div>
+            <div class="">
+            <form method="post"  action="{{ route('institutions.update', $institution->id) }}" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
                             <div class="form-group row py-2">
@@ -114,21 +120,27 @@
                             </div>
 
                         </form>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 </div>
 
 @endsection
+
 @push('costum-scripts')
 <script type="module">
-    $('#type').change(function(){
-        if(this.selectedIndex != 0){
-            $('#parent').required = true;
-            console.log('ok');
+    $(document).on('change', '#type', function parent_type() {
+        var selecthtml = $('#type');
+        var selected = this.options[this.selectedIndex].value;
+        if (selected == 'IESR') {
+            $('#parent').val = "";
+            $('#parent').prop('disabled', true)
+        } else {
+            $('#parent').prop('disabled', false);
+            $('#parent').prop('required', true);
         }
+
     });
 </script>
 @endpush
+

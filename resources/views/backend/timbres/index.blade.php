@@ -27,7 +27,7 @@ Timbres
         <div class="white-box">
             <h3 class="box-title">Timbres </h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('timbres.create') }}"> Créer un utilisateur </a>
+                <a class="btn btn-success" href="{{ route('timbres.create') }}"> Ajouter </a>
                 
             </div>
             <div class="table-responsive">

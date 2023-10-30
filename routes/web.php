@@ -43,7 +43,6 @@ require __DIR__.'/auth.php';
 Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', App\Http\Controllers\Backend\UserController::class);
-    Route::resource('products', ProductController::class);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

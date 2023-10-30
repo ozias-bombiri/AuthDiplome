@@ -1,31 +1,35 @@
-@extends('includes.master')
+@extends('layouts.ample')
 
-@section('contenu')
-<div class="row justify-content-center">
-    <div class="col-md-10">
+@section('page-title')
+{{ __('Modifier un niveau d\'étude') }}
+@endsection
 
-        <div class="card mt-3">
-            <div class="card-header">
-                <h4>{{ __('Ajouter un niveau d\'étude') }}</h4>
+@section('content')
+
+<div class="row my-3">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="white-box">
+            <div class="d-md-flex mb-3">
+                <h3 class="box-title mb-0">{{ __('Modifier un niveau d\'étude') }}</h3>
+                <div class="">
 
                 </div>
-
-            <div class="card-body">
-
-                <div class="row my-3">
-                    @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    @endif
-                </div>
-
-                <div class="row my-3">
-                    <form method="post" action="{{ route('niveau_etudes.update', $niveau->id) }}">
+            </div>
+            <div class="">
+            <form method="post" action="{{ route('niveau_etudes.update', $niveau->id) }}">
                         @method('PUT')
                         @csrf
                         <div class="form-group row py-2">
@@ -59,15 +63,14 @@
                         </div>
     
                     </form>
-
-                </div>
-
             </div>
         </div>
     </div>
 </div>
+
 @endsection
 
 @push('costum-scripts')
 
 @endpush
+

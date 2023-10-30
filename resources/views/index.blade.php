@@ -7,7 +7,7 @@
                     
                 </div>
             </div>
-            <div class="table-responsive">
+            <div class="">
                 
             </div>
         </div>
