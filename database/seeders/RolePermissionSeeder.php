@@ -146,7 +146,6 @@ class RolePermissionSeeder extends Seeder
             'password' => Hash::make('admin')
         ]);
         $admin->assignRole([$role_superadmin->id]);
-
         
     }
 }
