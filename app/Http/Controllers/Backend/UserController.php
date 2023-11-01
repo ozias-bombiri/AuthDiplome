@@ -55,20 +55,24 @@ class UserController extends Controller
      * Store a newly created resource in storage.
      */
 
-     public function store(Request $request)
+     public function store(StoreUserRequest $request)
      {
-         $this->validate($request, [
-             'name' => 'required',
-             'email' => 'required|email|unique:users,email',
-             //'password' => 'required|same:confirm-password',
-             'password' => ['required', 'string', 'min:5', 'confirmed'],
-             'roles' => 'required'
-         ]);
-     
+         $validated =  $request->validated();     
          $input = $request->all();
-         
          $user = $this->modelRepository->create($input);
-         $user->assignRole($request->input('roles'));
+         $type = $input['type'];
+         if($type == 1){
+            $user->assignRole('direction');
+         }
+         elseif($type ==2){
+            $user->assignRole('daoi');
+         }
+         elseif($type ==3){
+            $user->assignRole('authentification');
+         }
+         elseif($type ==4){
+            $user->assignRole('admin');
+         }
          return redirect()->route('users.index')
                          ->with('success','User created successfully');
      }
@@ -142,15 +146,9 @@ class UserController extends Controller
      * Update the specified resource in storage.
      */
 
-     public function update(Request $request, $id)
+     public function update(UpdateUserRequest $request, $id)
      {
-         $this->validate($request, [
-             'name' => 'required',
-             'email' => 'required|email|unique:users,email,'.$id,
-             'password' => ['required', 'string', 'min:5', 'confirmed'],
-             //'password' => 'same:confirm-password',
-             'roles' => 'required'
-         ]);
+        $validated =  $request->validated(); 
      
          $input = $request->all(); 
                  

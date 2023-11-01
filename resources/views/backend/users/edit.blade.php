@@ -32,57 +32,45 @@
                 <form method="POST" action="{{ route('users.update', $user->id) }}">
                     {{ csrf_field() }}
                     {{ method_field('PUT') }}
-                    <div class="form-group row py-2">
-                        <label for="iesr" class="col-sm-2 col-form-label">Institution</label>
-                        <div class="col">
-                            <select class="form-control" id="iesr" name="institution_id" required>
-                                <option value="">Choisir</option>
-                                @foreach( $institutions as $institution)
-                                <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
 
                     <div class="form-group row py-2">
-                        <label for="nom" class="col-sm-2 col-form-label">Name</label>
+                        <label for="nom" class="col-sm-2 col-form-label">Nom</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="nom" name="name" value="{{ $user->name}}" required>
+                            <input type="text" class="form-control" id="nom" name="nom" value="{{ $user->nom}}" required>
                         </div>
                     </div>
-
+                    <div class="form-group row py-2">
+                        <label for="prenom" class="col-sm-2 col-form-label">Prénom</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="prenom" name="prenom" value="{{ $user->prenom}}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="telephone" class="col-sm-2 col-form-label">Téléphone</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="telephone" name="telephone" value="{{ $user->telephone}}" required>
+                        </div>
+                    </div>
                     <div class="form-group row py-2">
                         <label for="prenom" class="col-sm-2 col-form-label">Email</label>
                         <div class="col">
                             <input type="email" class="form-control" id="email" name="email" value="{{ $user->email}}" required>
                         </div>
                     </div>
-
                     <div class="form-group row py-2">
-                        <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
+                        <label for="roles" class="col-sm-2 col-form-label">Role</label>
                         <div class="col">
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="password" class="col-sm-2 col-form-label">Confimer mot de passe</label>
-                        <div class="col">
-                            <input type="password" class="form-control" id="confirm-password" name="password_confirmation" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="type" class="col-sm-2 col-form-label">Role</label>
-                        <div class="col">
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-
-                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-                                </div>
-                            </div>
-
-
+                        <select class="form-control" name="roles" required disabled>
+                        <option value="" selected hidden disabled>Choisir un rôle</option>
+                            @foreach($roles as $role)
+                            @if(count($user->roles)>0)
+                            <option value="{{ $role }}" @if($role==$user->roles[0]->name) selected @endif> {{ $role }}</option>
+                            @else
+                            <option value="{{ $role }}"> {{ $role }}</option>
+                            @endif
+                            @endforeach
+                        </select>
                         </div>
                     </div>
                     <div class="row py-4">
@@ -95,7 +83,6 @@
                         </div>
 
                     </div>
-
                 </form>
 
             </div>

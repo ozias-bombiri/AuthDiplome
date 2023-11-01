@@ -18,7 +18,9 @@ class UserRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'name',
+        'nom',
+        'prenom',
+        'telephone',
 		'email',
 		'email_verified_at',
 		'password',
@@ -46,7 +48,7 @@ class UserRepository extends BaseRepository
     }
 
     public function all($search = [], $skip = null, $limit = null, $columns = ['*']){
-        $columns = ['id', 'name', 'email', 'statut', 'institution_id', ];
+        $columns = ['id', 'nom', 'prenom', 'telephone', 'email', 'statut', 'institution_id', ];
         $query = $this->allQuery($search, $skip, $limit);
 
         return $query->get($columns);
@@ -54,7 +56,7 @@ class UserRepository extends BaseRepository
 
     public function create($input)
     {
-        $input['password'] = Hash::make($input['password']);
+        $input['password'] = Hash::make('Password');
      
         return User::create($input);
         
@@ -62,11 +64,11 @@ class UserRepository extends BaseRepository
 
     public function update($input, $id)
     {
-        if(!empty($input['password'])){ 
-            $input['password'] = Hash::make($input['password']);
-        }else{
-            $input = Arr::except($input,array('password'));    
-        }
+        // if(!empty($input['password'])){ 
+        //     $input['password'] = Hash::make($input['password']);
+        // }else{
+        //     $input = Arr::except($input,array('password'));    
+        // }
         $user = User::find($id);
         $user->update($input);
 

@@ -31,22 +31,48 @@
             <div class="">
                 <form method="post" action="{{ route('users.store') }}">
                     @csrf
+
                     <div class="form-group row py-2">
-                        <label for="iesr" class="col-sm-2 col-form-label">Institution</label>
+                        <label for="type" class="col-sm-2 col-form-label">Type d'utilisateur</label>
                         <div class="col">
-                            <select class="form-control" id="iesr" name="institution_id" required>
-                                <option value="">Choisir</option>
+                            <select class="form-control" id="type" name="type"  required>
+                                <option value="" selected  hidden disabled>Choisir</option>
+                                
+                                <option value="1">Gestion d'attestations provisoires</option>
+                                <option value="2">Gestion d'attestations définitives et diplomes</option>
+                                <option value="3">Gestion des authentifications</option>
+                                <option value="4">Administrateur</option>                                
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="institution" class="col-sm-2 col-form-label">Institution</label>
+                        <div class="col">
+                            <select class="form-control" id="institution" name="institution_id" required>
+                                <option value="" selected hidden disabled>Choisir</option>
                                 @foreach( $institutions as $institution)
-                                <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>
+                                <option value="{{ $institution->id}}" class="institutionOption {{ $institution->type}}">{{ $institution->sigle }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="nom" class="col-sm-2 col-form-label">Name</label>
+                        <label for="nom" class="col-sm-2 col-form-label">Nom</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="nom" name="name" placeholder=" ..." required>
+                            <input type="text" class="form-control" id="nom" name="nom" placeholder=" ..." required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="prenom" class="col-sm-2 col-form-label">Prénom</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="prenom" name="prenom" placeholder=" ..." required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="telephone" class="col-sm-2 col-form-label">Téléphone</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="telephone" name="telephone" placeholder=" ..." required>
                         </div>
                     </div>
 
@@ -55,41 +81,8 @@
                         <div class="col">
                             <input type="email" class="form-control" id="email" name="email" placeholder=" ..." required>
                         </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="password" class="col-sm-2 col-form-label">Mot de passe</label>
-                        <div class="col">
-                            <input type="password" class="form-control" id="password" name="password" required>
-                        </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="password" class="col-sm-2 col-form-label">Confimer mot de passe</label>
-                        <div class="col">
-                            <input type="password" class="form-control" id="confirm-password" name="password_confirmation" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="type" class="col-sm-2 col-form-label">Role</label>
-                        <div class="col">
-
-                            <div class="col-xs-12 col-sm-12 col-md-12">
-                                <div class="form-group">
-
-                                    {!! Form::select('roles[]', $roles,[], array('class' => 'form-control','multiple')) !!}
-                                </div>
-                            </div>
-                            <!--
-                                    <select class="form-control" id="role" name="role">
-                                        <option value="" disabled selected>choisir ...</option>
-                                        @foreach( $roles as $role)
-                                            <option value="{{ $role}}">{{ $role }}</option>
-                                        @endforeach
-                                    </select>
-                                  -->
-                        </div>
-                    </div>
+                    </div>                    
+        
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">
@@ -111,5 +104,39 @@
 @endsection
 
 @push('costum-scripts')
+
+<script type="module">
+    $(document).on('change', '#type', function () {
+        var selecthtml = $('#type');
+        var selected = this.options[this.selectedIndex].value;
+        if (selected == '1') {
+            $('#institution').val = "";
+            $('#institution').prop('disabled', false) ;
+            $('.institutionOption').prop('hidden', false) ;
+            $('.IESR').prop('hidden', true);
+            
+        } else if (selected ==2)
+        {
+            $('.institutionOption').prop('hidden', false);
+            
+            $('.Ecole, .Institut, .UFR').prop('hidden', true);
+        }
+        else if (selected ==3)
+        {
+            $('.institutionOption').prop('hidden', false);
+            $('.IESR').prop('hidden', false);
+            $('#institution').prop('disabled', true);
+            //$('#institution').prop('required', true);
+        }
+        else if (selected ==4)
+        {
+            $('.institutionOption').prop('hidden', false);
+            $('.IESR').prop('hidden', false);
+            $('#institution').prop('disabled', true);
+            //$('#parent').prop('required', true);
+        }
+
+    });
+</script>
 
 @endpush

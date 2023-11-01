@@ -26,7 +26,7 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <h3 class="box-title">Utilisateurs </h3>
-            <div class="col-2 offset-10 mb-5">
+            <div class="col-4 offset-6 mb-5">
                 <a class="btn btn-success" href="{{ route('users.create') }}"> Créer un utilisateur </a>
                 <a class="btn btn-success" href="{{ route('roles.index') }}"> Voir les roles</a>
             </div>
@@ -35,8 +35,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Name</th>
+                            <th>Nom Prénom</th>
                             <th>Email</th>
+                            <th>Institution</th>
                             <th>Roles</th>
                             <th>Statut</th>
                             <th width="200px">Action</th>
@@ -46,8 +47,10 @@
                         @foreach ($utilisateurs as $utilisateur)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $utilisateur->name }}</td>
+                            <td>{{ $utilisateur->nom }} {{ $utilisateur->prenom }}</td>
                             <td>{{ $utilisateur->email }}</td>
+                            <td> @if(!empty($utilisateur->institution)) {{ $utilisateur->institution->sigle }} @else - @endif
+                            
                             <td>
 
                                 @if(!empty($utilisateur->getRoleNames()))
