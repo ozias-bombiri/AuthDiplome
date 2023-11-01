@@ -110,5 +110,7 @@ Route::group(['middleware' =>['auth', 'role:authentification']], function(){
     ->name('metiers.auth.index');
     Route::post('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'rechercher'])
     ->name('metiers.auth.recherche');
+    Route::get('/authentification/view/{categorie}/{document}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'visualiser'])
+    ->name('metiers.auth.visualiser');
 });
 
