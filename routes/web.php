@@ -67,7 +67,7 @@ Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
 // Route::resource('users', App\Http\Controllers\Backend\UserController::class);
 // Route::resource('roles', RoleController::class);
 
-Route::group(['middleware' => ['auth', 'role:direction|admin']], function() {
+Route::group(['middleware' => ['auth', 'role:direction']], function() {
     Route::get('d/parcours/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listParcours'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.parcours-list');
     Route::get('d/parcours/add/', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addParcours'])

@@ -24,7 +24,7 @@ class ResultatAcademiqueRepository extends BaseRepository
 		'cote',
 		'session',
 		'dateSoutenance',
-		'etudiant_id',
+		'impetrant_id',
 		'parcours_id',
 		'anneeAcademique_id',
 		'document_id'

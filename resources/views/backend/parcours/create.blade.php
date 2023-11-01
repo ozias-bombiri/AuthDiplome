@@ -42,6 +42,12 @@
                         </div>
                     </div>
                     <div class="form-group row py-2">
+                        <label for="code" class="col-sm-2 col-form-label">Code du parcours</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="code" name="code" placeholder="..." required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
                         <label for="intitule" class="col-sm-2 col-form-label">Intitulé du parcours</label>
                         <div class="col">
                             <input type="text" class="form-control" id="intitule" name="intitule" placeholder="Lettres modernes" required>

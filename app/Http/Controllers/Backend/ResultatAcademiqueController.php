@@ -18,11 +18,11 @@ class ResultatAcademiqueController extends Controller
     private $parcoursRepository;
     private $anneeAcademiqueRepository;
 
-    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, ImpetrantRepository $impetrantRepo,ParcoursRepository $pacoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
+    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, ImpetrantRepository $impetrantRepo,ParcoursRepository $parcoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
     {
         $this->modelRepository = $ResultatAcademiqueRepo;
         $this->impetrantRepository = $impetrantRepo;
-        $this->parcoursRepository = $pacoursRepo;
+        $this->parcoursRepository = $parcoursRepo;
         $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
     }
     /**

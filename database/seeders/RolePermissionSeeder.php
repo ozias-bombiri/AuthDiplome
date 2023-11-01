@@ -132,6 +132,7 @@ class RolePermissionSeeder extends Seeder
             'generate-rapport'
         ]);
         
+        $superAdminRole = Role::create(['name' => 'superAdmin']);
         
         $role_superadmin = Role::where('name', 'superAdmin')->first();
      
@@ -145,7 +146,6 @@ class RolePermissionSeeder extends Seeder
             'password' => Hash::make('admin')
         ]);
         $admin->assignRole([$role_superadmin->id]);
-
         
     }
 }
