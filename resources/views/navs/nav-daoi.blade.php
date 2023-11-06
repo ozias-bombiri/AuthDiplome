@@ -8,27 +8,27 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.attestationdef-list', auth()->user()->institution_id) }}" aria-expanded="false">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <span class="hide-menu">Profile</span>
+                <span class="hide-menu">Attestations definitives</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.parcours-list', auth()->user()->institution_id) }}" aria-expanded="false">
                 <i class="fa fa-table" aria-hidden="true"></i>
-                <span class="hide-menu">Basic Table</span>
+                <span class="hide-menu">Parcours de formation</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.etudiantattdef-list', auth()->user()->institution_id) }}" aria-expanded="false">
                 <i class="fa fa-font" aria-hidden="true"></i>
-                <span class="hide-menu">Icon</span>
+                <span class="hide-menu">Impetrants</span>
             </a>
         </li>
         <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
                 <i class="fa fa-globe" aria-hidden="true"></i>
-                <span class="hide-menu">Google Map</span>
+                <span class="hide-menu">Signataires</span>
             </a>
         </li>
         <li class="sidebar-item">

@@ -114,3 +114,43 @@ Route::group(['middleware' =>['auth', 'role:authentification']], function(){
     ->name('metiers.auth.visualiser');
 });
 
+
+Route::group(['middleware' =>['auth', 'role:daoi']], function(){
+    
+   
+    
+
+    Route::get('d/impetrantsattdef/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'listEtudiantsAttDef'])
+    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.etudiantattdef-list');
+    Route::get('d/impetrantsattdef/add/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'addEtudiant'])
+    ->name('metiers.etablissements.etudiantattdef-add');
+    Route::post('d/impetrantsattdef/store', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'storeEtudiant'])
+    ->name('metiers.etablissements.etudiantattdef-store');
+
+
+    Route::get('d/definitives/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'listAttestation'])
+    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.attestationdef-list');
+    Route::get('d/definitives/add/{institution_id}/{etudiant_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'addAttestation'])
+    ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.etablissements.attestationdef-add');
+    Route::post('d/definitives/store', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'storeAttestation'])
+    ->name('metiers.etablissements.attestationdef-store');
+    Route::get('d/definitives/view/{id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'viewAttestation'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.attestationdef-view');
+    Route::get('d/definitives/pdf/{id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'pdfAttestation'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.attestationdef-pdf');
+    Route::post('d/definitives/filtre/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'filtreAttestation'])
+    ->name('metiers.etablissements.attestationdef-filtre');
+    
+    
+    
+    
+    
+    
+    
+    Route::get('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'index'])
+    ->name('metiers.auth.index');
+    Route::post('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'rechercher'])
+    ->name('metiers.auth.recherche');
+    Route::get('/authentification/view/{categorie}/{document}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'visualiser'])
+    ->name('metiers.auth.visualiser');
+});

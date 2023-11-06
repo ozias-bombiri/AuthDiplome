@@ -304,6 +304,8 @@ class AttestationProvisoireController extends Controller
         
         $etudiants = $this->etudiantRepository->findByInstitution($institution->id);
         //$etudiants = $this->etudiantRepository->all();
+        
+        //dd($etudiants);
         return view('metiers.etablissements.list_etudiants', compact('etudiants', 'institution'));
     }
 

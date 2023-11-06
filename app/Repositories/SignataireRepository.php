@@ -46,4 +46,14 @@ class SignataireRepository extends BaseRepository
     {
         return Signataire::class;
     }
+
+    public function signataireAttesDef($institution_id)
+    {
+        $signataires = Signataire::select('id','nom','prenom')
+        ->where("typeDocument","=","Attestation Definitive")
+        ->where('institution_id','=',$institution_id)
+        ->get();
+
+        return $signataires;
+    }
 }
