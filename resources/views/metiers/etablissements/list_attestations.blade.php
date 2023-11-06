@@ -136,11 +136,11 @@
 <!-- Modal Details-->
 <div class="row my-3">
 
-    <div class="modal fade" id="exampleModal" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="exampleModal1" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Détails attestation</h5>
+                    <h5 class="modal-title" id="exampleModalLabel1">Détails attestation</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -157,32 +157,32 @@
                             <tbody>
                                 <tr>
                                     <td>Référence </td>
-                                    <td id="reference"></td>
+                                    <td id="reference1"></td>
                                 </tr>
                                 <tr>
                                     <td>Intitulé</td>
-                                    <td id="intitule"></td>
+                                    <td id="intitule1"></td>
                                 </tr>
                                 <tr>
                                     <td>Impétrant</td>
-                                    <td id="identifiant"></td>
+                                    <td id="identifiant1"></td>
                                 </tr>
 
                                 <tr>
                                     <td>Parcours de formation </td>
-                                    <td id="parcours"></td>
+                                    <td id="parcours1"></td>
                                 </tr>
                                 <tr>
                                     <td>Niveau d'étude </td>
-                                    <td id="niveau"></td>
+                                    <td id="niveau1"></td>
                                 </tr>
                                 <tr>
                                     <td>Institution </td>
-                                    <td id="institution"> </td>
+                                    <td id="institution1"> </td>
                                 </tr>
                                 <tr>
                                     <td>Résultats académiques </td>
-                                    <td id="sessionr">
+                                    <td id="sessionr1">
                                         Année académique : <br />
                                         Session : <br />
                                         Moyenne : <br />
@@ -289,14 +289,14 @@
                 // Function to call when to
                 // request is ok 
                 success: function(data) {
-                    $("#reference").text(data.result.reference);
-                    $("#intitule").text(data.result.intitule);
-                    $("#identifiant").text(data.result.impetrant);
-                    $("#parcours").text(data.result.parcours);
-                    $("#niveau").text(data.result.niveau);
-                    $("#institution").text(data.result.institution);
-                    $("#sessionr").text(data.result.sessionr);
-                    var myModal = new bootstrap.Modal($("#exampleModal"), {});
+                    $("#reference1").text(data.result.reference);
+                    $("#intitule1").text(data.result.intitule);
+                    $("#identifiant1").text(data.result.impetrant);
+                    $("#parcours1").text(data.result.parcours);
+                    $("#niveau1").text(data.result.niveau);
+                    $("#institution1").text(data.result.institution);
+                    $("#sessionr1").text(data.result.sessionr);
+                    var myModal = new bootstrap.Modal($("#exampleModal1"), {});
                     myModal.show();
                 },
 
