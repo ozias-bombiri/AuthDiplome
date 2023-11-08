@@ -56,4 +56,14 @@ class SignataireRepository extends BaseRepository
 
         return $signataires;
     }
+
+    // public function signataireAttesDef($institution_id, $typeDoc)
+    // {
+    //     $signataires = Signataire::select('id','nom','prenom')
+    //     ->where("typeDocument","=", $typeDoc)
+    //     ->where('institution_id','=',$institution_id)
+    //     ->get();
+
+    //     return $signataires;
+    // }
 }

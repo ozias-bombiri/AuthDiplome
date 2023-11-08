@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('attestation_definitives', function (Blueprint $table) {
             $table->id();
             $table->string('intitule', 100);
-            $table->date('dateSignaure');
+            $table->date('dateSignature');
             $table->string('reference', 50)->unique();
             $table->date('dateCreation');
             $table->string('lieuCreation');

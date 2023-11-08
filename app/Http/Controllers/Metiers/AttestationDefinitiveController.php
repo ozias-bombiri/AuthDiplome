@@ -100,7 +100,7 @@ class AttestationDefinitiveController extends Controller
         //$signataires = $this->signataireRepository->signataireAttesDef();
         //dd($signataires);
 
-        return view('metiers.etablissements.list_etudiants_att_def', compact('etudiants', 'institution'));
+        return view('metiers.daoi.list_etudiants_att_def', compact('etudiants', 'institution'));
 
 
     }
@@ -122,7 +122,7 @@ class AttestationDefinitiveController extends Controller
         else {
             $attestations = $this->attestationRepository->all();
         }
-        return view('metiers.etablissements.list_attestationsdef', compact('attestations', 'institution', 'annees', 'niveaux'));
+        return view('metiers.daoi.list_attestationsdef', compact('attestations', 'institution', 'annees', 'niveaux'));
     }
 
     public function filtreAttestation(Request $request)
@@ -268,7 +268,7 @@ class AttestationDefinitiveController extends Controller
         
         // set the PDF rendering options
         $customPaper = array(0,0,600.00,310.80);
-        $pdf->setPaper('A3', 'paysage');
+        //$pdf->setPaper('A4', 'portrait');
         
         
         return $pdf->stream(); 

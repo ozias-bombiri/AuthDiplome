@@ -44,6 +44,12 @@
         }
 
 
+        @page {
+            size: A4 landscape;
+            margin: 0;
+        }
+
+
         .wrapper {
             border: 1px solid black;
         }
@@ -73,7 +79,7 @@
         }
         #three {
             top: 0em;
-            left: 50em;
+            left: 57em;
             height: 7em;
             width: 15em;
         }
@@ -156,14 +162,23 @@
             width: 90%;
             height: 90%;
         }
-        .enteteDeno{
-            text-align: left;
-            margin-left: 0px;
+       
+        .header-left {
+            position: absolute;
+            top: 50px;
+            left: 50px;
         }
 
-        .enteteLic{
-            text-align: left;
-            
+        .header-right {
+            position: absolute;
+            top: 100px;
+            right: 100px;
+            left: 50px;
+        }
+
+        .title {
+            text-align: center;
+            margin-top: 300px; 
         }
 
     </style>
@@ -172,20 +187,23 @@
 
 <body>
 
-    <div class="wrapper">
+    <div class="wrappe">
 
         <!-- Timbre de l'institution -->
-        <div id="one" class="zone text-center enteteDeno">
+        <div id="one" class="zone header-left">
             <div> 
-                Dénomitation du Ministère <br/>
-                --------------- <br/>
-                Dénomitation de l'IESR <br/>
-                ---------<br/>
-                Dénomitation de l'établissement (UFR, Institut) <br/>
-                --------------- <br/>
-                Adresses (BP, téléphone, Email officielle, Site web) <br/><br/>
+                {{ $timbre->denomMinistere }} <br />
+                --------------- <br />
+                @if($institution->parent)
+                {{ $institution->parent->denomination }} <br />
+                ---------<br />
+                @endif
+                {{ $institution->denomination }} <br />
+                --------------- <br />
+                {{ $institution->adresse }} {{ $institution->telephone }} <br />
+                {{ $institution->email }} {{ $institution->siteWeb}}
 
-                N°«Num_Enr» MESRSI/SG/IESR/P/VP-EIP/DAOI
+             
             </div>
         </div>
         
@@ -199,7 +217,7 @@
 
         <!-- TIMBRE DU BURKINA FASO -->
 
-        <div id="three" class="zone text-center enteteBF">
+        <div id="three" class="zone">
             <div> 
                 BURKINA FASO <br/>
                 ------------- <br/>
@@ -237,7 +255,7 @@
 
         <!-- INFORMATIONS DETAILLEES IMPETRANT-->
 
-        <div id="seven" class="zone">
+        <div id="seven" class="zone header-left">
             <div>
                 
                 <p> 
@@ -262,7 +280,7 @@
         </div>
 
         <!-- PARCOURS -->
-        <div id="eight" class="zone enteteLic"> 
+        <div id="" class=" title"> 
             <div> 
                 <h2> LICENCE {{ strtoupper($parcours->intitule) }}</h2>
             </div>
@@ -270,7 +288,7 @@
 
         <!-- INFORMATIONS DETAILLEES DIPLOME-->
 
-        <div id="nine" class="zone">
+        <div id="nine" class="zone header-left">
             <div>
                 <p>
                             Domaine : {{ $parcours->domaine }} <br/>
@@ -284,7 +302,7 @@
 
         <!-- ANNONE JOUISSANCE -->
 
-        <div id="ten" class="zone">
+        <div id="ten" class="zone header-left">
 
             <div class="row">
                 <p>
@@ -306,7 +324,7 @@
 
         <div id="twelve" class="zone text-center">
 
-            <div class="col-6"> 
+            <div class="col-6 header-left"> 
                     QR code <br/>
                     <!--{!! QrCode::size(300)->backgroundColor(255,90,0)->generate('RemoteStack') !!} -->
                     <img id="qrcode" src="{{ $qrcode }}" alt="qr code"> 
@@ -336,7 +354,7 @@
         <!-- NOTA BENE -->
 
         <div id="fourteen" class="zone">
-            <div class="col-12 offet-2"> 
+            <div class="col-12 offet-2 header-left"> 
                 <b><u>Important : </u></b>
                 <ul> 
                     <li> l’attestation provisoire est valable un (1) an à partir de sa date de signature ;</li>
