@@ -69,6 +69,6 @@ class AttestationProvisoireRepository extends BaseRepository
     public function findByReference($reference){
         $attestation = AttestationProvisoire::where('reference', '=', $reference)
                         ->first();
-        return $attestation;        
+        return $attestation;
     }
 }

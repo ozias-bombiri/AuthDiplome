@@ -17,6 +17,7 @@ use App\Models\AttestationProvisoire;
 use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
 use App\Models\Impetrant;
+use App\Models\Signataire;
 use App\Models\Parcours;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -98,7 +99,10 @@ class AttestationDefinitiveController extends Controller
         // $resultAcaEtudiants = Impetrant::join('resultat_academiques', 'resultat_academiques.impetrant_id', '=', 'impetrants.id')
         
         //$signataires = $this->signataireRepository->signataireAttesDef();
-        //dd($signataires);
+        
+        
+
+        //dd($signataireTypeDoc);
 
         return view('metiers.daoi.list_etudiants_att_def', compact('etudiants', 'institution'));
 
@@ -159,7 +163,7 @@ class AttestationDefinitiveController extends Controller
     {
         $institution = $this->institutionRepository->find($institution_id);
         //$signataires = $institution->signataires;
-        $signataires = $this->signataireRepository->signataireAttesDef($institution->id);
+        $signataires = $this->signataireRepository->signataireAttesDef($institution->id, "Attestation Definitive");
         $annees = $this->anneeRepository->all();
         $parcours = $institution->parcours;
         //$etudiant = $this->etudiantRepository->find($etudiant_id);
@@ -187,7 +191,7 @@ class AttestationDefinitiveController extends Controller
             return response()->json(['result' =>$data]);
         }
         
-        return view('metiers.etablissements.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant', 'institution'));
+        return view('metiers.daoi.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant', 'institution'));
     }
 
     /**
@@ -225,7 +229,7 @@ class AttestationDefinitiveController extends Controller
         $attestation = $this->attestationRepository->create($input_attestation);
 
         
-        return redirect(route('metiers.etablissements.attestationdef-list', $institution->id ));
+        return redirect(route('metiers.daoi.attestationdef-list', $institution->id ));
     }
 
     /**
@@ -310,4 +314,29 @@ class AttestationDefinitiveController extends Controller
         return view('metiers.etablissements.view_attestation', compact('attestation'));
     }
 
+
+    /**
+     * Lister les signaitaires de l'établissement
+     **/
+    public function listSignataires($institution_id)
+    {
+        //$institution = Auth ::user()->institution;
+        $institution = $this->institutionRepository->find($institution_id);
+        $signataires = null;
+        if($institution && $institution->type !='IESR'){
+            $signataires = $institution->signataires;
+        }
+        else {
+            $signataires = $this->signataireRepository->all();
+        }
+        return view('metiers.etablissements.list_signataires', compact('signataires'));
+    }
+
+    /**
+     * Ajouter un signataire
+     **/
+   
+   
 }
+
+

@@ -28,7 +28,7 @@
         <div class="white-box">            
             <h3 class="box-title">Filtres</h3>
             <div class="table">
-                <form method="post" action="{{ route('metiers.etablissements.attestation-filtre') }}">
+                <form method="post" action="{{ route('metiers.daoi.attestationdef-filtre') }}">
                     @csrf
                     <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
 
@@ -74,7 +74,7 @@
                                 <button id="filtre" type="submit" class="btn btn-success">Afficher</button>
                             </div>
                             <div class="col-sm-3">
-                                <a class="btn btn-danger" href="{{ route('metiers.etablissements.attestation-list', $institution->id) }}"> Annuler filtre </a>
+                                <a class="btn btn-danger" href="{{ route('metiers.daoi.attestationdef-list', $institution->id) }}"> Annuler filtre </a>
                             </div>
 
                         </div>
@@ -117,7 +117,7 @@
                                 <button id="{{ $attestation->id }}" class="btn btn-info view action-btn" title="Détails">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
-                                <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestationdef-pdf', $attestation->id) }}">
+                                <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.daoi.attestationdef-pdf', $attestation->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                             </td>

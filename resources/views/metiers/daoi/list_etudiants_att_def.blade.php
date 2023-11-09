@@ -91,7 +91,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form method="post" action="{{ route('metiers.etablissements.etudiantattdef-store') }}">
+                    <form method="post" action="{{ route('metiers.daoi.etudiantattdef-store') }}">
                         @csrf
                         <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
                         <div class="form-group row py-2">
@@ -220,7 +220,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="container-fluid">
-                        <form method="post" action="{{ route('metiers.etablissements.attestationdef-store') }}">
+                        <form method="post" action="{{ route('metiers.daoi.attestationdef-store') }}">
                             @csrf
                             <fieldset class="border border-secondary px-4 py-3 my-2">
                                 <legend> Informations impétrant</legend>

@@ -47,23 +47,23 @@ class SignataireRepository extends BaseRepository
         return Signataire::class;
     }
 
-    public function signataireAttesDef($institution_id)
-    {
-        $signataires = Signataire::select('id','nom','prenom')
-        ->where("typeDocument","=","Attestation Definitive")
-        ->where('institution_id','=',$institution_id)
-        ->get();
-
-        return $signataires;
-    }
-
-    // public function signataireAttesDef($institution_id, $typeDoc)
+    // public function signataireAttesDef($institution_id)
     // {
-    //     $signataires = Signataire::select('id','nom','prenom')
-    //     ->where("typeDocument","=", $typeDoc)
+    //     $signataires = Signataire::select('id','nom','prenom','typeDocument')
+    //     ->where("typeDocument","=","Attestation Definitive")
     //     ->where('institution_id','=',$institution_id)
     //     ->get();
 
     //     return $signataires;
     // }
+
+    public function signataireAttesDef($institution_id, $typeDocument)
+    {
+        $signataires = Signataire::select('id','nom','prenom')
+        ->where("typeDocument","=", $typeDocument)
+        ->where('institution_id','=',$institution_id)
+        ->get();
+
+        return $signataires;
+    }
 }

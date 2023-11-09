@@ -121,28 +121,28 @@ Route::group(['middleware' =>['auth', 'role:daoi']], function(){
     
 
     Route::get('d/impetrantsattdef/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'listEtudiantsAttDef'])
-    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.etudiantattdef-list');
+    ->where('institution_id', '[0-9]+')->name('metiers.daoi.etudiantattdef-list');
     Route::get('d/impetrantsattdef/add/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'addEtudiant'])
-    ->name('metiers.etablissements.etudiantattdef-add');
+    ->name('metiers.daoi.etudiantattdef-add');
     Route::post('d/impetrantsattdef/store', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'storeEtudiant'])
-    ->name('metiers.etablissements.etudiantattdef-store');
+    ->name('metiers.daoi.etudiantattdef-store');
 
 
     Route::get('d/definitives/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'listAttestation'])
-    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.attestationdef-list');
+    ->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
     Route::get('d/definitives/add/{institution_id}/{etudiant_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'addAttestation'])
-    ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.etablissements.attestationdef-add');
+    ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.daoi.attestationdef-add');
     Route::post('d/definitives/store', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'storeAttestation'])
-    ->name('metiers.etablissements.attestationdef-store');
+    ->name('metiers.daoi.attestationdef-store');
     Route::get('d/definitives/view/{id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'viewAttestation'])
-    ->where('id', '[0-9]+')->name('metiers.etablissements.attestationdef-view');
+    ->where('id', '[0-9]+')->name('metiers.daoi.attestationdef-view');
     Route::get('d/definitives/pdf/{id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'pdfAttestation'])
-    ->where('id', '[0-9]+')->name('metiers.etablissements.attestationdef-pdf');
+    ->where('id', '[0-9]+')->name('metiers.daoi.attestationdef-pdf');
     Route::post('d/definitives/filtre/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'filtreAttestation'])
-    ->name('metiers.etablissements.attestationdef-filtre');
+    ->name('metiers.daoi.attestationdef-filtre');
     
     
-    
+  
     
     
     
