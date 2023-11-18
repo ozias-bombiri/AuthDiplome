@@ -54,6 +54,18 @@
                         </div>
                     </div>
                     <div class="form-group row py-2">
+                            <label for="code" class="col-sm-3 col-form-label">Code parcours</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="code" name="code" required>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="soutenance" class="col-sm-3 col-form-label">Parcours avec soutenance ?</label>
+                            <div class="col-sm-1">
+                                <input type="checkbox" class="" id="soutenance" name="soutenance" value="1">
+                            </div>
+                        </div>
+                    <div class="form-group row py-2">
                         <label for="domaine" class="col-sm-2 col-form-label">Domaine</label>
                         <div class="col">
                             <input type="text" class="form-control" id="domaine" name="domaine" placeholder=" ..." required>
@@ -71,13 +83,7 @@
                         <div class="col">
                             <input type="text" class="form-control" id="specialite" name="specialite" placeholder="..." required>
                         </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="soutenance" class="col-sm-2 col-form-label">Parcours avec soutenance ?</label>
-                        <div class="col-sm-1">
-                            <input type="checkbox" class="" id="soutenance" name="soutenance">
-                        </div>
-                    </div>
+                    </div>                    
                     <div class="form-group row py-2">
                         <label for="niveau" class="col-sm-2 col-form-label">Niveau d'étude</label>
                         <div class="col">
@@ -88,6 +94,7 @@
                             </select>
                         </div>
                     </div>
+                    
 
                     <div class="form-group row py-2">
                         <label for="description" class="col-sm-2 col-form-label">Description</label>
