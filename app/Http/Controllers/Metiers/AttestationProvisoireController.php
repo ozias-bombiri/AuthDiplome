@@ -87,7 +87,8 @@ class AttestationProvisoireController extends Controller
     **/
     public function storeParcours(Request $request)
     {
-        $input = $request->all();
+        $input = $request->all(); 
+        $input['soutenance'] = (isset($input['soutenance'])) ? true : false ;
         $institution = Auth::user()->institution;
         $parcours = $this->parcoursRepository->create($input);
         return redirect(route('metiers.etablissements.parcours-list', $institution->id));
@@ -252,9 +253,16 @@ class AttestationProvisoireController extends Controller
                     ->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
-        $customPaper = array(0,0,600.00,310.80);
+        //$customPaper = array(0,0,600.00,310.80);
         $pdf->setPaper('A4', 'portrait');
-        
+        $pdf->output();
+
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2,"Multiply");
+        $canvas->set_opacity(.2);
+        $canvas->page_text($width/5, $height/2, 'ATTESTATION PROVISOIRE', null, 30, array(0,0,0),2,2,-30);
         
         return $pdf->stream(); 
         

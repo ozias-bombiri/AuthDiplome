@@ -239,7 +239,7 @@
                                     <label for="annee" class="col-sm-2 col-form-label">Année académique</label>
                                     <div class="col">
                                         <select class="form-control" id="annee2" name="annee_id" required>
-                                            <option value="" disabled>Choisir </option>
+                                            <option value=""selected hidden disabled>Choisir </option>
 
                                         </select>
                                     </div>
@@ -249,7 +249,7 @@
                                     <label for="prenom" class="col-sm-2 col-form-label">Parcours</label>
                                     <div class="col">
                                         <select class="form-control" id="parcours2" name="parcours_id" required>
-                                            <option value="" selected>Choisir </option>
+                                            <option value="" selected hidden disabled >Choisir </option>
                                         </select>
                                     </div>
                                 </div>
@@ -258,6 +258,7 @@
                                     <label for="sexe" class="col-sm-2 col-form-label">Session </label>
                                     <div class="col">
                                         <select class="form-control" id="sessionr" name="sessionr" required>
+                                            <option value="" selected hidden disabled >Choisir </option>
                                             <option value="Normale">Normale </option>
                                             <option value="Rattrapage">Rattrapage </option>
                                             <option value="Spéciale">Spéciale </option>
@@ -267,13 +268,13 @@
                                 <div class="form-group row py-2">
                                     <label for="dateNaissance" class="col-sm-2 col-form-label">Date de soutenance</label>
                                     <div class="col">
-                                        <input type="date" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" placeholder="Date de soutenance" required>
+                                        <input type="date" min="2023-10-3" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" placeholder="Date de soutenance" required>
                                     </div>
                                 </div>
                                 <div class="form-group row py-2">
                                     <label for="lieuNaissance" class="col-sm-2 col-form-label">Moyenne</label>
                                     <div class="col">
-                                        <input type="number" step="0.01" class="form-control form-control" id="moyenne" name="moyenne" required>
+                                        <input type="number" min="0.0" max="20.0" step="0.10" class="form-control form-control" id="moyenne" name="moyenne" required>
                                     </div>
                                 </div>
                                 <div class="form-group row py-2">
@@ -290,7 +291,7 @@
                                     <label for="prenom" class="col-sm-2 col-form-label">Signataire</label>
                                     <div class="col">
                                         <select class="form-control" id="signataire2" name="signataire" required>
-                                            <option value="" disabled>Choisir </option>
+                                            <option value="" selected hidden disabled>Choisir </option>
 
                                         </select>
                                     </div>
@@ -298,7 +299,7 @@
                                 <div class="form-group row py-2">
                                     <label for="dateSignature" class="col-sm-2 col-form-label">Date de signature</label>
                                     <div class="col">
-                                        <input type="date" class="form-control form-control" id="dateSignature" name="dateSignature" required>
+                                        <input type="date" min="now()" class="form-control form-control" id="dateSignature" name="dateSignature" required>
                                     </div>
                                 </div>
                                 <div class="form-group row py-2">

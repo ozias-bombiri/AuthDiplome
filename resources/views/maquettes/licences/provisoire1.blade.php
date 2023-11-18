@@ -21,8 +21,11 @@
 
     <style type="text/css" media="screen">
         @page {
-           margin-left: 4em;
-           margin-right: 4em;
+            /*596 X 842 en 100 dpi */
+            width: 596px;
+            height: 842px;
+            margin: 70px 95px; /* 2300 x 3318 pour le contenu de la page */
+           
         }
 
         .zone {
@@ -31,6 +34,36 @@
             position: fixed;
             padding: 0.1em;
         }
+        .w-full {
+            width: 456px;
+        }
+
+        .w-1_2 {
+            width: 298px;
+        }
+
+        .w-1_3 {
+            width: 165px;
+        }
+
+        .w-2_3 {
+            width: 330px;
+        }
+
+        .w-1_4 {
+            width: 149px;
+        }
+
+        .w-1_5 {
+            width: 120px;
+        }
+        .w-2_5 {
+            width: 240px;
+        }
+
+        .w-3_5 {
+            width: 360px;
+        }
 
         .text-center {
             text-align: center;
@@ -38,24 +71,24 @@
 
         /* Timbre */
         #one {
-
+            left: 0px;
             height: 10em;
-            width: 20em;
+            /* width: 20em; */
         }
 
         /* Logo */
         #two {
-            left: 21em;
+            left: 298px;
             height: 10em;
-            width: 7em;
+            /* width: 7em; */
 
         }
 
         /* Timbre burkina */
         #three {
-            left: 29em;
+            right: 0px;
             height: 10em;
-            width: 15em;
+            /* width: 15em; */
         }
 
         /* Intitule document */
@@ -154,7 +187,7 @@
     <div class="wrapper">
 
         <!-- Timbre de l'institution -->
-        <div id="one" class="zone text-center">
+        <div id="one" class="zone w-1_2">
             <div>
                 {{ $timbre->denomMinistere }} <br />
                 --------------- <br />
@@ -171,7 +204,7 @@
         </div>
 
         <!-- LOGO DE L'INSTITUTION -->
-        <div id="two" class="zone text-center">
+        <div id="two" class="zone text-center w-1_4">
             <div>
 
                 <img id="logo" src="{{ $logo }}" alt="logo">
@@ -180,7 +213,7 @@
 
         <!-- TIMBRE DU BURKINA FASO -->
 
-        <div id="three" class="zone text-center">
+        <div id="three" class="zone text-center w-1_4">
             <div>
                 BURKINA FASO <br />
                 ------------- <br />
@@ -191,7 +224,7 @@
 
         <!-- INTITULE DU DOCUMENT -->
 
-        <div id="four" class="zone text-center">
+        <div id="four" class="zone text-center w-full">
             <div class="text-center">
                 <h2> ATTESTATION PROVISOIRE DE LICENCE</h2>
             </div>
@@ -200,7 +233,7 @@
 
         <!-- ANNONE RESPONSABLE -->
 
-        <div id="five" class="zone text-center">
+        <div id="five" class="zone text-center w-full">
 
             <div class="row">
                 <p> Le Responsable de l'établissement (Directeur académique ou équivalement de l'UFR), soussigné, </p>
@@ -209,17 +242,18 @@
 
         <!-- ANNONE IMPETRANT -->
 
-        <div id="six" class="zone text-center">
+        <div id="six" class="zone text-center w-full">
             <div class="text-center">
                 <h4> ATTESTE QUE </h4>
                 <h5> {{ $impetrant->nom }} {{ $impetrant->prenom }} </h5>
+                <hr/>
             </div>
 
         </div>
 
         <!-- INFORMATIONS DETAILLEES -->
 
-        <div id="seven" class="zone">
+        <div id="seven" class="zone w-full">
             <div class="row">
                 <p class="paragraphe">
                     @if(! $impetrant->nevers) 
@@ -232,11 +266,18 @@
                         @else née en 
                         @endif
                         {{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('Y') }}
-                    @endif                    
+                    @endif
+
                       à {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance }}) <br />
                     {{$impetrant->typeIdentifiant }} : {{ $impetrant->identifiant }} Sexe : {{ $impetrant->sexe }} <br />
-                    a acquis les {{ $parcours->credit }} crédits du parcours Licence {{ $parcours->intitule }} à l’issue de la session {{ $resultat->session}} <br />
-                    de l’année académique {{ $resultat->annee_academique->intitule }} <br />
+                    a acquis les {{ $parcours->credit }} crédits du parcours {{ $parcours->intitule }} à l’issue
+                    @if($parcours->soutenance) 
+                     de la soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
+                    @else 
+                    de la session {{ $resultat->session}}
+                    de l’année académique {{ $resultat->annee_academique->intitule }} 
+                    @endif                    
+                    <br />
                     Domaine : {{ $parcours->domaine }} <br />
                     Mention : {{ $parcours->mention }} <br />
                     Spécialité : {{ $parcours->specialite }} <br />
@@ -250,7 +291,7 @@
 
         <div id="eight" class="zone">
 
-            <div class="row">
+            <div class="row w-full">
                 <p>
                     En foi de quoi, la présente attestation lui est délivrée pour servir et valoir ce que de droit. <br /><br />
                 </p>
@@ -295,7 +336,7 @@
 
         <!-- NOTA BENE -->
 
-        <div id="twelve" class="zone">
+        <div id="twelve" class="zone w-full">
             <div>
                 <b><u>Important : </u></b>
                 <ul class="text-it">

@@ -93,7 +93,7 @@
                         @csrf
                         <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
                         <div class="form-group row py-2">
-                            <label for="niveau" class="col-sm-2 col-form-label">Niveau</label>
+                            <label for="niveau" class="col-sm-3 col-form-label">Niveau</label>
                             <div class="col">
                                 <select class="form-control" id="institution" name="niveauEtude_id" required>
                                     <option value="" selected disabled hidden> Choisir le niveau</option>
@@ -105,44 +105,51 @@
                         </div>
 
                         <div class="form-group row py-2">
-                            <label for="intitule" class="col-sm-2 col-form-label">Parcours</label>
+                            <label for="intitule" class="col-sm-3 col-form-label">Parcours</label>
                             <div class="col">
                                 <input type="text" class="form-control form-control" id="intitule" name="intitule" placeholder="Lettres modernes" required>
                             </div>
                         </div>
                         <div class="form-group row py-2">
-                            <label for="domaine" class="col-sm-2 col-form-label">Domaine</label>
+                            <label for="code" class="col-sm-3 col-form-label">Code parcours</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="code" name="code" required>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="soutenance" class="col-sm-3 col-form-label">Parcours avec soutenance ?</label>
+                            <div class="col-sm-1">
+                                <input type="checkbox" class="" id="soutenance" name="soutenance" value="1">
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="domaine" class="col-sm-3 col-form-label">Domaine</label>
                             <div class="col">
                                 <input type="text" class="form-control" id="domaine" name="domaine" placeholder=" ..." required>
                             </div>
                         </div>
                         <div class="form-group row py-2">
-                            <label for="mention" class="col-sm-2 col-form-label">Mention</label>
+                            <label for="mention" class="col-sm-3 col-form-label">Mention</label>
                             <div class="col">
                                 <input type="text" class="form-control form-control" id="mention" name="mention" placeholder="..." required>
                             </div>
                         </div>
 
                         <div class="form-group row py-2">
-                            <label for="specialite" class="col-sm-2 col-form-label">Spécialité</label>
+                            <label for="specialite" class="col-sm-3 col-form-label">Spécialité</label>
                             <div class="col">
                                 <input type="text" class="form-control form-control" id="specialite" name="specialite" placeholder="..." required>
                             </div>
                         </div>
+                        
                         <div class="form-group row py-2">
-                            <label for="credit" class="col-sm-2 col-form-label">Nombre de crédit</label>
+                            <label for="description" class="col-sm-3 col-form-label">Description</label>
                             <div class="col">
-                                <input type="number" class="form-control form-control" id="credit" name="credit" required>
-                            </div>
-                        </div>
-                        <div class="form-group row py-2">
-                            <label for="description" class="col-sm-2 col-form-label">Description</label>
-                            <div class="col">
-                                <input type="text" class="form-control form-control" id="description" name="description" required>
+                                <textarea class="form-control form-control" id="description" name="description" required> </textarea>
                             </div>
                         </div>
                         <div class="row py-4">
-                            <label class="col-sm-2 col-form-label"></label>
+                            <label class="col-sm-3 col-form-label"></label>
                             <div class="col">
                                 <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                             </div>
