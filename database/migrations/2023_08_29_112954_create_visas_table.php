@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('numero', 100);
             $table->string('intitule', 100);
-            $table->date('dateSignature');
+            $table->date('dateSignature')->nullable();
             $table->text('texte');
             $table->timestamps();
         });

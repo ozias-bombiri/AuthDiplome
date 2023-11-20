@@ -9,7 +9,7 @@ class DocumentCreate
 
     public function CreateQrcode($qr_infos, $file_name){
         
-        $path = 'img/qrcode' ;
+        $path = config('custom.qrcode_url') ;
 
         if(!File::exists(public_path($path))) {
                 File::makeDirectory(public_path($path));
@@ -23,7 +23,7 @@ class DocumentCreate
     }
 
     public function getLogoBase64($institution){
-        $path = 'img/logos' ;
+        $path = config('custom.logo_url') ;
 
         $file_path = $path.'.'.$institution->logo;
 
@@ -45,7 +45,8 @@ class DocumentCreate
         $qrcode = $this->createQrcode($qr_infos, $attestation->reference);
        
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                    ->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+                    ->loadView('maquettes.licences.provisoire1', 
+                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
         //$customPaper = array(0,0,600.00,310.80);

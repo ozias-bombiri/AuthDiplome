@@ -27,13 +27,13 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <h3 class="box-title">Parcours de formation</h3>
-            <div class="col-2 offset-10 mb-5">
+            <div class="col-4 offset-8 mb-5">
                 <button id="add" class="btn btn-success"> Ajouter</button>
                 <button id="upload" class="btn btn-success"> Importer</button>
                 <input type="hidden" id="institution" value="{{ $institution->id }}" />
             </div>
-            <div class="table-responsive">
-                <table id="data" class="table table-striped table-bordered">
+            <div>
+                <table id="data" class="table table-striped table-bordered table-responsive-sm">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -49,13 +49,13 @@
                     <tbody>
                         @foreach ($parcours as $par)
                         <tr>
-                            <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $par->institution->sigle }}</td>
-                            <td>{{ $par->niveau_etude->intitule }}</td>
-                            <td>{{ $par->intitule }}</td>
-                            <td>{{ $par->domaine }} </td>
-                            <td> {{ $par->mention }}</td>
-                            <td>{{ $par->specialite }}</td>
+                            <td class="text-center">{{ $loop->index +1 }}</td>
+                            <td class="text-center">{{ $par->institution->sigle }}</td>
+                            <td class="text-center">{{ $par->niveau_etude->intitule }}</td>
+                            <td class="text-center">{{ $par->intitule }}</td>
+                            <td class="text-center">{{ $par->domaine }} </td>
+                            <td class="text-center"> {{ $par->mention }}</td>
+                            <td class="text-center">{{ $par->specialite }}</td>
 
                             <td>
                                 <a class="btn btn-info action-btn" title="Voir attestations provisoire" href="#">
