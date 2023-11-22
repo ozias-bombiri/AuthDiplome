@@ -3,6 +3,9 @@
 namespace App\Utils ;
 
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use PDF;
+use File;
+
 
 class DocumentCreate 
 {
@@ -37,16 +40,18 @@ class DocumentCreate
         return $logo;
     }
 
-    public function createAttestationProvisoire($institution, $timbre, $parcours, $impetrant, $signataire, $attestation, $resultat) {
+    public function createAttestationProvisoire($institution, $timbre, $parcours, $impetrant, $signataire, $document, $resultat) {
 
-        $logo = $this->getLogoBase64($institution);
+        $categorie = "provisoire";
         
-        $qr_infos = $attestation->intitule."\nRef :".$attestation->reference ;
-        $qrcode = $this->createQrcode($qr_infos, $attestation->reference);
+        $logo = $this->getLogoBase64($institution);
+        $lien = "http://192.168.135.81:8081/authentification/pdf/".$document->reference;
+        $qr_infos = $document->intitule."\nRef :".$document->reference."\n \n ".$lien ;
+        $qrcode = $this->createQrcode($qr_infos, $document->reference);
        
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
                     ->loadView('maquettes.licences.provisoire1', 
-                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'document', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
         //$customPaper = array(0,0,600.00,310.80);
@@ -59,6 +64,11 @@ class DocumentCreate
         $canvas->set_opacity(.2,"Multiply");
         $canvas->set_opacity(.2);
         $canvas->page_text($width/5, $height/2, 'ATTESTATION PROVISOIRE', null, 30, array(0,0,0),2,2,-30);
+        $filename = config("custom.url_document").'/'.$document->reference.'.pdf';
+        file_put_contents(public_path($filename), $pdf->output());
+        $document->nombreGeneration ++;
+        $document->update();
+        return $filename;
         
     }
 

@@ -110,23 +110,22 @@ Route::group(['middleware' =>['auth', 'role:authentification']], function(){
     ->name('metiers.auth.index');
     Route::post('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'rechercher'])
     ->name('metiers.auth.recherche');
-    Route::get('/authentification/view/{categorie}/{document}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'visualiser'])
+    Route::get('/authentification/view/{categorie}/{id}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'visualiser'])
     ->name('metiers.auth.visualiser');
+    
 });
+
+Route::get('/authentification/pdf/{reference}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'viewpdf'])
+    ->name('metiers.auth.pdf');
 
 
 Route::group(['middleware' =>['auth', 'role:daoi']], function(){
-    
-   
-    
-
     Route::get('d/impetrantsattdef/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'listEtudiantsAttDef'])
     ->where('institution_id', '[0-9]+')->name('metiers.daoi.etudiantattdef-list');
     Route::get('d/impetrantsattdef/add/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'addEtudiant'])
     ->name('metiers.daoi.etudiantattdef-add');
     Route::post('d/impetrantsattdef/store', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'storeEtudiant'])
     ->name('metiers.daoi.etudiantattdef-store');
-
 
     Route::get('d/definitives/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'listAttestation'])
     ->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
@@ -141,16 +140,5 @@ Route::group(['middleware' =>['auth', 'role:daoi']], function(){
     Route::post('d/definitives/filtre/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'filtreAttestation'])
     ->name('metiers.daoi.attestationdef-filtre');
     
-    
-  
-    
-    
-    
-    
-    Route::get('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'index'])
-    ->name('metiers.auth.index');
-    Route::post('/authentification/recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'rechercher'])
-    ->name('metiers.auth.recherche');
-    Route::get('/authentification/view/{categorie}/{document}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'visualiser'])
-    ->name('metiers.auth.visualiser');
+
 });

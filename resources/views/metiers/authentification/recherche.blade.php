@@ -36,12 +36,12 @@ Recherche
                 <form method="post" action="{{ route('metiers.auth.recherche') }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-group row py-2">
-                        <label for="sigle" class="col-sm-2 col-form-label">Référence à chercher</label>
+                        <label for="reference" class="col-sm-2 col-form-label">Référence à chercher</label>
                         <div class="col">
                             <input type="text" class="form-control form-control" id="reference" name="reference" required>
                         </div>
 
-                        <label for="sigle" class="col-sm-2 col-form-label">Catégorie</label>
+                        <label for="categorie" class="col-sm-2 col-form-label">Catégorie</label>
                         <div class="col">
                             <select class="form-control" id="categorie" name="categorie" required>
                                 <option value="provisoire">Attestation provisoire</option>
@@ -69,10 +69,43 @@ Recherche
                 @endif
 
                 @if(isset($document))
-                <button class="btn btn-link btn-primary" id="visualiser" href="{{ route('metiers.auth.visualiser', ['categorie' =>$categorie, 'document' =>$document->id]) }}">Document trouver : {{ $document->intitule }}</a>
-                <input type="hidden" id="categorie" value="{{ $categorie }}" />
-                <input type="hidden" id="document" value="{{ $document->id }}" />
-                    @endif
+
+                <table id="data" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Année</th>
+                            <th>Référence</th>
+                            <th>Intitule</th>
+                            <th>Identifiant</th>
+                            <th>Nom Prénom </th>
+                            <th>Parcours (Niveau d'étude)</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+
+                            <td> {{ $document->resultat_academique->annee_academique->intitule }}</td>
+                            <td>{{ $document->reference }}</td>
+                            <td>{{ $document->intitule }}</td>
+                            <td>{{ $document->resultat_academique->impetrant->identifiant }} </td>
+                            <td>{{ $document->resultat_academique->impetrant->nom }} {{ $document->resultat_academique->impetrant->prenom }}</td>
+                            <td>{{ $document->resultat_academique->parcours->intitule }} ({{ $document->resultat_academique->parcours->niveau_etude->intitule }})</td>
+                            <td>
+                                <button id="{{ $document->id }}" class="btn btn-info view-btn" data="{{ $categorie }}" title="Détails">
+                                    <i class="bi bi-eye-fill"></i>
+                                </button>
+                                
+                                <button class="btn btn-primary pdf-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $document->id) }}">
+                                    <i class="bi bi-file-pdf"></i>
+                                </button>
+                                
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                @endif
             </div>
 
         </div>
@@ -86,7 +119,7 @@ Recherche
         <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Détails attestation</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Détails du document</h5>
                     <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -103,32 +136,32 @@ Recherche
                             <tbody>
                                 <tr>
                                     <td>Référence </td>
-                                    <td id="reference"></td>
+                                    <td id="reference1"></td>
                                 </tr>
                                 <tr>
                                     <td>Intitulé</td>
-                                    <td id="intitule"></td>
+                                    <td id="intitule1"></td>
                                 </tr>
                                 <tr>
                                     <td>Impétrant</td>
-                                    <td id="identifiant"></td>
+                                    <td id="identifiant1"></td>
                                 </tr>
 
                                 <tr>
                                     <td>Parcours de formation </td>
-                                    <td id="parcours"></td>
+                                    <td id="parcours1"></td>
                                 </tr>
                                 <tr>
                                     <td>Niveau d'étude </td>
-                                    <td id="niveau"></td>
+                                    <td id="niveau1"></td>
                                 </tr>
                                 <tr>
                                     <td>Institution </td>
-                                    <td id="institution"> </td>
+                                    <td id="institution1"> </td>
                                 </tr>
                                 <tr>
                                     <td>Résultats académiques </td>
-                                    <td id="sessionr">
+                                    <td id="sessionr1">
                                         Année académique : <br />
                                         Session : <br />
                                         Moyenne : <br />
@@ -169,30 +202,31 @@ Recherche
 <script type="module">
     $(document).ready(function() {
 
-        $(document).on('click', '#visualiser', function() {
+        $(document).on('click', '.view-btn', function() {
             $.ajaxSetup({
                 headers: {
                     'X_CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
                 }
             });
-            var id = $("#document").value;
-            var categorie = $("#categorie").value;
+            var id = $(this).attr('id');
+            var categorie = $(this).attr("data");
+            console.log(categorie +'/'+id);
             $.ajax({
                 // Our sample url to make request 
-                url: "/authentification/view/"+ categorie + "/" + id,
+                url: "/authentification/view/" + categorie + "/" + id,
                 method: "GET",
                 dataType: "json",
 
                 // Function to call when to
                 // request is ok 
                 success: function(data) {
-                    $("#reference").text(data.result.reference);
-                    $("#intitule").text(data.result.intitule);
-                    $("#identifiant").text(data.result.impetrant);
-                    $("#parcours").text(data.result.parcours);
-                    $("#niveau").text(data.result.niveau);
-                    $("#institution").text(data.result.institution);
-                    $("#sessionr").text(data.result.sessionr);
+                    $("#reference1").text(data.result.reference);
+                    $("#intitule1").text(data.result.intitule);
+                    $("#identifiant1").text(data.result.impetrant);
+                    $("#parcours1").text(data.result.parcours);
+                    $("#niveau1").text(data.result.niveau);
+                    $("#institution1").text(data.result.institution);
+                    $("#sessionr1").text(data.result.sessionr);
                     var myModal = new bootstrap.Modal($("#exampleModal"), {});
                     myModal.show();
                 },

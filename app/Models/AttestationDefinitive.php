@@ -36,6 +36,7 @@ class AttestationDefinitive extends Model
 	protected $casts = [
 		'dateSignature' => 'datetime',
 		'dateCreation' => 'datetime',
+		'nombreGeneration' => 'int',
 		'resultatAcademique_id' => 'int',
 		'signataire_id' => 'int',
 		'document_id' => 'int'
@@ -47,6 +48,7 @@ class AttestationDefinitive extends Model
 		'reference',
 		'dateCreation',
 		'lieuCreation',
+		'nombreGeneration',
 		'resultatAcademique_id',
 		'signataire_id',
 		'document_id'

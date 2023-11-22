@@ -16,7 +16,7 @@
 
 
 
-    <title>{{ $attestation->reference }}</title>
+    <title>{{ $document->reference }}</title>
 
 
     <style type="text/css" media="screen">
@@ -303,7 +303,7 @@
         <div id="nine" class="zone">
 
             <div class="col-4">
-                Fait le {{ \Carbon\Carbon::parse($attestation->dateSignature)->translatedFormat('d F Y') }} à {{ $attestation->lieuCreation}} <br /><br /><br />
+                Fait le {{ \Carbon\Carbon::parse($document->dateSignature)->translatedFormat('d F Y') }} à {{ $document->lieuCreation}} <br /><br /><br />
             </div>
         </div>
 

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('reference', 50)->unique();
             $table->date('dateCreation');
             $table->string('lieuCreation');
+            $table->integer('nombreGeneration');
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('document_id')->nullable()->constrained('documents')->onDelete('cascade')->onUpdate('cascade');

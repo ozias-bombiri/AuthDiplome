@@ -37,7 +37,7 @@ class AttestationProvisoire extends Model
 	protected $casts = [
 		'dateCreation' => 'datetime',
 		'dateSignature' => 'datetime',
-		'statutGeneration' => 'bool',
+		'nombreGeneration' => 'int',
 		'resultatAcademique_id' => 'int',
 		'signataire_id' => 'int',
 		'document_id' => 'int'
@@ -49,7 +49,7 @@ class AttestationProvisoire extends Model
 		'dateCreation',
 		'lieuCreation',
 		'dateSignature',
-		'statutGeneration',
+		'nombreGeneration',
 		'resultatAcademique_id',
 		'signataire_id',
 		'document_id'

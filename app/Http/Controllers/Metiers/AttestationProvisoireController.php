@@ -16,10 +16,13 @@ use App\Repositories\ResultatAcademiqueRepository;
 use App\Repositories\SignataireRepository;
 use App\Repositories\TimbreRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 use File;
+
+use App\Utils\DocumentCreate;
 
 class AttestationProvisoireController extends Controller
 {
@@ -32,6 +35,7 @@ class AttestationProvisoireController extends Controller
     protected $anneeRepository;
     protected $resultatRepository ;
     protected $timbreRepository;
+    protected $pdfCreator;
 
     public function __construct(
         AttestationProvisoireRepository $attestationRepo,
@@ -42,7 +46,8 @@ class AttestationProvisoireController extends Controller
         ImpetrantRepository $etudtiantRepo,
         AnneeAcademiqueRepository $anneeRepo,
         ResultatAcademiqueRepository $resultatRepo,
-        TimbreRepository $timbreRepo
+        TimbreRepository $timbreRepo,
+        DocumentCreate $pdfCreator
          )
     {
         $this->attestationRepository = $attestationRepo;
@@ -54,6 +59,7 @@ class AttestationProvisoireController extends Controller
         $this->anneeRepository = $anneeRepo;
         $this->resultatRepository = $resultatRepo;
         $this->timbreRepository = $timbreRepo;
+        $this->pdfCreator = $pdfCreator;
     }
     /** 
     * Afficher les parcours de son etablissement
@@ -218,10 +224,10 @@ class AttestationProvisoireController extends Controller
     /**
      * Afficher les informations détaillées d'une attestation provisoire
      **/
-    public function pdfAttestation($id)
+    public function pdfAttestation1($id)
     {
         $attestation = $this->attestationRepository->find($id);
-
+        
         $institution = $attestation->signataire->institution;
         $timbre = $institution->timbre ;
         $impetrant = $attestation->resultat_academique->impetrant;
@@ -242,7 +248,9 @@ class AttestationProvisoireController extends Controller
         }
 
         $file_path = $path . $attestation->reference. '.png';
-        $qr_infos = $attestation->intitule."\nRef :".$attestation->reference ;
+        $lien = "http://192.168.135.81:8081/authentification/view/provisoire/".$id;
+        
+        $qr_infos = $attestation->intitule."\nRef :".$attestation->reference."\n \n ".$lien ;
         QrCode::generate($qr_infos, public_path($file_path) );
         $type = pathinfo($file_path, PATHINFO_EXTENSION);
         $image = file_get_contents($file_path);
@@ -263,11 +271,38 @@ class AttestationProvisoireController extends Controller
         $canvas->set_opacity(.2,"Multiply");
         $canvas->set_opacity(.2);
         $canvas->page_text($width/5, $height/2, 'ATTESTATION PROVISOIRE', null, 30, array(0,0,0),2,2,-30);
-        
+        //$filename = config("custom.document_url").'/'.$attestation->reference.'.pdf';
+        //file_put_contents('filename.pdf', $filename);
         return $pdf->stream(); 
         
         
         //return view('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+    }
+
+    public function pdfAttestation($id)
+    {
+        $attestation = $this->attestationRepository->find($id);
+        $document_path = null;
+        if($attestation->nombreGeneration >0){
+            $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
+        
+        }
+        else {
+            $institution = $attestation->signataire->institution;
+            $timbre = $institution->timbre ;
+            $impetrant = $attestation->resultat_academique->impetrant;
+            $parcours = $attestation->resultat_academique->parcours;
+            $resultat = $attestation->resultat_academique ;
+            $signataire = $attestation->signataire;
+            
+
+            $document_path = $this->pdfCreator->createAttestationProvisoire($institution, $timbre, $parcours, $impetrant, $signataire, $attestation, $resultat);
+        }
+
+        return Response::make(file_get_contents(public_path($document_path)), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$attestation->reference.'"'
+            ]);
     }
 
     /**

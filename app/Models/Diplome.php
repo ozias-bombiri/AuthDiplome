@@ -40,6 +40,7 @@ class Diplome extends Model
 	protected $casts = [
 		'dateSignature' => 'datetime',
 		'dateCreation' => 'datetime',
+		'nombreGeneration' => 'int',
 		'resultatAcademique_id' => 'int',
 		'signataire_id' => 'int',
 		'document_id' => 'int'
@@ -52,6 +53,7 @@ class Diplome extends Model
 		'lieuCreation',
 		'dateSignature',
 		'dateCreation',
+		'nombreGeneration',
 		'resultatAcademique_id',
 		'signataire_id',
 		'document_id'

@@ -58,8 +58,8 @@
                             <td class="text-center">{{ $par->specialite }}</td>
 
                             <td>
-                                <a class="btn btn-info action-btn" title="Voir attestations provisoire" href="#">
-                                    <i class="bi bi-eye-fill"></i>
+                                <a class="btn btn-primary action-btn" title="Détails" href="#">
+                                    <i class="bi bi-eye"></i> 
                                 </a>
                                 <a class="btn btn-primary action-btn" title="Ajouter une attestation" href="#">
                                     <i class="bi bi-plus"></i>
