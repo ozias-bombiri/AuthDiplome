@@ -108,6 +108,58 @@ class VerificationController extends Controller
         }
     }
 
+    /**
+     * Afficher les informations détaillées d'une attestation provisoire
+     **/
+    public function detailsDocument($categorie, $id)
+    {
+        $document =null;
+        if( $categorie ==="provisoire"){
+            $document = $this->attestationProvisoireRepository->find($id);
+        }
+        elseif( $categorie ==="definitive" ){
+            $document = $this->attestationDefinitiveRepository->find($id);
+        }
+        elseif( $categorie ==="diplome" ){
+            $document = $this->diplomeRepository->find($id);
+        }      
+        //$attestation = $this->attestationRepository->find($id);
+        
+        $institution = $document->signataire->institution;
+        $timbre = $institution->timbre ;
+        $impetrant = $document->resultat_academique->impetrant;
+        $parcours = $document->resultat_academique->parcours;
+        $resultat = $document->resultat_academique ;
+        $signataire = $document->signataire;
+        $path = 'img/logo_unz.jpg';
+        $type = pathinfo($path, PATHINFO_EXTENSION);
+        $data = file_get_contents($path);
+        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
+        
+
+        $path = 'img/qrcode/' ;
+
+
+        if(!File::exists(public_path($path))) {
+                File::makeDirectory(public_path($path));
+        }
+
+        $file_path = $path . $document->reference. '.png';
+        $lien = "http://192.168.135.81:8081/authentification/view/provisoire/".$id;
+        
+        $qr_infos = $document->intitule."\nRef :".$document->reference."\n \n ".$lien ;
+        QrCode::generate($qr_infos, public_path($file_path) );
+        $type = pathinfo($file_path, PATHINFO_EXTENSION);
+        $image = file_get_contents($file_path);
+
+        $qrcode = 'data:image/' . $type . ';base64,' . base64_encode($image);  
+        
+        return view('maquettes.licences.provisoire', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'document', 'resultat', 'logo', 'qrcode'));
+    }
+
+
+
+
     public function viewpdf($reference){
         $document_path = config("custom.url_document").'/'.$reference.'.pdf';
 

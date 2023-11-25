@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Metiers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
@@ -13,16 +14,10 @@ use App\Repositories\ResultatAcademiqueRepository;
 use App\Repositories\SignataireRepository;
 use App\Repositories\TimbreRepository;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Models\AttestationProvisoire;
-use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
-use App\Models\Impetrant;
-use App\Models\Signataire;
 use App\Models\Parcours;
 use Illuminate\Support\Facades\Auth;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
-use PDF;
-use File;
+use App\Utils\DocumentCreate;
 
 
 class AttestationDefinitiveController extends Controller
@@ -37,6 +32,7 @@ class AttestationDefinitiveController extends Controller
     protected $anneeRepository;
     protected $resultatRepository ;
     protected $timbreRepository;
+    protected $pdfCreator ;
 
     public function __construct(
             AttestationDefinitiveRepository $attestationRepo,
@@ -47,7 +43,8 @@ class AttestationDefinitiveController extends Controller
             ImpetrantRepository $etudtiantRepo,
             AnneeAcademiqueRepository $anneeRepo,
             ResultatAcademiqueRepository $resultatRepo,
-            TimbreRepository $timbreRepo
+            TimbreRepository $timbreRepo,
+            DocumentCreate $pdfCreator
          )
     {
         $this->attestationRepository = $attestationRepo;
@@ -59,6 +56,7 @@ class AttestationDefinitiveController extends Controller
         $this->anneeRepository = $anneeRepo;
         $this->resultatRepository = $resultatRepo;
         $this->timbreRepository = $timbreRepo;
+        $this->pdfCreator = $pdfCreator;
     }
     
 
@@ -239,6 +237,12 @@ class AttestationDefinitiveController extends Controller
     {
         
         $attestation = $this->attestationRepository->find($id);
+        $document_path = null;
+        if($attestation->nombreGeneration >10){
+            $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
+        
+        }
+        else {
 
         $institution = $attestation->signataire->institution;
         $timbre = $institution->timbre ;
@@ -246,40 +250,15 @@ class AttestationDefinitiveController extends Controller
         $parcours = $attestation->resultat_academique->parcours;
         $resultat = $attestation->resultat_academique ;
         $signataire = $attestation->signataire;
-        $path = 'img/logo_unz.jpg';
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        
 
-        $path = 'img/qrcode/' ;
-
-
-        if(!File::exists(public_path($path))) {
-                File::makeDirectory(public_path($path));
+        $document_path = $this->pdfCreator->createAttestationDefinitive($institution, $timbre, $parcours, $impetrant, $signataire, $attestation, $resultat);
         }
-
-        $file_path = $path . $attestation->reference. '.png';
-        $qr_infos = $attestation->intitule."\nRef :".$attestation->reference ;
-        QrCode::generate($qr_infos, public_path($file_path) );
-        $type = pathinfo($file_path, PATHINFO_EXTENSION);
-        $image = file_get_contents($file_path);
-
-        $qrcode = 'data:image/' . $type . ';base64,' . base64_encode($image);
-       
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                    ->loadView('maquettes.licences.definitive', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
+        return Response::make(file_get_contents(public_path($document_path)), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$attestation->reference.'"'
+            ]);
         
-        // set the PDF rendering options
-        $customPaper = array(0,0,600.00,310.80);
-        //$pdf->setPaper('A4', 'portrait');
-        
-        
-        return $pdf->stream(); 
-        
-        
-        //return view('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
-    }
+        }
 
     /**
      * Afficher les informations détaillées d'une attestation provisoire

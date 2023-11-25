@@ -115,7 +115,9 @@ Route::group(['middleware' =>['auth', 'role:authentification']], function(){
     
 });
 
-Route::get('/authentification/pdf/{reference}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'viewpdf'])
+Route::get('/authentification/details/{categorie}/{id}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'detailsDocument'])
+    ->name('metiers.auth.details');
+    Route::get('/authentification/pdf/{reference}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'viewpdf'])
     ->name('metiers.auth.pdf');
 
 

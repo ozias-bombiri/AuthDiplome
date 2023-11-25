@@ -45,7 +45,7 @@ class DocumentCreate
         $categorie = "provisoire";
         
         $logo = $this->getLogoBase64($institution);
-        $lien = "http://192.168.135.81:8081/authentification/pdf/".$document->reference;
+        $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$document->id;
         $qr_infos = $document->intitule."\nRef :".$document->reference."\n \n ".$lien ;
         $qrcode = $this->createQrcode($qr_infos, $document->reference);
        
@@ -71,5 +71,38 @@ class DocumentCreate
         return $filename;
         
     }
+
+    public function createAttestationDefinitive($institution, $timbre, $parcours, $impetrant, $signataire, $document, $resultat) {
+
+        $categorie = "provisoire";
+        
+        $logo = $this->getLogoBase64($institution);
+        $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$document->id;
+        $qr_infos = $document->intitule."\nRef :".$document->reference."\n \n ".$lien ;
+        $qrcode = $this->createQrcode($qr_infos, $document->reference);
+       
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+                    ->loadView('maquettes.licences.definitive1', 
+                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'document', 'resultat', 'logo', 'qrcode'));
+        
+        // set the PDF rendering options
+        //$customPaper = array(0,0,600.00,310.80);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->output();
+
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2,"Multiply");
+        $canvas->set_opacity(.2);
+        $canvas->page_text($width/3, $height/2, 'ATTESTATION DEFINITIVE', null, 20, array(0,0,0),2,2,-30);
+        $filename = config("custom.url_document").'/'.$document->reference.'.pdf';
+        file_put_contents(public_path($filename), $pdf->output());
+        $document->nombreGeneration ++;
+        $document->update();
+        return $filename;
+        
+    }
+
 
 }

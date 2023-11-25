@@ -222,68 +222,14 @@ class AttestationProvisoireController extends Controller
     }
 
     /**
-     * Afficher les informations détaillées d'une attestation provisoire
+     * Afficher le doucment pdf 
      **/
-    public function pdfAttestation1($id)
-    {
-        $attestation = $this->attestationRepository->find($id);
-        
-        $institution = $attestation->signataire->institution;
-        $timbre = $institution->timbre ;
-        $impetrant = $attestation->resultat_academique->impetrant;
-        $parcours = $attestation->resultat_academique->parcours;
-        $resultat = $attestation->resultat_academique ;
-        $signataire = $attestation->signataire;
-        $path = 'img/logo_unz.jpg';
-        $type = pathinfo($path, PATHINFO_EXTENSION);
-        $data = file_get_contents($path);
-        $logo = 'data:image/' . $type . ';base64,' . base64_encode($data);
-        
-
-        $path = 'img/qrcode/' ;
-
-
-        if(!File::exists(public_path($path))) {
-                File::makeDirectory(public_path($path));
-        }
-
-        $file_path = $path . $attestation->reference. '.png';
-        $lien = "http://192.168.135.81:8081/authentification/view/provisoire/".$id;
-        
-        $qr_infos = $attestation->intitule."\nRef :".$attestation->reference."\n \n ".$lien ;
-        QrCode::generate($qr_infos, public_path($file_path) );
-        $type = pathinfo($file_path, PATHINFO_EXTENSION);
-        $image = file_get_contents($file_path);
-
-        $qrcode = 'data:image/' . $type . ';base64,' . base64_encode($image);
-       
-        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                    ->loadView('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
-        
-        // set the PDF rendering options
-        //$customPaper = array(0,0,600.00,310.80);
-        $pdf->setPaper('A4', 'portrait');
-        $pdf->output();
-
-        $canvas = $pdf->getDomPDF()->getCanvas();
-        $height = $canvas->get_height();
-        $width = $canvas->get_width();
-        $canvas->set_opacity(.2,"Multiply");
-        $canvas->set_opacity(.2);
-        $canvas->page_text($width/5, $height/2, 'ATTESTATION PROVISOIRE', null, 30, array(0,0,0),2,2,-30);
-        //$filename = config("custom.document_url").'/'.$attestation->reference.'.pdf';
-        //file_put_contents('filename.pdf', $filename);
-        return $pdf->stream(); 
-        
-        
-        //return view('maquettes.licences.provisoire1', compact('institution', 'timbre', 'parcours', 'impetrant', 'signataire', 'attestation', 'resultat', 'logo', 'qrcode'));
-    }
-
+    
     public function pdfAttestation($id)
     {
         $attestation = $this->attestationRepository->find($id);
         $document_path = null;
-        if($attestation->nombreGeneration >0){
+        if($attestation->nombreGeneration >10){
             $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
         
         }
