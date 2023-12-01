@@ -45,12 +45,30 @@ class ImpetrantRepository extends BaseRepository
         return Impetrant::class;
     }
 
-    public function findByInstitution($institution_id){
-        $impetrants = Impetrant::join('institutions_impetrants', 'institutions_impetrants.impetrant_id', '=', 'impetrants.id')
-                		->where('institutions_impetrants.institution_id', '=', $institution_id)
+    public function findByIdentifiant($identifiant){
+        $impetrant = Impetrant::where('impetrants.identifiant', '=', $identifiant)->first();
+        return $impetrant;
+        
+    }
+    public function findByEtablissement($institution_id){
+        $impetrants = Impetrant::join('inscriptions', 'inscriptions.impetrant_id', '=', 'impetrants.id')
+                        ->join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
+                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                		->where('filieres.institution_id', '=', $institution_id)
                         ->select('impetrants.*')
                         ->get();
+        return $impetrants;
+        
+    }
 
+    public function findByIesr($iesr_id){
+        $impetrants = Impetrant::join('inscriptions', 'inscriptions.impetrant_id', '=', 'impetrants.id')
+                        ->join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
+                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                        ->join('institutions', 'filieres.institution_id', '=', 'institution.id')
+                		->where('institutions.parent_id', '=', $iesr_id)
+                        ->select('impetrants.*')
+                        ->get();
         return $impetrants;
         
     }

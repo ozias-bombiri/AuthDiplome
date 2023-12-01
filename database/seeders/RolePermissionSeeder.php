@@ -111,7 +111,6 @@ class RolePermissionSeeder extends Seeder
         //Role daoi pour l'émission des attestations définitives et des diplômes
         $daoiRole = Role::create(['name' => 'daoi']);
         $daoiRole->givePermissionTo([
-
             'create-attestation-definitives',
             'edit-attestation-definitives',
             'delete-attestation-definitives',
@@ -141,7 +140,9 @@ class RolePermissionSeeder extends Seeder
         $role_superadmin->syncPermissions($all_permissions);
 
         $admin = User::create([
-            'name' => 'Admin admin', 
+            'nom' => 'Admin',
+            'prenom'=> 'Admin',
+            'telephone' => '0000000', 
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin')
         ]);

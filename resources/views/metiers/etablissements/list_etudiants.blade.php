@@ -28,7 +28,7 @@
         <div class="white-box">
             <h3 class="box-title">Impétrants</h3>
             <div class="col-2 offset-10 mb-5">
-                <button id="add" class="btn btn-success"> Ajouter</button>
+                <a id="add1" class="btn btn-success" href="{{ route('metiers.etablissements.etudiant-add') }}"> Ajouter</a>
                 <button id="upload" class="btn btn-success"> Importer</button>
                 <input type="hidden" id="institution" value="{{ $institution->id }}" />
             </div>
@@ -309,7 +309,6 @@
                                     </div>
                                 </div>
                             </fieldset>
-                            <input type="hidden" class="form-control form-control" id="impetrant" name="impetrant" value="{{ $etudiant->id }}">
                             <div class="row py-4">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col">

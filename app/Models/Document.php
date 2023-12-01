@@ -32,13 +32,15 @@ class Document extends Model
 	protected $table = 'documents';
 
 	protected $casts = [
-		'datecreation' => 'datetime'
+		'datecreation' => 'datetime',
+		'user_id' => 'int',
 	];
 
 	protected $fillable = [
 		'reference',
 		'datecreation',
-		'type'
+		'type',
+		'user_id',
 	];
 
 	public function attestation_definitives()

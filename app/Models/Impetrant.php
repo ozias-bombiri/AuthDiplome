@@ -65,9 +65,9 @@ class Impetrant extends Model
 		return $this->hasMany(ResultatAcademique::class);
 	}
 
-	public function institutions()
+	public function parcours()
 	{
-		return $this->belongsToMany(Institution::class, 'institutions_impetrants', 'impetrant_id', 'institution_id');
+		return $this->belongsToMany(Parcours::class, 'inscriptions', 'impetrant_id', 'parcours_id');
 	}
 
 

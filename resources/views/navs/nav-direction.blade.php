@@ -8,9 +8,9 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.attestation-list', auth()->user()->institution_id) }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.filiere-list', auth()->user()->institution_id) }}" aria-expanded="false">
                 <i class="fa fa-user" aria-hidden="true"></i>
-                <span class="hide-menu">Attestation provisoires</span>
+                <span class="hide-menu">Filières</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -19,6 +19,13 @@
                 <span class="hide-menu">Parcours de formation</span>
             </a>
         </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.attestation-list', auth()->user()->institution_id) }}" aria-expanded="false">
+                <i class="fa fa-user" aria-hidden="true"></i>
+                <span class="hide-menu">Attestation provisoires</span>
+            </a>
+        </li>
+        
         <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.etablissements.etudiant-list', auth()->user()->institution_id) }}" aria-expanded="false">
                 <i class="fa fa-font" aria-hidden="true"></i>

@@ -31,7 +31,8 @@ class Timbre extends Model
     protected $table = 'timbres';
 
 	protected $casts = [
-		'institution_id' => 'int'
+		'institution_id' => 'int',
+		'ministere_id' => 'int'
 	];
 
 	protected $fillable = [
@@ -40,11 +41,17 @@ class Timbre extends Model
 		'ministere',
 		'denomMinistere',
 		'description',
-		'institution_id'
+		'signataire_id',
+		'ministere_id'
 	];
 
 	public function institution()
 	{
 		return $this->belongsTo(Institution::class);
+	}
+
+	public function ministere()
+	{
+		return $this->belongsTo(Ministere::class);
 	}
 }

@@ -101,10 +101,10 @@
                         <li class="dropdown">
                             <button class=" profile-pic nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <img src="{{URL::asset('/ample/plugins/images/users/varun.jpg')}}" alt="user-img" width="36" class="img-circle">
-                                <span class="text-white font-medium">{{ auth()->user()->name}}</span>
+                                <span class="text-white font-medium">{{ auth()->user()->nom.' '.auth()->user()->prenom}}</span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-
+                                
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                     {{ __('Se deconnecter') }}
@@ -117,6 +117,10 @@
                                 <a class="dropdown-item" href="#!">profil</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#!">Modifier le profil</a>
+                                <div class="dropdown-divider"></div>
+                                @if(!empty(auth()->user()->institution))
+                                <a class="dropdown-item" href="#" disabled>{{ auth()->user()->institution->sigle}}</a>
+                                @endif
                             </div>
 
                         </li>

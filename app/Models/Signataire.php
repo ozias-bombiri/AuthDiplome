@@ -38,7 +38,8 @@ class Signataire extends Model
     protected $table = 'signataires';
 
 	protected $casts = [
-		'institution_id' => 'int'
+		'institution_id' => 'int',
+		
 	];
 
 	protected $fillable = [
@@ -52,7 +53,7 @@ class Signataire extends Model
 		'grade',
 		'titreAcademique',
 		'titreHonorifique',
-		'institution_id'
+		
 	];
 
 	protected function nom():Attribute
@@ -71,5 +72,10 @@ class Signataire extends Model
 	public function attestation_provisoires()
 	{
 		return $this->hasMany(AttestationProvisoire::class, 'signataire_id');
+	}
+
+	public function timbre()
+	{
+		return $this->hasOne(Timbre::class,'signataire_id');
 	}
 }

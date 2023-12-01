@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('prenom', 100);
             $table->enum('sexe', ['Masculin', 'Féminin']);
             $table->date('dateNaissance');
-            $table->boolean('nevers')->default(0)->change();
+            $table->boolean('nevers')->default(0);
             $table->string('lieuNaissance', 50);
             $table->string('paysNaissance', 30);
             $table->timestamps();

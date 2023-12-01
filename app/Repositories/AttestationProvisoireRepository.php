@@ -42,10 +42,35 @@ class AttestationProvisoireRepository extends BaseRepository
         return AttestationProvisoire::class;
     }
 
-    public function findByInstitution($institution_id){
-        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultat_academique_id', '=', 'resultat_academiques.id')
+    public function findByEtablissement($institution_id){
+        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
                 		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
-                        ->where('parcours.institution_id', '=', $institution_id)
+                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                        ->where('filieres.institution_id', '=', $institution_id)
+                        ->select('attestation_provisoires.*')
+                        ->get();
+
+        return $attestations;
+        
+    }
+
+    public function findByIesr($iesr_id){
+        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
+                		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
+                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                        ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                        ->where('institution.parent_id', '=', $iesr_id)
+                        ->select('attestation_provisoires.*')
+                        ->get();
+
+        return $attestations;
+        
+    }
+
+    public function findByNiveau($niveau){
+        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
+                		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
+                        ->where('parcours.niveauEtude_id', '=', $niveau)
                         ->select('attestation_provisoires.*')
                         ->get();
 

@@ -61,6 +61,7 @@ Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAca
 Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
+Route::resource('numeroteurs', App\Http\Controllers\Backend\NumeroteurController::class);
 
 
 
@@ -68,38 +69,50 @@ Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
 // Route::resource('roles', RoleController::class);
 
 Route::group(['middleware' => ['auth', 'role:direction']], function() {
-    Route::get('d/parcours/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listParcours'])
-    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.parcours-list');
-    Route::get('d/parcours/add/', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addParcours'])
-    ->name('metiers.etablissements.parcours-add');
-    Route::post('d/parcours/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeParcours'])
-    ->name('metiers.etablissements.parcours-store');
 
-    Route::get('d/provisoires/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listAttestation'])
+    Route::get('d/filieres/list/{institution_id}', [App\Http\Controllers\Etablissement\FiliereController::class, 'listFiliere'])
+    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.filiere-list');
+    Route::get('d/filieres/add/', [App\Http\Controllers\Etablissement\FiliereController::class, 'addFiliere'])
+    ->name('metiers.etablissements.filiere-add');
+    Route::post('d/filieres/add', [App\Http\Controllers\Etablissement\FiliereController::class, 'storeFiliere'])
+    ->name('metiers.etablissements.filiere-store');
+    
+    Route::get('d/parcours/list/{institution_id}', [App\Http\Controllers\Etablissement\ParcoursController::class, 'listParcours'])
+    ->where('institution_id', '[0-9]+')->name('metiers.etablissements.parcours-list');
+    Route::get('d/parcours/add/', [App\Http\Controllers\Etablissement\ParcoursController::class, 'addParcours'])
+    ->name('metiers.etablissements.parcours-add');
+    Route::post('d/parcours/add', [App\Http\Controllers\Etablissement\ParcoursController::class, 'storeParcours'])
+    ->name('metiers.etablissements.parcours-store');
+    Route::get('d/parcours/view/{id}', [App\Http\Controllers\Etablissement\ParcoursController::class, 'viewParcours'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.parcours-view');
+
+    Route::get('d/provisoires/list/{institution_id}', [App\Http\Controllers\Etablissement\AttestationController::class, 'listAttestation'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.attestation-list');
-    Route::get('d/provisoires/add/{institution_id}/{etudiant_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addAttestation'])
-    ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.etablissements.attestation-add');
-    Route::post('d/provisoires/store', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeAttestation'])
+    Route::get('d/provisoires/add/{parcours}/{impetrant}', [App\Http\Controllers\Etablissement\AttestationController::class, 'addAttestation'])
+    ->where('parcours', '[0-9]+')->where('impetrant', '[0-9]+')->name('metiers.etablissements.attestation-add');
+    Route::post('d/provisoires/store', [App\Http\Controllers\Etablissement\AttestationController::class, 'storeAttestation'])
     ->name('metiers.etablissements.attestation-store');
-    Route::get('d/provisoires/view/{id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'viewAttestation'])
+    Route::get('d/provisoires/view/{id}', [App\Http\Controllers\Etablissement\AttestationController::class, 'viewAttestation'])
     ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-view');
-    Route::get('d/provisoires/pdf/{id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'pdfAttestation'])
+    Route::get('d/provisoires/pdf/{id}', [App\Http\Controllers\Etablissement\AttestationController::class, 'pdfAttestation'])
     ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-pdf');
-    Route::post('d/provisoires/filtre/', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'filtreAttestation'])
+    Route::post('d/provisoires/filtre/', [App\Http\Controllers\Etablissement\AttestationController::class, 'filtreAttestation'])
     ->name('metiers.etablissements.attestation-filtre');
-   
-    Route::get('d/impetrants/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listEtudiants'])
+    Route::get('d/provisoires/niveaux/{id}', [App\Http\Controllers\Etablissement\AttestationController::class, 'filtreNiveau'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-niveaux');
+    
+    Route::get('d/impetrants/list/{institution_id}', [App\Http\Controllers\Etablissement\ImpetrantController::class, 'listEtudiants'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.etudiant-list');
-    Route::get('d/impetrants/add/', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addEtudiant'])
-    ->name('metiers.etablissements.etudiant-add');
-    Route::post('d/impetrants/store', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeEtudiant'])
+    Route::get('d/impetrants/add/{id}', [App\Http\Controllers\Etablissement\ImpetrantController::class, 'addEtudiant'])
+    ->where('id', '[0-9]+')->name('metiers.etablissements.etudiant-add');
+    Route::post('d/impetrants/store', [App\Http\Controllers\Etablissement\ImpetrantController::class, 'storeEtudiant'])
     ->name('metiers.etablissements.etudiant-store');
 
-    Route::get('d/signataires/list/{institution_id}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'listSignataires'])
+    Route::get('d/signataires/list/{institution_id}', [App\Http\Controllers\Etablissement\SignataireController::class, 'listSignataires'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.signataire-list');
-    Route::get('d/signataires/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'addSignataire'])
+    Route::get('d/signataires/add', [App\Http\Controllers\Etablissement\SignataireController::class, 'addSignataire'])
     ->name('metiers.etablissements.signataire-add');
-    Route::post('d/signataires/add', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'storeSignataire'])
+    Route::post('d/signataires/add', [App\Http\Controllers\Etablissement\SignataireController::class, 'storeSignataire'])
     ->name('metiers.etablissements.signataire-store');
     
     

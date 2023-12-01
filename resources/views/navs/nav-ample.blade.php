@@ -15,6 +15,6 @@
 @endhasrole
 <hr>
 
-@hasrole(['admin'])
+@hasrole(['admin', 'superAdmin'])
     @include('navs.nav-admin')
 @endhasrole

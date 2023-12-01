@@ -7,17 +7,26 @@ use App\Repositories\TimbreRepository;
 use App\Http\Requests\StoreTimbreRequest;
 use App\Http\Requests\UpdateTimbreRequest;
 use App\Repositories\InstitutionRepository;
+use App\Repositories\MinistereRepository;
+use App\Repositories\SignataireRepository;
 
 class TimbreController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
     private $institutionRepository;
+    private $ministereRepository;
+    private $signataireRepository;
 
-    public function __construct(TimbreRepository $timbreRepo, InstitutionRepository $institutionRepo)
+    public function __construct(TimbreRepository $timbreRepo, 
+                        InstitutionRepository $institutionRepo,
+                        MinistereRepository $ministereRepo,
+                        SignataireRepository $signataireRepo)
     {
         $this->modelRepository = $timbreRepo;
         $this->institutionRepository = $institutionRepo;
+        $this->ministereRepository = $ministereRepo;
+        $this->signataireRepository = $signataireRepo;
     }
     /**
      * Display a listing of the resource.
@@ -34,8 +43,10 @@ class TimbreController extends Controller
      */
     public function create()
     {
-        $institutions = $this->institutionRepository->all();
-        return view('backend.timbres.create', compact('institutions')) ;
+        $ministeres = $this->ministereRepository->all();
+        $signataires = $this->signataireRepository->all();
+        //$institutions = $this->institutionRepository->all();
+        return view('backend.timbres.create', compact('ministeres', 'signataires')) ;
     }
 
     /**
@@ -45,17 +56,9 @@ class TimbreController extends Controller
     {
         $validated = $request->validated();
         $input = $request->all();
-        $input['type'] = "";
-        $institution = $this->institutionRepository->find($input['institution_id']);
-        if($institution->type === 'IESR'){
-            $input['type'] = 'IESR';
-        }
-        else {
-            $input['type'] = 'ETABLISSEMENT';
-        }
+        //$institution = $this->institutionRepository->find($input['institution_id']);
+        
         $timbre = $this->modelRepository->create($input);
-
-        //Flash::success('timbre enregistré avec succès.');
 
         return redirect(route('timbres.index'));
     }

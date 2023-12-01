@@ -18,10 +18,12 @@ return new class extends Migration
             $table->date('dateCreation');
             $table->string('lieuCreation');
             $table->date('dateSignature');
-            $table->integer('nombreGeneration');
+            $table->boolean('satutSignature')->default(0);
+            $table->integer('nombreGeneration')->default(0);
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('document_id')->nullable()->constrained('documents')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique('resultatAcademique_id');
             $table->timestamps();
         });
     }

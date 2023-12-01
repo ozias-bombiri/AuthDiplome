@@ -14,14 +14,16 @@ return new class extends Migration
         Schema::create('attestation_definitives', function (Blueprint $table) {
             $table->id();
             $table->string('intitule', 100);
-            $table->date('dateSignature');
             $table->string('reference', 50)->unique();
             $table->date('dateCreation');
             $table->string('lieuCreation');
-            $table->integer('nombreGeneration');
+            $table->date('dateSignature');            
+            $table->boolean('satutSignature')->default(0);            
+            $table->integer('nombreGeneration')->default(0);
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('document_id')->nullable()->constrained('documents')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique('resultatAcademique_id');
             $table->timestamps();
         });
     }

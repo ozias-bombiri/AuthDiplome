@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('prenom', 100);
             $table->string('telephone', 20)->nullable();
             $table->string('email', 100)->unique();
+            $table->enum('statut', ['Attente', 'Active', 'Desactive'])->default('Attente');
+            $table->foreignId('institution_id')->nullable()->constrained('institutions')->onDelete('cascade')->onUpdate('cascade')->default(1);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password', 100);
             $table->rememberToken();
-            $table->enum('statut', ['Attente', 'Active', 'Desactive'])->default('Attente');
-            $table->foreignId('institution_id')->nullable()->constrained('institutions')->onDelete('cascade')->onUpdate('cascade')->default(1);
             $table->timestamps();
         });
     }

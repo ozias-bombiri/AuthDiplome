@@ -51,6 +51,34 @@ class ParcoursRepository extends BaseRepository
      **/
     public function findByInstitution($institution_id)
     {
-        return Parcours::where('institution_id', $institution_id);
+        return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                ->where('institutions.id', $institution_id)
+                ->select('parcours.*')
+                ->get();
+    }
+
+    /**
+     * Selectionner les parcours d'une institution
+     **/
+    public function findByIesr($iesr_id)
+    {
+        return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                ->where('institutions.parent_id', $iesr_id)
+                ->select('parcours.*')
+                ->get();
+    }
+
+    /**
+     * Selectionner les parcours d'une institution
+     **/
+    public function findInstitution($id)
+    {
+        return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                ->where('parcours.id', $id)
+                ->select('institutions.*')
+                ->first();
     }
 }

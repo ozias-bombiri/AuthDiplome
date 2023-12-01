@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('timbres', function (Blueprint $table) {
             $table->id();
             $table->string('intitule', 100)->unique();
-            $table->enum('type', ['iesr', 'etablissement']);
-            $table->string('ministere', 20);
-            $table->string('denomMinistere', 150);
+            $table->enum('type', ['iesr', 'etablissement', 'autre'])->default('etablissement');
+            $table->foreignId('ministere_id')->constrained('ministeres')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->text('description');
-            $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

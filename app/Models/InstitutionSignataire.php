@@ -10,10 +10,10 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class ImpetrantInstitution
+ * Class InstitutionSignataire
  * 
  * @property int $id
- * @property int $impetrant_id
+ * @property int $signataire_id
  * @property int $institution_id
  * @property string $referenceInscription
  * @property string $annee
@@ -21,25 +21,27 @@ use Illuminate\Database\Eloquent\Model;
  * @property Carbon|null $updated_at
  * 
  * @property Institution $institution
- * @property Impetrant $impetrant
+ * @property Signataire $signataire
  *
  * @package App\Models
  */
-class InstitutionImpetrant extends Model
+class InstitutionSignataire extends Model
 {
-	protected $table = 'institutions_impetrants';
+	protected $table = 'institutions_signataires';
 
 	protected $casts = [
-		'impetrant_id' => 'int',
 		'institution_id' => 'int',
+		'signataire_id' => 'int',
 		
 	];
 
 	protected $fillable = [
-		'impetrant_id',
+		'signataire_id',
 		'institution_id',
-		'referenceInscription',
-		'annee',
+		'typeDocument',
+		'statut',
+		'debut',
+		'fin'
 	];
 
 	public function institution()
@@ -47,8 +49,8 @@ class InstitutionImpetrant extends Model
 		return $this->belongsTo(Institution::class);
 	}
 
-	public function impetrant()
+	public function signataire()
 	{
-		return $this->belongsTo(Impetrant::class);
+		return $this->belongsTo(Signataire::class);
 	}
 }

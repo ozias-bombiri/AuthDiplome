@@ -37,7 +37,6 @@ Timbres
                             <th>No</th>
                             <th>Intitule</th>
                             <th>Type</th>
-                            <th>Institution</th>
                             <th width="200px">Action</th>
                         </tr>
                     </thead>
@@ -47,7 +46,7 @@ Timbres
                             <td>{{ $loop->index +1 }}</td>
                             <td>{{ $timbre->intitule }}</td>
                             <td>{{ $timbre->type }}</td>
-                            <td> {{ $timbre->institution->sigle }}</td>
+                           
                             <td>
                                 <form action="{{ route('timbres.destroy',$timbre->id) }}" method="POST">
                                     <a class="btn btn-info" title="Détails" href="{{ route('timbres.show',$timbre->id) }}">

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('reference', 50);
             $table->date('datecreation');
-            $table->enum('type', ['AttestationProvisoire', 'AttestationDefinitve', 'Diplome']);
+            $table->string('type');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');            
             $table->timestamps();
         });
     }

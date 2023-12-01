@@ -62,9 +62,9 @@ class Institution extends Model
 		return $this->belongsTo($this::class, 'parent_id');
 	}
 
-	public function parcours()
+	public function filieres()
 	{
-		return $this->hasMany(Parcours::class);
+		return $this->hasMany(Filiere::class);
 	}
 
 	public function signataires()
@@ -82,10 +82,7 @@ class Institution extends Model
 		return $this->hasMany(User::class);
 	}
 
-	public function impetrants()
-	{
-		return $this->belongsToMany(Impetrant::class, 'institutions_impetrants', 'institution_id', 'impetrant_id');
-	}
+	
 
 	
 	

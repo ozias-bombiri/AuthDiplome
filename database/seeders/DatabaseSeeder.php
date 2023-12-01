@@ -15,10 +15,12 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AnneeAcademiqueSeeder::class);
         $this->call(NiveauEtudeSeeder::class);
-        $this->call(InstitutionSeeder::class);
-        //$this->call(ProfileSeeder::class);
-        $this->call(UserSeeder::class);
+        $this->call(InstitutionSeeder::class);        
         $this->call(RolePermissionSeeder::class);
+        $this->call(UserSeeder::class);
+        $this->call(FiliereSeeder::class);
+        $this->call(MinistereSeeder::class);
+        $this->call(VisaSeeder::class);
 
     }
 }

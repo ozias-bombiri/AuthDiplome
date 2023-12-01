@@ -68,8 +68,8 @@
                         <div class="col">
                             <select class="form-control" id="sexe" name="sexe">
                                 <option value="" disabled selected>choisir ...</option>
-                                <option value="masculin">Masculin</option>
-                                <option value="feminin">Féminin</option>
+                                <option value="Masculin">Masculin</option>
+                                <option value="Féminin">Féminin</option>
                             </select>
                         </div>
                     </div>

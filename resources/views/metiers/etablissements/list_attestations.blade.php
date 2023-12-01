@@ -4,14 +4,14 @@
 <link href="https://cdn.datatables.net/v/bs5/dt-1.13.6/datatables.min.css" rel="stylesheet">
 @endpush
 
-@section('page-title') 
-    Attestations provisoires
+@section('page-title')
+Attestations provisoires
 @endsection
 
 @section('content')
 <div class="row my-3">
     <div class="col-md-12 col-lg-12 col-sm-12">
-    @if ($errors->any())
+        @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
                 @foreach ($errors->all() as $error)
@@ -19,13 +19,21 @@
                 @endforeach
             </ul>
         </div>
-    @endif
+        @endif
     </div>
 </div>
-
+<div class="row">
+    <ul class="nav nav-tabs">
+        @foreach($niveaux as $niveau)
+        <li class="nav-item">
+            <a class="nav-link" aria-current="page" href="{{ route('metiers.etablissements.attestation-niveaux', $niveau->id) }}">{{ $niveau->intitule}}</a>
+        </li>
+        @endforeach
+    </ul>
+</div>
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
-        <div class="white-box">            
+        <div class="white-box">
             <h3 class="box-title">Filtres</h3>
             <div class="table">
                 <form method="post" action="{{ route('metiers.etablissements.attestation-filtre') }}">
@@ -50,7 +58,7 @@
                             <div class="col">
                                 <select class="form-control" id="parcours" name="parcours" required>
                                     <option value="">Choisir</option>
-                                    @foreach ($institution->parcours as $parc)
+                                    @foreach ($parcours as $parc)
                                     <option value="{{ $parc->id}}">{{ $parc->intitule}}</option>
                                     @endforeach
                                 </select>
@@ -88,7 +96,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title mb-4">Attestations</h3>                
+            <h3 class="box-title mb-4">Attestations</h3>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
                     <thead>

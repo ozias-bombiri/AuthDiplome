@@ -7,7 +7,7 @@ use PDF;
 use File;
 
 
-class DocumentCreate 
+class DocumentCreator 
 {
 
     public function CreateQrcode($qr_infos, $file_name){
@@ -45,7 +45,7 @@ class DocumentCreate
         $categorie = "provisoire";
         
         $logo = $this->getLogoBase64($institution);
-        $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$document->id;
+        $lien = config('app.url').'/authentification/details/'.$categorie."/".$document->id;
         $qr_infos = $document->intitule."\nRef :".$document->reference."\n \n ".$lien ;
         $qrcode = $this->createQrcode($qr_infos, $document->reference);
        

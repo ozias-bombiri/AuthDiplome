@@ -15,16 +15,19 @@ class NiveauEtudeSeeder extends Seeder
     {
         DB::table('niveau_etudes')->insert([
             'intitule' => 'Licence',
+            'credit' => 180,
             'description' => 'Licence'
 
         ]);
         DB::table('niveau_etudes')->insert([
             'intitule' => 'Master',
+            'credit' => 120,
             'description' => 'Master'
 
         ]);
         DB::table('niveau_etudes')->insert([
             'intitule' => 'Doctorat',
+            'credit' => 180,
             'description' => 'Doctorat '
 
         ]);

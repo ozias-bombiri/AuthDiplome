@@ -33,11 +33,51 @@
                 <input type="hidden" id="institution" value="{{ $institution->id }}" />
             </div>
             <div>
+                <form method="post" action="{{ route('metiers.etablissements.attestation-filtre') }}">
+                    @csrf
+                    <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
+
+                    <div class="row border border-secondary">
+                        <div class="form-group col-4 py-2">
+                            <label for="niveau" class="col-sm-10 col-form-label">Niveau d'étude </label>
+                            <div class="col">
+                                <select class="form-control" id="niveau" name="niveau" required>
+                                    <option value="" selected disabled hidden>Choisir</option>
+                                    @foreach ($niveaux as $niveau)
+                                    <option value="{{ $niveau->id}}">{{ $niveau->intitule}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-4 py-2">
+                            <label for="filiere" class="col-sm-10 col-form-label">Filiere </label>
+                            <div class="col">
+                                <select class="form-control" id="filiere" name="filiere" required>
+                                    <option value="">Choisir</option>
+                                    
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row py-4">
+                            <label class="col-sm-2 col-form-label"></label>
+                            <div class="col-sm-3">
+                                <button id="filtre" type="submit" class="btn btn-success">Afficher</button>
+                            </div>
+                            <div class="col-sm-3">
+                                <a class="btn btn-danger" href="{{ '__d__' }}"> Annuler filtre </a>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div>
                 <table id="data" class="table table-striped table-bordered table-responsive-sm">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Institution</th>
+                            <th>Filière</th>
                             <th>Niveau</th>
                             <th>Intitule</th>
                             <th>Domaine</th>
@@ -50,7 +90,7 @@
                         @foreach ($parcours as $par)
                         <tr>
                             <td class="text-center">{{ $loop->index +1 }}</td>
-                            <td class="text-center">{{ $par->institution->sigle }}</td>
+                            <td class="text-center">{{ $par->filiere->sigle }}</td>
                             <td class="text-center">{{ $par->niveau_etude->intitule }}</td>
                             <td class="text-center">{{ $par->intitule }}</td>
                             <td class="text-center">{{ $par->domaine }} </td>
@@ -58,14 +98,12 @@
                             <td class="text-center">{{ $par->specialite }}</td>
 
                             <td>
-                                <a class="btn btn-primary action-btn" title="Détails" href="#">
+                                <a class="btn btn-primary action-btn" title="Détails" href="{{ route('metiers.etablissements.parcours-view', $par->id) }}">
                                     <i class="bi bi-eye"></i> 
                                 </a>
-                                <a class="btn btn-primary action-btn" title="Ajouter une attestation" href="#">
+                                <a class="btn btn-primary action-btn" title="Ajouter une attestation" href="">
                                     <i class="bi bi-plus"></i>
                                 </a>
-
-
                             </td>
                         </tr>
                         @endforeach
@@ -92,10 +130,24 @@
                     <form method="post" action="{{ route('metiers.etablissements.parcours-store') }}">
                         @csrf
                         <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
+
+                        <div class="form-group row py-2">
+                            <label for="filiere" class="col-sm-3 col-form-label">Filière</label>
+                            <div class="col">
+                                <select class="form-control" id="filiere" name="filiere_id" required>
+                                    <option value="" selected disabled hidden> Choisir la filière</option>
+                                    @foreach( $filieres as $filiere)
+                                    <option value="{{ $filiere->id}}">{{ $filiere->intitule }}</option>
+                                    @endforeach
+                                </select>
+                                <input type="text" id="codefiliere" name="codefiliere" value="" disabled>
+
+                            </div>
+                        </div>
                         <div class="form-group row py-2">
                             <label for="niveau" class="col-sm-3 col-form-label">Niveau</label>
                             <div class="col">
-                                <select class="form-control" id="institution" name="niveauEtude_id" required>
+                                <select class="form-control" id="niveau" name="niveauEtude_id" required>
                                     <option value="" selected disabled hidden> Choisir le niveau</option>
                                     @foreach( $niveaux as $niveau)
                                     <option value="{{ $niveau->id}}">{{ $niveau->intitule }}</option>
@@ -189,6 +241,16 @@
             myModal.show();
 
         });
+        //Filtre sur les niveaux
+        $(document).on('change', '#niveau', function() {
+            var selected = this.options[this.selectedIndex].value;
+
+            var myModal = new bootstrap.Modal($("#exampleModal1"), {});
+            myModal.show();
+
+        });
     });
+
+
 </script>
 @endpush

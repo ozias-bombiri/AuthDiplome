@@ -36,7 +36,7 @@ class Parcours extends Model
     protected $table = 'parcours';
 
 	protected $casts = [
-		'institution_id' => 'int',
+		'filiere_id' => 'int',
 		'niveauEtude_id' => 'int',
 		'soutenance' => 'bool'
 		
@@ -50,13 +50,13 @@ class Parcours extends Model
 		'mention',
 		'specialite',
 		'description',
-		'institution_id',
+		'filiere_id',
 		'niveauEtude_id'
 	];
 
-	public function institution()
+	public function filiere()
 	{
-		return $this->belongsTo(Institution::class);
+		return $this->belongsTo(Filiere::class);
 	}
 
 	public function niveau_etude()
@@ -67,6 +67,11 @@ class Parcours extends Model
 	public function resultat_academiques()
 	{
 		return $this->hasMany(ResultatAcademique::class, 'parcours_id');
+	}
+
+	public function impetrants()
+	{
+		return $this->belongsToMany(Impetrant::class, 'inscriptions', 'parcours_id', 'impetrant_id');
 	}
 
 	

@@ -23,7 +23,7 @@
         @page {
             /*827 X 1170 en 100 dpi */
             margin: 5px 5px;
-            border: 2px solid red;
+            /*border: 2px solid red;*/
             padding: 2em;
            
         }
@@ -31,14 +31,14 @@
         .wrapper{
             /*596 X 842 en 100 dpi */
             height: 1100px;
-            border: 2px solid red;
+            /*border: 2px solid red;*/
             width: 780px;
            
         }
 
         .zone {
             font-family: Times;
-            border: 1px solid black;
+            /*border: 1px solid black;*/
             position: absolute;
             padding: 0.1em;
         }
@@ -63,7 +63,7 @@
         }
 
         .h-1{
-            height: 140px;
+            height: 150px;
         }
 
         .w-1_5 {
@@ -93,7 +93,7 @@
         }
         .py-1 {
             border-color: blue;
-            top: 200px;
+            top: 220px;
         }
         .py-2 {
             top: 50px;
@@ -108,7 +108,7 @@
 
         /* Logo */
         #two {
-            left: 380px;
+            left: 350px;
            /* height: 10em;
             /* width: 7em; */
 
@@ -130,21 +130,21 @@
 
         /* Le responsable */
         #five {
-            top: 16em;
+            top: 18em;
             height: 2em;
             
         }
 
         /* Atteste que */
         #six {
-            top: 18em;
+            top: 19em;
             height: 5em;
             
         }
 
         /* Paragraphe informations detaillé */
         #seven {
-            top: 23em;
+            top: 24em;
             height: 13em;
             
         }
@@ -165,7 +165,7 @@
 
         /* Qr code */
         #ten {
-            top: 41em;
+            top: 43em;
             height: 10em;
             /*width: 20em;*/
         }
@@ -215,7 +215,7 @@
         <!-- Timbre de l'institution -->
         <div id="one" class="zone w-1_2 h-1 px-0 py-0">
             <div>
-                {{ $timbre->denomMinistere }} <br />
+                {{ $timbre->ministere->denomination }} <br />
                 --------------- <br />
                 @if($institution->parent)
                 {{ $institution->parent->denomination }} <br />
@@ -223,8 +223,8 @@
                 @endif
                 {{ $institution->denomination }} <br />
                 --------------- <br />
-                {{ $institution->adresse }} {{ $institution->telephone }} <br />
-                {{ $institution->email }} {{ $institution->siteWeb}}
+                {{ $institution->adresse.'  '.$institution->telephone }} <br />
+                {{ $institution->email.'  '.$institution->siteWeb}}
 
             </div>
         </div>
@@ -289,7 +289,7 @@
 
                     à {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance }}) <br />
                 {{$impetrant->typeIdentifiant }} : {{ $impetrant->identifiant }} Sexe : {{ $impetrant->sexe }} <br />
-                a acquis les {{ $parcours->credit }} crédits du parcours {{ $parcours->intitule }} à l’issue
+                a acquis les {{ $parcours->niveau_etude->credit }} crédits du parcours {{ $parcours->intitule }} à l’issue
                 @if($parcours->soutenance) 
                     de la soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
                 @else 

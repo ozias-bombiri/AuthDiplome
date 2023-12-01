@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('institutions', function (Blueprint $table) {
             $table->id();
             $table->string('code', 20)->unique()->nullable();
-            $table->string('sigle', 30)->unique();
+            $table->string('sigle', 30);
             $table->string('denomination', 100);
             $table->string('type', 30);
             $table->string('telephone', 20);
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->string('email', 30);
             $table->string('siteWeb', 50)->nullable();
             $table->string('logo', 50)->nullable();
-            $table->text('description');
             $table->foreignId('parent_id')->nullable()->constrained('institutions')->onDelete('cascade')
             ->onUpdate('cascade')->default(1);
+            $table->text('description');
             $table->timestamps();
         });
     }

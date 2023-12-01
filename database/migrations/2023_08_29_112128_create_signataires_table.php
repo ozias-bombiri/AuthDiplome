@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('nip', 50);
             $table->enum('sexe', ['Masculin', 'Féminin']);
             $table->enum('typeDocument', ['Attestation Provisoire', 'Attestation Definitive', 'Diplome']);
-            $table->string('fonction', 30);
-            $table->string('fonctionLongue', 100);
+            $table->string('fonction', 150);
+            $table->string('fonctionLongue', 150);
             $table->string('grade', 50);
             $table->string('titreAcademique', 100)->nullable();
             $table->string('titreHonorifique', 100)->nullable();
