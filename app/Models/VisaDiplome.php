@@ -12,16 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class VisaDiplome
  * 
- * @property int $id
- * @property int $visa_id
- * @property int $diplome_id
- * @property int $ordre
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Diplome $diplome
- * @property Visa $visa
- *
  * @package App\Models
  */
 class VisaDiplome extends Model
@@ -30,19 +20,19 @@ class VisaDiplome extends Model
 
 	protected $casts = [
 		'visa_id' => 'int',
-		'diplome_id' => 'int',
+		'visaInstitution_id' => 'int',
 		'ordre' => 'int'
 	];
 
 	protected $fillable = [
 		'visa_id',
-		'diplome_id',
+		'visaInstitution_id',
 		'ordre'
 	];
 
-	public function diplome()
+	public function visaInstitution()
 	{
-		return $this->belongsTo(Diplome::class);
+		return $this->belongsTo(visaInstitution::class);
 	}
 
 	public function visa()

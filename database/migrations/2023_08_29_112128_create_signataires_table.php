@@ -13,21 +13,13 @@ return new class extends Migration
     {
         Schema::create('signataires', function (Blueprint $table) {
             $table->id();
-            $table->enum('statut', ['active', 'desactive'])->default('desactive');
-            $table->date('debut')->nullable();
-            $table->date('fin')->nullable();
             $table->string('nom', 30);
             $table->string('prenom', 100);
             $table->string('nip', 50);
             $table->enum('sexe', ['Masculin', 'Féminin']);
-            $table->enum('typeDocument', ['Attestation Provisoire', 'Attestation Definitive', 'Diplome']);
-            $table->string('fonction', 150);
-            $table->string('fonctionLongue', 150);
             $table->string('grade', 50);
             $table->string('titreAcademique', 100)->nullable();
             $table->string('titreHonorifique', 100)->nullable();
-            $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
-            
             $table->timestamps();
         });
     }

@@ -18,21 +18,6 @@ use Spatie\Permission\Traits\HasRoles;	//Spatie laravel
 /**
  * Class User
  * 
- * @property int $id
- * @property string $name
- * @property string $email
- * @property Carbon|null $email_verified_at
- * @property string $password
- * @property string|null $remember_token
- * @property string $statut
- * @property int $profile_id
- * @property int $institution_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Institution $institution
- * @property Profile $profile
- *
  * @package App\Models
  */
 class User extends Authenticatable

@@ -57,4 +57,9 @@ class InstitutionRepository extends BaseRepository
     {
         return Institution::whereIn('type', ['Institut', 'UFR', 'Ecole'])->get();
     }
+
+    public function findByIesr($iesr_id)
+    {
+        return Institution::where('parent_id', '=', $iesr_id)->get();
+    }
 }

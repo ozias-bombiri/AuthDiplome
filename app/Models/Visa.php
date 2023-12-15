@@ -13,16 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Visa
  * 
- * @property int $id
- * @property string $numero
- * @property string $intitule
- * @property Carbon $dateSignature
- * @property string $texte
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Collection|Diplome[] $diplomes
- *
  * @package App\Models
  */
 class Visa extends Model
@@ -36,14 +26,13 @@ class Visa extends Model
 	protected $fillable = [
 		'numero',
 		'intitule',
+		'categorie',
 		'dateSignature',
 		'texte'
 	];
 
-	public function diplomes()
+	public function institutions()
 	{
-		return $this->belongsToMany(Diplome::class, 'visa_diplomes')
-					->withPivot('id', 'ordre')
-					->withTimestamps();
+		return $this->belongsToMany(Institution::class, 'visa_diplomes', 'visa_id', 'institution_id');
 	}
 }

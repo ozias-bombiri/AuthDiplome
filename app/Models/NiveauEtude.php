@@ -13,14 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class NiveauEtude
  * 
- * @property int $id
- * @property string $intitule
- * @property string $description
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
- * @property Collection|Parcour[] $parcours
- *
  * @package App\Models
  */
 class NiveauEtude extends Model
@@ -35,6 +28,6 @@ class NiveauEtude extends Model
 
 	public function parcours()
 	{
-		return $this->hasMany(Parcour::class, 'niveauEtude_id');
+		return $this->hasMany(Parcours::class, 'niveauEtude_id');
 	}
 }

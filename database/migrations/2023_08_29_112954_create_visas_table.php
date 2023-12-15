@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('intitule', 100);
             $table->date('dateSignature')->nullable();
             $table->text('texte');
+            $table->enum('type', ['general', 'personnel']);
             $table->timestamps();
         });
     }

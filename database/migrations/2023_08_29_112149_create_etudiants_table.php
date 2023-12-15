@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('impetrants', function (Blueprint $table) {
+        Schema::create('etudiants', function (Blueprint $table) {
             $table->id();
             $table->string('identifiant', 30)->unique();
             $table->enum('typeIdentifiant', ['INE', 'Matricule', 'Autre'])->default('INE');
@@ -31,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('impetrants');
+        Schema::dropIfExists('etudiants');
     }
 };

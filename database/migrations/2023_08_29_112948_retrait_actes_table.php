@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('resultat_academiques', function (Blueprint $table) {
+        Schema::create('retrait_actes', function (Blueprint $table) {
             $table->id();
             $table->string('reference', 50)->unique();
-            $table->double('moyenne');
-            $table->foreignId('etudiant_id')->constrained('etudiants')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('procesVerbal_id')->constrained('proces_verbaux')->onDelete('cascade')->onUpdate('cascade');
-            $table->unique(['etudiant_id', 'parcours_id']);
+            $table->date('dateRetrait');
+            $table->string('retirant');
+            $table->string('description');            
+            $table->foreignId('acteAcademique_id')->constrained('acte_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('resultat_academiques');
+        Schema::dropIfExists('retrait_actes');
     }
 };

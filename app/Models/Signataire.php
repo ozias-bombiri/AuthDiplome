@@ -14,23 +14,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Signataire
  * 
- * @property int $id
- * @property string $nom
- * @property string $prenom
- * @property string $nip
- * @property string $sexe
- * @property string $typeDocument
- * @property string $fonction
- * @property string $fonctionLongue
- * @property string $titreAcademique
- * @property string $titreHonorifique
- * @property int $institution_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Institution $institution
- * @property Collection|AttestationProvisoire[] $attestation_provisoires
- *
  * @package App\Models
  */
 class Signataire extends Model
@@ -66,16 +49,12 @@ class Signataire extends Model
 
 	public function institution()
 	{
-		return $this->belongsTo(Institution::class);
+		return $this->belongsToMany(Institution::class, 'institutions_signataires', 'signataire_id', 'institution_id');
 	}
 
-	public function attestation_provisoires()
+	public function actes()
 	{
-		return $this->hasMany(AttestationProvisoire::class, 'signataire_id');
+		return $this->hasMany(ActeAcademique::class, 'signataire_id');
 	}
 
-	public function timbre()
-	{
-		return $this->hasOne(Timbre::class,'signataire_id');
-	}
 }

@@ -81,4 +81,39 @@ class ParcoursRepository extends BaseRepository
                 ->select('institutions.*')
                 ->first();
     }
+
+    /**
+     * Selectionner par filiere 
+     **/
+    public function findByFiliere($filiere)
+    {
+        return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->where('filieres.id', $filiere)
+                ->select('parcours.*')
+                ->get();
+    }
+
+    /**
+     * Selectionner par niveau
+     **/
+    public function findByNiveau($niveau)
+    {
+        return Parcours::join('niveau_etudes', 'parcours.niveauEtude_id', '=', 'niveau_etudes.id')
+                ->where('niveau_etudes.id', $niveau)
+                ->select('parcours.*')
+                ->get();
+    }
+
+    /**
+     * Selectionner par filiere et niveau
+     **/
+    public function findByFiliereAndNiveau($filiere, $niveau)
+    {
+        return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->join('niveau_etudes', 'parcours.niveauEtude_id', '=', 'niveau_etudes.id')
+                ->where('filieres.id', $filiere)
+                ->where('niveau_etudes.id', $niveau)
+                ->select('parcours.*')
+                ->get();
+    }
 }

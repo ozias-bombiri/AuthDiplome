@@ -11,23 +11,23 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Ministere
+ * Class CategorieActe
  * 
  * 
  * @package App\Models
  */
-
-class Ministere extends Model
+class CategorieActe extends Model
 {
-    protected $table = 'ministeres';
+    protected $table = 'categorie_actes';
 
 	protected $fillable = [
-		'sigle',
-		'denomination',
+		'intitule',
+		'nombreCopies',
+		'visas'
 	];
 
-	public function timbres()
+	public function acteAcademiques()
 	{
-		return $this->hasMany(Timbre::class, 'ministere_id');
+		return $this->hasMany(ActeAcademique::class);
 	}
 }

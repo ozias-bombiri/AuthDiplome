@@ -10,28 +10,25 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class Timbre
+ * Class SignataireInstitution
  * 
  * @package App\Models
  */
-
-class Timbre extends Model
+class SignataireInstitution extends Model
 {
-    protected $table = 'timbres';
+	protected $table = 'signataires_institutions';
 
 	protected $casts = [
 		'institution_id' => 'int',
-		'ministere_id' => 'int'
+		'categorieSignataire_id' => 'int',
+		
 	];
 
 	protected $fillable = [
+		'categorieSignataire_id',
+		'institution_id',
 		'intitule',
-		'type',
-		'ministere',
-		'denomMinistere',
-		'description',
-		'signataire_id',
-		'ministere_id'
+		
 	];
 
 	public function institution()
@@ -39,8 +36,8 @@ class Timbre extends Model
 		return $this->belongsTo(Institution::class);
 	}
 
-	public function ministere()
+	public function categorieSignataire()
 	{
-		return $this->belongsTo(Ministere::class);
+		return $this->belongsTo(CategorieSignataire::class);
 	}
 }

@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('visas_diplomes', function (Blueprint $table) {
+        Schema::create('categorie_actes', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('visa_id')->constrained('visas')->onDelete('cascade')->onUpdate('cascade');    
-            $table->foreignId('visaInstitution_id')->constrained('visas_institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('ordre');   
+            $table->string('intitule', 100);
+            $table->string('nombreCopies');
+            $table->boolean('visas')->default(0);
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('visa_diplomes');
+        Schema::dropIfExists('categorie_actes');
     }
 };

@@ -11,20 +11,21 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diplomes', function (Blueprint $table) {
+        Schema::create('acte_academiques', function (Blueprint $table) {
             $table->id();
             $table->string('intitule', 100);
             $table->string('reference', 50)->unique();
-            $table->string('numeroEnregistrement', 50)->unique();
-            $table->date('dateCreation');
-            $table->string('lieuCreation');
+            $table->string('numero', 50) ;            
+            $table->string('lieu');
             $table->date('dateSignature');            
             $table->boolean('satutSignature')->default(0);            
-            $table->integer('nombreGeneration')->default(0);
+            $table->boolean('statutRemise')->default(0);
+            $table->boolean('validite')->default(1);
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('document_id')->nullable()->constrained('documents')->onDelete('cascade')->onUpdate('cascade');
-            $table->unique('resultatAcademique_id');           
+            $table->foreignId('categorieActe_id')->nullable()->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['resultatAcademique_id', 'categorieActe_id']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diplomes');
+        Schema::dropIfExists('acte_academiques');
     }
 };

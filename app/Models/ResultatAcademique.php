@@ -14,29 +14,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 /**
  * Class ResultatAcademique
  * 
- * @property int $id
- * @property string $reference
- * @property bool $soutenance
- * @property Carbon $dateSignaure
- * @property float $moyenne
- * @property string $cote
- * @property string $session
- * @property Carbon $dateSoutenance
- * @property int $impetrant_id
- * @property int $parcours_id
- * @property int $anneeAcademique_id
- * @property int $document_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property AnneeAcademique $annee_academique
- * @property Document $document
- * @property Impetrant $impetrant
- * @property Parcour $parcour
- * @property Collection|AttestationDefinitive[] $attestation_definitives
- * @property Collection|AttestationProvisoire[] $attestation_provisoires
- * @property Collection|Diplome[] $diplomes
- *
  * @package App\Models
  */
 class ResultatAcademique extends Model
@@ -44,61 +21,36 @@ class ResultatAcademique extends Model
 	protected $table = 'resultat_academiques';
 
 	protected $casts = [
-		'dateSignature' => 'datetime',
 		'moyenne' => 'float',
-		'dateSoutenance' => 'datetime',
-		'impetrant_id' => 'int',
-		'parcours_id' => 'int',
-		'anneeAcademique_id' => 'int',
-		'document_id' => 'int'
+		'etudiant_id' => 'int',
+		'procesVerbal_id' => 'int',
+		'user_id' => 'int',
 	];
 
 	protected $fillable = [
 		'reference',
-		'dateSignature',
 		'moyenne',
-		'cote',
-		'session',
-		'dateSoutenance',
-		'impetrant_id',
-		'parcours_id',
-		'anneeAcademique_id',
-		'document_id'
+		'etudiant_id',
+		'procesVerbal_id',
+		'user_id',
+		
 	];
 
-	public function annee_academique()
+	
+
+	public function etudiant()
 	{
-		return $this->belongsTo(AnneeAcademique::class, 'anneeAcademique_id');
+		return $this->belongsTo(Etudiant::class);
 	}
 
-	public function document()
+	public function procesVerbal()
 	{
-		return $this->belongsTo(Document::class);
+		return $this->belongsTo(ProcesVerbal::class);
 	}
 
-	public function impetrant()
+	public function acteAcademiques()
 	{
-		return $this->belongsTo(Impetrant::class);
-	}
-
-	public function parcours()
-	{
-		return $this->belongsTo(Parcours::class, 'parcours_id');
-	}
-
-	public function attestation_definitive():HasOne
-	{
-		return $this->hasOne(AttestationDefinitive::class, 'resultatAcademique_id');
-	}
-
-	public function attestation_provisoire():HasOne
-	{
-		return $this->hasOne(AttestationProvisoire::class, 'resultatAcademique_id');
-	}
-
-	public function diplome() : HasOne
-	{
-		return $this->hasOne(Diplome::class, 'resultatAcademique_id');
+		return $this->hasMany(ActeAcademique::class, 'resultatAcademique_id');
 	}
 
 }

@@ -13,18 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Document
  * 
- * @property int $id
- * @property string $reference
- * @property Carbon $datecreation
- * @property string $type
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
- * @property Collection|AttestationDefinitive[] $attestation_definitives
- * @property Collection|AttestationProvisoire[] $attestation_provisoires
- * @property Collection|Diplome[] $diplomes
- * @property Collection|ResultatAcademique[] $resultat_academiques
- *
  * @package App\Models
  */
 class Document extends Model
@@ -33,33 +22,21 @@ class Document extends Model
 
 	protected $casts = [
 		'datecreation' => 'datetime',
+		'acteAcademique_id' => 'int',
 		'user_id' => 'int',
 	];
 
 	protected $fillable = [
 		'reference',
-		'datecreation',
-		'type',
+		'numero',
+		'dateGeneration',
+		'nombreGeneration',
+		'acteAcademique_id',
 		'user_id',
 	];
 
-	public function attestation_definitives()
+	public function acteAcademique()
 	{
-		return $this->hasMany(AttestationDefinitive::class);
-	}
-
-	public function attestation_provisoires()
-	{
-		return $this->hasMany(AttestationProvisoire::class);
-	}
-
-	public function diplomes()
-	{
-		return $this->hasMany(Diplome::class);
-	}
-
-	public function resultat_academiques()
-	{
-		return $this->hasMany(ResultatAcademique::class);
+		return $this->belongsTo(ActeAcademique::class);
 	}
 }

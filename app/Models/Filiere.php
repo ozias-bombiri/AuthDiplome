@@ -13,15 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Filiere
  * 
- * @property int $id
- * @property string $intitule
- * @property string $debut
- * @property string $fin
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Collection|Parcours[] $parcours
- *
  * @package App\Models
  */
 class Filiere extends Model

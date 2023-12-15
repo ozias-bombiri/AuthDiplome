@@ -13,15 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class AnneeAcademique
  * 
- * @property int $id
- * @property string $intitule
- * @property string $debut
- * @property string $fin
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
  * 
- * @property Collection|ResultatAcademique[] $resultat_academiques
- *
  * @package App\Models
  */
 class AnneeAcademique extends Model
@@ -34,8 +26,8 @@ class AnneeAcademique extends Model
 		'fin'
 	];
 
-	public function resultat_academiques()
+	public function procesVerbaux()
 	{
-		return $this->hasMany(ResultatAcademique::class, 'anneeAcademique_id');
+		return $this->hasMany(ProcesVerbal::class);
 	}
 }

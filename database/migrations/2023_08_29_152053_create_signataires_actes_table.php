@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('institutions_signataires', function (Blueprint $table) {
+        Schema::create('signataires_actes', function (Blueprint $table) {
             $table->id();
-            $table->string('typeDocument');
-            $table->string('satut')->default('active');
+            $table->string('statut')->default('active');
             $table->date('debut')->nullable();
             $table->date('fin')->nullable();
-            $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');    
+            $table->foreignId('signataireInstitution_id')->constrained('signataires_institutions')->onDelete('cascade')->onUpdate('cascade');    
             $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('institutions_signataires');
+        Schema::dropIfExists('signataires_actes');
     }
 };

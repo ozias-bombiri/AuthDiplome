@@ -12,27 +12,8 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 /**
- * Class Institution
+ * Class Institution * 
  * 
- * @property int $id
- * @property string $sigle
- * @property string $denomination
- * @property string $telephone
- * @property string $adresse
- * @property string $email
- * @property string $type
- * @property string $logo
- * @property string $description
- * @property int $parent
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Institution $parent
- * @property Collection|Parcour[] $parcours
- * @property Collection|Signataire[] $signataires
- * @property Collection|TimbreInstitution[] $timbres
- * @property Collection|User[] $users
- *
  * @package App\Models
  */
 class Institution extends Model
@@ -59,7 +40,7 @@ class Institution extends Model
 
 	public function parent()
 	{
-		return $this->belongsTo($this::class, 'parent_id');
+		return $this->belongsTo(Institution::class, 'parent_id');
 	}
 
 	public function filieres()
@@ -69,21 +50,22 @@ class Institution extends Model
 
 	public function signataires()
 	{
-		return $this->hasMany(Signataire::class);
+		return $this->belongsToMany(Signataire::class, 'institutions_signataires', 'institution_id', 'signataire_id');
 	}
 
-	public function timbre():HasOne
+	public function timbres()
 	{
-		return $this->hasOne(Timbre::class, 'institution_id');
+		return $this->hasMany(Timbre::class,);
+	}
+
+	public function visas()
+	{
+		return $this->belongsToMany(Visa::class, 'visa_diplomes', 'institution_id', 'visa_id');
 	}
 
 	public function users()
 	{
 		return $this->hasMany(User::class);
-	}
-
-	
-
-	
+	}	
 	
 }

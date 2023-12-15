@@ -11,13 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('timbres', function (Blueprint $table) {
+        Schema::create('visas_institutions', function (Blueprint $table) {
             $table->id();
-            $table->string('intitule', 100)->unique();
-            $table->string('type', 50)->default('etablissement');
-            $table->foreignId('ministere_id')->constrained('ministeres')->onDelete('cascade')->onUpdate('cascade');
+            $table->string('intitule');
+            $table->foreignId('categorieActe_id')->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');    
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->text('description');
             $table->timestamps();
         });
     }
@@ -27,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('timbres');
+        Schema::dropIfExists('visas_institutions');
     }
 };

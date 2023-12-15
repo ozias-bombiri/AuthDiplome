@@ -11,27 +11,27 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Class DemandeAuthentification
+ * Class RetraitActe
  * 
  * 
  * @package App\Models
  */
-class DemandeAuthentification extends Model
+class RetraitActe extends Model
 {
-	protected $table = 'demande_authentifications';
-
-	protected $casts = [
-		'dateDemande' => 'datetime',
-		
-	];
+    protected $table = 'retrait_actes';
 
 	protected $fillable = [
 		'reference',
-		'reponse',
-		'dateDemande',
-		'demandeur',
+		'dateRetrait',
+		'retirant',
 		'description',
+		'acteAcademique_id',
+		'user_id'
+
 	];
 
-	
+	public function acteAcademique()
+	{
+		return $this->belongsTo(ActeAcademique::class);
+	}
 }

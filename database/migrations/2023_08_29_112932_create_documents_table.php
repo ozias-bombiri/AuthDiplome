@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->string('reference', 50);
-            $table->date('datecreation');
-            $table->string('type');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');            
+            $table->string('numero', 50);
+            $table->date('dateGeneration');
+            $table->integer('nombreGeneration');
+            $table->foreignId('acteAcademique_id')->constrained('acte_academiques')->onDelete('cascade')->onUpdate('cascade');            
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('inscriptions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('parcours_id')->constrained('parcours')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('impetrant_id')->constrained('impetrants')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('etudiant_id')->constrained('etudiants')->onDelete('cascade')->onUpdate('cascade');
             $table->string('referenceInscription', 50)->nullable(); 
             $table->string('annee', 20); 
-            $table->unique(['parcours_id', 'impetrant_id']);       
+            $table->unique(['parcours_id', 'etudiant_id']);       
             $table->timestamps();
         });
     }

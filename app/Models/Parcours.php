@@ -13,22 +13,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Parcours
  * 
- * @property int $id
- * @property string $intitule
- * @property string $credit
- * @property string $domaine
- * @property string $mention
- * @property string $specialite
- * @property string $description
- * @property int $institution_id
- * @property int $niveauEtude_id
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Institution $institution
- * @property NiveauEtude $niveau_etude
- * @property Collection|ResultatAcademique[] $resultat_academiques
- *
  * @package App\Models
  */
 class Parcours extends Model
@@ -71,7 +55,7 @@ class Parcours extends Model
 
 	public function impetrants()
 	{
-		return $this->belongsToMany(Impetrant::class, 'inscriptions', 'parcours_id', 'impetrant_id');
+		return $this->belongsToMany(Etudiant::class, 'inscriptions', 'parcours_id', 'impetrant_id');
 	}
 
 	

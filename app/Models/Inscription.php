@@ -12,16 +12,6 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * Class Inscription
  * 
- * @property int $id
- * @property int $impetrant_id
- * @property int $parcours_id
- * @property string $referenceInscription
- * @property string $annee
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- * 
- * @property Parcours $parcours
- * @property Impetrant $impetrant
  *
  * @package App\Models
  */
@@ -31,12 +21,12 @@ class Inscription extends Model
 
 	protected $casts = [
 		'parcours_id' => 'int',
-		'impetrant_id' => 'int',
+		'etudiant_id' => 'int',
 		
 	];
 
 	protected $fillable = [
-		'impetrant_id',
+		'etudiant_id',
 		'parcours_id',
 		'referenceInscription',
 		'annee',
@@ -47,8 +37,8 @@ class Inscription extends Model
 		return $this->belongsTo(Parcours::class);
 	}
 
-	public function impetrant()
+	public function etudiant()
 	{
-		return $this->belongsTo(Impetrant::class);
+		return $this->belongsTo(Etudiant::class);
 	}
 }

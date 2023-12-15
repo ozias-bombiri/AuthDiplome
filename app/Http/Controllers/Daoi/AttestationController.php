@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Etablissement;
+namespace App\Http\Controllers\Daoi;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Repositories\AttestationProvisoireRepository;
+use App\Repositories\AttestationDefinitiveRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
@@ -33,7 +33,7 @@ class AttestationController extends Controller
                                 ParcoursRepository $parcoursRepo, 
                                 NiveauEtudeRepository $niveauRepo,
                                 AnneeAcademiqueRepository $anneeRepo,
-                                AttestationProvisoireRepository $attestationRepo,
+                                AttestationDefinitiveRepository $attestationRepo,
                                 ResultatAcademiqueRepository $resultatRepo,
                                 ImpetrantRepository $impetrantRepo,
                                 NumeroteurRepository $numeroteurRepo,
@@ -53,7 +53,7 @@ class AttestationController extends Controller
 
 
     /**
-     * Lister les attestations provisoires à partir du parcours de formation choisi
+     * Lister les attestations defintives à partir du parcours de formation choisi
      **/
     public function listAttestation($institution_id)
     {
@@ -61,9 +61,9 @@ class AttestationController extends Controller
         $institution = $this->institutionRepository->find($institution_id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
-        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
-        $attestations = $this->attestationRepository->findByEtablissement($institution->id);
-        return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+        $parcours = $this->parcoursRepository->findByIesr($institution->id);
+        $attestations = $this->attestationRepository->findByIesr($institution->id);
+        return view('metiers.daoi.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
     public function filtreAttestation(Request $request)
