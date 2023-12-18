@@ -35,7 +35,7 @@ class VisaInstitution extends Model
 		return $this->belongsTo(Institution::class);
 	}
 
-	public function visas()
+	public function visaDiplomes()
 	{
 		return $this->hasMany(VisaDiplome::class);
 	}

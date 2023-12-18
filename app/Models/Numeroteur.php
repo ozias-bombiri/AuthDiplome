@@ -21,7 +21,7 @@ class Numeroteur extends Model
     protected $table = 'numeroteurs';
 
 	protected $fillable = [
-		'categorie',
+		'categorieActe_id',
 		'compteur',
 		'chaine',
 		'institution_id'
@@ -29,6 +29,11 @@ class Numeroteur extends Model
 
 	public function institution()
 	{
-		return $this->belongsTo(Institution::class, 'institution_id');
+		return $this->belongsTo(Institution::class);
+	}
+
+	public function categorieActe()
+	{
+		return $this->belongsTo(CategorieActe::class);
 	}
 }

@@ -27,7 +27,7 @@ class ActeAcademique extends Model
 		'validite' => 'boolean',
 		'categorieActe' => 'int',
 		'resultatAcademique_id' => 'int',
-		'signataire_id' => 'int',
+		'signataireActe_id' => 'int',
 		'user_id' => 'int',
 		
 	];
@@ -41,7 +41,7 @@ class ActeAcademique extends Model
 		'statutRemise',
 		'categorieActe_id',
 		'resultatAcademique_id',
-		'signataire_id',
+		'signataireActe_id',
 		'user_id',
 	];
 
@@ -57,11 +57,11 @@ class ActeAcademique extends Model
 
 	public function resultat_academique()
 	{
-		return $this->belongsTo(ResultatAcademique::class, 'resultatAcademique_id');
+		return $this->belongsTo(ResultatAcademique::class);
 	}
 
-	public function signataire()
+	public function signataireActe()
 	{
-		return $this->belongsTo(Signataire::class, 'signataire_id');
+		return $this->belongsTo(SignataireActe::class);
 	}
 }

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('etudiant_id')->constrained('etudiants')->onDelete('cascade')->onUpdate('cascade');
             $table->string('referenceInscription', 50)->nullable(); 
             $table->string('annee', 20); 
-            $table->unique(['parcours_id', 'etudiant_id']);       
+            $table->unique(['parcours_id', 'etudiant_id']);
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');      
             $table->timestamps();
         });
     }

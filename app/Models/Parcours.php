@@ -48,14 +48,14 @@ class Parcours extends Model
 		return $this->belongsTo(NiveauEtude::class, 'niveauEtude_id');
 	}
 
-	public function resultat_academiques()
+	public function procesVerbaux()
 	{
-		return $this->hasMany(ResultatAcademique::class, 'parcours_id');
+		return $this->hasMany(ProcesVerbal::class);
 	}
 
-	public function impetrants()
+	public function etudiants()
 	{
-		return $this->belongsToMany(Etudiant::class, 'inscriptions', 'parcours_id', 'impetrant_id');
+		return $this->belongsToMany(Etudiant::class, 'inscriptions', 'parcours_id', 'etudiant_id');
 	}
 
 	

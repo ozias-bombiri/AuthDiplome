@@ -31,7 +31,7 @@ class Visa extends Model
 		'texte'
 	];
 
-	public function institutions()
+	public function visaInstitutions()
 	{
 		return $this->belongsToMany(Institution::class, 'visa_diplomes', 'visa_id', 'institution_id');
 	}

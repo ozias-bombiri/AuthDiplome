@@ -39,22 +39,9 @@ class Signataire extends Model
 		
 	];
 
-	protected function nom():Attribute
+	public function signataireActes()
 	{
-		return Attribute::make(
-            get: fn (string $value) => strtoupper($value),
-			set: fn (string $value) => strtoupper($value),
-        );
-	}
-
-	public function institution()
-	{
-		return $this->belongsToMany(Institution::class, 'institutions_signataires', 'signataire_id', 'institution_id');
-	}
-
-	public function actes()
-	{
-		return $this->hasMany(ActeAcademique::class, 'signataire_id');
+		return $this->hasMany(SignataireActe::class);
 	}
 
 }

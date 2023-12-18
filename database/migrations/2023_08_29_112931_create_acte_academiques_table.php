@@ -22,7 +22,7 @@ return new class extends Migration
             $table->boolean('statutRemise')->default(0);
             $table->boolean('validite')->default(1);
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('signataireActe_id')->constrained('signataires_actes')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('categorieActe_id')->nullable()->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');
             $table->unique(['resultatAcademique_id', 'categorieActe_id']);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');

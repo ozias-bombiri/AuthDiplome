@@ -28,6 +28,6 @@ class NiveauEtude extends Model
 
 	public function parcours()
 	{
-		return $this->hasMany(Parcours::class, 'niveauEtude_id');
+		return $this->hasMany(Parcours::class);
 	}
 }

@@ -28,6 +28,6 @@ class Ministere extends Model
 
 	public function timbres()
 	{
-		return $this->hasMany(Timbre::class, 'ministere_id');
+		return $this->hasMany(Timbre::class);
 	}
 }

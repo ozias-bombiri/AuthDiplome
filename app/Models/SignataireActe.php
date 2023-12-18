@@ -34,13 +34,13 @@ class SignataireActe extends Model
 		'mention'
 	];
 
-	public function signataireInstitution()
+	public function institution()
 	{
-		return $this->belongsTo(SignataireInstitution::class);
+		return $this->belongsTo(Institution::class);
 	}
 
-	public function signataires()
+	public function signataire()
 	{
-		return $this->hasMany(Signataire::class);
+		return $this->belongsTo(Signataire::class);
 	}
 }

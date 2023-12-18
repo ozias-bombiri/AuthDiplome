@@ -22,7 +22,7 @@ class ResultatAcademique extends Model
 
 	protected $casts = [
 		'moyenne' => 'float',
-		'etudiant_id' => 'int',
+		'inscription_id' => 'int',
 		'procesVerbal_id' => 'int',
 		'user_id' => 'int',
 	];
@@ -30,7 +30,7 @@ class ResultatAcademique extends Model
 	protected $fillable = [
 		'reference',
 		'moyenne',
-		'etudiant_id',
+		'inscription_id',
 		'procesVerbal_id',
 		'user_id',
 		

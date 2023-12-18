@@ -48,9 +48,9 @@ class Institution extends Model
 		return $this->hasMany(Filiere::class);
 	}
 
-	public function signataires()
+	public function signataireActes()
 	{
-		return $this->belongsToMany(Signataire::class, 'institutions_signataires', 'institution_id', 'signataire_id');
+		return $this->belongsToMany(SignataireActe::class);
 	}
 
 	public function timbres()
@@ -58,14 +58,19 @@ class Institution extends Model
 		return $this->hasMany(Timbre::class,);
 	}
 
-	public function visas()
+	public function visaInstitution()
 	{
-		return $this->belongsToMany(Visa::class, 'visa_diplomes', 'institution_id', 'visa_id');
+		return $this->hasMany(VisaInstitution::class);
 	}
 
 	public function users()
 	{
 		return $this->hasMany(User::class);
-	}	
+	}
+	
+	public function numeroteurs()
+	{
+		return $this->hasMany(Numeroteur::class);
+	}
 	
 }

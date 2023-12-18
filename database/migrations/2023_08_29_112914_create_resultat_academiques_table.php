@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('reference', 50)->unique();
             $table->double('moyenne');
-            $table->foreignId('etudiant_id')->constrained('etudiants')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('inscription_id')->constrained('inscriptions')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('procesVerbal_id')->constrained('proces_verbaux')->onDelete('cascade')->onUpdate('cascade');
-            $table->unique(['etudiant_id', 'parcours_id']);
+            $table->unique(['inscription_id', 'procesVerbal_id']);
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
