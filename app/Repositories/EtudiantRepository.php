@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Models\Impetrant;
+use App\Models\Etudiant;
 use App\Repositories\BaseRepository;
 
 /**
- * Class ImpetrantRepository
+ * Class EtudiantRepository
  * @package App\Repositories
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class ImpetrantRepository extends BaseRepository
+class EtudiantRepository extends BaseRepository
 {
     /**
      * @var array
@@ -23,6 +23,7 @@ class ImpetrantRepository extends BaseRepository
 		'prenom',
 		'sexe',
 		'dateNaissance',
+		'nevers',
 		'lieuNaissance',
 		'paysNaissance'
     ];
@@ -42,32 +43,32 @@ class ImpetrantRepository extends BaseRepository
      **/
     public function model()
     {
-        return Impetrant::class;
+        return Etudiant::class;
     }
 
     public function findByIdentifiant($identifiant){
-        $impetrant = Impetrant::where('impetrants.identifiant', '=', $identifiant)->first();
+        $impetrant = Etudiant::where('etudiants.identifiant', '=', $identifiant)->first();
         return $impetrant;
         
     }
     public function findByEtablissement($institution_id){
-        $impetrants = Impetrant::join('inscriptions', 'inscriptions.impetrant_id', '=', 'impetrants.id')
+        $impetrants = Etudiant::join('inscriptions', 'inscriptions.etudiant_id', '=', 'etudiants.id')
                         ->join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
                         ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                 		->where('filieres.institution_id', '=', $institution_id)
-                        ->select('impetrants.*')
+                        ->select('etudiants.*')
                         ->get();
         return $impetrants;
         
     }
 
     public function findByIesr($iesr_id){
-        $impetrants = Impetrant::join('inscriptions', 'inscriptions.impetrant_id', '=', 'impetrants.id')
+        $impetrants = Etudiant::join('inscriptions', 'inscriptions.etudiant_id', '=', 'etudiants.id')
                         ->join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
                         ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                         ->join('institutions', 'filieres.institution_id', '=', 'institution.id')
                 		->where('institutions.parent_id', '=', $iesr_id)
-                        ->select('impetrants.*')
+                        ->select('etudiants.*')
                         ->get();
         return $impetrants;
         

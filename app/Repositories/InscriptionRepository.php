@@ -2,25 +2,23 @@
 
 namespace App\Repositories;
 
-use App\Models\Document;
+use App\Models\Inscription;
 use App\Repositories\BaseRepository;
 
 /**
- * Class DocumentRepository
+ * Class InscriptionRepository
  * @package App\Repositories
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class DocumentRepository extends BaseRepository
+class InscriptionRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'reference',
-		'numero',
-		'dateGeneration',
-		'nombreGeneration',
+        'referenceInscription',
+		'annee',
     ];
 
     /**
@@ -38,6 +36,12 @@ class DocumentRepository extends BaseRepository
      **/
     public function model()
     {
-        return Document::class;
+        return Inscription::class;
+    }
+
+    public function findByReference($reference){
+        $attestation = Inscription::where('referenceInscription', '=', $reference)
+                        ->first();
+        return $attestation;        
     }
 }

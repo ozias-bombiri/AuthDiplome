@@ -20,16 +20,10 @@ class ResultatAcademiqueRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'reference',
-		'soutenance',
-		'dateSignaure',
 		'moyenne',
-		'cote',
-		'session',
-		'dateSoutenance',
-		'impetrant_id',
-		'parcours_id',
-		'anneeAcademique_id',
-		'document_id'
+		'inscription_id',
+		'procesVerbal_id',
+		'user_id',
     ];
 
     /**
@@ -51,32 +45,14 @@ class ResultatAcademiqueRepository extends BaseRepository
     }
 
 
-    
-
-
-    public function findByInstitution($institution_id){ 
-        
-
-        // $impetrants = Impetrant::join('institutions_impetrants', 'institutions_impetrants.impetrant_id', '=', 'impetrants.id')
-        //     ->join('resultat_academiques', 'resultat_academiques.impetrant_id', '=', 'impetrants.id')
-        //     ->join('attestation_provisoires', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
-        //     //->join('parcours', 'parcours.institution_id', '=', 'institutions_impetrants.id')    
-        //     ->where('institutions_impetrants.institution_id', '=', $institution_id)
-        //     ->where('institutions_impetrants.institution_id', '=', $institution_id)
-        //     //->select('impetrants.*','resultat_academiques.*','attestation_provisoires.*')
-        //     ->select('impetrants.*','moyenne','cote','session','dateSoutenance','parcours_id','anneeAcademique_id','annee_academiques.intitule')
-        //     ->get(); 
-        
-         $impetrants = ResultatAcademique::with('annee_academique', 'impetrant', 'parcours')
-         ->join('impetrants', 'resultat_academiques.impetrant_id', '=', 'impetrants.id')
-         ->join('institutions_impetrants', 'institutions_impetrants.impetrant_id', '=', 'impetrants.id')
-         
-         ->where('institutions_impetrants.institution_id', '=', $institution_id)
-         ->select('impetrants.*','anneeAcademique_id','parcours_id','moyenne','cote','session','dateSoutenance','reference')
-         ->get();
-      
-
-        return $impetrants;
-        
+     /**
+     * Selectionner par pv
+     **/
+    public function findByProcesVerbal($procesVerbal_id)
+    {
+        return ResultatAcademique::join('proces_verbaux', 'resultat_academiques.parcours_id', '=', 'proces_verbaux.id')
+                ->where('proces_verbaux.id', $procesVerbal_id)
+                ->select('resultat_academiques.*')
+                ->get();
     }
 }

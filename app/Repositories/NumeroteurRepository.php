@@ -17,8 +17,7 @@ class NumeroteurRepository extends BaseRepository
      * @var array
      */
     protected $fieldSearchable = [
-        'categorie',
-		'compteur',
+        'compteur',
 		'chaine',
     ];
 
@@ -40,10 +39,10 @@ class NumeroteurRepository extends BaseRepository
         return Numeroteur::class;
     }
 
-    public function findByInstitutionandCategorie($institution_id, $categorie)
+    public function findByInstitutionAndCategorie($institution_id, $categorie)
     {
         return Numeroteur::where('institution_id', '=', $institution_id)
-                            ->where('categorie', '=', $categorie)
+                            ->where('categorieActe_id', '=', $categorie)
                             ->first();
     }
 }

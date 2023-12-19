@@ -2,27 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\Diplome;
+use App\Models\CategorieActe;
 use App\Repositories\BaseRepository;
 
 /**
- * Class DiplomeRepository
+ * Class AttestationDefinitiveRepository
  * @package App\Repositories
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class DiplomeRepository extends BaseRepository
+class CategorieActeRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'reference',
         'intitule',
-        'numeroEnregistremet',
-        'dateSignature',
-        'dateCreation',
-        'statutGeneration'
+		'nombreCopies',
+		'visas'
     ];
 
     /**
@@ -40,12 +37,6 @@ class DiplomeRepository extends BaseRepository
      **/
     public function model()
     {
-        return Diplome::class;
-    }
-
-    public function findByReference($reference){
-        $attestation = Diplome::where('reference', '=', $reference)
-                        ->first();
-        return $attestation;        
+        return CategorieActe::class;
     }
 }

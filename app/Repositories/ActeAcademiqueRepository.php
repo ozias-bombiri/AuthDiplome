@@ -2,26 +2,27 @@
 
 namespace App\Repositories;
 
-use App\Models\AttestationProvisoire;
+use App\Models\ActeAcademique;
 use App\Repositories\BaseRepository;
 
 /**
- * Class AttestationProvisoireRepository
+ * Class ActeAcademiqueRepository
  * @package App\Repositories
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class AttestationProvisoireRepository extends BaseRepository
+class ActeAcademiqueRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'reference',
         'intitule',
-        'dateSignature',
-        'dateCreation',
-        'statutGeneration'
+		'numero',
+		'dateSignature',
+		'lieu',
+		'statutSignature',
+		'statutRemise',
     ];
 
     /**
@@ -39,15 +40,15 @@ class AttestationProvisoireRepository extends BaseRepository
      **/
     public function model()
     {
-        return AttestationProvisoire::class;
+        return ActeAcademique::class;
     }
 
     public function findByEtablissement($institution_id){
-        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
+        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
                 		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
                         ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                         ->where('filieres.institution_id', '=', $institution_id)
-                        ->select('attestation_provisoires.*')
+                        ->select('actes_academiques.*')
                         ->get();
 
         return $attestations;
@@ -55,12 +56,12 @@ class AttestationProvisoireRepository extends BaseRepository
     }
 
     public function findByIesr($iesr_id){
-        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
+        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
                 		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
                         ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                         ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
                         ->where('institution.parent_id', '=', $iesr_id)
-                        ->select('attestation_provisoires.*')
+                        ->select('actes_academiques.*')
                         ->get();
 
         return $attestations;
@@ -68,10 +69,10 @@ class AttestationProvisoireRepository extends BaseRepository
     }
 
     public function findByNiveau($niveau){
-        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
+        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
                 		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
                         ->where('parcours.niveauEtude_id', '=', $niveau)
-                        ->select('attestation_provisoires.*')
+                        ->select('actes_academiques.*')
                         ->get();
 
         return $attestations;
@@ -79,12 +80,12 @@ class AttestationProvisoireRepository extends BaseRepository
     }
 
     public function findByNiveauParcoursAnnee($niveau,  $parcours, $annee){
-        $attestations = AttestationProvisoire::join('resultat_academiques', 'attestation_provisoires.resultatAcademique_id', '=', 'resultat_academiques.id')
+        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
                 		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
                         ->where('parcours.niveauEtude_id', '=', $niveau)
                         ->where('parcours.id', '=', $parcours)
                         ->where('resultat_academiques.anneeAcademique_id', '=', $annee)
-                        ->select('attestation_provisoires.*')
+                        ->select('actes_academiques.*')
                         ->get();
 
         return $attestations;
@@ -92,7 +93,7 @@ class AttestationProvisoireRepository extends BaseRepository
     }
 
     public function findByReference($reference){
-        $attestation = AttestationProvisoire::where('reference', '=', $reference)
+        $attestation = ActeAcademique::where('reference', '=', $reference)
                         ->first();
         return $attestation;
     }

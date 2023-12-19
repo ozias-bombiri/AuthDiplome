@@ -2,25 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\Document;
+use App\Models\VisaInstitution;
 use App\Repositories\BaseRepository;
 
 /**
- * Class DocumentRepository
+ * Class VisaInstitutionRepository
  * @package App\Repositories
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class DocumentRepository extends BaseRepository
+class VisaInstitutionRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'reference',
-		'numero',
-		'dateGeneration',
-		'nombreGeneration',
+        'categorieActe_id',
+		'institution_id',
+		'intitule'
     ];
 
     /**
@@ -38,6 +37,6 @@ class DocumentRepository extends BaseRepository
      **/
     public function model()
     {
-        return Document::class;
+        return VisaInstitution::class;
     }
 }

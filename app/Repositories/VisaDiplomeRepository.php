@@ -2,25 +2,24 @@
 
 namespace App\Repositories;
 
-use App\Models\Document;
+use App\Models\VisaDiplome;
 use App\Repositories\BaseRepository;
 
 /**
- * Class DocumentRepository
+ * Class VisaDiplomeRepository
  * @package App\Repositories
  * @version April 9, 2022, 9:37 am UTC
 */
 
-class DocumentRepository extends BaseRepository
+class VisaDiplomeRepository extends BaseRepository
 {
     /**
      * @var array
      */
     protected $fieldSearchable = [
-        'reference',
-		'numero',
-		'dateGeneration',
-		'nombreGeneration',
+        'visa_id',
+		'visaInstitution_id',
+		'ordre'
     ];
 
     /**
@@ -38,6 +37,6 @@ class DocumentRepository extends BaseRepository
      **/
     public function model()
     {
-        return Document::class;
+        return VisaDiplome::class;
     }
 }
