@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class VisaInstitution extends Model
 {
-	protected $table = 'visa_diplomes';
+	protected $table = 'visas_institutions';
 
 	protected $casts = [
 		'categorieActe_id' => 'int',
@@ -35,8 +35,13 @@ class VisaInstitution extends Model
 		return $this->belongsTo(Institution::class);
 	}
 
-	public function visaDiplomes()
+	public function visaDiplomes() 
 	{
 		return $this->hasMany(VisaDiplome::class);
+	}
+
+	public function categorieActe()
+	{
+		return $this->belongsTo(CategorieActe::class);
 	}
 }

@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('numero', 50) ;            
             $table->string('lieu');
             $table->date('dateSignature');            
-            $table->boolean('satutSignature')->default(0);            
+            $table->boolean('statutSignature')->default(0);            
             $table->boolean('statutRemise')->default(0);
             $table->boolean('validite')->default(1);
             $table->foreignId('resultatAcademique_id')->constrained('resultat_academiques')->onDelete('cascade')->onUpdate('cascade');

@@ -38,7 +38,7 @@ class ProcesVerbal extends Model
 		'user_id',
 	];
 
-	public function Parcours()
+	public function parcour()
 	{
 		return $this->belongsTo(Parcours::class);
 	}
