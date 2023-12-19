@@ -63,7 +63,14 @@ Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class)
 Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
 Route::resource('numeroteurs', App\Http\Controllers\Backend\NumeroteurController::class);
 
-
+Route::resource('acte_academiques', App\Http\Controllers\Backend\ActeAcademiqueController::class);
+Route::resource('categorie_actes', App\Http\Controllers\Backend\CategorieActeController::class);
+Route::resource('ministeres', App\Http\Controllers\Backend\MinistereController::class);
+Route::resource('proces_verbals', App\Http\Controllers\Backend\ProcesVerbalController::class);
+Route::resource('retrait_actes', App\Http\Controllers\Backend\RetraitActeController::class);
+Route::resource('signataire_actes', App\Http\Controllers\Backend\SignataireActeController::class);
+Route::resource('visa_diplomes', App\Http\Controllers\Backend\VisaDiplomeController::class);
+Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
 
 // Route::resource('users', App\Http\Controllers\Backend\UserController::class);
 // Route::resource('roles', RoleController::class);

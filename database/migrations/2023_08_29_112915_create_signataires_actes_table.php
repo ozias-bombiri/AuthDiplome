@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('signataires_actes', function (Blueprint $table) {
             $table->id();
-            $table->string('statut')->default('active');
+            $table->boolean('statut')->default('active');
             $table->date('debut')->nullable();
             $table->date('fin')->nullable();
             $table->foreignId('categorieActe_id')->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');    

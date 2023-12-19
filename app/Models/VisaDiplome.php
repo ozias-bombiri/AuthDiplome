@@ -16,7 +16,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class VisaDiplome extends Model
 {
-	protected $table = 'visa_diplomes';
+	protected $table = 'visas_diplomes';
 
 	protected $casts = [
 		'visa_id' => 'int',
