@@ -4,8 +4,6 @@ namespace App\Repositories;
 
 use App\Models\ResultatAcademique;
 use App\Repositories\BaseRepository;
-use App\Models\Impetrant; 
-use App\Models\AttestationProvisoire; 
 
 /**
  * Class ResultatAcademiqueRepository
