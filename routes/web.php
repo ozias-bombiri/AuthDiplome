@@ -103,6 +103,8 @@ Route::group(['middleware' => ['auth']], function(){
     
 });
 
+
+
 Route::group(['middleware' => ['auth', 'role:direction']], function() {
 
     Route::get('filieres/{institution_id}', [App\Http\Controllers\Etablissement\FiliereController::class, 'listFiliere'])
