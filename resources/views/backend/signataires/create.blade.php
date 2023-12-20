@@ -43,6 +43,7 @@
                         </div>
                     </div>
 
+                    
                     <div class="form-group row py-2">
                         <label for="nom" class="col-sm-2 col-form-label">Nom</label>
                         <div class="col">
@@ -72,9 +73,7 @@
                                 <option value="Féminin">Féminin</option>
                             </select>
                         </div>
-                    </div>
-
-                    
+                    </div>                    
 
                     <div class="form-group row py-2">
                         <label for="grade" class="col-sm-2 col-form-label">Grade</label>
@@ -87,6 +86,36 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group row py-2">
+                        <label for="categorie" class="col-sm-2 col-form-label">Categorie d'acte</label>
+                        <div class="col">
+                            <select class="form-control" id="categorie" name="categorieActe_id" required>
+                                <option value="" selected disabled hidden>Choisir</option>
+                                @foreach( $categories as $categorie)
+                                <option value="{{ $categorie->id}}">{{ $categorie->intitule }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="debut" class="col-sm-2 col-form-label">Date de début de signature </label>
+                        <div class="col">
+                            <input type="date" class="form-control" id="debut" name="debut" placeholder=" ..." required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="fonction" class="col-sm-2 col-form-label">Fonction</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="fonction" name="fonction" placeholder=" ..." required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="mention" class="col-sm-2 col-form-label">Mention</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="mention" name="mention" placeholder=" ..." required>
+                        </div>
+                    </div>
+
                     <div class="form-group row py-2">
                         <label for="titreAcademique" class="col-sm-2 col-form-label">Titre academique</label>
                         <div class="col">

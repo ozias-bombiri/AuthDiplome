@@ -21,6 +21,7 @@ class SignataireActe extends Model
 	protected $casts = [
 		'institution_id' => 'int',
 		'signataire_id' => 'int',
+		'categorieActe_id' => 'int',
 		
 	];
 
@@ -31,7 +32,8 @@ class SignataireActe extends Model
 		'debut',
 		'fin',
 		'fonction',
-		'mention'
+		'mention',
+		'categorieActe_id'
 	];
 
 	public function institution()

@@ -16,6 +16,8 @@ return new class extends Migration
             $table->boolean('statut')->default('active');
             $table->date('debut')->nullable();
             $table->date('fin')->nullable();
+            $table->string('fonction', 150);
+            $table->string('mention', 150);
             $table->foreignId('categorieActe_id')->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');    
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');    
             $table->foreignId('signataire_id')->constrained('signataires')->onDelete('cascade')->onUpdate('cascade');
