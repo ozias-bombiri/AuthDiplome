@@ -8,7 +8,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('parcours.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
                 <i class="fa fa-table" aria-hidden="true"></i>
                 <span class="hide-menu">Parcours</span>
             </a>
@@ -50,7 +50,7 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('numeroteurs.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('resultat_academiques.index') }}" aria-expanded="false">
                 <i class="fa fa-columns" aria-hidden="true"></i>
                 <span class="hide-menu">Numeroteurs</span>
             </a>
