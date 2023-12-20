@@ -14,27 +14,21 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('proces_verbals.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
                 <i class="fa fa-font" aria-hidden="true"></i>
                 <span class="hide-menu">Procès verbaux</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('retrait_actes.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#" aria-expanded="false">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                 <span class="hide-menu">Remise d'actes</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('institutions.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('annee_academiques.index') }}" aria-expanded="false">
                 <i class="fa fa-globe" aria-hidden="true"></i>
                 <span class="hide-menu">Etablissements</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('etudiants.index') }}" aria-expanded="false">
-                <i class="fa fa-globe" aria-hidden="true"></i>
-                <span class="hide-menu">Etudiants</span>
             </a>
         </li>
         <li class="sidebar-item">
@@ -44,21 +38,15 @@
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('annee_academiques.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('parcours.index') }}" aria-expanded="false">
                 <i class="fa fa-columns" aria-hidden="true"></i>
                 <span class="hide-menu">Années academiques</span>
             </a>
         </li>
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('niveau_etudes.index') }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('impetrants.index') }}" aria-expanded="false">
                 <i class="fa fa-columns" aria-hidden="true"></i>
                 <span class="hide-menu">Niveaux d'études</span>
-            </a>
-        </li>
-        <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('categorie_actes.index') }}" aria-expanded="false">
-                <i class="fa fa-columns" aria-hidden="true"></i>
-                <span class="hide-menu">Categorie d'actes</span>
             </a>
         </li>
         <li class="sidebar-item">
