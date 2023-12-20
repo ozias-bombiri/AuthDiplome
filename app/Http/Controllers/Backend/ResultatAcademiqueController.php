@@ -7,21 +7,21 @@ use App\Repositories\ResultatAcademiqueRepository;
 use App\Http\Requests\StoreResultatAcademiqueRequest;
 use App\Http\Requests\UpdateResultatAcademiqueRequest;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Repositories\ImpetrantRepository;
+use App\Repositories\EtudiantRepository;
 use App\Repositories\ParcoursRepository;
 
 class ResultatAcademiqueController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
-    private $impetrantRepository;
+    private $etudiantRepository;
     private $parcoursRepository;
     private $anneeAcademiqueRepository;
 
-    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, ImpetrantRepository $impetrantRepo,ParcoursRepository $parcoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
+    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, EtudiantRepository $etudiantRepo,ParcoursRepository $parcoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
     {
         $this->modelRepository = $ResultatAcademiqueRepo;
-        $this->impetrantRepository = $impetrantRepo;
+        $this->etudiantRepository = $etudiantRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
     }
@@ -39,7 +39,7 @@ class ResultatAcademiqueController extends Controller
      */
     public function create()
     {
-        $etudiants = $this->impetrantRepository->all();
+        $etudiants = $this->etudiantRepository->all();
         $parcours = $this->parcoursRepository->all();
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
         return view('backend.resultat_academiques.create', compact('etudiants', 'parcours', 'anneeAcademiques')) ;

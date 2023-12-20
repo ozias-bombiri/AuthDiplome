@@ -7,7 +7,6 @@ use App\Models\AttestationProvisoire;
 use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Repositories\AttestationProvisoireRepository;
 use App\Repositories\FiliereRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
@@ -39,7 +38,7 @@ class AttestationProvisoireController extends Controller
     protected $pdfCreator;
 
     public function __construct(
-        AttestationProvisoireRepository $attestationRepo,
+        
         FiliereRepository $filiereRepo,
         ParcoursRepository $parcoursRepo,
         NiveauEtudeRepository $niveauRepo,

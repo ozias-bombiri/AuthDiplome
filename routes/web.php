@@ -50,9 +50,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('annee_academiques', App\Http\Controllers\Backend\AnneeAcademiqueController::class);
 Route::resource('niveau_etudes', App\Http\Controllers\Backend\NiveauEtudeController::class);
 Route::resource('institutions', App\Http\Controllers\Backend\InstitutionController::class);
-Route::resource('diplomes', App\Http\Controllers\Backend\DiplomeController::class);
-Route::resource('attestation_provisoires', App\Http\Controllers\Backend\AttestationProvisoireController::class);
-Route::resource('attestation_definitives', App\Http\Controllers\Backend\AttestationDefinitiveController::class);
+//Route::resource('diplomes', App\Http\Controllers\Backend\DiplomeController::class);
+//Route::resource('attestation_provisoires', App\Http\Controllers\Backend\AttestationProvisoireController::class);
+//Route::resource('attestation_definitives', App\Http\Controllers\Backend\AttestationDefinitiveController::class);
 Route::resource('demande_authentifications', App\Http\Controllers\Backend\DemandeAuthentificationController::class);
 Route::resource('documents', App\Http\Controllers\Backend\DocumentController::class);
 Route::resource('impetrants', App\Http\Controllers\Backend\ImpetrantController::class);
@@ -61,6 +61,8 @@ Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAca
 Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
+
+
 Route::resource('numeroteurs', App\Http\Controllers\Backend\NumeroteurController::class);
 
 Route::resource('acte_academiques', App\Http\Controllers\Backend\ActeAcademiqueController::class);
@@ -71,6 +73,10 @@ Route::resource('retrait_actes', App\Http\Controllers\Backend\RetraitActeControl
 Route::resource('signataire_actes', App\Http\Controllers\Backend\SignataireActeController::class);
 Route::resource('visa_diplomes', App\Http\Controllers\Backend\VisaDiplomeController::class);
 Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
+Route::resource('filieres', App\Http\Controllers\Backend\FiliereController::class);
+//Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
+
+
 
 // Route::resource('users', App\Http\Controllers\Backend\UserController::class);
 // Route::resource('roles', RoleController::class);
