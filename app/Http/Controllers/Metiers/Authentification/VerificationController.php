@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Metiers\Authentification;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\AttestationDefinitiveRepository;
-use App\Repositories\AttestationProvisoireRepository;
+//use App\Repositories\AttestationProvisoireRepository;
 use App\Repositories\DiplomeRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -15,13 +15,17 @@ use File;
 
 class VerificationController extends Controller
 {
-    private $attestationProvisoireRepository ;
+    //private $attestationProvisoireRepository ;
     private $attestationDefinitiveRepository ;
     private $diplomeRepository ;
 
-    public function __construct(AttestationProvisoireRepository $attestationProRepo, AttestationDefinitiveRepository $attestationDefRepo, DiplomeRepository $diplomeRepo)
+    public function __construct(
+        //AttestationProvisoireRepository $attestationProRepo, 
+        AttestationDefinitiveRepository $attestationDefRepo, 
+        DiplomeRepository $diplomeRepo
+        )
     {
-        $this->attestationProvisoireRepository = $attestationProRepo;
+        //$this->attestationProvisoireRepository = $attestationProRepo;
         $this->attestationDefinitiveRepository = $attestationDefRepo;
         $this->diplomeRepository = $diplomeRepo;
         
