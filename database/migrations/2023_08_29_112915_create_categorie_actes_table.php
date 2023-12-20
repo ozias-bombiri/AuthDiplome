@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('intitule', 100);
             $table->string('nombreCopies');
+            $table->string('description', 150)->nullable();
             $table->boolean('visas')->default(0);
             $table->timestamps();
         });

@@ -18,7 +18,18 @@ class RolePermissionSeeder extends Seeder
     {
         //Création des permissions
 
-        $permissions = [            
+        $permissions = [ 
+            'create-proces-verbal',
+            'view-proces-verbal', 
+            'edit-proces-verbal', 
+            'delete-proces-verbal',
+            'view-all-proces-verbal',
+            'view-resultat-proces-verbal', 
+            'add-resultat-proces-verbal',
+            'create-parcours',
+            'edit-parcours',
+            'delete-parcours',
+            'add-proces-verbal',
             'create-users',
             'edit-users',
             'delete-users',
@@ -36,9 +47,7 @@ class RolePermissionSeeder extends Seeder
             'edit-signataires',
             'delete-signataires',
             'disable-signataires',
-            'create-parcours',
-            'edit-parcours',
-            'delete-parcours',
+            
             'create-resultats',
             'edit-resultats',
             'delete-resultats',
@@ -67,12 +76,20 @@ class RolePermissionSeeder extends Seeder
         $roles = [
             'superAdmin',
             'admin',
-            'direction',
+            'scolarite',
+            'directeur',
+            'std',
             'daoi',
+            'vpeip',
+            'president',
             'authentification'
         ];
+        foreach ($roles as $role) {
+            Role::create(['name' => $role]);
+       }
+
         //Role admin         
-        $adminRole = Role::create(['name' => 'admin']);
+        $adminRole = Role::where('name', 'admin')->first();
         $adminRole->givePermissionTo([
             'create-users',
             'edit-users',
@@ -93,8 +110,8 @@ class RolePermissionSeeder extends Seeder
             'disable-signataires',
         ]);
 
-        //Role direction pour l'émission des attestation provisoires
-        $directionRole = Role::create(['name' => 'direction']);
+        //Role scolarite pour l'émission des attestation provisoires
+        $directionRole = Role::where('name', 'scolarite')->first();
         $directionRole->givePermissionTo([
             'create-parcours',
             'edit-parcours',
@@ -109,7 +126,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         //Role daoi pour l'émission des attestations définitives et des diplômes
-        $daoiRole = Role::create(['name' => 'daoi']);
+        $daoiRole = Role::where('name', 'std')->first();
         $daoiRole->givePermissionTo([
             'create-attestation-definitives',
             'edit-attestation-definitives',
@@ -122,7 +139,7 @@ class RolePermissionSeeder extends Seeder
         ]);
 
         // Role authentification pour l'authentification des documents
-        $authentificationRole = Role::create(['name' => 'authentification']);
+        $authentificationRole = Role::where('name', 'authentification')->first();
         $authentificationRole->givePermissionTo([
 
             'check-attestation-provisoires',
@@ -131,7 +148,6 @@ class RolePermissionSeeder extends Seeder
             'generate-rapport'
         ]);
         
-        $superAdminRole = Role::create(['name' => 'superAdmin']);
         
         $role_superadmin = Role::where('name', 'superAdmin')->first();
      
