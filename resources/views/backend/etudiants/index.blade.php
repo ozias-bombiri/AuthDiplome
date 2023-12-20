@@ -5,7 +5,7 @@
 @endpush
 
 @section('page-title')
-Impétrants
+Etudiants
 @endsection
 
 @section('content')
@@ -25,9 +25,9 @@ Impétrants
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">Impétrants </h3>
+            <h3 class="box-title">Etudiants </h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('impetrants.create') }}"> Ajouter </a>
+                <a class="btn btn-success" href="{{ route('etudiants.create') }}"> Ajouter </a>
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered table-responsible">
@@ -43,7 +43,7 @@ Impétrants
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($impetrants as $impetrant)
+                        @foreach ($etudiants as $impetrant)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
                             <td>{{ $impetrant->identifiant }}</td>

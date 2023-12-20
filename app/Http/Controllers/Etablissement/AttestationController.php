@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Etablissement;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Repositories\AttestationProvisoireRepository;
+use App\Repositories\EtudiantRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
@@ -33,9 +34,9 @@ class AttestationController extends Controller
                                 ParcoursRepository $parcoursRepo, 
                                 NiveauEtudeRepository $niveauRepo,
                                 AnneeAcademiqueRepository $anneeRepo,
-                                AttestationProvisoireRepository $attestationRepo,
+                                ActeAcademiqueRepository $attestationRepo,
                                 ResultatAcademiqueRepository $resultatRepo,
-                                ImpetrantRepository $impetrantRepo,
+                                EtudiantRepository $impetrantRepo,
                                 NumeroteurRepository $numeroteurRepo,
                                 DocumentCreator $pdfCreator)
     {

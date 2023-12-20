@@ -3,21 +3,22 @@
 namespace App\Http\Controllers\Etablissement;
 
 use App\Http\Controllers\Controller;
+use App\Models\Etudiant;
 use App\Models\Inscription;
-use App\Repositories\ImpetrantRepository;
+use App\Repositories\EtudiantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\ParcoursRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class ImpetrantController extends Controller
+class EtudiantController extends Controller
 {
     protected $institutionRepository;
     protected $impetrantRepository;
     protected $inscriptionRepository;
     protected $parcoursRepository;
 
-    public function __construct(InstitutionRepository $institutionRepo, ImpetrantRepository $impetrantRepo, ParcoursRepository $parcoursRepo)
+    public function __construct(InstitutionRepository $institutionRepo, EtudiantRepository $impetrantRepo, ParcoursRepository $parcoursRepo)
     {
         $this->institutionRepository = $institutionRepo;
         $this->impetrantRepository = $impetrantRepo;

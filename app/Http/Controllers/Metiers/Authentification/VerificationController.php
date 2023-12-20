@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Metiers\Authentification;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AttestationDefinitiveRepository;
 //use App\Repositories\AttestationProvisoireRepository;
 use App\Repositories\DiplomeRepository;
@@ -16,18 +17,13 @@ use File;
 class VerificationController extends Controller
 {
     //private $attestationProvisoireRepository ;
-    private $attestationDefinitiveRepository ;
-    private $diplomeRepository ;
-
+    private $acteAcademiqueRepository ;
+    
     public function __construct(
-        //AttestationProvisoireRepository $attestationProRepo, 
-        AttestationDefinitiveRepository $attestationDefRepo, 
-        DiplomeRepository $diplomeRepo
+        ActeAcademiqueRepository $attestationDefRepo, 
         )
     {
-        //$this->attestationProvisoireRepository = $attestationProRepo;
-        $this->attestationDefinitiveRepository = $attestationDefRepo;
-        $this->diplomeRepository = $diplomeRepo;
+        $this->acteAcademiqueRepository = $attestationDefRepo;
         
     }
 
@@ -46,13 +42,13 @@ class VerificationController extends Controller
         $categorie = $input['categorie'];
         $document =null;
         if ($categorie === "provisoire") {
-            $document  = $this->attestationProvisoireRepository->findByReference($reference);
+            $document  = $this->acteAcademiqueRepository->findByReference($reference);
         }
         else if($categorie === "definitive"){
-            $document = $this->attestationDefinitiveRepository->findByReference($reference);
+            $document = $this->acteAcademiqueRepository->findByReference($reference);
         }
         else if($categorie === "diplome"){
-            $document = $this->diplomeRepository->findByReference($reference);
+            $document = $this->acteAcademiqueRepository->findByReference($reference);
         }
         else {
 
@@ -71,13 +67,13 @@ class VerificationController extends Controller
     public function visualiser(Request $request, $categorie, $id){
         $document =null;
         if( $categorie ==="provisoire"){
-            $document = $this->attestationProvisoireRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }
         elseif( $categorie ==="definitive" ){
-            $document = $this->attestationDefinitiveRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }
         elseif( $categorie ==="diplome" ){
-            $document = $this->diplomeRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }        
         //$document = $this->attestationProvisoireRepository->find($id);
         
@@ -119,13 +115,13 @@ class VerificationController extends Controller
     {
         $document =null;
         if( $categorie ==="provisoire"){
-            $document = $this->attestationProvisoireRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }
         elseif( $categorie ==="definitive" ){
-            $document = $this->attestationDefinitiveRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }
         elseif( $categorie ==="diplome" ){
-            $document = $this->diplomeRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }      
         //$attestation = $this->attestationRepository->find($id);
         
@@ -179,16 +175,16 @@ class VerificationController extends Controller
     {
         $document =null;
         if( $categorie ==="provisoire"){
-            $document = $this->attestationProvisoireRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }
         elseif( $categorie ==="definitive" ){
-            $document = $this->attestationDefinitiveRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }
         elseif( $categorie ==="diplome" ){
-            $document = $this->diplomeRepository->find($id);
+            $document = $this->acteAcademiqueRepository->find($id);
         }  
 
-        $document = $this->attestationProvisoireRepository->find($id);
+        $document = $this->acteAcademiqueRepository->find($id);
         $attestation= $document;
         $institution = $document->signataire->institution;
         $timbre = $institution->timbre ;
