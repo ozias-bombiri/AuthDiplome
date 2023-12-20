@@ -24,8 +24,6 @@ class ParcoursRepository extends BaseRepository
 		'mention',
 		'specialite',
 		'description',
-		'etablissement_id',
-		'niveauEtude_id'
     ];
 
     /**

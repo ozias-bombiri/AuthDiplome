@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Repositories\SignataireRepository;
 use App\Http\Requests\StoreSignataireRequest;
 use App\Http\Requests\UpdateSignataireRequest;
+use App\Repositories\CategorieActeRepository;
 use App\Repositories\InstitutionRepository;
+use App\Repositories\SignataireActeRepository;
 use Illuminate\Http\Request;
 
 class SignataireController extends Controller
@@ -14,11 +16,18 @@ class SignataireController extends Controller
     /** @var  modelRepository */
     private $modelRepository;
     private $institutionRepository;
+    private $categorieActeRepository ;
+    private $signataireActeRepository;
 
-    public function __construct(SignataireRepository $signataireRepo, InstitutionRepository $institutionRepo)
+    public function __construct(SignataireRepository $signataireRepo, 
+                        InstitutionRepository $institutionRepo, 
+                        CategorieActeRepository $categorieActeRepo,
+                        SignataireActeRepository $signataireActeRepo)
     {
         $this->modelRepository = $signataireRepo;
         $this->institutionRepository = $institutionRepo;
+        $this->categorieActeRepository = $categorieActeRepo;
+        $this->signataireActeRepository = $signataireActeRepo ;
     }
     /**
      * Display a listing of the resource.
@@ -34,8 +43,9 @@ class SignataireController extends Controller
      */
     public function create()
     {
+        $categories = $this->categorieActeRepository->all();
         $institutions = $this->institutionRepository->all();
-        return view('backend.signataires.create', compact('institutions')) ;
+        return view('backend.signataires.create', compact('institutions', 'categories')) ;
     }
 
     /**
@@ -46,9 +56,16 @@ class SignataireController extends Controller
         $input = $request->all();
 
         $signataire = $this->modelRepository->create($input);
-
-        //Flash::success('signataire enregistré avec succès.');
-
+        $signataireActe = [];
+        $signataireActe['statut']  = 'active';
+        $signataireActe['debut']  = $input['debut'];
+        $signataireActe['fonction']  = $input['fonction'];
+        $signataireActe['mention']  = $input['mention'];
+        $signataireActe['categorieActe_id']  = $input['categorieActe_id'];
+        $signataireActe['institution_id']  = $input['institution_id'];
+        $signataireActe['signataire_id']  = $signataire->id;
+        $this->signataireActeRepository->create($signataireActe);
+        
         return redirect(route('signataires.index'));
     }
 
@@ -133,7 +150,6 @@ class SignataireController extends Controller
 
         $this->modelRepository->delete($id);
 
-        $message = "signataire supprimé avec succès";
-        return $this->sendSuccessDialogResponse($message);
+        return redirect(route('signataires.index'));
     }
 }

@@ -18,8 +18,9 @@ class DocumentRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'reference',
-		'datecreation',
-		'type'
+		'numero',
+		'dateGeneration',
+		'nombreGeneration',
     ];
 
     /**

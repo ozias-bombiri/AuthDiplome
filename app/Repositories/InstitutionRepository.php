@@ -18,16 +18,16 @@ class InstitutionRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'code',
-        'sigle',
-        'parent_id',
+		'sigle',
 		'denomination',
 		'telephone',
 		'adresse',
 		'email',
-        'siteWeb',
 		'type',
 		'logo',
+		'siteWeb',
 		'description',
+		'parent_id'
     ];
 
     /**

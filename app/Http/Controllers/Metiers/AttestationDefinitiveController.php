@@ -16,9 +16,11 @@ use App\Repositories\TimbreRepository;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Models\ResultatAcademique;
 use App\Models\Parcours;
+use App\Repositories\ActeAcademiqueRepository;
+use App\Repositories\EtudiantRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Utils\DocumentCreate;
-
+use App\Utils\DocumentCreator;
 
 class AttestationDefinitiveController extends Controller
 {
@@ -35,16 +37,16 @@ class AttestationDefinitiveController extends Controller
     protected $pdfCreator ;
 
     public function __construct(
-            AttestationDefinitiveRepository $attestationRepo,
+            ActeAcademiqueRepository $attestationRepo,
             ParcoursRepository $parcoursRepo,
             NiveauEtudeRepository $niveauRepo,
             SignataireRepository $signataireRepo,
             InstitutionRepository $institutionRepo,
-            ImpetrantRepository $etudtiantRepo,
+            EtudiantRepository $etudtiantRepo,
             AnneeAcademiqueRepository $anneeRepo,
             ResultatAcademiqueRepository $resultatRepo,
             TimbreRepository $timbreRepo,
-            DocumentCreate $pdfCreator
+            DocumentCreator $pdfCreator
          )
     {
         $this->attestationRepository = $attestationRepo;

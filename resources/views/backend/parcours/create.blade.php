@@ -32,45 +32,67 @@
                 <form method="post" action="{{ route('parcours.store') }}">
                     @csrf
                     <div class="form-group row py-2">
-                        <label for="etablissement" class="col-sm-2 col-form-label">Institution</label>
+                        <label for="filiere" class="col-sm-2 col-form-label">Filiere</label>
                         <div class="col">
-                            <select class="form-control" id="institution" name="institution_id" required>
-                                @foreach( $etablissements as $etablissement)
-                                <option value="{{ $etablissement->id}}">{{ $etablissement->sigle }}</option>
+                            <select class="form-control" id="filiere" name="filiere_id" required>
+                                @foreach( $filieres as $filiere)
+                                <option value="{{ $filiere->id}}">{{ $filiere->intitule }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
+
+                    <div class="form-group row py-2">
+                        <label for="niveau" class="col-sm-2 col-form-label">Niveau d'étude</label>
+                        <div class="col">
+                            <select class="form-control" id="niveauEtude_id" name="niveauEtude_id" required>
+                                @foreach( $niveaux as $niveau)
+                                <option value="{{ $niveau->id}}">{{ $niveau->intitule }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+
+                   
+
                     <div class="form-group row py-2">
                         <label for="code" class="col-sm-2 col-form-label">Code du parcours</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="code" name="code" placeholder="..." required>
+                            <input type="text" class="form-control" id="code" name="code" required>
                         </div>
                     </div>
+
+
                     <div class="form-group row py-2">
                         <label for="intitule" class="col-sm-2 col-form-label">Intitulé du parcours</label>
                         <div class="col">
                             <input type="text" class="form-control" id="intitule" name="intitule" placeholder="Lettres modernes" required>
                         </div>
                     </div>
+
                     <div class="form-group row py-2">
                             <label for="code" class="col-sm-3 col-form-label">Code parcours</label>
                             <div class="col">
                                 <input type="text" class="form-control form-control" id="code" name="code" required>
                             </div>
+                    </div>
+
+
+                    <div class="form-group row py-2">
+                        <label for="soutenance" class="col-sm-3 col-form-label">Parcours avec soutenance ?</label>
+                        <div class="col-sm-1">
+                            <input type="checkbox" class="" id="soutenance" name="soutenance" value="1">
                         </div>
-                        <div class="form-group row py-2">
-                            <label for="soutenance" class="col-sm-3 col-form-label">Parcours avec soutenance ?</label>
-                            <div class="col-sm-1">
-                                <input type="checkbox" class="" id="soutenance" name="soutenance" value="1">
-                            </div>
-                        </div>
+                    </div>
+
                     <div class="form-group row py-2">
                         <label for="domaine" class="col-sm-2 col-form-label">Domaine</label>
                         <div class="col">
                             <input type="text" class="form-control" id="domaine" name="domaine" placeholder=" ..." required>
                         </div>
                     </div>
+
                     <div class="form-group row py-2">
                         <label for="mention" class="col-sm-2 col-form-label">Mention</label>
                         <div class="col">
@@ -84,16 +106,7 @@
                             <input type="text" class="form-control" id="specialite" name="specialite" placeholder="..." required>
                         </div>
                     </div>                    
-                    <div class="form-group row py-2">
-                        <label for="niveau" class="col-sm-2 col-form-label">Niveau d'étude</label>
-                        <div class="col">
-                            <select class="form-control" id="niveauEtude_id" name="niveauEtude_id" required>
-                                @foreach( $niveaux as $niveau)
-                                <option value="{{ $niveau->id}}">{{ $niveau->intitule }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+ 
                     
 
                     <div class="form-group row py-2">
@@ -102,6 +115,7 @@
                             <textarea class="form-control" id="description" name="description" required> </textarea>
                         </div>
                     </div>
+
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">

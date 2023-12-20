@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Daoi;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
-use App\Repositories\AttestationDefinitiveRepository;
-use App\Repositories\ImpetrantRepository;
+use App\Repositories\EtudiantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
 use App\Repositories\NumeroteurRepository;
@@ -33,9 +33,9 @@ class AttestationController extends Controller
                                 ParcoursRepository $parcoursRepo, 
                                 NiveauEtudeRepository $niveauRepo,
                                 AnneeAcademiqueRepository $anneeRepo,
-                                AttestationDefinitiveRepository $attestationRepo,
+                                ActeAcademiqueRepository $attestationRepo,
                                 ResultatAcademiqueRepository $resultatRepo,
-                                ImpetrantRepository $impetrantRepo,
+                                EtudiantRepository $impetrantRepo,
                                 NumeroteurRepository $numeroteurRepo,
                                 DocumentCreator $pdfCreator)
     {

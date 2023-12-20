@@ -18,9 +18,9 @@ class FiliereRepository extends BaseRepository
      */
     protected $fieldSearchable = [
         'intitule',
-        'code',
-        'sigle',
-        'description',
+		'sigle',
+		'code',
+		'description',
     ];
 
     /**
@@ -39,5 +39,23 @@ class FiliereRepository extends BaseRepository
     public function model()
     {
         return Filiere::class;
+    }
+
+    public function findByEtablissement($institution_id){
+        $impetrants = Filiere::join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                        ->where('institutions.id', '=', $institution_id)
+                        ->select('filieres.*')
+                        ->get();
+        return $impetrants;
+        
+    }
+
+    public function findByIesr($institution_id){
+        $impetrants = Filiere::join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                        ->where('institutions.parent_id', '=', $institution_id)
+                        ->select('filieres.*')
+                        ->get();
+        return $impetrants;
+        
     }
 }

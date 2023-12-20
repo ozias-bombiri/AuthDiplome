@@ -16,11 +16,12 @@ use Illuminate\Database\Eloquent\Model;
  */
 class SignataireActe extends Model
 {
-	protected $table = 'institutions_signataires';
+	protected $table = 'signataires_actes';
 
 	protected $casts = [
 		'institution_id' => 'int',
 		'signataire_id' => 'int',
+		'categorieActe_id' => 'int',
 		
 	];
 
@@ -31,7 +32,8 @@ class SignataireActe extends Model
 		'debut',
 		'fin',
 		'fonction',
-		'mention'
+		'mention',
+		'categorieActe_id'
 	];
 
 	public function institution()
@@ -42,5 +44,10 @@ class SignataireActe extends Model
 	public function signataire()
 	{
 		return $this->belongsTo(Signataire::class);
+	}
+
+	public function categorieActe()
+	{
+		return $this->belongsTo(CategorieActe::class);
 	}
 }

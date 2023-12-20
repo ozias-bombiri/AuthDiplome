@@ -14,24 +14,7 @@ class AnneeAcademiqueSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('annee_academiques')->insert([
-            'intitule' => '2017-2018',
-            'debut' => 'Octobre 2017',
-            'fin' => 'Juillet 2018'
-
-        ]);
-        DB::table('annee_academiques')->insert([
-            'intitule' => '2018-2019',
-            'debut' => 'Octobre 2018',
-            'fin' => 'Juillet 2019'
-
-        ]);
-        DB::table('annee_academiques')->insert([
-            'intitule' => '2019-2020',
-            'debut' => 'Octobre 2019',
-            'fin' => 'Juillet 2020'
-
-        ]);
+        
         DB::table('annee_academiques')->insert([
             'intitule' => '2020-2021',
             'debut' => 'Octobre 2020',

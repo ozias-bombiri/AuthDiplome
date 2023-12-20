@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Repositories\InstitutionRepository;
+use App\Repositories\CategorieActeRepository;
 use App\Repositories\NumeroteurRepository;
 use Illuminate\Http\Request;
 
@@ -12,10 +13,16 @@ class NumeroteurController extends Controller
     /** @var  modelRepository */
     private $modelRepository;
     private $institutionRepository;
+    private $categorieRepository;
 
-    public function __construct(NumeroteurRepository $anneeRepo, InstitutionRepository $institutionRepo)
+    public function __construct(
+        NumeroteurRepository $anneeRepo, 
+        InstitutionRepository $institutionRepo,
+        CategorieActeRepository $categorieRepo,
+        )
     {
         $this->modelRepository = $anneeRepo;
+        $this->categorieRepository = $categorieRepo;
         $this->institutionRepository = $institutionRepo;
     }
     /**
@@ -32,8 +39,9 @@ class NumeroteurController extends Controller
      */
     public function create()
     {
+        $categories = $this->categorieRepository->all();
         $institutions = $this->institutionRepository->all();
-        return view('backend.numeroteurs.create', compact('institutions'));
+        return view('backend.numeroteurs.create', compact('institutions','categories'));
     }
 
     /**

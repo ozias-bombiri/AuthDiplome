@@ -50,8 +50,8 @@ Signataires
                             <td>{{ $signataire->nom }}</td>
                             <td>{{ $signataire->prenom }}</td>
                             <td>{{ $signataire->grade }}</td>
-                            <td>{{ $signataire->fonction }}</td>
-                            <td> {{ $signataire->institution->sigle }}</td>
+                            <td>{{ $signataire->signataireActes[0]->fonction }}</td>
+                            <td> {{ $signataire->signataireActes[0]->institution->sigle }}</td>
                             <td>
                                 <form action="{{ route('signataires.destroy',$signataire->id) }}" method="POST">
                                     <a class="btn btn-info" title="Détails" href="{{ route('signataires.show',$signataire->id) }}">
