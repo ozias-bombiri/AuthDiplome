@@ -51,7 +51,7 @@ class FiliereController extends Controller
 
         $filiere = $this->modelRepository->create($input);
 
-        return redirect(route('filieres.index'));
+        return redirect(route('les_filieres.index'));
     }
 
     /**
@@ -62,7 +62,7 @@ class FiliereController extends Controller
         $filiere = $this->modelRepository->find($id);
 
         if (empty($filiere)) {
-            return redirect(route('filieres.index'));
+            return redirect(route('les_filieres.index'));
         }
 
         return view('backend.filieres.show')->with('filiere', $filiere);
@@ -77,7 +77,7 @@ class FiliereController extends Controller
         $filiere = $this->modelRepository->find($id);
 
         if (empty($filiere)) {
-            return redirect(route('filieres.index'));
+            return redirect(route('les_filieres.index'));
         }
 
         return view('backend.filieres.edit')->with('filiere', $filiere);
@@ -93,11 +93,11 @@ class FiliereController extends Controller
         $filiere = $this->modelRepository->find($id);
 
         if (empty($filiere)) {
-            return redirect(route('filieres.index'));
+            return redirect(route('les_filieres.index'));
         }
         
         $filiere = $this->modelRepository->update($input, $id);
-        return redirect(route('filieres.index'));
+        return redirect(route('les_filieres.index'));
     }
 
     /**
@@ -115,7 +115,7 @@ class FiliereController extends Controller
         $this->modelRepository->delete($id);
 
         $message = "Filière supprimée avec succès";
-        return redirect(route('filieres.index'));
+        return redirect(route('les_filieres.index'));
     }
 
 }

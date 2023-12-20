@@ -68,7 +68,7 @@ Route::resource('retrait_actes', App\Http\Controllers\Backend\RetraitActeControl
 Route::resource('signataire_actes', App\Http\Controllers\Backend\SignataireActeController::class);
 Route::resource('visa_diplomes', App\Http\Controllers\Backend\VisaDiplomeController::class);
 Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
-Route::resource('filieres', App\Http\Controllers\Backend\FiliereController::class);
+Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::class);
 //Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
 
 

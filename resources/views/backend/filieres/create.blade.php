@@ -29,7 +29,7 @@
                 </div>   
             </div>
             <div class="">
-                <form method="post" action="{{ route('filieres.store') }}">
+                <form method="post" action="{{ route('les_filieres.store') }}">
                     @csrf
                     
                     <div class="form-group row py-2">
@@ -71,7 +71,7 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('filieres.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('les_filieres.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

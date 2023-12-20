@@ -27,7 +27,7 @@
         <div class="white-box">
             <h3 class="box-title">{{ __('Filieres') }} </h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('filieres.create') }}"> Ajouter </a>
+                <a class="btn btn-success" href="{{ route('les_filieres.create') }}"> Ajouter </a>
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
@@ -52,11 +52,11 @@
 
                            
                             <td>
-                                <form action="{{ route('filieres.destroy',$filiere->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('filieres.show',$filiere->id) }}">
+                                <form action="{{ route('les_filieres.destroy',$filiere->id) }}" method="POST">
+                                    <a class="btn btn-info" title="Détails" href="{{ route('les_filieres.show',$filiere->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('filieres.edit',$filiere->id) }}">
+                                    <a class="btn btn-primary" title="Modifier" href="{{ route('les_filieres.edit',$filiere->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 
