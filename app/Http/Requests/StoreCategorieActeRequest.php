@@ -25,6 +25,7 @@ class StoreCategorieActeRequest extends FormRequest
             'intitule' => 'required|string',
 		    'nombreCopies' => 'required',
 		    'visas' => 'required',
+            
         ];
     }
 }
