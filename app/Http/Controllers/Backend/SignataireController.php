@@ -7,9 +7,7 @@ use App\Repositories\SignataireRepository;
 use App\Http\Requests\StoreSignataireRequest;
 use App\Http\Requests\UpdateSignataireRequest;
 use App\Repositories\CategorieActeRepository;
-use App\Repositories\CategorieActeRepository;
 use App\Repositories\InstitutionRepository;
-use App\Repositories\SignataireActeRepository;
 use App\Repositories\SignataireActeRepository;
 use Illuminate\Http\Request;
 
@@ -20,9 +18,7 @@ class SignataireController extends Controller
     private $institutionRepository;
     private $categorieActeRepository ;
     private $signataireActeRepository;
-    private $categorieActeRepository ;
-    private $signataireActeRepository;
-
+   
      public function __construct(SignataireRepository $signataireRepo, 
                         InstitutionRepository $institutionRepo, 
                         CategorieActeRepository $categorieActeRepo,

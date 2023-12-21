@@ -88,12 +88,17 @@ class DiplomeController extends Controller
         }else{
             $institution_id = 1;
         }
+        if(isset($_GET['categorie_id'])){
+            $categorie_id = $_GET['categorie_id'];
+        }else{
+            $categorie_id = 3;
+        }
         //$institution = Auth ::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByIesr($institution->id);
-        $attestations = $this->attestationRepository->findByIesr($institution->id);
+        $attestations = $this->attestationRepository->findByIesr($institution->id, $categorie_id);
         return view('metiers.daoi.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
