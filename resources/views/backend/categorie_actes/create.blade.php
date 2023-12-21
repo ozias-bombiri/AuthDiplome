@@ -56,6 +56,13 @@
                         </div>
                     </div>
 
+                    <div class="form-group row py-2">
+                        <label for="debut" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col">
+                            <textarea class="form-control" id="description" name="description" required> </textarea>
+                        </div>
+                    </div>
+
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">

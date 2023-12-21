@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProcesVerbalRequest extends FormRequest
-{
+{ 
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,8 +21,9 @@ class StoreProcesVerbalRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
+        return [ 
             'reference' => 'required|string',
+            'nomFichierPdf' => 'required|string',
             'session' => 'required|string',
             'dateDeliberation' => 'required|string',
             'nombreEtudiants' => 'required|string',

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Repositories\ProcesVerbalRepository;
 use App\http\Requests\StoreProcesVerbalRequest ;
 use App\http\Requests\UpdateProcesVerbalRequest ;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\ParcoursRepository;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 
 class ProcesVerbalController extends Controller
@@ -50,9 +53,18 @@ class ProcesVerbalController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreProcesVerbalRequest $request)
+    public function store(Request $request)
     {
+        $user_id = Auth::id(); 
         $input = $request->all();
+        $input['user_id'] = $user_id;
+
+        if($request->file()) {
+            $file = $request->file('nomFichierPdf');
+            $fileName = 'PV_du'.str_replace(array('/', '%', '@', '\'', ';', '<', '>' ), '_', $input['reference']).'_'.time().'.'.$file->getClientOriginalExtension();
+            $file->move(public_path('uploads/PDFs'), $fileName);
+            $input['nomFichierPdf'] = $fileName;
+        }
 
         $proces_verbal = $this->modelRepository->create($input);
 

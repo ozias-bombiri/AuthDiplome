@@ -22,14 +22,15 @@ class ProcesVerbal extends Model
 	protected $casts = [
 		'parcours_id' => 'int',
 		'anneeAcademique_id' => 'int',
-		'nombreEtudiant' => 'int',
+		'nombreEtudiants' => 'int',
 		'user_id' => 'int',
 		
 	];
 
 	protected $fillable = [
-		'intitule',
-		'code',
+		'reference',
+		'nomFichierPdf',
+		'nombreEtudiants',
 		'dateDeliberation',
 		'session',
 		'description',
