@@ -8,55 +8,72 @@ use App\Http\Requests\StoreResultatAcademiqueRequest;
 use App\Http\Requests\UpdateResultatAcademiqueRequest;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\EtudiantRepository;
+use App\Repositories\InscriptionRepository;
 use App\Repositories\ParcoursRepository;
+use App\Repositories\ProcesVerbalRepository;
 
 class ResultatAcademiqueController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
     private $etudiantRepository;
-    private $parcoursRepository;
+    private $procesVervalRepository;
     private $anneeAcademiqueRepository;
+    private $inscriptionRepository;
 
-    public function __construct(ResultatAcademiqueRepository $ResultatAcademiqueRepo, EtudiantRepository $etudiantRepo,ParcoursRepository $parcoursRepo,AnneeAcademiqueRepository $anneeAcademiqueRepo)
+    public function __construct(
+                ResultatAcademiqueRepository $resultatAcademiqueRepo, 
+                EtudiantRepository $etudiantRepo,
+                ProcesVerbalRepository $porcesVerbalRepo,
+                AnneeAcademiqueRepository $anneeAcademiqueRepo,
+                InscriptionRepository $inscriptionRepo
+                )
     {
-        $this->modelRepository = $ResultatAcademiqueRepo;
+        $this->modelRepository = $resultatAcademiqueRepo;
         $this->etudiantRepository = $etudiantRepo;
-        $this->parcoursRepository = $parcoursRepo;
+        $this->procesVervalRepository = $porcesVerbalRepo;
         $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
+        $this->inscriptionRepository = $inscriptionRepo;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index($id)
     {
-        $resultats = $this->modelRepository->all();
-        return view('backend.resultat_academiques.index', compact('resultats'));
+        $procesVerbal = $this->procesVervalRepository->find($id);
+        $resultats = $this->modelRepository->findByProcesVerbal($procesVerbal->id);
+        return view('backend.resultat_academiques.index', compact('procesVerbal', 'resultats'));
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($id)
     {
-        $etudiants = $this->etudiantRepository->all();
-        $parcours = $this->parcoursRepository->all();
+        $procesVerbal = $this->procesVervalRepository->find($id);
+        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
-        return view('backend.resultat_academiques.create', compact('etudiants', 'parcours', 'anneeAcademiques')) ;
+        return view('backend.resultat_academiques.create', compact('inscriptions', 'procesVerbal', 'anneeAcademiques')) ;
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreResultatAcademiqueRequest $request)
+    public function store(StoreResultatAcademiqueRequest $request, $id)
     {
+        $procesVerbal = $this->procesVervalRepository->find($id);        
         $input = $request->all();
 
-        $resultat = $this->modelRepository->create($input);
+        $input_resultat = [];
+        $input_resultat['inscription_id'] = $input['inscription_id'];
+        $input_resultat['procesVerbal_id'] = $procesVerbal->id;
+        $input_resultat['moyenne'] = $input['moyenne'];
+        $input_resultat['reference'] = $input['inscription_id'].''.$procesVerbal->id;
+        $input_resultat['user_id'] = 1;
+        $resultat = $this->modelRepository->create($input_resultat);
 
-        //Flash::success('resultat enregistré avec succès.');
-
-        return redirect(route('resultat_academiques.index'));
+        
+        return redirect(route('proces_verbaux.resultats.index', $procesVerbal->id));
     }
 
     /**

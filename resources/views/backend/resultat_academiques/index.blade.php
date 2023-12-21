@@ -25,19 +25,20 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Résultats académiques') }} </h3>
+            <h3 class="box-title">{{ __('Résultats académiques') }} @if(isset($procesVerbal)) {{ $procesVerbal->reference }} @endif</h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('resultat_academiques.create') }}"> Ajouter </a>
+                <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create', $procesVerbal->id) }}"> Ajouter </a>
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Dénomination</th>
-                            <th>Sigle</th>
-                            <th>Type</th>
-                            <th>Parent</th>
+                            <th>Référence</th>
+                            <th>Parcours</th>
+                            <th>Annee académique</th>
+                            <th>Etudiant</th>
+                            <th>Moyenne</th>                            
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -45,16 +46,12 @@
                         @foreach ($resultats as $resultat)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $resultat->denomination }}</td>
-                            <td>{{ $resultat->sigle }}</td>
-                            <td>{{ $resultat->type }}</td>
+                            <td>{{ $resultat->reference }}</td>
+                            <td> {{ $resultat->procesVerbal->parcours->intitule }}</td>
+                            <td>{{ $resultat->procesVerbal->anneeAcademique->intitule }}</td>
+                            <td>{{ $resultat->inscription->etudiant->nom.' '.$resultat->inscription->etudiant->prenom }}</td>
+                            <td>{{ $resultat->moyenne }}</td>
 
-                            <td>
-                                @if($resultat->parent)
-                                {{ $resultat->sigle }}
-                                @else -
-                                @endif
-                            </td>
                             <td>
                                 <form action="{{ route('resultat_academiques.destroy',$resultat->id) }}" method="POST">
                                     <a class="btn btn-info" title="Détails" href="{{ route('resultat_academiques.show',$resultat->id) }}">

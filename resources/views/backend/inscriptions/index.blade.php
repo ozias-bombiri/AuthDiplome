@@ -34,9 +34,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Référence</th>
                             <th>Annee</th>
-                            <th>Etudiant</th>                            
+                            <th>Identifiant</th>                                
+                            <th>Etudiant</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -44,8 +44,8 @@
                         @foreach ($inscriptions as $inscription)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $inscription->referenceInscription }}</td>
-                            <td>{{ $inscription->reference }}</td>
+                            <td>{{ $inscription->anneeAcademique->intitule }}</td>
+                            <td>{{ $inscription->etudiant->identifiant }}</td>                            
                             <td>{{ $inscription->etudiant->nom.' '.$inscription->etudiant->prenom }}</td>
 
                             <td>

@@ -69,7 +69,7 @@ Parcours
                                     <a class="btn btn-primary" title="Inscription" href="{{ route('parcours.inscriptions.index',$par->id) }}">
                                         <i class="bi bi-folder"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Procès verbaux" href="{{ route('parcours.edit',$par->id) }}">
+                                    <a class="btn btn-primary" title="Procès verbaux" href="{{ route('parcours.proces_verbaux.index',$par->id) }}">
                                         <i class="bi bi-file-pdf"></i>
                                     </a>
 

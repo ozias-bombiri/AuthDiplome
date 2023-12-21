@@ -36,12 +36,12 @@ class Inscription extends Model
 
 	public function parcours()
 	{
-		return $this->belongsTo(Parcours::class);
+		return $this->belongsTo(Parcours::class, 'parcours_id');
 	}
 
 	public function anneeAcademique()
 	{
-		return $this->belongsTo(AnneeAcademique::class);
+		return $this->belongsTo(AnneeAcademique::class, 'anneeAcademique_id');
 	}
 
 	public function etudiant()

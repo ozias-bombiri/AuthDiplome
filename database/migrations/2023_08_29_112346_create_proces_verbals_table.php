@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('proces_verbaux', function (Blueprint $table) {
             $table->id();
-            $table->string('nomFichierPdf', 50)->nullable();
+            $table->string('nomFichierPdf', 150)->nullable();
             $table->string('reference', 50);
             $table->string('session');
             $table->date('dateDeliberation');

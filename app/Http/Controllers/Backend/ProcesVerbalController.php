@@ -39,6 +39,17 @@ class ProcesVerbalController extends Controller
         return view('backend.proces_verbals.index', compact('proces_verbals'));
         
     }
+
+    /**
+     * Display a listing of the resource for a given parcours.
+     */
+    public function index2($id)
+    {
+        $parcours = $this->parcoursRepository->find($id);
+        $proces_verbals = $this->modelRepository->findByParcours($parcours->id);
+        return view('backend.proces_verbals.index', compact('proces_verbals', 'parcours'));
+        
+    }
     
     /**
      * Show the form for creating a new resource.
@@ -65,7 +76,7 @@ class ProcesVerbalController extends Controller
             $file->move(public_path('uploads/PDFs'), $fileName);
             $input['nomFichierPdf'] = $fileName;
         }
-
+        $input['reference'] = "PV_".$input['parcours_id'].'-'.$input['anneeAcademique_id'];
         $proces_verbal = $this->modelRepository->create($input);
 
         return redirect(route('proces_verbals.index'));
