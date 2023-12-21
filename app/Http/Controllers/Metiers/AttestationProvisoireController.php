@@ -23,7 +23,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use PDF;
 use File;
 use App\Utils\DocumentCreator;
-
+use Illuminate\Support\Facades\Auth;
 
 class AttestationProvisoireController extends Controller
 {
@@ -65,6 +65,19 @@ class AttestationProvisoireController extends Controller
         $this->resultatRepository = $resultatRepo;
         $this->timbreRepository = $timbreRepo;
         $this->pdfCreator = $pdfCreator;
+    }
+
+    public function index()
+    {
+        $institution = Auth::user()->institution;
+        $institution = $this->institutionRepository->find($institution->id);
+        $annees = $this->anneeRepository->all();
+        $niveaux = $this->niveauRepository->all();
+        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+        $attestations = $this->attestationRepository->findByEtablissement($institution->id);
+        // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+
+        return view("metiers.attestation.provisoire", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
     
