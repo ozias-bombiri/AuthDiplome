@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('signataires_actes', function (Blueprint $table) {
             $table->id();
-            $table->boolean('statut')->default('active');
+            $table->boolean('statut')->default(true);
             $table->date('debut')->nullable();
             $table->date('fin')->nullable();
             $table->string('fonction', 150);
