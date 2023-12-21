@@ -53,11 +53,11 @@ Etudiants
                             <td>{{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('d F Y') }}</td>
                             <td> {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance}}) </td>
                             <td>
-                                <form action="{{ route('impetrants.destroy',$impetrant->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('impetrants.show',$impetrant->id) }}">
+                                <form action="{{ route('etudiants.destroy',$impetrant->id) }}" method="POST">
+                                    <a class="btn btn-info" title="Détails" href="{{ route('etudiants.show',$impetrant->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('impetrants.edit',$impetrant->id) }}">
+                                    <a class="btn btn-primary" title="Modifier" href="{{ route('etudiants.edit',$impetrant->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 

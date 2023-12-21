@@ -22,19 +22,26 @@ class Inscription extends Model
 	protected $casts = [
 		'parcours_id' => 'int',
 		'etudiant_id' => 'int',
-		
+		'user_id' => 'int',
+		'anneeAcademique_id' => 'int',
 	];
 
 	protected $fillable = [
 		'etudiant_id',
 		'parcours_id',
 		'referenceInscription',
-		'annee',
+		'anneeAcademique_id',
+		'user_id',
 	];
 
 	public function parcours()
 	{
 		return $this->belongsTo(Parcours::class);
+	}
+
+	public function anneeAcademique()
+	{
+		return $this->belongsTo(AnneeAcademique::class);
 	}
 
 	public function etudiant()

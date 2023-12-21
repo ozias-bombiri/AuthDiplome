@@ -80,6 +80,8 @@ class ParcoursController extends Controller
      */
     public function edit(string $id)
     {
+        $filieres = $this->filiereRepository->all();
+        $niveaux = $this->niveauEtudeRepository->all();
         $parcours = $this->modelRepository->find($id);
 
         if (empty($parcours)) {
@@ -88,7 +90,7 @@ class ParcoursController extends Controller
             return redirect(route('parcours.index'));
         }
 
-        return view('backend.parcours.edit')->with('parcours', $parcours);
+        return view('backend.parcours.edit', compact('parcours', 'filieres', 'niveaux'));
     }
 
     /**
@@ -125,7 +127,6 @@ class ParcoursController extends Controller
 
         $this->modelRepository->delete($id);
 
-        $message = "parcours supprimé avec succès";
-        return $this->sendSuccessDialogResponse($message);
+        return redirect(route('parcours.index'));
     }
 }
