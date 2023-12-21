@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Metiers\AttestationProvisoireController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProductController;
 
@@ -50,19 +51,16 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('annee_academiques', App\Http\Controllers\Backend\AnneeAcademiqueController::class);
 Route::resource('niveau_etudes', App\Http\Controllers\Backend\NiveauEtudeController::class);
 Route::resource('institutions', App\Http\Controllers\Backend\InstitutionController::class);
-Route::resource('diplomes', App\Http\Controllers\Backend\DiplomeController::class);
-Route::resource('attestation_provisoires', App\Http\Controllers\Backend\AttestationProvisoireController::class);
-Route::resource('attestation_definitives', App\Http\Controllers\Backend\AttestationDefinitiveController::class);
 Route::resource('demande_authentifications', App\Http\Controllers\Backend\DemandeAuthentificationController::class);
 Route::resource('documents', App\Http\Controllers\Backend\DocumentController::class);
-Route::resource('impetrants', App\Http\Controllers\Backend\ImpetrantController::class);
-Route::resource('parcours', App\Http\Controllers\Backend\ParcoursController::class);
 Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAcademiqueController::class);
 Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
-Route::resource('numeroteurs', App\Http\Controllers\Backend\NumeroteurController::class);
+Route::resource('parcours', App\Http\Controllers\Backend\ParcoursController::class);
+Route::resource('etudiants', App\Http\Controllers\Backend\EtudiantController::class);
 
+Route::resource('numeroteurs', App\Http\Controllers\Backend\NumeroteurController::class);
 Route::resource('acte_academiques', App\Http\Controllers\Backend\ActeAcademiqueController::class);
 Route::resource('categorie_actes', App\Http\Controllers\Backend\CategorieActeController::class);
 Route::resource('ministeres', App\Http\Controllers\Backend\MinistereController::class);
@@ -71,9 +69,44 @@ Route::resource('retrait_actes', App\Http\Controllers\Backend\RetraitActeControl
 Route::resource('signataire_actes', App\Http\Controllers\Backend\SignataireActeController::class);
 Route::resource('visa_diplomes', App\Http\Controllers\Backend\VisaDiplomeController::class);
 Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
+Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::class);
+//Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
 
-// Route::resource('users', App\Http\Controllers\Backend\UserController::class);
-// Route::resource('roles', RoleController::class);
+
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{id}/inscriptions', [App\Http\Controllers\Backend\InscriptionController::class, 'index'])
+    ->name('parcours.inscriptions.index');
+    Route::get('parcours/{id}/inscriptions/add', [App\Http\Controllers\Backend\InscriptionController::class, 'create'])
+    ->name('parcours.inscriptions.create');
+    Route::post('parcours/{id}/inscriptions/add', [App\Http\Controllers\Backend\InscriptionController::class, 'store'])
+    ->name('parcours.inscriptions.store');
+    Route::delete('parcours/{id}/inscriptions/delete', [App\Http\Controllers\Backend\InscriptionController::class, 'destroy'])
+    ->name('parcours.inscriptions.destroy');
+    Route::get('parcours/{id}/inscriptions/{inscription}/show', [App\Http\Controllers\Backend\InscriptionController::class, 'show'])
+    ->name('parcours.inscriptions.show');
+    
+});
+
+
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
+    ->name('parcours.proces_verbaux.index');    
+    
+});
+
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
+    ->name('proces_verbaux.resultats.index');
+    Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
+    ->name('proces_verbaux.resultats.create');
+    Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
+    ->name('proces_verbaux.resultats.store');
+    
+    //Les attestions et diplomes
+    Route::get('actes/provisoire', [AttestationProvisoireController::class, 'index'])
+    ->name('attestion.provisoire.index');  
+    
+});
 
 Route::group(['middleware' => ['auth', 'role:direction']], function() {
 
@@ -86,7 +119,7 @@ Route::group(['middleware' => ['auth', 'role:direction']], function() {
     
     Route::get('parcours/{institution_id}', [App\Http\Controllers\Etablissement\ParcoursController::class, 'listParcours'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.parcours-list');
-    Route::get('parcours/create/', [App\Http\Controllers\Etablissement\ParcoursController::class, 'addParcours'])
+    Route::get('parcours/add/', [App\Http\Controllers\Etablissement\ParcoursController::class, 'addParcours'])
     ->name('metiers.etablissements.parcours-add');
     Route::post('parcours/create', [App\Http\Controllers\Etablissement\ParcoursController::class, 'storeParcours'])
     ->name('metiers.etablissements.parcours-store');
@@ -108,18 +141,18 @@ Route::group(['middleware' => ['auth', 'role:direction']], function() {
     Route::get('provisoires/niveaux/{id}', [App\Http\Controllers\Etablissement\AttestationController::class, 'filtreNiveau'])
     ->where('id', '[0-9]+')->name('metiers.etablissements.attestation-niveaux');
     
-    Route::get('impetrants/{institution_id}', [App\Http\Controllers\Etablissement\ImpetrantController::class, 'listEtudiants'])
+    Route::get('impetrants/{institution_id}', [App\Http\Controllers\Etablissement\EtudiantController::class, 'listEtudiants'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.etudiant-list');
-    Route::get('impetrants/create/{id}', [App\Http\Controllers\Etablissement\ImpetrantController::class, 'addEtudiant'])
+    Route::get('impetrants/create/{id}', [App\Http\Controllers\Etablissement\EtudiantController::class, 'addEtudiant'])
     ->where('id', '[0-9]+')->name('metiers.etablissements.etudiant-add');
-    Route::post('impetrants/create', [App\Http\Controllers\Etablissement\ImpetrantController::class, 'storeEtudiant'])
+    Route::post('impetrants/create', [App\Http\Controllers\Etablissement\EtudiantController::class, 'storeEtudiant'])
     ->name('metiers.etablissements.etudiant-store');
 
-    Route::get('signataires/{institution_id}', [App\Http\Controllers\Etablissement\SignataireController::class, 'listSignataires'])
+    Route::get('signataires2/{institution_id}', [App\Http\Controllers\Etablissement\SignataireController::class, 'listSignataires'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.signataire-list');
-    Route::get('signataires/create', [App\Http\Controllers\Etablissement\SignataireController::class, 'addSignataire'])
+    Route::get('signataires2/create', [App\Http\Controllers\Etablissement\SignataireController::class, 'addSignataire'])
     ->name('metiers.etablissements.signataire-add');
-    Route::post('signataires/create', [App\Http\Controllers\Etablissement\SignataireController::class, 'storeSignataire'])
+    Route::post('signataires2/create', [App\Http\Controllers\Etablissement\SignataireController::class, 'storeSignataire'])
     ->name('metiers.etablissements.signataire-store');
     
     
