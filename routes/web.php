@@ -72,11 +72,36 @@ Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::
 //Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
 
 
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{id}/inscriptions', [App\Http\Controllers\Backend\InscriptionController::class, 'index'])
+    ->name('parcours.inscriptions.index');
+    Route::get('parcours/{id}/inscriptions/add', [App\Http\Controllers\Backend\InscriptionController::class, 'create'])
+    ->name('parcours.inscriptions.create');
+    Route::post('parcours/{id}/inscriptions/add', [App\Http\Controllers\Backend\InscriptionController::class, 'store'])
+    ->name('parcours.inscriptions.store');
+    Route::delete('parcours/{id}/inscriptions/delete', [App\Http\Controllers\Backend\InscriptionController::class, 'destroy'])
+    ->name('parcours.inscriptions.destroy');
+    Route::get('parcours/{id}/inscriptions/{inscription}/show', [App\Http\Controllers\Backend\InscriptionController::class, 'show'])
+    ->name('parcours.inscriptions.show');
+    
+});
 
-// Route::resource('users', App\Http\Controllers\Backend\UserController::class);
-// Route::resource('roles', RoleController::class);
 
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
+    ->name('parcours.proces_verbaux.index');    
+    
+});
 
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
+    ->name('proces_verbaux.resultats.index');
+    Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
+    ->name('proces_verbaux.resultats.create');
+    Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
+    ->name('proces_verbaux.resultats.store');    
+    
+});
 
 Route::group(['middleware' => ['auth', 'role:direction']], function() {
 

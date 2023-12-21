@@ -36,6 +36,7 @@ Parcours
                         <tr>
                             <th>No</th>
                             <th>Institution</th>
+                            <th>Filière</th>
                             <th>Niveau</th>
                             <th>Intitule</th>
                             <th>Domaine</th>
@@ -48,7 +49,8 @@ Parcours
                         @foreach ($parcours as $par)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $par->institution->sigle ?? '' }}</td>
+                            <td>{{ $par->filiere->institution->sigle.' ('.$par->filiere->institution->parent->sigle.')' }}</td>
+                            <td>{{ $par->filiere->intitule}}</td>
                             <td>{{ $par->niveau_etude->intitule }}</td>
                             <td>{{ $par->intitule }}</td>
                             <td>{{ $par->domaine }} </td>
@@ -62,6 +64,13 @@ Parcours
                                     </a>
                                     <a class="btn btn-primary" title="Modifier" href="{{ route('parcours.edit',$par->id) }}">
                                         <i class="bi bi-pencil"></i>
+                                    </a>
+
+                                    <a class="btn btn-primary" title="Inscription" href="{{ route('parcours.inscriptions.index',$par->id) }}">
+                                        <i class="bi bi-folder"></i>
+                                    </a>
+                                    <a class="btn btn-primary" title="Procès verbaux" href="{{ route('parcours.proces_verbaux.index',$par->id) }}">
+                                        <i class="bi bi-file-pdf"></i>
                                     </a>
 
                                     @csrf

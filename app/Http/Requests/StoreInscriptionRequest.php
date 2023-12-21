@@ -22,11 +22,8 @@ class StoreInscriptionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'referenceInscription' => 'required|string',
-            'annee' => 'required',
-            'parcours_id' => 'required|string',
-            'etudiant_id' => 'required',
-            'user_id' => 'required',
+            'anneeAcademique_id' => 'required',
+            'identifiant' => 'required',
         ];
     }
 }

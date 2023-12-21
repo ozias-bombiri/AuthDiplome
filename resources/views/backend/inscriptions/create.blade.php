@@ -29,27 +29,82 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('resultat_academiques.store') }}">
+                <form method="post" action="{{ route('parcours.inscriptions.store', $parcours->id) }}">
                     @csrf
-                    <div class="form-group row py-2">
-                        <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
-                        <div class="col">
-                            <select class="form-control" id="impetrant_id" name="impetrant_id" required>
-                                @foreach( $etudiants as $etudiant)
-                                <option value="{{ $etudiant->id}}">{{ $etudiant->nom }} {{ $etudiant->prenom }}</option>
-                                @endforeach
-                            </select>
+                    <div>
+                        <div class="form-group row py-2">
+                            <label for="typeIdentifiant" class="col-sm-2 col-form-label">Type de l'identifiant </label>
+                            <div class="col">
+                                <select class="form-control" id="typeIdentifiant" name="typeIdentifiant" required>
+                                    <option value="" selected disabled hidden>Choisir </option>
+                                    <option value="INE">INE</option>
+                                    <option value="Matricule">Matricule</option>
+                                    <option value="Autres">Autres</option>
+                                </select>
+                            </div>
                         </div>
+                        <div class="form-group row py-2">
+                            <label for="identifiant" class="col-sm-2 col-form-label">Identifiant</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="identifiant" name="identifiant" placeholder="Identifiant" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="nom" name="nom" placeholder="Nom" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="prenom" class="col-sm-2 col-form-label">Prenom</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="prenom" name="prenom" placeholder="Prenom" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="sexe" class="col-sm-2 col-form-label">Sexe </label>
+                            <div class="col">
+                                <select class="form-control" id="typeIdentifiant" name="sexe" required>
+                                    <option value="" selected disabled hidden>Choisir </option>
+                                    <option value="Masculin">Masculin</option>
+                                    <option value="Feminin">Féminin</option>
+
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="dateNaissance" class="col-sm-2 col-form-label">Date de naissance</label>
+                            <div class="col-sm-2">
+                                Nevers ? <input type="checkbox" class="" id="nevers" name="nevers" value="1">
+                            </div>
+                            <div class="col-sm-5">
+                                <input type="date" class="form-control form-control" id="dateNaissance" name="dateNaissance" placeholder="Date de naissance" required>
+                            </div>
+
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="lieuNaissance" class="col-sm-2 col-form-label">Lieu de naissance</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="lieuNaissance" name="lieuNaissance" placeholder="Lieu naissance" required>
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="paysNaissance" class="col-sm-2 col-form-label">Pays de naissance</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="paysNaissance" name="paysNaissance" placeholder="Pays de naissance" required>
+                            </div>
+                        </div>
+
                     </div>
 
                     <div class="form-group row py-2">
                         <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="parcours_id" required>
-                                @foreach( $parcours as $parcour)
-                                <option value="{{ $parcour->id}}">{{ $parcour->intitule }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control form-control" id="parcours" name="parcours_id" value="{{ $parcours->intitule }}" required disabled>
                         </div>
                     </div>
 
@@ -57,63 +112,14 @@
                         <label for="anneeAcademiques" class="col-sm-2 col-form-label">Année académique</label>
                         <div class="col">
                             <select class="form-control" id="parcour" name="anneeAcademique_id" required>
-                                @foreach( $anneeAcademiques as $anneeAcademique)
-                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->intitule }}</option>
+                                <option value="" selected disabled hidden>Choisir </option>
+                                @foreach( $annees as $annee)
+                                <option value="{{ $annee->id}}">{{ $annee->intitule }}</option>
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
-                    <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="soutenance" class="col-sm-2 col-form-label">Soutenu</label>
-                        <div class="col">
-                            <input type="radio" value="1" id="soutenance" name="soutenance"> Oui <br>
-                            <input type="radio" value="0" id="soutenance" name="soutenance"> Non
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="dateSignature" class="col-sm-2 col-form-label">Date de signature</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSignature" name="dateSignature" placeholder="..." required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="moyenne" class="col-sm-2 col-form-label">La moyenne</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" placeholder="..." required>
-                        </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="cote" class="col-sm-2 col-form-label">Cote</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="cote" name="cote" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="session" class="col-sm-2 col-form-label">La session</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="session" name="session" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="dateSoutenance" class="col-sm-2 col-form-label">Date de soutenance</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" required>
-                        </div>
-                    </div>
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">

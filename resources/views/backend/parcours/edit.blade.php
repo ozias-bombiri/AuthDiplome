@@ -33,11 +33,11 @@
                     @csrf
                     @method('PUT')
                     <div class="form-group row py-2">
-                        <label for="etablissement" class="col-sm-2 col-form-label">Institution</label>
+                        <label for="filiere" class="col-sm-2 col-form-label">Filière</label>
                         <div class="col">
-                            <select class="form-control" id="institution" name="institution_id" required>
-                                @foreach( $etablissements as $etablissement)
-                                <option value="{{ $etablissement->id}}">{{ $etablissement->sigle }}</option>
+                            <select class="form-control" id="filiere" name="filiere_id" required>
+                                @foreach( $filieres as $filiere)
+                                <option value="{{ $filiere->id}}">{{ $filiere->intitule }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -45,26 +45,26 @@
                     <div class="form-group row py-2">
                         <label for="intitule" class="col-sm-2 col-form-label">Intitulé du parcours</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="intitule" name="intitule" placeholder="Lettres modernes" required>
+                            <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $parcours->intitule }}" required>
                         </div>
                     </div>
                     <div class="form-group row py-2">
                         <label for="domaine" class="col-sm-2 col-form-label">Domaine</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="domaine" name="domaine" placeholder=" ..." required>
+                            <input type="text" class="form-control" id="domaine" name="domaine" value="{{ $parcours->domaine }}" required>
                         </div>
                     </div>
                     <div class="form-group row py-2">
                         <label for="mention" class="col-sm-2 col-form-label">Mention</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="mention" name="mention" placeholder="..." required>
+                            <input type="text" class="form-control" id="mention" name="mention" value="{{ $parcours->mention }}" required>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
                         <label for="specialite" class="col-sm-2 col-form-label">Spécialité</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="specialite" name="specialite" placeholder="..." required>
+                            <input type="text" class="form-control" id="specialite" name="specialite" value="{{ $parcours->specialite }}" required>
                         </div>
                     </div>
                     <div class="form-group row py-2">
@@ -87,7 +87,7 @@
                     <div class="form-group row py-2">
                         <label for="description" class="col-sm-2 col-form-label">Description</label>
                         <div class="col">
-                            <textarea class="form-control" id="description" name="description" required> </textarea>
+                            <textarea class="form-control" id="description" name="description" required> {{ $parcours->description }} </textarea>
                         </div>
                     </div>
                     <div class="row py-4">

@@ -23,6 +23,7 @@ class UpdateProcesVerbalRequest extends FormRequest
     {
         return [
             'reference' => 'required|string',
+            'nomFichierPdf' => 'required|string',
             'session' => 'required|string',
             'dateDeliberation' => 'required|string',
             'nombreEtudiants' => 'required|string',
