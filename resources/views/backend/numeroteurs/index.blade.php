@@ -36,7 +36,7 @@ Numeroteurs des documents
                         <tr>
                             <th>No</th>
                             <th>Institution</th>
-                            <th>Document</th>
+                            <th>Categorie</th>
                             <th>Compteur</th>
                             <th>Texte</th>
                             <th width="200px">Action</th>
@@ -47,7 +47,7 @@ Numeroteurs des documents
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
                             <td>{{ $numeroteur->institution->sigle }}</td>
-                            <td>{{ $numeroteur->categorie }}</td>
+                            <td>{{ $numeroteur->categorieActe->intitule }}</td>
                             <td>{{ $numeroteur->compteur }}</td>
                             <td>{{ $numeroteur->chaine }}</td>
                             <td>

@@ -50,6 +50,7 @@ class NumeroteurController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+        $input['compteur'] = 0;
 
         $numeroteur = $this->modelRepository->create($input);
 
@@ -69,7 +70,17 @@ class NumeroteurController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categories = $this->categorieRepository->all();
+        $institutions = $this->institutionRepository->all();
+        
+        $numeroteur = $this->modelRepository->find($id);
+
+        if (empty($numeroteur)) {
+            return redirect(route('numeroteurs.index'));
+        }
+
+        return view('backend.numeroteurs.edit', compact('categories','institutions'))
+        ->with('numeroteur', $numeroteur);
     }
 
     /**
@@ -77,7 +88,15 @@ class NumeroteurController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $input = $request->all();
+        $numeroteur = $this->modelRepository->find($id);
+
+        if (empty($numeroteur)) {
+            return redirect(route('annee_academiques.index'));
+        }
+        
+        $numeroteur = $this->modelRepository->update($input, $id);
+        return redirect(route('numeroteurs.index'));
     }
 
     /**
@@ -85,6 +104,16 @@ class NumeroteurController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $numeroteur = $this->modelRepository->find($id);
+
+        if (empty($numeroteur)) {
+            $message = "Numeroteur introuvable";
+            return $this->sendResponse($message);
+        }
+
+        $this->modelRepository->delete($id);
+
+        $message = "Numeroteur supprimé avec succès";
+        return redirect(route('numeroteurs.index'));
     }
 }

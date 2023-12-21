@@ -34,6 +34,6 @@ class Numeroteur extends Model
 
 	public function categorieActe()
 	{
-		return $this->belongsTo(CategorieActe::class);
+		return $this->belongsTo(CategorieActe::class, 'categorieActe_id');
 	}
 }
