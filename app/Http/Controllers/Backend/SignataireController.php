@@ -57,7 +57,7 @@ class SignataireController extends Controller
 
         $signataire = $this->modelRepository->create($input);
         $signataireActe = [];
-        $signataireActe['statut']  = 'active';
+        //$signataireActe['statut']  = 'active';
         $signataireActe['debut']  = $input['debut'];
         $signataireActe['fonction']  = $input['fonction'];
         $signataireActe['mention']  = $input['mention'];
