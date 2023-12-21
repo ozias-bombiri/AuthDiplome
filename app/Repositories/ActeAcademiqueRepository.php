@@ -44,11 +44,10 @@ class ActeAcademiqueRepository extends BaseRepository
     }
 
     public function findByEtablissement($institution_id){
-        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
-                		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
-                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
-                        ->where('filieres.institution_id', '=', $institution_id)
-                        ->select('actes_academiques.*')
+        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
+                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+                        ->where('institutions.id', '=', $institution_id)
+                        ->select('acte_academiques.*')
                         ->get();
 
         return $attestations;

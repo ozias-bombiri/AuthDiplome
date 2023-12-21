@@ -37,7 +37,9 @@ class AttestationDefinitiveController extends Controller
     protected $pdfCreator ;
 
     public function __construct(
+
             ActeAcademiqueRepository $attestationRepo,
+
             ParcoursRepository $parcoursRepo,
             NiveauEtudeRepository $niveauRepo,
             SignataireRepository $signataireRepo,
@@ -49,16 +51,16 @@ class AttestationDefinitiveController extends Controller
             DocumentCreator $pdfCreator
          )
     {
-        $this->attestationRepository = $attestationRepo;
+        //$this->attestationRepository = $attestationRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->niveauRepository = $niveauRepo;
         $this->signataireRepository = $signataireRepo;
         $this->institutionRepository = $institutionRepo;
-        $this->etudiantRepository = $etudtiantRepo;
+        //$this->etudiantRepository = $etudtiantRepo;
         $this->anneeRepository = $anneeRepo;
         $this->resultatRepository = $resultatRepo;
         $this->timbreRepository = $timbreRepo;
-        $this->pdfCreator = $pdfCreator;
+        //$this->pdfCreator = $pdfCreator;
     }
     
 

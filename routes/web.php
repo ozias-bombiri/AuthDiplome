@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Metiers\AttestationProvisoireController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ProductController;
 
@@ -86,7 +87,6 @@ Route::group(['middleware' => ['auth']], function(){
     
 });
 
-
 Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
     ->name('parcours.proces_verbaux.index');    
@@ -99,7 +99,12 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
     ->name('proces_verbaux.resultats.create');
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
-    ->name('proces_verbaux.resultats.store');    
+
+    ->name('proces_verbaux.resultats.store');
+    
+    //Les attestions et diplomes
+    Route::get('actes/provisoire', [AttestationProvisoireController::class, 'index'])
+    ->name('attestion.provisoire.index');  
     
 });
 
