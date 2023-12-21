@@ -48,7 +48,7 @@ Parcours
                         @foreach ($parcours as $par)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $par->institution->sigle }}</td>
+                            <td>{{ $par->institution->sigle ?? '' }}</td>
                             <td>{{ $par->niveau_etude->intitule }}</td>
                             <td>{{ $par->intitule }}</td>
                             <td>{{ $par->domaine }} </td>
