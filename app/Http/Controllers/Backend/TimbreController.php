@@ -44,9 +44,8 @@ class TimbreController extends Controller
     public function create()
     {
         $ministeres = $this->ministereRepository->all();
-        $signataires = $this->signataireRepository->all();
-        //$institutions = $this->institutionRepository->all();
-        return view('backend.timbres.create', compact('ministeres', 'signataires')) ;
+        $institutions = $this->institutionRepository->all();
+        return view('backend.timbres.create', compact('ministeres', 'institutions')) ;
     }
 
     /**
@@ -84,6 +83,9 @@ class TimbreController extends Controller
      */
     public function edit(string $id)
     {
+
+        $ministeres = $this->ministereRepository->all();
+        $institutions = $this->institutionRepository->all();
         $timbre = $this->modelRepository->find($id);
 
         if (empty($timbre)) {
@@ -92,7 +94,7 @@ class TimbreController extends Controller
             return redirect(route('timbres.index'));
         }
         $institutions = $this->institutionRepository->all();
-        return view('backend.timbres.edit', compact('timbre', 'institutions'));
+        return view('backend.timbres.edit', compact('timbre', 'institutions','ministeres'));
     }
 
     /**
@@ -130,6 +132,6 @@ class TimbreController extends Controller
         $this->modelRepository->delete($id);
 
         $message = "timbre supprimé avec succès";
-        return $this->sendSuccessDialogResponse($message);
+        return redirect(route('timbres.index'));
     }
 }

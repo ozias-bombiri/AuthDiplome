@@ -23,8 +23,11 @@ class StoreTimbreRequest extends FormRequest
     {
         return [
             'intitule' => 'required|string',
+            'type' => 'required|string',
             'ministere_id' => 'required|string',
+            'institution_id' => 'required|string',
             
         ];
     }
 }
+
