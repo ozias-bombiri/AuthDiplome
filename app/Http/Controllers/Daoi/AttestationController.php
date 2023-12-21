@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Daoi;
 
 use App\Http\Controllers\Controller;
+use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\AttestationDefinitiveRepository;
+use App\Repositories\EtudiantRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
@@ -33,9 +35,9 @@ class AttestationController extends Controller
                                 ParcoursRepository $parcoursRepo, 
                                 NiveauEtudeRepository $niveauRepo,
                                 AnneeAcademiqueRepository $anneeRepo,
-                                AttestationDefinitiveRepository $attestationRepo,
+                                ActeAcademiqueRepository $attestationRepo,
                                 ResultatAcademiqueRepository $resultatRepo,
-                                ImpetrantRepository $impetrantRepo,
+                                EtudiantRepository $impetrantRepo,
                                 NumeroteurRepository $numeroteurRepo,
                                 DocumentCreator $pdfCreator)
     {
@@ -55,8 +57,13 @@ class AttestationController extends Controller
     /**
      * Lister les attestations defintives à partir du parcours de formation choisi
      **/
-    public function listAttestation($institution_id)
+    public function listAttestation()
     {
+        if(isset($_GET['institution_id'])){
+            $institution_id = $_GET['institution_id'];
+        }else{
+            $institution_id = 1;
+        }
         //$institution = Auth ::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
         $annees = $this->anneeRepository->all();

@@ -179,7 +179,8 @@ Route::get('authentification/details/{categorie}/{id}', [App\Http\Controllers\Me
 
 
 //ROUTES FOR DAOI PROFILE
-Route::group(['middleware' =>['auth', 'role:daoi']], function(){
+//Route::group(['middleware' =>['auth', 'role:daoi']], function(){
+Route::group(['middleware' =>['auth']], function(){
     Route::get('etablissements/{institution_id}', [App\Http\Controllers\Daoi\EtablissementController::class, 'listEtablissement'])
     ->where('institution_id', '[0-9]+')->name('metiers.daoi.etablissement-list');
     Route::post('etablissements/create', [App\Http\Controllers\Daoi\EtablissementController::class, 'storeEtablissement'])
@@ -213,8 +214,9 @@ Route::group(['middleware' =>['auth', 'role:daoi']], function(){
     Route::get('d/definitives/niveaux/{id}', [App\Http\Controllers\Daoi\AttestationController::class, 'filtreNiveau'])
     ->where('id', '[0-9]+')->name('metiers.daoi.attestation-niveaux');
     
-    Route::get('d/definitives/list/{institution_id}', [App\Http\Controllers\Daoi\AttestationController::class, 'listAttestation'])
-    ->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
+    Route::get('d/definitives/list', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'index'])
+    //->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
+    ->name('metiers.daoi.attestationdef-list');
     Route::get('d/definitives/add/{institution_id}/{etudiant_id}', [App\Http\Controllers\Daoi\AttestationController::class, 'addAttestation'])
     ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.daoi.attestationdef-add');
     Route::post('d/definitives/store', [App\Http\Controllers\Daoi\AttestationController::class, 'storeAttestation'])
@@ -225,6 +227,10 @@ Route::group(['middleware' =>['auth', 'role:daoi']], function(){
     ->where('id', '[0-9]+')->name('metiers.daoi.attestationdef-pdf');
     Route::post('d/definitives/filtre/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'filtreAttestation'])
     ->name('metiers.daoi.attestationdef-filtre');
+
+    Route::get('d/diplomes/list', [App\Http\Controllers\Metiers\DiplomeController::class, 'index'])
+    //->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
+    ->name('metiers.daoi.diplomes-list');
     
 
 });

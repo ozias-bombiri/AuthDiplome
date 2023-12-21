@@ -8,10 +8,7 @@ use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
 use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
-<<<<<<< HEAD
 use App\Repositories\EtudiantRepository;
-=======
->>>>>>> 315fa09 (Finalisation du CRUD)
 use App\Repositories\FiliereRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
@@ -71,13 +68,20 @@ class AttestationProvisoireController extends Controller
     }
 
     public function index()
+
     {
+        
+        if(isset($_GET['categorie_id'])){
+            $categorie_id = $_GET['categorie_id'];
+        }else{
+            $categorie_id = 1;
+        }
         $institution = Auth::user()->institution;
         $institution = $this->institutionRepository->find($institution->id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByInstitution($institution->id);
-        $attestations = $this->attestationRepository->findByEtablissement($institution->id);
+        $attestations = $this->attestationRepository->findByEtablissement($institution->id,$categorie_id );
         // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
 
         return view("metiers.attestation.provisoire", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));

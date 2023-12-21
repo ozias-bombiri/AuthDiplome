@@ -99,13 +99,13 @@
                 </a>
             </li>
             <li class="sidebar-item dropdown">
-                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.daoi.attestationdef-list') }}" aria-expanded="false">
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                     <span class="hide-menu">Attestions définitives</span>
                 </a>
             </li>
             <li class="sidebar-item dropdown">
-                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.daoi.diplomes-list', ['categorieActe_id' =>  \App\Models\CategorieActe::findByIntitule('DIPLOME')]) }}" aria-expanded="false">
                     <i class="fa fa-info-circle" aria-hidden="true"></i>
                     <span class="hide-menu">Diplôme</span>
                 </a>

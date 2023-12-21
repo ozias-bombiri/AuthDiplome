@@ -3,128 +3,98 @@
 namespace App\Http\Controllers\Metiers;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Response;
+use App\Repositories\ActeAcademiqueRepository;
+use App\Repositories\AnneeAcademiqueRepository;
+use App\Repositories\AttestationDefinitiveRepository;
+use App\Repositories\EtudiantRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\NiveauEtudeRepository;
+use App\Repositories\NumeroteurRepository;
 use App\Repositories\ParcoursRepository;
-use App\Repositories\AttestationDefinitiveRepository;
 use App\Repositories\ResultatAcademiqueRepository;
-use App\Repositories\SignataireRepository;
-use App\Repositories\TimbreRepository;
-use App\Repositories\AnneeAcademiqueRepository;
-use App\Models\ResultatAcademique;
-use App\Models\Parcours;
+use App\Utils\DocumentCreator;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Auth;
-use App\Utils\DocumentCreate;
 
 
 class AttestationDefinitiveController extends Controller
 {
-
-    protected $attestationRepository ;
+    protected $institutionRepository;
     protected $parcoursRepository;
     protected $niveauRepository;
-    protected $signataireRepository;
-    protected $institutionRepository ;
-    protected $etudiantRepository;
     protected $anneeRepository;
-    protected $resultatRepository ;
-    protected $timbreRepository;
-    protected $pdfCreator ;
+    protected $attestationRepository;
+    protected $resultatRepository;
+    protected $impetrantRepository;
+    protected $numeroteuRepository;
+    protected $pdfCreator;
 
-    public function __construct(
-           // AttestationDefinitiveRepository $attestationRepo,
-            ParcoursRepository $parcoursRepo,
-            NiveauEtudeRepository $niveauRepo,
-            SignataireRepository $signataireRepo,
-            InstitutionRepository $institutionRepo,
-            //ImpetrantRepository $etudtiantRepo,
-            AnneeAcademiqueRepository $anneeRepo,
-            ResultatAcademiqueRepository $resultatRepo,
-            TimbreRepository $timbreRepo,
-            //DocumentCreate $pdfCreator
-         )
+    public function __construct(InstitutionRepository $institutionRepo, 
+                                ParcoursRepository $parcoursRepo, 
+                                NiveauEtudeRepository $niveauRepo,
+                                AnneeAcademiqueRepository $anneeRepo,
+                                ActeAcademiqueRepository $attestationRepo,
+                                ResultatAcademiqueRepository $resultatRepo,
+                                EtudiantRepository $impetrantRepo,
+                                NumeroteurRepository $numeroteurRepo,
+                                DocumentCreator $pdfCreator)
     {
-        //$this->attestationRepository = $attestationRepo;
+        $this->institutionRepository = $institutionRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->niveauRepository = $niveauRepo;
-        $this->signataireRepository = $signataireRepo;
-        $this->institutionRepository = $institutionRepo;
-        //$this->etudiantRepository = $etudtiantRepo;
         $this->anneeRepository = $anneeRepo;
+        $this->attestationRepository = $attestationRepo;
         $this->resultatRepository = $resultatRepo;
-        $this->timbreRepository = $timbreRepo;
-        //$this->pdfCreator = $pdfCreator;
+        $this->impetrantRepository = $impetrantRepo;
+        $this->numeroteuRepository = $numeroteurRepo;
+        $this->pdfCreator = $pdfCreator;
+        
     }
-    
 
-
-    /**
-     * Liste des parcours
-     */
-    public function listParcours($institution_id)
+    public function index()
     {
+        if(isset($_GET['institution_id'])){
+            $institution_id = $_GET['institution_id'];
+        }else{
+            $institution_id = 1;
+        }
+        if(isset($_GET['categorie_id'])){
+            $categorie_id = $_GET['categorie_id'];
+        }else{
+            $categorie_id = 2;
+        }
+        //$institution = Auth::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
+        $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
-        $parcours = null;
-        if($institution && $institution->type !='IESR'){
-            $parcours = $institution->parcours;
-        }
-        else {
-            $parcours = $this->parcoursRepository->all();
-        }
-        return view('metiers.etablissements.list_parcours', compact('parcours', 'institution', 'niveaux'));
+        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+        
+        $attestations = $this->attestationRepository->findByEtablissement($institution->id, $categorie_id);
+        // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+
+        return view("metiers.daoi.list_attestations", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
+
 
     /**
-     * Liste des étudiants
-     */
-
-    public function listEtudiantsAttDef($institution_id)
-    {
-        $institution = $this->institutionRepository->find($institution_id);
-        
-        $etudiants = $this->etudiantRepository->findByInstitution($institution->id);
-
-        
-        
-        //$etudiants = $this->resultatRepository->findByInstitution($institution->id);
-
-        //$etudiants = $this->etudiantRepository->all();
-
-        // $resultAcaEtudiants = Impetrant::join('resultat_academiques', 'resultat_academiques.impetrant_id', '=', 'impetrants.id')
-        
-        //$signataires = $this->signataireRepository->signataireAttesDef();
-        
-        
-
-        //dd($signataireTypeDoc);
-
-        return view('metiers.daoi.list_etudiants_att_def', compact('etudiants', 'institution'));
-
-
-    }
-
-
-     /**
-     * Lister les attestations provisoires à partir du parcours de formation choisi
+     * Lister les attestations defintives à partir du parcours de formation choisi
      **/
-    public function listAttestation($institution_id)
+    public function listAttestation()
     {
+        if(isset($_GET['institution_id'])){
+            $institution_id = $_GET['institution_id'];
+        }else{
+            $institution_id = 1;
+        }
         //$institution = Auth ::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
-        $attestations = null;
-        if($institution && $institution->type !='IESR'){
-            $attestations = $this->attestationRepository->findByInstitution($institution_id);
-        }
-        else {
-            $attestations = $this->attestationRepository->all();
-        }
-        return view('metiers.daoi.list_attestationsdef', compact('attestations', 'institution', 'annees', 'niveaux'));
+        $parcours = $this->parcoursRepository->findByIesr($institution->id);
+        $attestations = $this->attestationRepository->findByIesr($institution->id);
+        return view('metiers.daoi.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
     public function filtreAttestation(Request $request)
@@ -157,21 +127,17 @@ class AttestationDefinitiveController extends Controller
     /**
      * Ajouter une attestation provisoire à partir du parcours de formation choisi
      **/
-    public function addAttestation(Request $request, $institution_id, $etudiant_id)
+    public function addAttestation(Request $request, $parcours, $impetrant)
     {
-        $institution = $this->institutionRepository->find($institution_id);
-        //$signataires = $institution->signataires;
-        $signataires = $this->signataireRepository->signataireAttesDef($institution->id, "Attestation Definitive");
+        $parcou = $this->parcoursRepository->find($parcours);
+        $filiere = $parcou->filiere;
+        $institution = $filiere->institution;
+        //dd($institution);
+        $signataires = $institution->signataires;
+        
         $annees = $this->anneeRepository->all();
-        $parcours = $institution->parcours;
-        //$etudiant = $this->etudiantRepository->find($etudiant_id);
-        $etudiant = $this->resultatRepository->findByInstitution($institution->id)
-        ->find($etudiant_id);
-        
-        $resultats = $this->resultatRepository->find($etudiant_id);
-
-        //dd($resultats);
-        
+        $etudiant = $this->impetrantRepository->find($impetrant);
+        /*
         if ($request->ajax()) {
             $data = [];
             if(empty($etudiant)){
@@ -181,15 +147,15 @@ class AttestationDefinitiveController extends Controller
             $data = [
                 'annees' => $this->anneeRepository->all(),
                 'parcours' => $institution->parcours,
-                'signataires'  => $signataires,
-                'etudiant' => $etudiant,
-                'institution' => $institution,
+                'signataires' => $institution->signataires,
+                'etudiant' => $this->etudiantRepository->find($etudiant_id),
+                'institution' => $institution
             ];
         }
             return response()->json(['result' =>$data]);
-        }
+        } */
         
-        return view('metiers.daoi.add_attestation', compact('annees', 'parcours', 'signataires', 'etudiant', 'institution'));
+        return view('metiers.etablissements.add_attestation', compact('annees', 'parcou', 'signataires', 'etudiant', 'institution'));
     }
 
     /**
@@ -199,43 +165,49 @@ class AttestationDefinitiveController extends Controller
     {
         $institution = Auth ::user()->institution;
         $inputs = $request->all();
+        $numeroteur = $this->numeroteuRepository->findByInstitutionandCategorie($institution->id, 'provisoire');
+        //Enregistrement du résultat académique
         $input_resultat = [];
+        $input_resultat['reference'] = "RES".time();
+        $input_resultat['soutenance'] = false;
+        $input_resultat['dateSoutenance'] = null;
+        //$input_resultat['dateSignature'] = $inputs['dateSignature'];
+        $input_resultat['cote'] = $inputs['cote'];
+        $input_resultat['moyenne'] = $inputs['moyenne'];
+        $input_resultat['session'] = $inputs['sessionr'];
+        $parcours = $this->parcoursRepository->find($inputs['parcours_id']);
+        if($parcours->soutenance){
+            $input_resultat['dateSoutenance'] = $inputs['dateSoutenance'];
+        }
+        else {
+            $input_resultat['dateSoutenance'] = null;
+        }
+        $input_resultat['impetrant_id'] = $inputs['impetrant_id'];
+        $input_resultat['parcours_id'] = $inputs['parcours_id'];
+        $input_resultat['anneeAcademique_id'] = $inputs['annee_id'];
+        $resultat = $this->resultatRepository->create($input_resultat);
 
-        //Recuperation du niveau d'etude
-        $parcours_intitule = $request->input('parcours_id');
-        $id_parcours = Parcours::where('intitule', $parcours_intitule)->value('id');
-        $id_niveau_etude = Parcours::with('niveau_etude')
-        ->select('niveauEtude_id')
-        ->where('parcours.intitule','=', $parcours_intitule)
-        ->first();
-        $intitule_niveau = $id_niveau_etude->niveau_etude->intitule;
-        //Recuperation id de resultat academique
-        $reference_resultat = $request->input('reference');
-        $id_resultat = ResultatAcademique::where('reference', $reference_resultat)->value('id');
-       
-        //Création de l'attestation definitive
+        //Création de l'attestation
         $input_attestation = [];
-        $input_attestation['reference'] = "AD".time(); 
-        $input_attestation['intitule'] = "ATTESTATION PROVISOIRE DE ".strtoupper($intitule_niveau);
+        $input_attestation['reference'] = "AP".time(); 
+        $input_attestation['intitule'] = "ATTESTATION PROVISOIRE DE ".strtoupper($parcours->niveau_etude->intitule);
         $input_attestation['dateSignature'] = $inputs['dateSignature'];
         $input_attestation['dateCreation'] = date('Y-m-d');
-        $input_attestation['statutGeneration'] = false;
-        $input_attestation['resultatAcademique_id'] = $id_resultat;
+        $input_attestation['nombreGeneration'] = 0;
+        $input_attestation['resultatAcademique_id'] = $resultat->id;
         $input_attestation['signataire_id'] = $inputs['signataire'];
         $input_attestation['lieuCreation'] = $inputs['lieuCreation'];
-        
         $attestation = $this->attestationRepository->create($input_attestation);
 
-        
-        return redirect(route('metiers.daoi.attestationdef-list', $institution->id ));
+        return redirect(route('metiers.etablissements.attestation-list', $institution->id ));
     }
 
     /**
-     * Afficher les informations détaillées d'une attestation provisoire
+     * Afficher le doucment pdf 
      **/
+    
     public function pdfAttestation($id)
     {
-        
         $attestation = $this->attestationRepository->find($id);
         $document_path = null;
         if($attestation->nombreGeneration >10){
@@ -243,22 +215,21 @@ class AttestationDefinitiveController extends Controller
         
         }
         else {
+            $institution = $attestation->signataire->institution;
+            $impetrant = $attestation->resultat_academique->impetrant;
+            $parcours = $attestation->resultat_academique->parcours;
+            $resultat = $attestation->resultat_academique ;
+            $signataire = $attestation->signataire;
+            $timbre = $signataire->timbre ;
 
-        $institution = $attestation->signataire->institution;
-        $timbre = $institution->timbre ;
-        $impetrant = $attestation->resultat_academique->impetrant;
-        $parcours = $attestation->resultat_academique->parcours;
-        $resultat = $attestation->resultat_academique ;
-        $signataire = $attestation->signataire;
-
-        $document_path = $this->pdfCreator->createAttestationDefinitive($institution, $timbre, $parcours, $impetrant, $signataire, $attestation, $resultat);
+            $document_path = $this->pdfCreator->createAttestationProvisoire($institution, $timbre, $parcours, $impetrant, $signataire, $attestation, $resultat);
         }
+
         return Response::make(file_get_contents(public_path($document_path)), 200, [
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'inline; filename="'.$attestation->reference.'"'
             ]);
-        
-        }
+    }
 
     /**
      * Afficher les informations détaillées d'une attestation provisoire
@@ -293,29 +264,14 @@ class AttestationDefinitiveController extends Controller
         return view('metiers.etablissements.view_attestation', compact('attestation'));
     }
 
-
-    /**
-     * Lister les signaitaires de l'établissement
-     **/
-    public function listSignataires($institution_id)
-    {
-        //$institution = Auth ::user()->institution;
-        $institution = $this->institutionRepository->find($institution_id);
-        $signataires = null;
-        if($institution && $institution->type !='IESR'){
-            $signataires = $institution->signataires;
-        }
-        else {
-            $signataires = $this->signataireRepository->all();
-        }
-        return view('metiers.etablissements.list_signataires', compact('signataires'));
+    public function filtreNiveau($id){
+        $niveau = $this->niveauRepository->find($id);
+        $attestations = $this->attestationRepository->findByNiveau($niveau->id);
+        $institution = Auth::user()->institution ;
+        $annees = $this->anneeRepository->all();
+        $niveaux = $this->niveauRepository->all();
+        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+        return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
-    /**
-     * Ajouter un signataire
-     **/
-   
-   
 }
-
-

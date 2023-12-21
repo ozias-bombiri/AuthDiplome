@@ -39,4 +39,8 @@ class CategorieActeRepository extends BaseRepository
     {
         return CategorieActe::class;
     }
+
+    public function findByIntitule($intitule){
+        return CategorieActe::where('intitule', 'like', '%'.$intitule.'%')->first();
+    }
 }
