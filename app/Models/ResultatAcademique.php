@@ -38,14 +38,14 @@ class ResultatAcademique extends Model
 
 	
 
-	public function etudiant()
+	public function inscription()
 	{
-		return $this->belongsTo(Etudiant::class);
+		return $this->belongsTo(Inscription::class, 'inscription_id');
 	}
 
 	public function procesVerbal()
 	{
-		return $this->belongsTo(ProcesVerbal::class);
+		return $this->belongsTo(ProcesVerbal::class, 'procesVerbal_id');
 	}
 
 	public function acteAcademiques()

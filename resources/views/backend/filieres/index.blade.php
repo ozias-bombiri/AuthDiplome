@@ -5,7 +5,7 @@
 @endpush
 
 @section('page-title')
-Impétrants
+{{ __('Filieres') }}
 @endsection
 
 @section('content')
@@ -25,39 +25,38 @@ Impétrants
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">Impétrants </h3>
+            <h3 class="box-title">{{ __('Filieres') }} </h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('impetrants.create') }}"> Ajouter </a>
+                <a class="btn btn-success" href="{{ route('les_filieres.create') }}"> Ajouter </a>
             </div>
             <div class="table-responsive">
-                <table id="data" class="table table-striped table-bordered table-responsible">
+                <table id="data" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Identifiant</th>
-                            <th>Nom </th>
-                            <th>Prénom</th>
-                            <th>Date de naissance</th>
-                            <th>Lien de naissance</th>
+                            <th>Institution</th>
+                            <th>Intitulé</th>
+                            <th>Sigle</th>
+                            <th>Code</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach ($impetrants as $impetrant)
+                    <tbody>   
+                        @foreach ($filieres as $filiere)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $impetrant->identifiant }}</td>
-                            <td>{{ $impetrant->nom }}</td>
-                            <td>{{ $impetrant->prenom }}</td>
+                            <td>{{ $filiere->institution->sigle }}</td>
+                            <td>{{ $filiere->intitule }}</td>
+                            <td>{{ $filiere->sigle }}</td>
+                            <td>{{ $filiere->code }}</td>
 
-                            <td>{{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('d F Y') }}</td>
-                            <td> {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance}}) </td>
+                           
                             <td>
-                                <form action="{{ route('impetrants.destroy',$impetrant->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('impetrants.show',$impetrant->id) }}">
+                                <form action="{{ route('les_filieres.destroy',$filiere->id) }}" method="POST">
+                                    <a class="btn btn-info" title="Détails" href="{{ route('les_filieres.show',$filiere->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('impetrants.edit',$impetrant->id) }}">
+                                    <a class="btn btn-primary" title="Modifier" href="{{ route('les_filieres.edit',$filiere->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 
@@ -77,6 +76,7 @@ Impétrants
             </div>
         </div>
     </div>
+</div>
 </div>
 
 @endsection

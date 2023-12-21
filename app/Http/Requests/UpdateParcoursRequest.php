@@ -29,7 +29,7 @@ class UpdateParcoursRequest extends FormRequest
             'mention'  => 'required|string',
             'specialite'  => 'required|string',
             'description'  => 'nullable',
-            'institution_id'  => 'required',
+            'filiere_id'  => 'required',
             'niveauEtude_id'  => 'required'
         ];
     }

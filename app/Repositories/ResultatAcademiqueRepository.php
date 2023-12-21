@@ -48,7 +48,7 @@ class ResultatAcademiqueRepository extends BaseRepository
      **/
     public function findByProcesVerbal($procesVerbal_id)
     {
-        return ResultatAcademique::join('proces_verbaux', 'resultat_academiques.parcours_id', '=', 'proces_verbaux.id')
+        return ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
                 ->where('proces_verbaux.id', $procesVerbal_id)
                 ->select('resultat_academiques.*')
                 ->get();

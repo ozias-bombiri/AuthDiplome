@@ -22,14 +22,15 @@ class ProcesVerbal extends Model
 	protected $casts = [
 		'parcours_id' => 'int',
 		'anneeAcademique_id' => 'int',
-		'nombreEtudiant' => 'int',
+		'nombreEtudiants' => 'int',
 		'user_id' => 'int',
 		
 	];
 
 	protected $fillable = [
-		'intitule',
-		'code',
+		'reference',
+		'nomFichierPdf',
+		'nombreEtudiants',
 		'dateDeliberation',
 		'session',
 		'description',
@@ -38,14 +39,14 @@ class ProcesVerbal extends Model
 		'user_id',
 	];
 
-	public function parcour()
+	public function parcours()
 	{
-		return $this->belongsTo(Parcours::class);
+		return $this->belongsTo(Parcours::class, 'parcours_id');
 	}
 
 	public function anneeAcademique()
 	{
-		return $this->belongsTo(AnneeAcademique::class);
+		return $this->belongsTo(AnneeAcademique::class, 'anneeAcademique_id');
 	}
 
 	public function resultat_academiques()

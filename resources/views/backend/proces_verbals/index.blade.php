@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Procès verbaux') }} </h3>
+            <h3 class="box-title">{{ __('Procès verbaux') }} @if(isset($parcours)) du parcours :  {{ $parcours->intitule }} @endif </h3>
             <div class="col-2 offset-10 mb-5">
                 <a class="btn btn-success" href="{{ route('proces_verbals.create') }}"> Ajouter </a>
             </div>
@@ -39,13 +39,14 @@
                             <th>Reference</th>
                             <th>Session</th>
                             <th>Date deliberation</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($proces_verbals as $proces_verbal)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $proces_verbal->parcour->intitule }}</td>
+                            <td>{{ $proces_verbal->parcours->intitule }}</td>
                             <td>{{ $proces_verbal->anneeAcademique->intitule }}</td>
                             <td>{{ $proces_verbal->reference }}</td>
                             <td>{{ $proces_verbal->session }}</td>
@@ -58,6 +59,9 @@
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                     <a class="btn btn-primary" title="Modifier" href="{{ route('proces_verbals.edit',$proces_verbal->id) }}">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a class="btn btn-primary" title="Résultats academiques" href="{{ route('proces_verbaux.resultats.index',$proces_verbal->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 

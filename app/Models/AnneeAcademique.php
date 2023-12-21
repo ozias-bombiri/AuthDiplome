@@ -30,4 +30,9 @@ class AnneeAcademique extends Model
 	{
 		return $this->hasMany(ProcesVerbal::class);
 	}
+
+	public function Inscriptions()
+	{
+		return $this->hasMany(Inscription::class);
+	}
 }

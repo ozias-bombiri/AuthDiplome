@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('proces_verbals.store') }}">
+                <form method="post" action="{{ route('proces_verbals.store') }}" enctype="multipart/form-data">
                     @csrf
 
 
@@ -52,6 +52,13 @@
                                 <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->intitule }}</option>
                                 @endforeach
                             </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="nomFichierPdf" class="col-sm-2 col-form-label">Fichier PDF</label>
+                        <div class="col">
+                            <input type="file" class="form-control" id="nomFichierPdf" name="nomFichierPdf" accept="application/pdf">
                         </div>
                     </div>
 

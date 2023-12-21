@@ -53,6 +53,56 @@ class VisaSeeder extends Seeder
             'texte' => "Vu l’arrêté nº2019-073/MESRSI/SG/DGESup du 25 février 2019 portant régime général des études du diplôme de Licence dans les institutions publiques et privées d’enseignement supérieur et de recherche ;",
 
         ]);
+
+        DB::table('visas')->insert([
+            'intitule' => 'decret nº0000-000',
+            'numero' => '0000-000',
+            'dateSignature' => '2019-2-25',
+            'texte' => "Vu le décret n°………. du …………. portant changement de dénomination de l’IESR ou l’arrêté portant changement de dénomination de l’IPES ;",
+
+        ]);
+
+        DB::table('visas')->insert([
+            'intitule' => 'decret de création iesr',
+            'numero' => '0000-001',
+            'dateSignature' => '2019-2-25',
+            'texte' => "Vu le décret portant création de l’IESR ou l’arrêté d’ouverture pour les IPES ;",
+
+        ]);
+
+        DB::table('visas')->insert([
+            'intitule' => 'convention cadre',
+            'numero' => '0000-002',
+            'dateSignature' => '2019-2-25',
+            'texte' => "Vu la convention Cadre de partenariat entre l’Institution d’Enseignement Supérieur et de Recherche (IESR) et l’Ecole et Centre de Formation Professionnelle de l’Etat (ECFPE) ;",
+
+        ]);
+
+        DB::table('visas')->insert([
+            'intitule' => 'arreté universitarisation iesr',
+            'numero' => '0000-003',
+            'dateSignature' => '2019-2-25',
+            'texte' => "Vu l’arrrêté portant autorisation d’universitariser des offres de formation à (le nom de l’ECFPE) ;",
+
+        ]);
+
+        DB::table('visas')->insert([
+            'intitule' => 'arreté extension iesr',
+            'numero' => '0000-004',
+            'dateSignature' => '2019-2-25',
+            'texte' => "Vu l’arrêté portant extension de l’IESR ;",
+
+        ]);
+
+        DB::table('visas')->insert([
+            'intitule' => 'procès-verbal de délibération',
+            'numero' => '0000-004',
+            'dateSignature' => '2019-2-25',
+            'texte' => "Vu le procès-verbal de délibération du jury d’examen en date du ……………………… …………………………………",
+
+        ]);
+
+        
         
     }
 }

@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('proces_verbaux', function (Blueprint $table) {
             $table->id();
+            $table->string('nomFichierPdf', 150)->nullable();
             $table->string('reference', 50);
             $table->string('session');
             $table->date('dateDeliberation');
-            $table->integer('nombreEtudiants');
+            $table->integer('nombreEtudiants')->nullable();
             $table->string('description');
             $table->foreignId('parcours_id')->constrained('parcours')->onDelete('cascade')->onUpdate('cascade'); 
             $table->foreignId('anneeAcademique_id')->constrained('annee_academiques')->onDelete('cascade')->onUpdate('cascade');

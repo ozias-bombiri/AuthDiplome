@@ -6,19 +6,23 @@ use App\Http\Controllers\Controller;
 use App\Repositories\ParcoursRepository;
 use App\Http\Requests\StoreParcoursRequest;
 use App\Http\Requests\UpdateParcoursRequest;
-use App\Repositories\InstitutionRepository;
+use App\Repositories\FiliereRepository;
 use App\Repositories\NiveauEtudeRepository;
 
 class ParcoursController extends Controller
 {
     /** @var  modelRepository */
     private $modelRepository;
-    private $institutionRepository;
+    private $filiereRepository;
     private $niveauEtudeRepository;
 
-    public function __construct(ParcoursRepository $parcoursRepo, InstitutionRepository $institutionRepo, NiveauEtudeRepository $niveauRepo)
+    public function __construct(
+        ParcoursRepository $parcoursRepo, 
+        FiliereRepository $filiereRepo, 
+        NiveauEtudeRepository $niveauRepo
+        )
     {
-        $this->institutionRepository = $institutionRepo;
+        $this->filiereRepository = $filiereRepo;
         $this->modelRepository = $parcoursRepo;
         $this->niveauEtudeRepository = $niveauRepo;
     }
@@ -36,9 +40,9 @@ class ParcoursController extends Controller
      */
     public function create()
     {
-        $etablissements = $this->institutionRepository->findEtablissement();
+        $filieres = $this->filiereRepository->all();
         $niveaux = $this->niveauEtudeRepository->all();
-        return view('backend.parcours.create', compact('etablissements', 'niveaux')) ;
+        return view('backend.parcours.create', compact('filieres', 'niveaux')) ;
     }
 
     /**
@@ -76,6 +80,8 @@ class ParcoursController extends Controller
      */
     public function edit(string $id)
     {
+        $filieres = $this->filiereRepository->all();
+        $niveaux = $this->niveauEtudeRepository->all();
         $parcours = $this->modelRepository->find($id);
 
         if (empty($parcours)) {
@@ -84,7 +90,7 @@ class ParcoursController extends Controller
             return redirect(route('parcours.index'));
         }
 
-        return view('backend.parcours.edit')->with('parcours', $parcours);
+        return view('backend.parcours.edit', compact('parcours', 'filieres', 'niveaux'));
     }
 
     /**
@@ -121,7 +127,6 @@ class ParcoursController extends Controller
 
         $this->modelRepository->delete($id);
 
-        $message = "parcours supprimé avec succès";
-        return $this->sendSuccessDialogResponse($message);
+        return redirect(route('parcours.index'));
     }
 }

@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateImpetrantRequest extends FormRequest
+class StoreInscriptionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,14 +22,9 @@ class UpdateImpetrantRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'identifiant' => 'required|string',
-            'typeIdentifiant' => 'required|string',
-            'nom' => 'required|string',
-            'prenom' => 'required|string',
-            'sexe' => 'required|string',
-            'dateNaissance' => 'required',
-            'lieuNaissance' => 'required|string',
-            'paysNaissance' => 'required|string'
+            'anneeAcademique_id' => 'required',
+            'identifiant' => 'required',
         ];
     }
 }
+

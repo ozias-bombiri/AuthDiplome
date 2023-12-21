@@ -44,4 +44,10 @@ class InscriptionRepository extends BaseRepository
                         ->first();
         return $attestation;        
     }
+
+    public function findByParcours($parcours_id){
+        $insctiptions = Inscription::where('parcours_id', '=', $parcours_id)
+                        ->get();
+        return $insctiptions;        
+    }
 }

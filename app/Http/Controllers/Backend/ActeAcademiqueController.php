@@ -37,8 +37,8 @@ class ActeAcademiqueController extends Controller
 
     public function index()
     {
-        $actes = $this->modelRepository->all();
-        return view('backend.acte_academiques.index', compact('actes'));
+        //$actes = $this->modelRepository->all();
+        return view('backend.acte_academiques.index');
     }
     
     /**

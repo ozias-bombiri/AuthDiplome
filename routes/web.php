@@ -87,7 +87,6 @@ Route::group(['middleware' => ['auth']], function(){
     
 });
 
-
 Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
     ->name('parcours.proces_verbaux.index');    
@@ -100,6 +99,7 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
     ->name('proces_verbaux.resultats.create');
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
+
     ->name('proces_verbaux.resultats.store');
     
     //Les attestions et diplomes

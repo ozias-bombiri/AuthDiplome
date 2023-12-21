@@ -18,7 +18,7 @@ class UserSeeder extends Seeder
     {
         $user = User::create([
             'nom' => 'bozi',
-            'prenom'=> 'bozi',
+            'prenom'=> 'scolarite',
             'telephone' => '0000000',
             'email' => 'obombiri@gmail.com',
             'statut' => 'Active',
@@ -26,20 +26,21 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-
-        $role_direction = Role::where('name', 'direction')->first();
+        $role_direction = Role::where('name', 'scolarite')->first();
         $user->assignRole([$role_direction->id]);
 
         $user = User::create([
             'nom' => 'tebda',
-            'prenom'=> 'tebda',
+            'prenom'=> 'directeur',
             'telephone' => '0000000',
             'email' => 'tebda@gmail.com',
             'statut' => 'Active',
-            'institution_id' => 1,
+            'institution_id' => 4,
             'password' => Hash::make('admin'),
 
         ]);
+        $role_direction = Role::where('name', 'directeur')->first();
+        $user->assignRole([$role_direction->id]);
 
         $user = User::create([
             'nom' => 'User1',
@@ -51,12 +52,12 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_daoi = Role::where('name', 'daoi')->first();
+        $role_daoi = Role::where('name', 'std')->first();
         $user->assignRole([$role_daoi->id]);
 
         $user = User::create([
             'nom' => 'User 2',
-            'prenom'=> 'STD',
+            'prenom'=> 'DAOI',
             'telephone' => '0000000',
             'email' => 'user2@exemple.com',
             'statut' => 'Active',
@@ -64,23 +65,42 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
+        $role_daoi = Role::where('name', 'daoi')->first();
+        $user->assignRole([$role_daoi->id]);
+
 
         $user = User::create([
             'nom' => 'User 3',
-            'prenom'=> 'STD',
+            'prenom'=> 'VP-EIP',
             'telephone' => '0000000',
             'email' => 'user3@exemple.com',
+            'statut' => 'Active',
+            'institution_id' => 1,
+            'password' => Hash::make('admin'),
+
+        ]);
+        $role_daoi = Role::where('name', 'vpeip')->first();
+        $user->assignRole([$role_daoi->id]);
+
+
+        $user = User::create([
+            'nom' => 'User 4',
+            'prenom'=> 'President',
+            'telephone' => '0000000',
+            'email' => 'user4@exemple.com',
             'statut' => 'Active',
             'institution_id' => 2,
             'password' => Hash::make('admin'),
 
         ]);
+        $role_auth = Role::where('name', 'president')->first();
+        $user->assignRole([$role_auth->id]);
 
         $user = User::create([
-            'nom' => 'User 4',
+            'nom' => 'User 5',
             'prenom'=> 'AUTH',
             'telephone' => '0000000',
-            'email' => 'user4@exemple.com',
+            'email' => 'user5@exemple.com',
             'statut' => 'Active',
             'institution_id' => 2,
             'password' => Hash::make('admin'),

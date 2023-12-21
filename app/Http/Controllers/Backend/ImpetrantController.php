@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
-use App\Repositories\ImpetrantRepository;
+use App\Repositories\EtudiantRepository;
 use App\Http\Requests\StoreImpetrantRequest;
 use App\Http\Requests\UpdateImpetrantRequest;
 
@@ -12,9 +12,9 @@ class ImpetrantController extends Controller
     /** @var  modelRepository */
     private $modelRepository;
 
-    public function __construct(ImpetrantRepository $impetrantRepo)
+    public function __construct(EtudiantRepository $etudiantRepo)
     {
-        $this->modelRepository = $impetrantRepo;
+        $this->modelRepository = $etudiantRepo;
     }
     /**
      * Display a listing of the resource.
