@@ -51,6 +51,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::resource('annee_academiques', App\Http\Controllers\Backend\AnneeAcademiqueController::class);
 Route::resource('niveau_etudes', App\Http\Controllers\Backend\NiveauEtudeController::class);
 Route::resource('institutions', App\Http\Controllers\Backend\InstitutionController::class);
+Route::resource('diplomes', App\Http\Controllers\Backend\DiplomeController::class);
+Route::resource('attestation_provisoires', App\Http\Controllers\Backend\AttestationProvisoireController::class);
+Route::resource('attestation_definitives', App\Http\Controllers\Backend\AttestationDefinitiveController::class);
 Route::resource('demande_authentifications', App\Http\Controllers\Backend\DemandeAuthentificationController::class);
 Route::resource('documents', App\Http\Controllers\Backend\DocumentController::class);
 Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAcademiqueController::class);

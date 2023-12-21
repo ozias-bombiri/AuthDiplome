@@ -8,7 +8,10 @@ use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
 use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
+<<<<<<< HEAD
 use App\Repositories\EtudiantRepository;
+=======
+>>>>>>> 315fa09 (Finalisation du CRUD)
 use App\Repositories\FiliereRepository;
 use App\Repositories\ImpetrantRepository;
 use App\Repositories\InstitutionRepository;
