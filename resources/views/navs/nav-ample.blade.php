@@ -86,6 +86,32 @@
                 <span class="hide-menu">Utilisateurs</span>
             </a>
         </li>
+        <li class="sidebar-item dropdown">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Edition des actes</span>
+            </a>
+
+            <li class="sidebar-item dropdown-content">
+                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('attestion.provisoire.index') }}" aria-expanded="false">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <span class="hide-menu">Attestions provisoires</span>
+                </a>
+            </li>
+            <li class="sidebar-item dropdown-content">
+                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <span class="hide-menu">Attestions définitives</span>
+                </a>
+            </li>
+            <li class="sidebar-item dropdown-content">
+                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                    <span class="hide-menu">Diplôme</span>
+                </a>
+            </li>
+        </li>
+
     </ul>
 
 </nav>
