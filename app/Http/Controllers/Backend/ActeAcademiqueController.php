@@ -59,9 +59,9 @@ class ActeAcademiqueController extends Controller
 
         $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
 
-        //dd($resultats);
+        $reponse = "Aucun résultat académique associé à ce PV" ;
 
-        if ($resultats->isEmpty()) return back() ; 
+        if ($resultats->isEmpty()) return back()->with('reponse', $reponse); 
 
         $categorieActe = $this->categorieRepository->findByIntitule("PROVISOIRE");
       
@@ -70,6 +70,7 @@ class ActeAcademiqueController extends Controller
         $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id); 
 
         $pv = ProcesVerbal::find($procesVerbal_id) ;
+
         
         return view('backend.acte_academiques.create2', compact('categorieActe', 'signataireActe', 'procesVerbal_id', 'pv'));
     
