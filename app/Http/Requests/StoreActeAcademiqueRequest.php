@@ -23,7 +23,7 @@ class StoreActeAcademiqueRequest extends FormRequest
     {
         return [
             'lieu' => 'required|string',
-            'dateSignature' => 'required',
+            'dateSignature' => 'required|date',
             
         ];
     }

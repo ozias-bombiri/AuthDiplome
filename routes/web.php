@@ -128,6 +128,8 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.provisoires.create');
     Route::get('proces_verbaux/{id}/provisoires/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire2'])
     ->name('proces_verbaux.provisoires.create2');
+    Route::post('proces_verbaux/provisoires/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
+    ->name('proces_verbaux.provisoires.store2');
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
     ->name('proces_verbaux.resultats.store'); 
     

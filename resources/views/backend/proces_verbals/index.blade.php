@@ -63,8 +63,8 @@
                                         <i class="bi bi-card-list"></i>
                                     </a>
 
-                                    <a class="btn btn-primary" title="Etablir des attestations" href="{{ route('proces_verbaux.provisoires.create2',$proces_verbal->id) }}">
-                                        <i class="bi bi-card-list"></i>
+                                    <a class="btn btn-warning" title="Etablir des attestations provisoires" href="{{ route('proces_verbaux.provisoires.create2',$proces_verbal->id) }}">
+                                        <i class="bi bi-clipboard-minus-fill"></i>
                                     </a>
 
                                     @csrf

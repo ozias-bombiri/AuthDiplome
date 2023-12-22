@@ -5,7 +5,7 @@
 @endpush
 
 @section('page-title')
-{{ __('Résultats académiques') }}
+{{ __('Actes académiques') }}
 @endsection
 
 @section('content')
@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Résultats académiques') }} </h3>
+            <h3 class="box-title">{{ __('Actes académiques') }} </h3>
             <div class="col-2 offset-10 mb-5">
                 <a class="btn btn-success" href="{{ route('acte_academiques.create') }}"> Ajouter </a>
             </div>
@@ -46,7 +46,7 @@
                         @foreach ($actes as $acte)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $acte->resultat_academique->reference }}</td>
+                            <td>{{ $acte->resultatAcademique->reference }}</td>
                             <td>{{ $acte->signataireActe->statut }}</td>
                             <td>{{ $acte->categorieActe->intitule }}</td>
                             <td>{{ $acte->intitule }}</td>
