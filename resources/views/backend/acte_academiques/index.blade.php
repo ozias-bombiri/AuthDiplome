@@ -46,7 +46,7 @@
                         @foreach ($actes as $acte)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $acte->resultat_academique->reference }}</td>
+                            <td>{{ $acte->resultatAcademique->reference }}</td>
                             <td>{{ $acte->signataireActe->statut }}</td>
                             <td>{{ $acte->categorieActe->intitule }}</td>
                             <td>{{ $acte->intitule }}</td>

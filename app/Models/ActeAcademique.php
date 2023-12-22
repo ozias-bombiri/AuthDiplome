@@ -25,7 +25,7 @@ class ActeAcademique extends Model
 		'statutSignature' => 'boolean',
 		'statutRemise' => 'boolean',
 		'validite' => 'boolean',
-		'categorieActe' => 'int',
+		'categorieActe_id' => 'int',
 		'resultatAcademique_id' => 'int',
 		'signataireActe_id' => 'int',
 		'user_id' => 'int',
@@ -43,25 +43,26 @@ class ActeAcademique extends Model
 		'resultatAcademique_id',
 		'signataireActe_id',
 		'user_id',
+		'reference',
 	];
 
 	public function categorieActe()
 	{
-		return $this->belongsTo(CategorieActe::class);
+		return $this->belongsTo(CategorieActe::class, 'categorieActe_id');
 	}
 
 	public function documents()
 	{
-		return $this->hasMany(Document::class);
+		return $this->hasMany(Document::class, 'acteAcademique_id');
 	}
 
-	public function resultat_academique()
+	public function resultatAcademique()
 	{
-		return $this->belongsTo(ResultatAcademique::class);
+		return $this->belongsTo(ResultatAcademique::class, 'resultatAcademique_id');
 	}
 
 	public function signataireActe()
 	{
-		return $this->belongsTo(SignataireActe::class);
+		return $this->belongsTo(SignataireActe::class, 'signataireActe_id');
 	}
 }

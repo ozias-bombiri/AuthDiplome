@@ -55,14 +55,16 @@
                             
                             <td>
                                 <form action="{{ route('proces_verbals.destroy',$proces_verbal->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('proces_verbals.show',$proces_verbal->id) }}">
+                                    <a class="btn btn-info" title="voir pdf" href="{{ route('proces_verbals.show',$proces_verbal->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('proces_verbals.edit',$proces_verbal->id) }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
+                                    
                                     <a class="btn btn-primary" title="Résultats academiques" href="{{ route('proces_verbaux.resultats.index',$proces_verbal->id) }}">
-                                        <i class="bi bi-pencil"></i>
+                                        <i class="bi bi-card-list"></i>
+                                    </a>
+
+                                    <a class="btn btn-primary" title="Etablir des attestations" href="{{ route('proces_verbaux.provisoires.create2',$proces_verbal->id) }}">
+                                        <i class="bi bi-card-list"></i>
                                     </a>
 
                                     @csrf
