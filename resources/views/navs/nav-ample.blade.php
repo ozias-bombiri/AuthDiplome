@@ -87,36 +87,34 @@
             </a>
         </li>
 
-    </ul>
-
-
-        <li class="sidebar-item dropdown">
+        <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('users.index') }}" aria-expanded="false">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
-                <span class="hide-menu">Edition des actes</span>
+                <span class="hide-menu">Etidtion des actes</span>
             </a>
-
-            <li class="sidebar-item dropdown">
-                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('attestion.provisoire.index') }}" aria-expanded="false">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                    <span class="hide-menu">Attestions provisoires</span>
-                </a>
-            </li>
-            <li class="sidebar-item dropdown">
-                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.daoi.attestationdef-list') }}" aria-expanded="false">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                    <span class="hide-menu">Attestions définitives</span>
-                </a>
-            </li>
-            <li class="sidebar-item dropdown">
-                <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('metiers.daoi.diplomes-list', ['categorieActe_id' =>  \App\Models\CategorieActe::findByIntitule('DIPLOME')]) }}" aria-expanded="false">
-                    <i class="fa fa-info-circle" aria-hidden="true"></i>
-                    <span class="hide-menu">Diplôme</span>
-                </a>
-            </li>
         </li>
 
-    </ul>
+        
 
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('actes.provisoires.index', ['categorieActe_id' =>  \App\Models\CategorieActe::findByIntitule('PROVISOIRE')]) }}" aria-expanded="false">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Attestations provisoires</span>
+            </a>
+        </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('actes.definitives.index', ['categorieActe_id' =>  \App\Models\CategorieActe::findByIntitule('DEFINITIVE')]) }}" aria-expanded="false">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Attestations définitives</span>
+            </a>
+        </li>
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('actes.diplomes.index', ['categorieActe_id' =>  \App\Models\CategorieActe::findByIntitule('DIPLOME')]) }}" aria-expanded="false">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Diplômes</span>
+            </a>
+        </li>
+    </ul>
 
 </nav>

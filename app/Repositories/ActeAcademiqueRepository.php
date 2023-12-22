@@ -43,6 +43,17 @@ class ActeAcademiqueRepository extends BaseRepository
         return ActeAcademique::class;
     }
 
+    public function findByCategorieActe($categorie_id){
+        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
+                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+                        ->where('acte_academiques.categorieActe_id', '=',$categorie_id)
+                        ->select('acte_academiques.*')
+                        ->get();
+
+        return $attestations;
+        
+    }
+
     public function findByEtablissement($institution_id, $categorie_id){
         $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
                 		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')

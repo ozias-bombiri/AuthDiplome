@@ -51,7 +51,7 @@ Parcours
                             <td>{{ $loop->index +1 }}</td>
                             <td>{{ $par->filiere->institution->sigle.' ('.$par->filiere->institution->parent->sigle.')' }}</td>
                             <td>{{ $par->filiere->intitule}}</td>
-                            <td>{{ $par->niveau_etude->intitule }}</td>
+                            <td>{{ $par->niveauEtude->intitule }}</td>
                             <td>{{ $par->intitule }}</td>
                             <td>{{ $par->domaine }} </td>
                             <td> {{ $par->mention }}</td>
@@ -59,9 +59,7 @@ Parcours
 
                             <td>
                                 <form action="{{ route('parcours.destroy',$par->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('parcours.show',$par->id) }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
+                                    
                                     <a class="btn btn-primary" title="Modifier" href="{{ route('parcours.edit',$par->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>

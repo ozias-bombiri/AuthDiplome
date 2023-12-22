@@ -36,8 +36,8 @@ class SignataireController extends Controller
      */
     public function index()
     {
-        $signataires = $this->modelRepository->all();
-        return view('backend.signataires.index', compact(('signataires')));
+        $signataireActes = $this->signataireActeRepository->all();
+        return view('backend.signataires.index', compact(('signataireActes')));
     }
 
     /**
@@ -61,7 +61,7 @@ class SignataireController extends Controller
 
         $signataire = $this->modelRepository->create($input);
         $signataireActe = [];
-        $signataireActe['statut']  = 'active';
+        $signataireActe['statut']  = true;
         $signataireActe['debut']  = $input['debut'];
         $signataireActe['fonction']  = $input['fonction'];
         $signataireActe['mention']  = $input['mention'];

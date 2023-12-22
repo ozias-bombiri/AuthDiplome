@@ -85,7 +85,7 @@ class AttestationDefinitiveController extends Controller
         $attestations = $this->attestationRepository->findByEtablissement($institution->id, $categorie_id);
         // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
 
-        return view("metiers.daoi.list_attestations", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+        return view("metiers.actes.definitives.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
 

@@ -99,7 +99,7 @@ class DiplomeController extends Controller
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByIesr($institution->id);
         $attestations = $this->attestationRepository->findByIesr($institution->id, $categorie_id);
-        return view('metiers.daoi.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+        return view('metiers.actes.diplomes.index', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
     public function filtreAttestation(Request $request)

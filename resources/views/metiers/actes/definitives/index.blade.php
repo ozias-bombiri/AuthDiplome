@@ -96,7 +96,7 @@ Attestations provisoires
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title mb-4">Attestations</h3>
+            <h3 class="box-title mb-4">Attestations Provisoires</h3>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
@@ -115,12 +115,12 @@ Attestations provisoires
                         @foreach ($attestations as $attestation)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td> {{ $attestation->resultat_academique->annee_academique->intitule }}</td>
+                            <td> {{ $attestation->resultatAcademique->procesVerbal->anneeAcademique->intitule }}</td>
                             <td>{{ $attestation->reference }}</td>
                             <td>{{ $attestation->intitule }}</td>
-                            <td>{{ $attestation->resultat_academique->impetrant->identifiant }} </td>
-                            <td>{{ $attestation->resultat_academique->impetrant->nom }} {{ $attestation->resultat_academique->impetrant->prenom }}</td>
-                            <td>{{ $attestation->resultat_academique->parcours->intitule }} ({{ $attestation->resultat_academique->parcours->niveau_etude->intitule }})</td>
+                            <td>{{ $attestation->resultatAcademique->inscription->etudiant->identifiant }} </td>
+                            <td>{{ $attestation->resultatAcademique->inscription->etudiant->nom }} {{ $attestation->resultatAcademique->inscription->etudiant->prenom }}</td>
+                            <td>{{ $attestation->resultatAcademique->procesVerbal->parcours->intitule }} ({{ $attestation->resultatAcademique->procesVerbal->parcours->niveauEtude->intitule }})</td>
                             <td>
                                 <button id="{{ $attestation->id }}" class="btn btn-info view action-btn" title="Détails">
                                     <i class="bi bi-eye-fill"></i>
