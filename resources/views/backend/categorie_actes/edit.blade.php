@@ -29,7 +29,8 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('categorie_actes.store') }}">
+                <form method="post" action="{{ route('categorie_actes.update' ,$categorie->id) }}">
+                    @method('PUT')
                     @csrf
                     
 
