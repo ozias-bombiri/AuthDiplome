@@ -27,8 +27,6 @@ class Timbre extends Model
 	protected $fillable = [
 		'intitule',
 		'type',
-		'ministere',
-		'denomMinistere',
 		'description',
 		'institution_id',
 		'ministere_id'
@@ -36,11 +34,11 @@ class Timbre extends Model
 
 	public function institution()
 	{
-		return $this->belongsTo(Institution::class);
+		return $this->belongsTo(Institution::class, 'institution_id');
 	}
 
 	public function ministere()
 	{
-		return $this->belongsTo(Ministere::class);
+		return $this->belongsTo(Ministere::class, 'ministere_id');
 	}
 }

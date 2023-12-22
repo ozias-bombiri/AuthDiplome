@@ -111,11 +111,11 @@ Route::group(['middleware' => ['auth']], function(){
 //ROUTES POUR LES DIPLOMES
 Route::group(['middleware' => ['auth']], function(){
     Route::get('actes/diplomes', [App\Http\Controllers\Metiers\DiplomeController::class, 'index'])
-    ->name('actes.diplomes.index');
-    
-    
+    ->name('actes.diplomes.index'); 
     
 });
+
+
 //ROUTES POUR LES RESULTATS ACADEMIQUES ET ACTES ACADEMIQUES
 Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
@@ -135,6 +135,13 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.definitives.create');
     Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
     ->name('proces_verbaux.diplomes.create');
+    
+});
+
+//ROUTES POUR LA GENERATION DES PDF
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('actes/provisoires//{id}/generate', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'generer'])
+    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.generer'); 
     
 });
 

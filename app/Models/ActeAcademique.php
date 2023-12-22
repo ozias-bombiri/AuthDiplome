@@ -53,7 +53,7 @@ class ActeAcademique extends Model
 
 	public function documents()
 	{
-		return $this->hasMany(Document::class);
+		return $this->hasMany(Document::class, 'acteAcademique_id');
 	}
 
 	public function resultatAcademique()
