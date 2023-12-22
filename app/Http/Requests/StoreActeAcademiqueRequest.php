@@ -22,16 +22,9 @@ class StoreActeAcademiqueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reference' => 'required|string',
-            'numero' => 'required',
             'lieu' => 'required|string',
             'dateSignature' => 'required',
-            'statutSignature' => 'required',
-            'validite' => 'required',
-            'resultatAcademique_id' => 'required',
-            'signataireActe_id' => 'required',
-            'categorieActe_id' => 'required',
-            'resultatAcademique_id' => 'required',
+            
         ];
     }
 }

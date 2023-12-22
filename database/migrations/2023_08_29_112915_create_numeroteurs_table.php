@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('numeroteurs', function (Blueprint $table) {
             $table->id();
             $table->integer('compteur');
-            $table->string('chaine', 150);    
-            $table->timestamps();
-
+            $table->string('chaine', 150);   
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreignId('categorieActe_id')->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('categorieActe_id')->constrained('categorie_actes')->onDelete('cascade')->onUpdate('cascade');        
+            $table->timestamps();
         });
     }
 

@@ -30,7 +30,7 @@ class Timbre extends Model
 		'ministere',
 		'denomMinistere',
 		'description',
-		'signataire_id',
+		'institution_id',
 		'ministere_id'
 	];
 

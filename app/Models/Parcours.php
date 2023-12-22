@@ -43,7 +43,7 @@ class Parcours extends Model
 		return $this->belongsTo(Filiere::class);
 	}
 
-	public function niveau_etude()
+	public function niveauEtude()
 	{
 		return $this->belongsTo(NiveauEtude::class, 'niveauEtude_id');
 	}

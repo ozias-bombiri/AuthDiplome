@@ -44,20 +44,20 @@ Signataires
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($signataires as $signataire)
+                        @foreach ($signataireActes as $signataireActe)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $signataire->nom }}</td>
-                            <td>{{ $signataire->prenom }}</td>
-                            <td>{{ $signataire->grade }}</td>
-                            <td>{{ $signataire->signataireActes[0]->fonction }}</td>
-                            <td> {{ $signataire->signataireActes[0]->institution->sigle }}</td>
+                            <td>{{ $signataireActe->signataire->nom }}</td>
+                            <td>{{ $signataireActe->signataire->prenom }}</td>
+                            <td>{{ $signataireActe->signataire->grade }}</td>
+                            <td>{{ $signataireActe->fonction }}</td>
+                            <td> {{ $signataireActe->institution->sigle }}</td>
                             <td>
-                                <form action="{{ route('signataires.destroy',$signataire->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('signataires.show',$signataire->id) }}">
+                                <form action="{{ route('signataires.destroy',$signataireActe->id) }}" method="POST">
+                                    <a class="btn btn-info" title="Détails" href="{{ route('signataires.show',$signataireActe->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('signataires.edit',$signataire->id) }}">
+                                    <a class="btn btn-primary" title="Modifier" href="{{ route('signataires.edit',$signataireActe->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 

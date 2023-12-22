@@ -38,16 +38,16 @@ class SignataireActe extends Model
 
 	public function institution()
 	{
-		return $this->belongsTo(Institution::class);
+		return $this->belongsTo(Institution::class, 'institution_id');
 	}
 
 	public function signataire()
 	{
-		return $this->belongsTo(Signataire::class);
+		return $this->belongsTo(Signataire::class, 'signataire_id');
 	}
 
 	public function categorieActe()
 	{
-		return $this->belongsTo(CategorieActe::class);
+		return $this->belongsTo(CategorieActe::class, 'categorieActe_id');
 	}
 }

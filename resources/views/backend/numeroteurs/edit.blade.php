@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Modifier une academique') }}
+{{ __('Modifier un numeroteur') }}
 @endsection
 
 @section('content')
@@ -19,6 +19,7 @@
         @endif
     </div>
 </div>
+
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
@@ -29,35 +30,54 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('annee_academiques.update' ,$annee->id) }}">
+                <form method="post" action="{{ route('numeroteurs.update' ,$numeroteur->id) }}">
                     @method('PUT')
                     @csrf
 
                     <div class="form-group row py-2">
-                        <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
+                        <label for="intitution" class="col-sm-2 col-form-label">Institution</label>
                         <div class="col">
-                            <input type="text" class="form-control form-control" id="intitule" name="intitule" value="{{ $annee->intitule }}" required>
+                            <select class="form-control" id="institution" name="institution_id" required>
+                                <option value="" selected disabled hidden> Choisir </option>
+                                @foreach($institutions as $institution)
+                                    <option value="{{ $institution->id }}" @if ($institution->id == $numeroteur->institution->id) selected @endif> 
+                                        {{ $institution->sigle }} 
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="form-group row py-2">
-                        <label for="debut" class="col-sm-2 col-form-label">Début</label>
+                        <label for="categorie" class="col-sm-2 col-form-label">Catégorie de document</label>
                         <div class="col">
-                            <input type="date" class="form-control" id="debut" name="debut" value="{{ $annee->debut }}" required>
+                            <select class="form-control" id="categorie" name="categorieActe_id" required >
+                                <option value="" selected disabled hidden> Choisir </option>
+                                
+                                @foreach($categories as $categorie)
+                                    <option value="{{ $categorie->id }}" @if ($categorie->id == $numeroteur->categorieActe->id) selected @endif> 
+                                        {{ $categorie->intitule }} 
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
+
                     <div class="form-group row py-2">
-                        <label for="fin" class="col-sm-2 col-form-label">Fin</label>
+                        <label for="chaine" class="col-sm-2 col-form-label">Chaine d'identification</label>
                         <div class="col">
-                            <input type="date" class="form-control form-control" id="fin" name="fin" value="{{ $annee->fin }}" required>
+                            <input type="texte" class="form-control form-control" id="chaine" name="chaine" value="{{ $numeroteur->chaine }}" required>
                         </div>
                     </div>
+
+                   
+                    
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('annee_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('numeroteurs.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>
@@ -65,7 +85,7 @@
             </div>
         </div>
     </div>
-</div>8
+</div>
 
 @endsection
 

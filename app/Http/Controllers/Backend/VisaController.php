@@ -6,23 +6,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreVisaRequest;
 use App\Http\Requests\UpdateVisaRequest;
+use App\Repositories\VisaInstitutionRepository;
 use App\Repositories\VisaRepository;
 
 class VisaController extends Controller
 {
     protected $modelRepository ;
+    protected $visaInstitutionRepository ;
 
-    public function __construct(VisaRepository $visaRepo)
+    public function __construct(VisaRepository $visaRepo, VisaInstitutionRepository $visaInstituionRepo)
     {
         $this->modelRepository = $visaRepo;
+        $this->visaInstitutionRepository = $visaInstituionRepo;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $visas = $this->modelRepository->all();
-        return view('backend.visas.index', compact('visas'));
+        $visaInstitutions = $this->visaInstitutionRepository->all();
+        return view('backend.visa_institutions.index', compact('visaInstitutions'));
     }
 
     /**

@@ -37,6 +37,16 @@
                                 <input type="text" class="form-control" id="intitule" name="intitule" placeholder="..." required />
                             </div>
                         </div>
+
+                        <div class="form-group row py-2">
+                            <label for="type" class="col-sm-2 col-form-label">Type</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="type" name="type"  required>
+                            </div>
+                        </div>
+
+
+
                         <div class="form-group row py-2">
                             <label for="ministere" class="col-sm-2 col-form-label">ministere</label>
                             <div class="col">
@@ -49,31 +59,22 @@
                             </div>
                         </div>
                         <div class="form-group row py-2">
-                            <label for="signataire" class="col-sm-2 col-form-label">Signataire</label>
+                            <label for="institution" class="col-sm-2 col-form-label">Institution</label>
                             <div class="col">
-                                <select  class="form-control" id="signataire" name="signataire_id" required>
+                                <select  class="form-control" id="institution" name="institution_id" required>
                                     <option value="" selected hidden disabled>Choisir</option> 
-                                    @foreach( $signataires as $signataire)
-                                        <option value="{{ $signataire->id}}">{{ $signataire->nom.' '.$signataire->prenom }}</option>                                    
+                                    @foreach( $institutions as $institution)
+                                        <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>                                    
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group row py-2">
-                            <label for="type" class="col-sm-2 col-form-label">type</label>
-                            <div class="col">
-                                <select  class="form-control" id="type" name="type" required>
-                                    <option value="" selected hidden disabled>Choisir</option>                                    
-                                    <option value="etablissement">Etablissement</option>                                    
-                                    <option value="iesr">IESR</option>
-                                </select>
-                            </div>
-                        </div>
+                       
                         <div class="form-group row py-2">
                             <label for="description" class="col-sm-2 col-form-label">Description</label>
                             <div class="col">
-                                <textarea class="form-control" id="description" name="description" rows="2" cols="50" placeholder="..." required></textarea>
+                                <textarea class="form-control" id="description" name="description" rows="2" cols="50"></textarea>
                             </div>
                         </div>
                        

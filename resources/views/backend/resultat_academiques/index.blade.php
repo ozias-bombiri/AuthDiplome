@@ -26,8 +26,9 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <h3 class="box-title">{{ __('Résultats académiques') }} @if(isset($procesVerbal)) {{ $procesVerbal->reference }} @endif</h3>
-            <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create', $procesVerbal->id) }}"> Ajouter </a>
+            <div class="col-4 offset-8 mb-5">
+                <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create', $procesVerbal->id) }}"> Saisie individuelle </a>
+                <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create2', $procesVerbal->id) }}"> Saisie groupée </a>
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
@@ -54,13 +55,14 @@
 
                             <td>
                                 <form action="{{ route('resultat_academiques.destroy',$resultat->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('resultat_academiques.show',$resultat->id) }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('resultat_academiques.edit',$resultat->id) }}">
+                                    
+                                    <a class="btn btn-primary" title="corriger la moyenne" href="{{ route('resultat_academiques.edit',$resultat->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-
+                                    <a class="btn btn-primary" title="Etablir une attestation provisoire" href="{{ route('proces_verbaux.provisoires.create',$resultat->id) }}">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    
                                     @csrf
                                     @method('DELETE')
 

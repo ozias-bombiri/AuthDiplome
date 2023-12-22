@@ -24,7 +24,6 @@ class UpdateParcoursRequest extends FormRequest
         return [
             'code'=> 'required|string',
             'intitule' => 'required|string',
-            'soutenance'  => 'required',
             'domaine'  => 'required|string',
             'mention'  => 'required|string',
             'specialite'  => 'required|string',
