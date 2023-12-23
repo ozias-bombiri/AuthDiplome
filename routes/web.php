@@ -99,6 +99,19 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
     ->name('proces_verbaux.resultats.create');
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
+<<<<<<< Updated upstream
+=======
+    ->name('proces_verbaux.resultats.store'); 
+    Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store2'])
+    ->name('proces_verbaux.resultats.store2'); 
+    
+    Route::get('resultats/{resultat_id}/definitives/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive'])
+    ->name('proces_verbaux.definitives.create');
+    Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
+    ->name('proces_verbaux.diplomes.create');
+    
+});
+>>>>>>> Stashed changes
 
     ->name('proces_verbaux.resultats.store');
     

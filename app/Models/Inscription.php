@@ -48,4 +48,18 @@ class Inscription extends Model
 	{
 		return $this->belongsTo(Etudiant::class);
 	}
+
+	public function moyenne($inscription_id)
+	{
+		
+		$data = ResultatAcademique::where('inscription_id', $inscription_id)->get()->first();
+
+		if($data != null){
+			$resultat = $data->moyenne;
+		}else{
+			$resultat = "";
+		}
+
+		return $resultat;
+	}
 }

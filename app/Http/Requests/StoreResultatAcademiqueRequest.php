@@ -23,7 +23,7 @@ class StoreResultatAcademiqueRequest extends FormRequest
     {
         return [
             'moyenne' => 'required',
-            'inscription_id' => 'required',            
+            //'inscription_id' => 'required',            
         ];
     }
 }
