@@ -23,10 +23,9 @@ class UpdateTimbreRequest extends FormRequest
     {
         return [
             'intitule' => 'required|string',
-            'ministere' => 'required|string',
-            'denomMinistere' => 'required|string',
-            'description' => 'required|string',
-            'institution_id' => 'required'
+            'type' => 'required|string',
+            'ministere_id' => 'required|string',
+            'institution_id' => 'required|string',
         ];
     }
 }

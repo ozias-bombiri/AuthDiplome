@@ -74,6 +74,18 @@
                                         </tr>
 
                                         {{ $index++ }}
+                                        @else
+                                            <tr hidden>
+                                                <td style=" width:5%">{{($index)}}</td>
+                                                <td style=" width:20%">{{ $inscription->etudiant->identifiant}}</td>
+                                                <td>{{ $inscription->etudiant->nom.' '.$inscription->etudiant->prenom}}</td>
+                                                <td style="text-align: center; width:10%">
+                                                    <input type="number" class="form-control form-control" 
+                                                    id="{{ 'moyenne'.$inscription->id }}" name="moyenne[{{$inscription->id}}]" 
+                                                    value="{{$inscription->moyenne($inscription->id)}}"
+                                                    step="0.01" max="20" min="0">       
+                                                </td>
+                                            </tr>
                                         @endif
                                     
                                     @endforeach

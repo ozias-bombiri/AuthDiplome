@@ -72,7 +72,7 @@ Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutio
 Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::class);
 //Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
 
-
+//ROUTES POUR LES PARCOURS DE FORMATIONS
 Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/inscriptions', [App\Http\Controllers\Backend\InscriptionController::class, 'index'])
     ->name('parcours.inscriptions.index');
@@ -92,15 +92,42 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('parcours.proces_verbaux.index');    
     
 });
+//ROUTES POUR ATTESTATIONS PROVISOIRES
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('actes/provisoire', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'index'])
+    ->name('actes.provisoires.index');    
+    
+    
+});
 
+//ROUTES POUR LES ATTESTATION DEFINITIVES
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('actes/definitive', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'index'])
+    ->name('actes.definitives.index');
+    
+});
+
+//ROUTES POUR LES DIPLOMES
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('actes/diplomes', [App\Http\Controllers\Metiers\DiplomeController::class, 'index'])
+    ->name('actes.diplomes.index'); 
+    
+});
+
+
+//ROUTES POUR LES RESULTATS ACADEMIQUES ET ACTES ACADEMIQUES
 Route::group(['middleware' => ['auth']], function(){
     Route::get('parcours/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
     ->name('proces_verbaux.resultats.index');
     Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
     ->name('proces_verbaux.resultats.create');
+    Route::get('parcours/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create2'])
+    ->name('proces_verbaux.resultats.create2');
+    Route::get('resultats/{resultat_id}/provisoires/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire1'])
+    ->name('proces_verbaux.provisoires.create');
+    Route::get('proces_verbaux/{id}/provisoires/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire2'])
+    ->name('proces_verbaux.provisoires.create2');
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
-<<<<<<< Updated upstream
-=======
     ->name('proces_verbaux.resultats.store'); 
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store2'])
     ->name('proces_verbaux.resultats.store2'); 
@@ -111,13 +138,11 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.diplomes.create');
     
 });
->>>>>>> Stashed changes
 
-    ->name('proces_verbaux.resultats.store');
-    
-    //Les attestions et diplomes
-    Route::get('actes/provisoire', [AttestationProvisoireController::class, 'index'])
-    ->name('attestion.provisoire.index');  
+//ROUTES POUR LA GENERATION DES PDF
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('actes/provisoires//{id}/generate', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'generer'])
+    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.generer'); 
     
 });
 
@@ -189,7 +214,8 @@ Route::get('authentification/details/{categorie}/{id}', [App\Http\Controllers\Me
 
 
 //ROUTES FOR DAOI PROFILE
-Route::group(['middleware' =>['auth', 'role:daoi']], function(){
+//Route::group(['middleware' =>['auth', 'role:daoi']], function(){
+Route::group(['middleware' =>['auth']], function(){
     Route::get('etablissements/{institution_id}', [App\Http\Controllers\Daoi\EtablissementController::class, 'listEtablissement'])
     ->where('institution_id', '[0-9]+')->name('metiers.daoi.etablissement-list');
     Route::post('etablissements/create', [App\Http\Controllers\Daoi\EtablissementController::class, 'storeEtablissement'])
@@ -223,8 +249,9 @@ Route::group(['middleware' =>['auth', 'role:daoi']], function(){
     Route::get('d/definitives/niveaux/{id}', [App\Http\Controllers\Daoi\AttestationController::class, 'filtreNiveau'])
     ->where('id', '[0-9]+')->name('metiers.daoi.attestation-niveaux');
     
-    Route::get('d/definitives/list/{institution_id}', [App\Http\Controllers\Daoi\AttestationController::class, 'listAttestation'])
-    ->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
+    Route::get('d/definitives/list', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'index'])
+    //->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
+    ->name('metiers.daoi.attestationdef-list');
     Route::get('d/definitives/add/{institution_id}/{etudiant_id}', [App\Http\Controllers\Daoi\AttestationController::class, 'addAttestation'])
     ->where('institution_id', '[0-9]+')->where('etudiant_id', '[0-9]+')->name('metiers.daoi.attestationdef-add');
     Route::post('d/definitives/store', [App\Http\Controllers\Daoi\AttestationController::class, 'storeAttestation'])
@@ -235,6 +262,10 @@ Route::group(['middleware' =>['auth', 'role:daoi']], function(){
     ->where('id', '[0-9]+')->name('metiers.daoi.attestationdef-pdf');
     Route::post('d/definitives/filtre/', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'filtreAttestation'])
     ->name('metiers.daoi.attestationdef-filtre');
+
+    Route::get('d/diplomes/list', [App\Http\Controllers\Metiers\DiplomeController::class, 'index'])
+    //->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
+    ->name('metiers.daoi.diplomes-list');
     
 
 });

@@ -5,6 +5,7 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Yajra\DataTables\Html\Builder;
 use Carbon\Carbon ;
+use Illuminate\Support\Facades\Schema;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,5 +24,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //Builder::useVite();
         Carbon::setLocale(config('app.locale'));
+        Schema::defaultStringLength(500);
     }
 }

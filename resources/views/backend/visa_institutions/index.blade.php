@@ -25,7 +25,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Résultats académiques') }} </h3>
+            <h3 class="box-title">{{ __('Visa institution') }} </h3>
             <div class="col-2 offset-10 mb-5">
                 <a class="btn btn-success" href="{{ route('visa_institutions.create') }}"> Ajouter </a>
             </div>
@@ -40,12 +40,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($visa_institutions as $visa_institution)
+                        @foreach ($visaInstitutions as $visaInstitution)
                         <tr>  
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $visa_institution->categorieActe->intitule }}</td>
-                            <td>{{ $visa_institution->institution->sigle }}</td>
-                            <td>{{ $visa_institution->intitule }}</td>
+                            <td>{{ $visaInstitution->categorieActe->intitule }}</td>
+                            <td>{{ $visaInstitution->institution->sigle }}</td>
+                            <td>{{ $visaInstitution->intitule }}</td>
 
                             
                             <td>

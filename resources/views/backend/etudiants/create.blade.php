@@ -23,13 +23,13 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Ajouter un impétrant') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Ajouter un étudiant') }}</h3>
                 <div class="">
 
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('impetrants.store') }}">
+                <form method="post" action="{{ route('etudiants.store') }}">
                     @csrf
                     <div class="form-group row py-2">
                         <label for="identifiant" class="col-sm-2 col-form-label">Identifiant</label>
@@ -101,7 +101,7 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('impetrants.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('etudiants.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
                     </div>
                 </form>

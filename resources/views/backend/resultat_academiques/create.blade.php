@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Ajouter un résultat académique') }}
+{{ __('Saisir un résultat académique') }}
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Ajouter un résultat académique') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Saisir un résultat académique') }}</h3>
                 <div class="">
 
                 </div>

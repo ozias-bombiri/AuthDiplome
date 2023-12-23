@@ -43,10 +43,10 @@ class ActeAcademiqueRepository extends BaseRepository
         return ActeAcademique::class;
     }
 
-    public function findByEtablissement($institution_id){
+    public function findByCategorieActe($categorie_id){
         $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
                 		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
-                        ->where('institutions.id', '=', $institution_id)
+                        ->where('acte_academiques.categorieActe_id', '=',$categorie_id)
                         ->select('acte_academiques.*')
                         ->get();
 
@@ -54,13 +54,24 @@ class ActeAcademiqueRepository extends BaseRepository
         
     }
 
-    public function findByIesr($iesr_id){
-        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
-                		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
-                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
-                        ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
-                        ->where('institution.parent_id', '=', $iesr_id)
-                        ->select('actes_academiques.*')
+    public function findByEtablissement($institution_id, $categorie_id){
+        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
+                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+                        ->where('institutions.id', '=', $institution_id)
+                        ->where('acte_academiques.categorieActe_id', '=',$categorie_id)
+                        ->select('acte_academiques.*')
+                        ->get();
+
+        return $attestations;
+        
+    }
+
+    public function findByIesr($iesr_id, $categorie_id){
+        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
+                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+                        ->where('institutions.id', '=', $iesr_id)
+                        ->where('acte_academiques.categorieActe_id', '=',$categorie_id)                        
+                        ->select('acte_academiques.*')
                         ->get();
 
         return $attestations;
@@ -71,7 +82,7 @@ class ActeAcademiqueRepository extends BaseRepository
         $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
                 		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
                         ->where('parcours.niveauEtude_id', '=', $niveau)
-                        ->select('actes_academiques.*')
+                        ->select('acte_academiques.*')
                         ->get();
 
         return $attestations;
@@ -84,7 +95,7 @@ class ActeAcademiqueRepository extends BaseRepository
                         ->where('parcours.niveauEtude_id', '=', $niveau)
                         ->where('parcours.id', '=', $parcours)
                         ->where('resultat_academiques.anneeAcademique_id', '=', $annee)
-                        ->select('actes_academiques.*')
+                        ->select('acte_academiques.*')
                         ->get();
 
         return $attestations;

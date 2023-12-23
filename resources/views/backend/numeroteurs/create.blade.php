@@ -45,12 +45,12 @@
                     <div class="form-group row py-2">
                         <label for="categorie" class="col-sm-2 col-form-label">Catégorie de document</label>
                         <div class="col">
-                            <select class="form-control" id="categorie" name="categorie" required >
+                            <select class="form-control" id="categorie" name="categorieActe_id" required >
                                 <option value="" selected disabled hidden> Choisir </option>
-                                <option value="provisoire" > Attestation provisoire </option>
-                                <option value="definitive" > Attestation définitive </option>
-                                <option value="diplome" > Diplôme </option>
                                 
+                                @foreach($categories as $categorie)
+                                    <option value="{{ $categorie->id }}" > {{ $categorie->intitule }} </option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('annee_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('numeroteurs.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

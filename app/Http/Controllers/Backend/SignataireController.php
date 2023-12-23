@@ -18,8 +18,8 @@ class SignataireController extends Controller
     private $institutionRepository;
     private $categorieActeRepository ;
     private $signataireActeRepository;
-
-    public function __construct(SignataireRepository $signataireRepo, 
+   
+     public function __construct(SignataireRepository $signataireRepo, 
                         InstitutionRepository $institutionRepo, 
                         CategorieActeRepository $categorieActeRepo,
                         SignataireActeRepository $signataireActeRepo)
@@ -28,14 +28,16 @@ class SignataireController extends Controller
         $this->institutionRepository = $institutionRepo;
         $this->categorieActeRepository = $categorieActeRepo;
         $this->signataireActeRepository = $signataireActeRepo ;
+        $this->categorieActeRepository = $categorieActeRepo;
+        $this->signataireActeRepository = $signataireActeRepo ;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $signataires = $this->modelRepository->all();
-        return view('backend.signataires.index', compact(('signataires')));
+        $signataireActes = $this->signataireActeRepository->all();
+        return view('backend.signataires.index', compact(('signataireActes')));
     }
 
     /**
@@ -44,7 +46,9 @@ class SignataireController extends Controller
     public function create()
     {
         $categories = $this->categorieActeRepository->all();
+        $categories = $this->categorieActeRepository->all();
         $institutions = $this->institutionRepository->all();
+        return view('backend.signataires.create', compact('institutions', 'categories')) ;
         return view('backend.signataires.create', compact('institutions', 'categories')) ;
     }
 
@@ -57,7 +61,7 @@ class SignataireController extends Controller
 
         $signataire = $this->modelRepository->create($input);
         $signataireActe = [];
-        $signataireActe['statut']  = 'active';
+        $signataireActe['statut']  = true;
         $signataireActe['debut']  = $input['debut'];
         $signataireActe['fonction']  = $input['fonction'];
         $signataireActe['mention']  = $input['mention'];

@@ -30,4 +30,15 @@ class CategorieActe extends Model
 	{
 		return $this->hasMany(ActeAcademique::class);
 	}
+
+	public static function findByIntitule($intitule){
+        $categorie = CategorieActe::where('intitule', 'like', '%'.$intitule.'%')->first();
+
+		if($categorie !=null) {
+			return $categorie->id;
+		}
+		else {
+			return 1;
+		}
+    }
 }

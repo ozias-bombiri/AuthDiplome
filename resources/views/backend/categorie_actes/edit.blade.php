@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Modifier un résultat académique') }}
+{{ __('Modifier une catégorie d\'acte') }}
 @endsection
 
 @section('content')
@@ -23,104 +23,58 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Modifier un résultat académique') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Modifier une catégorie d\'acte') }}</h3>
                 <div class="">
 
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('resultat_academiques.store') }}">
+                <form method="post" action="{{ route('categorie_actes.store') }}">
                     @csrf
+                    
+
                     <div class="form-group row py-2">
-                        <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
+                        <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>
                         <div class="col">
-                            <select class="form-control" id="etablissement" name="etudiant_id" required>
-                                @foreach( $etudiants as $etudiant)
-                                <option value="{{ $etudiant->id}}">{{ $etudiant->sigle }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control form-control" id="intitule" name="intitule" value="{{ $categorie->intitule }}" required>
+                        </div>
+                    </div>
+                    
+
+                    <div class="form-group row py-2">
+                        <label for="nombreCopies" class="col-sm-2 col-form-label">Nombre de copies</label>
+                        <div class="col">
+                            <input type="number" class="form-control form-control" id="nombreCopies" name="nombreCopies" value="{{ $categorie->nombreCopies }}" required>
+                        </div>
+                    </div>
+                    
+
+                    
+
+                    <div class="form-group row py-2">
+                        <label for="visas" class="col-sm-2 col-form-label">Visas</label>
+                        <div class="col">
+                            <input type="radio" value="1" id="visas" name="visas"> Oui <br>
+                            <input type="radio" value="0" id="visas" name="visas"> Non
                         </div>
                     </div>
 
+                   
                     <div class="form-group row py-2">
-                        <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="parcours_id" required>
-                                @foreach( $parcours as $parcour)
-                                <option value="{{ $parcour->id}}">{{ $parcour->intitule }}</option>
-                                @endforeach
-                            </select>
+                            <textarea class="form-control" id="description" name="description" required> {{ $categorie->description }}</textarea>
                         </div>
                     </div>
 
-                    <div class="form-group row py-2">
-                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Parcours</label>
-                        <div class="col">
-                            <select class="form-control" id="parcour" name="anneeAcademique_id" required>
-                                @foreach( $anneeAcademiques as $anneeAcademique)
-                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->sigle }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="soutenance" class="col-sm-2 col-form-label">Soutenu</label>
-                        <div class="col">
-                            <input type="radio" value="1" id="soutenance" name="soutenance"> Oui <br>
-                            <input type="radio" value="0" id="soutenance" name="soutenance"> Non
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="dateSignaure" class="col-sm-2 col-form-label">Date de signature</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSignaure" name="dateSignaure" placeholder="..." required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="moyenne" class="col-sm-2 col-form-label">La moyenne</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" placeholder="..." required>
-                        </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="cote" class="col-sm-2 col-form-label">Cote</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="cote" name="cote" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="session" class="col-sm-2 col-form-label">La session</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="session" name="session" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="dateSoutenance" class="col-sm-2 col-form-label">Date de soutenance</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" required>
-                        </div>
-                    </div>
+                    
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('resultat_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('categorie_actes.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

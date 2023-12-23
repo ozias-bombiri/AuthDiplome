@@ -53,4 +53,26 @@ class SignataireActeRepository extends BaseRepository
 
         return $signatairesActes;
     }
+
+    public function findByInstitutionAndStatut($institution_id, $statut)
+    {
+        $signatairesActes = SignataireActe::join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+        ->where('institutions.id', $institution_id)
+        ->where('signataires_actes.statut', $statut)
+        ->select('signataires_actes.*')
+        ->get();
+
+        return $signatairesActes;
+    }
+
+    public function findByActiveInstitution($institution_id)
+    {
+        $signatairesActe = SignataireActe::join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+        ->where('institutions.id', $institution_id)
+        ->where('signataires_actes.statut', 1)
+        ->select('signataires_actes.*')
+        ->first();
+
+        return $signatairesActe;
+    }
 }

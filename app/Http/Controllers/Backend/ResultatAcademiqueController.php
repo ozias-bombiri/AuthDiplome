@@ -58,6 +58,17 @@ class ResultatAcademiqueController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create2($id)
+    {
+        $procesVerbal = $this->procesVervalRepository->find($id);
+        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);
+        $anneeAcademiques = $this->anneeAcademiqueRepository->all();
+        return view('backend.resultat_academiques.create2', compact('inscriptions', 'procesVerbal', 'anneeAcademiques')) ;
+    }
+
+    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreResultatAcademiqueRequest $request, $id)
@@ -100,7 +111,9 @@ class ResultatAcademiqueController extends Controller
             if ($resul != null){
                 ResultatAcademique::where('id',$resul->id)->update($data);
             }else{
-                ResultatAcademique::create($data);
+                if($moyenne[$inscription->id] != null){
+                    ResultatAcademique::create($data);
+                }    
             }
         }
         

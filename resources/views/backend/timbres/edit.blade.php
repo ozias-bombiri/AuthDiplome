@@ -32,41 +32,57 @@
             <form method="post" action="{{ route('timbres.update', $timbre->id) }}">
                         @method('PUT')
                         @csrf
+
                         <div class="form-group row py-2">
-                            <label for="institution" class="col-sm-2 col-form-label">Institution</label>
+                            <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
                             <div class="col">
-                                <select  class="form-control" id="institution" name="institution_id" required>
-                                    @foreach( $institutions as $institution)
-                                        <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>                                    
+                                <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $timbre->intitule }}" required />
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="type" class="col-sm-2 col-form-label">Type</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="type" name="type" value="{{ $timbre->type }}"  required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="ministere" class="col-sm-2 col-form-label">ministere</label>
+                            <div class="col">
+                                <select  class="form-control" id="ministere" name="ministere_id" required>
+                                    <option value="" selected hidden disabled>Choisir</option>  
+                                    @foreach( $ministeres as $ministere)
+                                        <option value="{{ $ministere->id}}"  @if ($ministere->id == $timbre->ministere->id) selected @endif>
+                                            {{ $ministere->sigle }}
+                                        </option>                                    
                                     @endforeach
                                 </select>
                             </div>
                         </div>
 
-                        <div class="form-group row py-2">
-                            <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>
-                            <div class="col">
-                                <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $timbre->intitule }}"  required>
-                            </div>
-                        </div>
 
                         <div class="form-group row py-2">
-                            <label for="ministere" class="col-sm-2 col-form-label">Ministere</label>
+                            <label for="institution" class="col-sm-2 col-form-label">Institution</label>
                             <div class="col">
-                                <input type="text" class="form-control" id="ministere" name="ministere" value="{{ $timbre->ministere }}" required>
+                                <select  class="form-control" id="institution" name="institution_id" required>
+                                    @foreach( $institutions as $institution)
+                                        <option value="{{ $institution->id}}" @if ($institution->id == $timbre->institution->id) selected @endif>
+                                            {{ $institution->sigle }}
+                                        </option>                                    
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
-                        <div class="form-group row py-2">
-                            <label for="denomMinistere" class="col-sm-2 col-form-label">Denomination du Ministere</label>
-                            <div class="col">
-                                <input type="text" class="form-control form-control" id="denomMinistere" name="denomMinistere" value="{{ $timbre->denomMinistere }}" required>
-                            </div>
-                        </div>
+      
+
+                       
+                       
                         
                         <div class="form-group row py-2">
                             <label for="description" class="col-sm-2 col-form-label">Description</label>
                             <div class="col">
-                                <textarea class="form-control" id="description" name="description" rows="4" cols="50" value="{{ $timbre->description }}" required></textarea>
+                                <textarea class="form-control" id="description" name="description" rows="4" cols="50" value="" required>{{ $timbre->description }}</textarea>
                             </div>
                         </div>
                        
