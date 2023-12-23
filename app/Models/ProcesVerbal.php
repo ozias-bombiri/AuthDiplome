@@ -54,11 +54,14 @@ class ProcesVerbal extends Model
 		return $this->hasMany(ResultatAcademique::class);
 	}
 
-	public function actesProvisoiresEnregistres($procesVerbal_id)
+	public function actesEnregistres($procesVerbal_id, $intitule)
 	{
+		$categorieActe = CategorieActe::where('intitule', 'like', '%'.$intitule.'%')->first() ;
+
 		$actes = ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
 					->join('acte_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
 					->where('proces_verbaux.id', $procesVerbal_id)
+					->where('acte_academiques.categorieActe_id', $categorieActe->id)
 					->select('acte_academiques.*')
 					->get();
 		if ($actes->isEmpty()) return false ;

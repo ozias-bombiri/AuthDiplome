@@ -74,15 +74,16 @@
                                                 <i class="bi bi-card-list"></i>
                                             </a>
 
-                                            <a class="{{ $proces_verbal->actesProvisoiresEnregistres($proces_verbal->id) ? 'btn btn-secondary' : 'btn btn-warning' }}"
+                                            <a class="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "PROVISOIRE") ? 'btn btn-secondary' : 'btn btn-warning' }}"
                                                 title="Etablir des attestations provisoires"
-                                                href="{{ $proces_verbal->actesProvisoiresEnregistres($proces_verbal->id) ? '#' : route('proces_verbaux.provisoires.create2', $proces_verbal->id) }}">
+                                                href="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "PROVISOIRE") ? '#' : route('proces_verbaux.provisoires.create2', $proces_verbal->id) }}">
                                                 <i class="bi bi-clipboard-minus-fill"></i>
                                             </a>
 
-                                            <a class="btn btn-primary }}" title="Etablir des attestations définitives"
-                                                href="{{ route('proces_verbaux.definitives.create2', $proces_verbal->id) }}">
-                                                <i class="bi bi-clipboard-minus-fill"></i>
+                                            <a class="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "DEFINITIVE") ? 'btn btn-secondary' : 'btn btn-warning' }}"
+                                                title="Etablir des attestations définitives"
+                                                href="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "DEFINITIVE") ? '#' : route('proces_verbaux.definitives.create2', $proces_verbal->id) }}">
+                                                <i class="bi bi-clipboard-plus-fill"></i>
                                             </a>
 
                                             @csrf

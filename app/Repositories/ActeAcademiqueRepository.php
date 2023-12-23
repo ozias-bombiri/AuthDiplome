@@ -114,7 +114,7 @@ class ActeAcademiqueRepository extends BaseRepository
 		$actesProvisoires = ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
 					->join('acte_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
 					->where('proces_verbaux.id', $procesVerbal_id)
-                    ->where('acte_academiques.id', $categorieActe_id)
+                    ->where('acte_academiques.categorieActe_id', $categorieActe_id)
 					->select('acte_academiques.*')
 					->get();
 		

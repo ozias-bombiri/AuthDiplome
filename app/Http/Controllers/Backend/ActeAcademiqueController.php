@@ -54,9 +54,6 @@ class ActeAcademiqueController extends Controller
     /**Etablir plusieurs attestations en un coup */
     public function provisoire2($procesVerbal_id)
     {
-
-       //dd($procesVerbal_id);
-
         $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
 
         $reponse = "Aucun résultat académique associé à ce PV" ;
@@ -92,13 +89,13 @@ class ActeAcademiqueController extends Controller
     public function definitive2($procesVerbal_id)
     {
 
-       //dd($procesVerbal_id);
-
         $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
+
+        $categorieActeProvisoire = $this->categorieRepository->findByIntitule("PROVISOIRE");
 
         $categorieActe = $this->categorieRepository->findByIntitule("DEFINITIVE");
 
-        $actesProvisoires = $this->modelRepository->findByPvCategorie($procesVerbal_id, $categorieActe->id);
+        $actesProvisoires = $this->modelRepository->findByPvCategorie($procesVerbal_id, $categorieActeProvisoire->id);
 
         $reponse = "Aucun résultat académique associé à ce PV" ;
 
