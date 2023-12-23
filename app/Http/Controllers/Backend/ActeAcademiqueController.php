@@ -89,6 +89,36 @@ class ActeAcademiqueController extends Controller
     
     }
 
+    public function definitive2($procesVerbal_id)
+    {
+
+       //dd($procesVerbal_id);
+
+        $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
+
+        $categorieActe = $this->categorieRepository->findByIntitule("DEFINITIVE");
+
+        $actesProvisoires = $this->modelRepository->findByPvCategorie($procesVerbal_id, $categorieActe->id);
+
+        $reponse = "Aucun résultat académique associé à ce PV" ;
+
+        if ($resultats->isEmpty()) return back()->with('reponse', $reponse); 
+
+        if ($actesProvisoires->isEmpty()){
+            $reponse = "Les actes provisoires du PV choisi n'ont pas encore été crées";
+            return back()->with('reponse', $reponse); 
+        }
+      
+        $institution = $resultats->first()->procesVerbal->parcours->filiere->institution;
+        
+        $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id); 
+
+        $pv = ProcesVerbal::find($procesVerbal_id) ;
+        
+        return view('backend.acte_academiques.create3', compact('categorieActe', 'signataireActe', 'procesVerbal_id', 'pv'));
+    
+    }
+
     /**Etablir un diplome */
     public function diplome($resultat_id)
     {
@@ -175,7 +205,7 @@ class ActeAcademiqueController extends Controller
             $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
             $numeroteur->compteur +=1;
             $input_acte = [];
-            $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant;
+            $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant.'_'.$categorieActe->id ;$resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant;
             $input_acte['numero'] = $numeroteur->compteur;
             $input_acte['dateSignature'] = $input['dateSignature'];
             $input_acte['statutSignaure'] = false;

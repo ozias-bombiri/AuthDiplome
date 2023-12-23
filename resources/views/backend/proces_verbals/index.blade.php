@@ -80,6 +80,11 @@
                                                 <i class="bi bi-clipboard-minus-fill"></i>
                                             </a>
 
+                                            <a class="btn btn-primary }}" title="Etablir des attestations définitives"
+                                                href="{{ route('proces_verbaux.definitives.create2', $proces_verbal->id) }}">
+                                                <i class="bi bi-clipboard-minus-fill"></i>
+                                            </a>
+
                                             @csrf
                                             @method('DELETE')
 

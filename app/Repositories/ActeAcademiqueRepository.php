@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ActeAcademique;
+use App\Models\ResultatAcademique;
 use App\Repositories\BaseRepository;
 
 /**
@@ -107,4 +108,17 @@ class ActeAcademiqueRepository extends BaseRepository
                         ->first();
         return $attestation;
     }
+
+    public function findByPvCategorie($procesVerbal_id, $categorieActe_id)
+	{
+		$actesProvisoires = ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+					->join('acte_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
+					->where('proces_verbaux.id', $procesVerbal_id)
+                    ->where('acte_academiques.id', $categorieActe_id)
+					->select('acte_academiques.*')
+					->get();
+		
+		return $actesProvisoires ;
+	
+	}
 }
