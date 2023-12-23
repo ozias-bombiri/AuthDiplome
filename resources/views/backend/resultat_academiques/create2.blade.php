@@ -73,7 +73,9 @@
                                             </td>
                                         </tr>
 
-                                        {{ $index++ }}
+                                            @php
+                                                $index++
+                                            @endphp
                                         @else
                                             <tr hidden>
                                                 <td style=" width:5%">{{($index)}}</td>
