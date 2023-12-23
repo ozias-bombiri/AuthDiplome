@@ -31,19 +31,7 @@
             <div class="">
                 <form method="post" action="{{ route('visa_institutions.store') }}">
                     @csrf
-
-
-                    <div class="form-group row py-2">
-                        <label for="categorie" class="col-sm-2 col-form-label">Categorie acte</label>
-                        <div class="col">
-                            <select class="form-control" id="categorieActe_id" name="categorieActe_id" required>
-                                @foreach( $categories as $categorie)
-                                <option value="{{ $categorie->id}}">{{ $categorie->intitule }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
+                    <input type="hidden" id="categorie" name="categorieActe_id"  value="{{ $categorieActe->id }}">
                     <div class="form-group row py-2">
                         <label for="institution" class="col-sm-2 col-form-label">Institution </label>
                         <div class="col">
@@ -54,6 +42,12 @@
                             </select>
                         </div>
                     </div>
+                    <div class="form-group row py-2">
+                        <label for="categorie" class="col-sm-2 col-form-label">Categorie acte</label>
+                        <div class="col">
+                            <input type="text" class="form-control form-control" id="categorie" name="categorie" value="{{ $categorieActe->intitule }}" disabled>
+                        </div>
+                    </div>                    
 
                     <div class="form-group row py-2">
                         <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>

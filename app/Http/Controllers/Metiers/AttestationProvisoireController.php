@@ -95,7 +95,10 @@ class AttestationProvisoireController extends Controller
 
         $attestation = $this->attestationRepository->find($acte_id);        
         $document_path = null;
-        if(empty($attestation->documents)) {
+        if(isset($attestation->documents) && count($attestation->documents) >0) {
+            $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
+        }
+        else {
             $institution = $attestation->signataireActe->institution;
             $etudiant = $attestation->resultatAcademique->inscription->etudiant;
             $parcours = $attestation->resultatAcademique->procesVerbal->parcours;
@@ -105,9 +108,6 @@ class AttestationProvisoireController extends Controller
 
             $document_path = $this->pdfCreator->createAttestationProvisoire($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
         
-        }
-        else {
-            $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
         }
         
         return Response::make(file_get_contents(public_path($document_path)), 200, [
