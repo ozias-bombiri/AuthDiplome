@@ -15,13 +15,16 @@ return new class extends Migration
             $table->id();
             $table->string('nomFichierPdf', 150)->nullable();
             $table->string('reference', 50);
+            $table->string('intitule', 150);
             $table->string('session');
             $table->date('dateDeliberation');
+            $table->enum('type', ['EXAMEN', 'SOUTENANCE', 'AUTRE']);
             $table->integer('nombreEtudiants')->nullable();
             $table->string('description');
             $table->foreignId('parcours_id')->constrained('parcours')->onDelete('cascade')->onUpdate('cascade'); 
             $table->foreignId('anneeAcademique_id')->constrained('annee_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
+            $table->unique(['parcours_id', 'anneeAcademique_id', 'session']);
             $table->timestamps();
         });
     }
