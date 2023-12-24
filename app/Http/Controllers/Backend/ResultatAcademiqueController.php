@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\ResultatAcademiqueRepository;
 use App\Http\Requests\StoreResultatAcademiqueRequest;
 use App\Http\Requests\UpdateResultatAcademiqueRequest;
+use App\Models\ResultatAcademique;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\EtudiantRepository;
 use App\Repositories\InscriptionRepository;
@@ -86,6 +87,40 @@ class ResultatAcademiqueController extends Controller
         
         return redirect(route('proces_verbaux.resultats.index', $procesVerbal->id));
     }
+
+    public function store2(StoreResultatAcademiqueRequest $request, $id)
+    {
+        $procesVerbal = $this->procesVervalRepository->find($id);  
+        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);      
+
+        $moyenne = $request->input('moyenne');
+
+        foreach ($inscriptions as $i => $inscription){
+            $data = array(
+                'inscription_id' => $inscription->id,
+                'procesVerbal_id' => $id,
+                'moyenne' => $moyenne[$inscription->id],
+                'reference' => $inscription->id.''.$id,
+                'user_id' => 1
+            );
+
+            $resul = ResultatAcademique::where('inscription_id',$inscription->id)
+                ->where('procesVerbal_id',$id)
+                ->get()->first();
+
+            if ($resul != null){
+                ResultatAcademique::where('id',$resul->id)->update($data);
+            }else{
+                if($moyenne[$inscription->id] != null){
+                    ResultatAcademique::create($data);
+                }    
+            }
+        }
+        
+        return redirect(route('proces_verbaux.resultats.index', $id));
+    }
+
+
 
     /**
      * Display the specified resource.
