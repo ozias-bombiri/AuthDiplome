@@ -160,8 +160,9 @@ class ActeAcademiqueController extends Controller
         $institution = $resultat->procesVerbal->parcours->filiere->institution;
         $etudiant = $resultat->inscription->etudiant;
         $parcours = $resultat->inscription->parcours;
-        $categorieActe = $this->categorieRepository->findByIntitule($input['categorieActe_id']);
+        $categorieActe = $this->categorieRepository->find($input['categorieActe_id']);
         $signataireActe = $this->signataireActeRepository->findByActiveInstitution($institution->id);
+        
         $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
         $numeroteur->compteur +=1;
         $input_acte = [];
@@ -174,7 +175,7 @@ class ActeAcademiqueController extends Controller
         $input_acte['resultatAcademique_id'] = $resultat->id;
         $input_acte['signataireActe_id'] = $signataireActe->id;
         $input_acte['categorieActe_id'] = $categorieActe->id;
-        $input_acte['intitule'] = $categorieActe->intitule.' '.$parcours->niveauEtude->intitule;
+        $input_acte['intitule'] = strtoupper($categorieActe->intitule.' de '.$parcours->niveauEtude->intitule);
         $input_acte['user_id'] = 1;
         $numeroteur->update();
         

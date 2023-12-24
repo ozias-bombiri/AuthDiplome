@@ -16,7 +16,7 @@
 
 
 
-    <title>{{ $document->reference }}</title>
+    <title>{{ $acte->reference }}</title>
 
 
     <style type="text/css" media="screen">
@@ -250,7 +250,7 @@
 
         <div id="four" class="zone text-center w-full px-0 py-1"> 
 
-            <h2> ATTESTATION PROVISOIRE DE LICENCE</h2>
+            <h2> {{ strtoupper($acte->intitule) }}</h2>
             
         </div>
 
@@ -258,7 +258,7 @@
 
         <div id="five" class="zone text-center w-full px-0">
 
-            Le Responsable de l'établissement (Directeur académique ou équivalement de l'UFR), soussigné,
+            Le {{ $signataireActe->fonction }} de {{ $institution->denomination. '('.$institution->sigle.')'}}, soussigné,
            
         </div>
 
@@ -267,7 +267,7 @@
         <div id="six" class="zone text-center w-full px-0">
             
             <h4> ATTESTE QUE </h4>
-            <h5> {{ $impetrant->nom }} {{ $impetrant->prenom }} </h5>
+            <h5> {{ strtoupper($impetrant->nom).' '.$impetrant->prenom }} </h5>
         </div>
 
         <!-- INFORMATIONS DETAILLEES -->
@@ -288,19 +288,20 @@
                 @endif
 
                     à {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance }}) <br />
-                {{$impetrant->typeIdentifiant }} : {{ $impetrant->identifiant }} Sexe : {{ $impetrant->sexe }} <br />
-                a acquis les {{ $parcours->niveau_etude->credit }} crédits du parcours {{ $parcours->intitule }} à l’issue
+                {{$impetrant->typeIdentifiant }} : <b>{{ $impetrant->identifiant }}</b> Sexe : {{ $impetrant->sexe }} <br />
+                a acquis les {{ $parcours->niveauEtude->credit }} crédits du parcours {{ $parcours->intitule }} à l’issue
                 @if($parcours->soutenance) 
                     de la soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
                 @else 
-                de la session {{ $resultat->session}}
-                de l’année académique {{ $resultat->annee_academique->intitule }} 
+                de la session {{ $resultat->procesVerbal->session}}
+                de l’année académique {{ $resultat->procesVerbal->anneeAcademique->intitule }} 
                 @endif                    
                 <br />
-                Domaine : {{ $parcours->domaine }} <br />
-                Mention : {{ $parcours->mention }} <br />
-                Spécialité : {{ $parcours->specialite }} <br />
-                et a obtenu la moyenne générale de {{ $resultat->moyenne}} sur 20, côte {{ $resultat->cote}}.
+                Domaine : <b>{{ $parcours->domaine }}</b> <br />
+                Mention : <b>{{ $parcours->mention }} </b><br />
+                Spécialité : <b>{{ $parcours->specialite }}</b> <br />
+                et a obtenu la moyenne générale de {{ $resultat->moyenne}} sur 20, 
+                côte @if($resultat->moyenne >= 16 ) A @elseif($resultat->moyenne < 16 && $resultat->moyenne >=14) B @elseif($resultat->moyenne < 14 && $resultat->moyenne >=12) C @elseif($resultat->moyenne < 12 && $resultat->moyenne >=10) @endif.
             </p>
         
 
@@ -319,7 +320,7 @@
 
         <div id="nine" class="zone">
 
-            Fait le {{ \Carbon\Carbon::parse($document->dateSignature)->translatedFormat('d F Y') }} à {{ $document->lieuCreation}} <br /><br /><br />
+            Fait le <b>{{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }} </b> à <b>{{ $acte->lieu}}</b> <br /><br /><br />
         
         </div>
 
@@ -337,13 +338,13 @@
 
         <div id="eleven" class="zone text-center">
             
-            <p class="text-center"> <u>Pour le Responsable et par délégation le {{ $signataire->fonction }}</u> </p> <br /> <br />
+            <p class="text-center"> <u> {{$signataireActe->mention}} le {{ $signataireActe->fonction }}</u> </p> <br /> <br />
 
             <p class="text-center">
                 <br /><br />
-                @if($signataire->grade) {{ $signataire->grade }}@endif
-                {{ $signataire->prenom }} {{ $signataire->nom }}<br />
-                <em>{{ $signataire->titreAcademique }}<br /> {{ $signataire->titreHonorifique }}</em>
+                @if($signataireActe->signataire->grade) {{ $signataireActe->signataire->grade }}@endif
+                <b>{{ $signataireActe->signataire->prenom }} {{ $signataireActe->signataire->nom }} </b><br />
+                <em>{{ $signataireActe->signataire->titreAcademique }}<br /> {{ $signataireActe->signataire->titreHonorifique }}</em>
             </p>
             
         </div>

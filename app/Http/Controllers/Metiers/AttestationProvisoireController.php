@@ -91,6 +91,31 @@ class AttestationProvisoireController extends Controller
         return view("metiers.actes.provisoires.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
+    public function generer($acte_id){
+
+        $attestation = $this->attestationRepository->find($acte_id);        
+        $document_path = null;
+        if(isset($attestation->documents) && count($attestation->documents) >0) {
+            $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
+        }
+        else {
+            $institution = $attestation->signataireActe->institution;
+            $etudiant = $attestation->resultatAcademique->inscription->etudiant;
+            $parcours = $attestation->resultatAcademique->procesVerbal->parcours;
+            $resultat = $attestation->resultatAcademique ;
+            $signataireActe = $attestation->signataireActe;
+            $timbre = $institution->timbres[0] ;
+
+            $document_path = $this->pdfCreator->createAttestationProvisoire($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
+        
+        }
+        
+        return Response::make(file_get_contents(public_path($document_path)), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$attestation->reference.'"'
+            ]);
+    }
+
     
 
 
