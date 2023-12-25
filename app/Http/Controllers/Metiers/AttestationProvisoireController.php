@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Metiers;
 
 use App\Http\Controllers\Controller;
 use App\Models\AttestationProvisoire;
+use App\Models\Institution;
 use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
 use App\Repositories\ActeAcademiqueRepository;
@@ -69,25 +70,31 @@ class AttestationProvisoireController extends Controller
 
     public function index()
 
-    {
-        if(isset($_GET['institution_id'])){
-            $institution_id = $_GET['institution_id'];
-        }else{
-            $institution_id = 1;
-        }
+    {        
+        $institution = Auth::user()->institution;
+        if($institution) {
+            $institution = $this->institutionRepository->find(1);
+        }        
+        $parcours = null;
+        $attestations = null;
+        $categorie_id = 1;
+
         if(isset($_GET['categorie_id'])){
             $categorie_id = $_GET['categorie_id'];
-        }else{
-            $categorie_id = 1;
         }
-        //$institution = Auth::user()->institution;
-        $institution = $this->institutionRepository->find($institution_id);
+        if($institution->type =="IESR") {
+            $parcours = $this->parcoursRepository->findByIesr($institution->id);
+            $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorie_id );        
+        }
+        else {
+            $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+            $attestations = $this->attestationRepository->findByEtablissementAndCategorieActe($institution->id, $categorie_id );       
+        
+        }
+        
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
-        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
-        $attestations = $this->attestationRepository->findByCategorieActe($categorie_id );
-        // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
-
+        $parcours = $this->parcoursRepository->findByInstitution($institution->id);        
         return view("metiers.actes.provisoires.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 

@@ -29,6 +29,8 @@ class ProcesVerbal extends Model
 
 	protected $fillable = [
 		'reference',
+		'intitule',
+		'type',
 		'nomFichierPdf',
 		'nombreEtudiants',
 		'dateDeliberation',

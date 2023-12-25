@@ -27,7 +27,19 @@ class FiliereController extends Controller
 
     public function index()
     {
-        $filieres = $this->modelRepository->all();
+        $filieres = null;
+        if(isset($_GET['etablissement_id'])){
+            $institution_id = $_GET['etablissement_id'];
+            $filieres = $this->modelRepository->findByEtablissement($institution_id);
+        
+        }
+        else if(isset($_GET['iesr_id'])){
+            $institution_id = $_GET['iesr_id'];
+            $filieres = $this->modelRepository->findByIesr($institution_id);
+        }
+        else {
+            $filieres = $this->modelRepository->all();
+        }
         return view('backend.filieres.index', compact('filieres'));
     }
     

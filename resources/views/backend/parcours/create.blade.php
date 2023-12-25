@@ -43,7 +43,7 @@
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="niveau" class="col-sm-2 col-form-label">Niveau d'étude</label>
+                        <label for="niveauEtude_id" class="col-sm-2 col-form-label">Niveau d'étude</label>
                         <div class="col">
                             <select class="form-control" id="niveauEtude_id" name="niveauEtude_id" required>
                                 @foreach( $niveaux as $niveau)
@@ -62,16 +62,15 @@
                     </div>
 
                     <div class="form-group row py-2">
-                            <label for="code" class="col-sm-3 col-form-label">Code parcours</label>
-                            <div class="col">
-                                <input type="text" class="form-control form-control" id="code" name="code" required>
-                            </div>
+                        <label for="code" class="col-sm-2 col-form-label">Code parcours</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="code" name="code" required>
+                        </div>
                     </div>
-
 
                     <div class="form-group row py-2">
                         <label for="soutenance" class="col-sm-3 col-form-label">Parcours avec soutenance ?</label>
-                        <div class="col-sm-1">
+                        <div class="col-sm-2">
                             <input type="checkbox" class="" id="soutenance" name="soutenance" value="1">
                         </div>
                     </div>
@@ -126,5 +125,29 @@
 @endsection
 
 @push('costum-scripts')
+
+<script type="module">
+    $(document).ready(function() {
+        
+        $(document).on('change', '#niveauEtude_id', function() {
+            var selectedNiveau = this.options[this.selectedIndex].value;
+            
+            console.log(selectedNiveau);
+
+            if(selectedNiveau != 1) {
+                $("#soutenance").prop('checked', true);
+                $("#soutenance").prop('disabled', true);
+            }
+            if(selectedNiveau == 1) {
+                $("#soutenance").prop('checked', false);
+                $("#soutenance").prop('disabled', false);
+            }
+            
+            
+            
+        });
+    });
+</script>
+
 
 @endpush

@@ -45,7 +45,7 @@ class ParcoursRepository extends BaseRepository
     }
 
     /**
-     * Selectionner les parcours d'une institution
+     * Selectionner les parcours d'un établissement
      **/
     public function findByInstitution($institution_id)
     {
@@ -57,7 +57,7 @@ class ParcoursRepository extends BaseRepository
     }
 
     /**
-     * Selectionner les parcours d'une institution
+     * Selectionner les parcours d'une iesr
      **/
     public function findByIesr($iesr_id)
     {

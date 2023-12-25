@@ -55,7 +55,7 @@ class ActeAcademiqueRepository extends BaseRepository
         
     }
 
-    public function findByEtablissement($institution_id, $categorie_id){
+    public function findByEtablissementAndCategorieActe($institution_id, $categorie_id){
         $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
                 		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
                         ->where('institutions.id', '=', $institution_id)
@@ -67,7 +67,7 @@ class ActeAcademiqueRepository extends BaseRepository
         
     }
 
-    public function findByIesr($iesr_id, $categorie_id){
+    public function findByIesrAndCategorieActe($iesr_id, $categorie_id){
         $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
                 		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
                         ->where('institutions.id', '=', $iesr_id)

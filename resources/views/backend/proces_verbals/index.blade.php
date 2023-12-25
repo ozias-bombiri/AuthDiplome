@@ -44,7 +44,7 @@
                                 <th>No</th>
                                 <th>Parcours</th>
                                 <th>Année</th>
-                                <th>Reference</th>
+                                <th>Intitule</th>
                                 <th>Session</th>
                                 <th>Date deliberation</th>
                                 <th>Action</th>
@@ -56,7 +56,7 @@
                                     <td>{{ $loop->index + 1 }}</td>
                                     <td>{{ $proces_verbal->parcours->intitule }}</td>
                                     <td>{{ $proces_verbal->anneeAcademique->intitule }}</td>
-                                    <td>{{ $proces_verbal->reference }}</td>
+                                    <td>{{ $proces_verbal->intitule }}</td>
                                     <td>{{ $proces_verbal->session }}</td>
                                     <td>{{ $proces_verbal->dateDeliberation }}</td>
 

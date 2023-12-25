@@ -58,14 +58,27 @@ class ProcesVerbalRepository extends BaseRepository
     
 
     /**
-     * Selectionner les pv d'une institution
+     * Selectionner les pv d'un établissement
      **/
     public function findByInstitution($institution_id)
     {
         return ProcesVerbal::join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
                 ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                 ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
-                ->where('parcours.id', $institution_id)
+                ->where('institutions.id', $institution_id)
+                ->select('proces_verbaux.*')
+                ->get();
+    }
+
+    /**
+     * Selectionner les pv d'une institution (iesr)
+     **/
+    public function findByIesr($iesr_id)
+    {
+        return ProcesVerbal::join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                ->where('institutions.parent_id', $iesr_id)
                 ->select('proces_verbaux.*')
                 ->get();
     }

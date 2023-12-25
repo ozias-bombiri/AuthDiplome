@@ -35,6 +35,20 @@ class ProcesVerbalController extends Controller
      */
     public function index()
     {
+        $proces_verbals = [];
+        
+        if(isset($_GET['etablissement_id'])){
+            $institution_id = $_GET['etablissement_id'];
+            $proces_verbals = $this->modelRepository->findByInstitution($institution_id);
+        
+        }
+        else if(isset($_GET['iesr_id'])){
+            $institution_id = $_GET['iesr_id'];
+            $proces_verbals = $this->modelRepository->findByIesr($institution_id);
+        }
+        else{
+            $proces_verbals = $this->modelRepository->all();
+        }
         $proces_verbals = $this->modelRepository->all();
         return view('backend.proces_verbals.index', compact('proces_verbals'));
         
@@ -69,14 +83,20 @@ class ProcesVerbalController extends Controller
         $user_id = Auth::id(); 
         $input = $request->all();
         $input['user_id'] = $user_id;
-
+        $parcours = $this->parcoursRepository->find($input['parcours_id']);
+        $annee = $this->anneeAcademiqueRepository->find($input['anneeAcademique_id']);
+        $input['reference'] = "PV_".$parcours->id.'-'.$annee->id;
+        $input['intitule'] = strtoupper("PV_".$parcours->intitule.'-'.$annee->intitule.' Session : '.$input['session']);
+        if($parcours->soutenance) $input['type'] = "SOUTENANCE";
+        else $input['type'] = "EXAMEN";
+        
         if($request->file()) {
             $file = $request->file('nomFichierPdf');
             $fileName = 'PV_du'.str_replace(array('/', '%', '@', '\'', ';', '<', '>' ), '_', $input['reference']).'_'.time().'.'.$file->getClientOriginalExtension();
             $file->move(public_path('uploads/PDFs'), $fileName);
             $input['nomFichierPdf'] = $fileName;
         }
-        $input['reference'] = "PV_".$input['parcours_id'].'-'.$input['anneeAcademique_id'];
+        
         $proces_verbal = $this->modelRepository->create($input);
 
         return redirect(route('proces_verbals.index'));
