@@ -12,6 +12,7 @@ use App\Repositories\EtudiantRepository;
 use App\Repositories\InscriptionRepository;
 use App\Repositories\ParcoursRepository;
 use App\Repositories\ProcesVerbalRepository;
+use Illuminate\Http\Request;
 
 class ResultatAcademiqueController extends Controller
 {
@@ -88,7 +89,7 @@ class ResultatAcademiqueController extends Controller
         return redirect(route('proces_verbaux.resultats.index', $procesVerbal->id));
     }
 
-    public function store2(StoreResultatAcademiqueRequest $request, $id)
+    public function store2(Request $request, $id)
     {
         $procesVerbal = $this->procesVervalRepository->find($id);  
         $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);      

@@ -104,6 +104,9 @@ class AttestationProvisoireController extends Controller
             $parcours = $attestation->resultatAcademique->procesVerbal->parcours;
             $resultat = $attestation->resultatAcademique ;
             $signataireActe = $attestation->signataireActe;
+            
+            $reponse = "Aucun timbre associé" ;
+            if (count($institution->timbres) <1 ) return back()->with('reponse', $reponse); 
             $timbre = $institution->timbres[0] ;
 
             $document_path = $this->pdfCreator->createAttestationProvisoire($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);

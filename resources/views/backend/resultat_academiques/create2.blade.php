@@ -69,7 +69,7 @@
                                                 <input type="number" class="form-control form-control" 
                                                 id="{{ 'moyenne'.$inscription->id }}" name="moyenne[{{$inscription->id}}]" 
                                                 value="{{$inscription->moyenne($inscription->id)}}"
-                                                step="0.01" max="20" min="0">       
+                                                step="0.01" max="20" min="10">       
                                             </td>
                                         </tr>
 

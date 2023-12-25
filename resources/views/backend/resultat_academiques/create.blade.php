@@ -59,7 +59,7 @@
                     <div class="form-group row py-2">
                         <label for="moyenne" class="col-sm-2 col-form-label">Moyenne</label>
                         <div class="col">
-                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" step="0.01" max="20" min="0" required>
+                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" step="0.01" max="20" min="10" required>
                         </div>
                     </div>
                     

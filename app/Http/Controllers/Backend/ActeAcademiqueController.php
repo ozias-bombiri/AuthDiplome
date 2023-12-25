@@ -46,8 +46,18 @@ class ActeAcademiqueController extends Controller
         $institution = $resultat->procesVerbal->parcours->filiere->institution;
         $etudiant = $resultat->inscription->etudiant;
         $categorieActe = $this->categorieRepository->findByIntitule("PROVISOIRE");
+
         $signataireActe = $this->signataireActeRepository->findByActiveInstitution($institution->id); 
-        
+        $reponse = "Aucun Signataire configuré" ;        
+
+        if (empty($signataireActe)) return back()->with('reponse', $reponse);
+
+        $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
+        $reponse = "Aucun Numéroteur associé" ;
+
+        if (empty($numeroteur)) return back()->with('reponse', $reponse); 
+
+
         return view('backend.acte_academiques.create', compact('resultat','categorieActe', 'signataireActe', 'etudiant'));
     }
 
@@ -164,6 +174,7 @@ class ActeAcademiqueController extends Controller
         $signataireActe = $this->signataireActeRepository->findByActiveInstitution($institution->id);
         
         $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
+        
         $numeroteur->compteur +=1;
         $input_acte = [];
         $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant;
