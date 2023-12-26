@@ -123,4 +123,25 @@ class ActeAcademiqueRepository extends BaseRepository
 		return $actesProvisoires ;
 	
 	}
+
+    public function findByPvCategorieIdentifiant($procesVerbal_id, $categorieActe_id, $identifiant)
+	{
+		$actesProvisoires = ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+        ->join('acte_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
+        ->join('inscriptions', 'inscriptions.id', '=', 'resultat_academiques.inscription_id')
+        ->join('etudiants', 'etudiants.id', '=', 'inscriptions.etudiant_id')
+        ->where('proces_verbaux.id', $procesVerbal_id)
+        ->where('acte_academiques.categorieActe_id', $categorieActe_id)
+        ->where('etudiants.identifiant', $identifiant)
+        ->select('acte_academiques.*')
+        ->first();
+		
+		return $actesProvisoires ;
+	
+	}
+
+   
+
+
+
 }

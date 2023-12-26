@@ -141,6 +141,11 @@ Attestations provisoires
                                 <a class="btn btn-primary action-btn" title="Etablir attestation définitive" href="#">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
+                                <a class="{{ $attestation->resultatAcademique->procesVerbal->actesDefinitifExiste($attestation->resultatAcademique->procesVerbal->id, "DEFINITIVE", $attestation->resultatAcademique->inscription->etudiant->identifiant) ? 'btn btn-secondary' : 'btn btn-warning' }}"
+                                    title="Etablir des attestations définitives"
+                                    href="{{ $attestation->resultatAcademique->procesVerbal->actesDefinitifExiste($attestation->resultatAcademique->procesVerbal->id, "DEFINITIVE", $attestation->resultatAcademique->inscription->etudiant->identifiant) ? '#' : route('proces_verbaux.definitives.definitiveSolo', [ 'id' => $attestation->resultatAcademique->procesVerbal->id, 'ident' => $attestation->resultatAcademique->inscription->etudiant->identifiant ]) }}">
+                                    <i class="bi bi-clipboard-plus-fill"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach

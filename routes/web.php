@@ -164,8 +164,12 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.definitives.create');
     Route::get('proces_verbaux/{id}/definitives/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive2'])
     ->name('proces_verbaux.definitives.create2');
+    Route::get('proces_verbaux/{id}/definitives/add_acte_solo/{ident}', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitiveSolo'])
+    ->name('proces_verbaux.definitives.definitiveSolo');
     Route::post('proces_verbaux/definitives/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
     ->name('proces_verbaux.definitives.store');
+    Route::post('proces_verbaux/definitives/storeSolo', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'storeSolo'])
+    ->name('proces_verbaux.definitives.storeSolo');
     Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
     ->name('proces_verbaux.diplomes.create');
     
@@ -178,7 +182,7 @@ Route::group(['middleware' => ['auth']], function(){
     
 });
 
-Route::group(['middleware' => ['auth', 'role:direction']], function() {
+Route::group(['middleware' => ['auth', 'role:directeur']], function() {
 
     Route::get('filieres/{institution_id}', [App\Http\Controllers\Etablissement\FiliereController::class, 'listFiliere'])
     ->where('institution_id', '[0-9]+')->name('metiers.etablissements.filiere-list');

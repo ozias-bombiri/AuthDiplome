@@ -53,4 +53,16 @@ class ResultatAcademiqueRepository extends BaseRepository
                 ->select('resultat_academiques.*')
                 ->get();
     }
+
+    public function findByProcesVerbalIdentifiant($procesVerbal_id, $identifiant)
+    {
+        return ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+        ->join('inscriptions', 'inscriptions.id', '=', 'resultat_academiques.inscription_id')
+        ->join('etudiants', 'etudiants.id', '=', 'inscriptions.etudiant_id')
+        ->where('proces_verbaux.id', $procesVerbal_id)
+        ->where('etudiants.identifiant', $identifiant)
+        ->select('resultat_academiques.*')
+        ->first();
+    }
+
 }
