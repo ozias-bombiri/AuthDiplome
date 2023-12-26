@@ -61,7 +61,7 @@ class DocumentCreator
         $qrcode = $this->createQrcode($qr_infos, $acte->reference);
        
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                    ->loadView('maquettes.licences.provisoire1', 
+                    ->loadView('maquettes.provisoire1', 
                         compact('institution', 'timbre', 'parcours', 'impetrant', 'signataireActe', 'acte', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
@@ -74,7 +74,7 @@ class DocumentCreator
         $width = $canvas->get_width();
         $canvas->set_opacity(.2,"Multiply");
         $canvas->set_opacity(.2);
-        $canvas->page_text($width/5, $height/2, 'ATTESTATION PROVISOIRE', null, 30, array(0,0,0),2,2,-30);
+        $canvas->page_text($width/5, $height/2, $categorie, null, 30, array(0,0,0),2,2,-30);
         $filename = config("custom.url_document").'/'.$acte->reference.'.pdf';
         file_put_contents(public_path($filename), $pdf->output());
         $document_data = [];
@@ -89,18 +89,23 @@ class DocumentCreator
         
     }
 
-    public function createAttestationDefinitive($institution, $timbre, $parcours, $impetrant, $signataireActe, $document, $resultat) {
+    public function createAttestationDefinitive($institution, $timbre, $parcours, $impetrant, $signataireActe, $acte, $resultat) {
 
-        $categorie = "provisoire";
+        $user_id = 1;
+        if (Auth::check()) {
+            $user_id = Auth::user()->id;
+        }
+        
+        $categorie = $acte->categorieActe->intitule;
         
         $logo = $this->getLogoBase64($institution);
         $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$document->id;
-        $qr_infos = $document->intitule."\nRef :".$document->reference."\n \n ".$lien ;
-        $qrcode = $this->createQrcode($qr_infos, $document->reference);
+        $qr_infos = $acte->intitule."\nRef :".$acte->reference."\n \n ".$lien ;
+        $qrcode = $this->createQrcode($qr_infos, $acte->reference);
        
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
-                    ->loadView('maquettes.licences.definitive1', 
-                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataireActe', 'document', 'resultat', 'logo', 'qrcode'));
+                    ->loadView('maquettes.definitive1', 
+                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataireActe', 'acte', 'resultat', 'logo', 'qrcode'));
         
         // set the PDF rendering options
         //$customPaper = array(0,0,600.00,310.80);
@@ -112,12 +117,19 @@ class DocumentCreator
         $width = $canvas->get_width();
         $canvas->set_opacity(.2,"Multiply");
         $canvas->set_opacity(.2);
-        $canvas->page_text($width/3, $height/2, 'ATTESTATION DEFINITIVE', null, 20, array(0,0,0),2,2,-30);
-        $filename = config("custom.url_document").'/'.$document->reference.'.pdf';
+        $canvas->page_text($width/5, $height/2, $categorie, null, 30, array(0,0,0),2,2,-30);
+        $filename = config("custom.url_document").'/'.$acte->reference.'.pdf';
         file_put_contents(public_path($filename), $pdf->output());
-        $document->nombreGeneration ++;
-        $document->update();
-        return $filename;
+        $document_data = [];
+        $document_data['acteAcademique_id'] = $acte->id;
+        $document_data['user_id'] = $user_id;
+        $document_data['reference'] = $acte->reference;
+        $document_data['numero'] = $acte->numero;
+        $document_data['nombreGeneration'] =1;
+        $document_data['dateGeneration'] = date('Y-m-d');
+        $document = $this->documentRepository->create($document_data);
+        return $filename;      
+        
         
     }
 
