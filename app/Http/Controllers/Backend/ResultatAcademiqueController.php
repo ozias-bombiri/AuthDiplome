@@ -53,10 +53,10 @@ class ResultatAcademiqueController extends Controller
     public function create($id)
     {
         $procesVerbal = $this->procesVervalRepository->find($id);
-        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
-
-        $reponse = "Aucune inscription à ce parcours" ;
+        $inscriptions = $this->procesVervalRepository->findByNoResultats($procesVerbal->id);
+        
+        $reponse = "Aucune inscription à ce parcours ou tout déja saisie" ;        
         if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
 
         return view('backend.resultat_academiques.create', compact('inscriptions', 'procesVerbal', 'anneeAcademiques')) ;
@@ -68,9 +68,12 @@ class ResultatAcademiqueController extends Controller
     public function create2($id)
     {
         $procesVerbal = $this->procesVervalRepository->find($id);
-        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
+        $inscriptions = $this->procesVervalRepository->findByNoResultats($procesVerbal->id);
         
+        $reponse = "Aucune inscription à ce parcours ou tout déja saisie" ;        
+        if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
+
         $reponse = "Aucune inscription à ce parcours" ;
         if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
 

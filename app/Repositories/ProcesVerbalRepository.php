@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Inscription;
 use App\Models\ProcesVerbal;
 use App\Repositories\BaseRepository;
 
@@ -53,6 +54,28 @@ class ProcesVerbalRepository extends BaseRepository
                 ->where('parcours.id', $parcours_id)
                 ->select('proces_verbaux.*')
                 ->get();
+    }
+
+
+    /**
+     * Selectionner les inscrits au parcours qui non pas encore de résultats
+     **/
+    public function findByNoResultats($procesVerbal_id)
+    {
+        
+        $resultats = ProcesVerbal::join('resultat_academiques', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+                ->where('proces_verbaux.id', $procesVerbal_id)
+                ->select('resultat_academiques.inscription_id')
+                ->get();
+
+        $noResultats = Inscription::join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
+                ->join('proces_verbaux', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                ->whereNotIn('inscriptions.id', $resultats)
+                ->select('inscriptions.*')
+                ->get();
+
+        return $noResultats;
+
     }
 
     

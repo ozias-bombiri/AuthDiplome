@@ -223,7 +223,7 @@ class ActeAcademiqueController extends Controller
             $input_acte['resultatAcademique_id'] = $resultat->id;
             $input_acte['signataireActe_id'] = $signataireActe->id;
             $input_acte['categorieActe_id'] = $categorieActe->id;
-            $input_acte['intitule'] = $categorieActe->intitule.' '.$parcours->niveauEtude->intitule;
+            $input_acte['intitule'] = strtoupper($categorieActe->intitule.' de '.$parcours->niveauEtude->intitule);
             $input_acte['user_id'] = Auth::id();
             $numeroteur->update();
             

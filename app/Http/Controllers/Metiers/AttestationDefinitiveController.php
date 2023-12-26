@@ -82,7 +82,7 @@ class AttestationDefinitiveController extends Controller
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByInstitution($institution->id);
         
-        $attestations = $this->attestationRepository->findByEtablissement($institution->id, $categorie_id);
+        $attestations = $this->attestationRepository->findByEtablissementAndCategorieActe($institution->id, $categorie_id);
         // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
 
         return view("metiers.actes.definitives.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
@@ -102,14 +102,14 @@ class AttestationDefinitiveController extends Controller
         if(isset($_GET['categorie_id'])){
             $categorie_id = $_GET['categorie_id'];
         }else{
-            $categorie_id = 3;
+            $categorie_id = 2;
         }
         //$institution = Auth ::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByIesr($institution->id);
-        $attestations = $this->attestationRepository->findByIesr($institution->id, $categorie_id);
+        $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorie_id);
         return view('metiers.daoi.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 

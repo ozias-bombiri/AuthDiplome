@@ -9,6 +9,7 @@ use App\Models\InstitutionImpetrant;
 use App\Models\ResultatAcademique;
 use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
+use App\Repositories\CategorieActeRepository;
 use App\Repositories\EtudiantRepository;
 use App\Repositories\FiliereRepository;
 use App\Repositories\ImpetrantRepository;
@@ -37,6 +38,7 @@ class AttestationProvisoireController extends Controller
     protected $etudiantRepository;
     protected $anneeRepository;
     protected $resultatRepository ;
+    protected $categorieActeRepository;
     protected $timbreRepository;
     protected $pdfCreator;
 
@@ -51,6 +53,7 @@ class AttestationProvisoireController extends Controller
         EtudiantRepository $etudtiantRepo,
         AnneeAcademiqueRepository $anneeRepo,
         ResultatAcademiqueRepository $resultatRepo,
+        CategorieActeRepository $categorieRepo,
         TimbreRepository $timbreRepo,
         DocumentCreator $pdfCreator
          )
@@ -64,6 +67,7 @@ class AttestationProvisoireController extends Controller
         $this->etudiantRepository = $etudtiantRepo;
         $this->anneeRepository = $anneeRepo;
         $this->resultatRepository = $resultatRepo;
+        $this->categorieActeRepository = $categorieRepo;
         $this->timbreRepository = $timbreRepo;
         $this->pdfCreator = $pdfCreator;
     }
@@ -72,29 +76,27 @@ class AttestationProvisoireController extends Controller
 
     {        
         $institution = Auth::user()->institution;
-        if($institution) {
+        //dd($institution);
+        if(empty($institution->id)) {
             $institution = $this->institutionRepository->find(1);
         }        
         $parcours = null;
         $attestations = null;
-        $categorie_id = 1;
+        
+        $categorieActeProvisoire = $this->categorieActeRepository->findByIntitule("PROVISOIRE");
 
-        if(isset($_GET['categorie_id'])){
-            $categorie_id = $_GET['categorie_id'];
-        }
         if($institution->type =="IESR") {
             $parcours = $this->parcoursRepository->findByIesr($institution->id);
-            $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorie_id );        
+            $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorieActeProvisoire->id );        
         }
         else {
             $parcours = $this->parcoursRepository->findByInstitution($institution->id);
-            $attestations = $this->attestationRepository->findByEtablissementAndCategorieActe($institution->id, $categorie_id );       
+            $attestations = $this->attestationRepository->findByEtablissementAndCategorieActe($institution->id, $categorieActeProvisoire->id );       
         
         }
         
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
-        $parcours = $this->parcoursRepository->findByInstitution($institution->id);        
         return view("metiers.actes.provisoires.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
