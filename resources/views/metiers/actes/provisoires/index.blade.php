@@ -79,8 +79,9 @@ Attestations provisoires
                                 <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.provisoires.generer', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
+
                                 
-                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="{{ route('actes.provisoires.retirer', $acte->id) }}">
+                                <a class="btn btn-primary action-btn" data-bs-toggle="modal" data-bs-target="#modalRemiseActe"  title="Remise de l'acte">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
 
@@ -101,6 +102,63 @@ Attestations provisoires
 </div>
 
 
+<!-- Modal REmise actes-->
+
+<div class="modal fade" id="modalRemiseActe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Remise de l'acte</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="post" action="{{ route('retrait_actes.store') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label for="acteAcademique" class="col-sm-2 col-form-label">Acte academique</label>
+                    <div class="col">
+                        <input type="hidden"  name="acteAcademique_id" value="{{ $attestation->id }}">
+                        <input type="text" class="form-control form-control" id="intitule2" value="{{ $attestation->intitule }}" readonly>
+                    </div> 
+                </div>
+
+                <div class="mb-3">
+                    <label for="reference" class="col-sm-2 col-form-label">Reference</label>
+                    <div class="col">
+                        <input type="text" class="form-control form-control" id="reference2" name="reference"  value="{{ $attestation->reference }}" readonly>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="dateRetrait" class="col-sm-2 col-form-label">Date de retrait</label>
+                    <div class="col">
+                        <input type="date" class="form-control form-control" id="dateRetrait" name="dateRetrait" value="{{ \Carbon\Carbon::now()->toDateString() }}" required>
+                    </div>
+                </div>
+           
+                <div class="mb-3">
+                    <label for="retirant" class="col-sm-2 col-form-label">Retirant</label>
+                    <div class="col">
+                        <input type="text" class="form-control form-control" id="retirant" name="retirant" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="description" class="col-sm-2 col-form-label">Description</label>
+                    <div class="col">
+                        <textarea name="description" class="form-control" id="" cols="5" rows="3"></textarea>
+                    </div>
+                </div>
+         
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+          <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+    </form>
+      </div>
+    </div>
+  </div>
 
 
 <!-- Modal Details-->
@@ -241,6 +299,7 @@ Attestations provisoires
 
 
 <script type="module">
+
     $(document).ready(function() {
 
         $(document).on('click', '.view', function() {
@@ -278,4 +337,6 @@ Attestations provisoires
         });
     });
 </script>
+
+
 @endpush

@@ -87,7 +87,8 @@ class AttestationProvisoireController extends Controller
 
         if($institution->type =="IESR") {
             $parcours = $this->parcoursRepository->findByIesr($institution->id);
-            $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorieActeProvisoire->id );        
+            $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorieActeProvisoire->id );       
+             
         }
         else {
             $parcours = $this->parcoursRepository->findByInstitution($institution->id);

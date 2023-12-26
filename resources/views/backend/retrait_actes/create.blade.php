@@ -72,7 +72,7 @@
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">
-                            <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                            <button type="submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
                             <a href="{{ route('actes.provisoires.retrait') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>

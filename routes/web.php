@@ -332,6 +332,11 @@ Route::group(['middleware' =>['auth']], function(){
     Route::get('d/diplomes/list', [App\Http\Controllers\Metiers\DiplomeController::class, 'index'])
     //->where('institution_id', '[0-9]+')->name('metiers.daoi.attestationdef-list');
     ->name('metiers.daoi.diplomes-list');
+
+
     
+
+    Route::get('actes/remise/{id}/', [App\Http\Controllers\Metiers\RetraitActeController::class, 'store'])
+    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.remise'); 
 
 });

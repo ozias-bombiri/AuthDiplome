@@ -8,9 +8,10 @@ use App\Repositories\RetraitActeRepository;
 use App\Http\Requests\StoreRetraitActeRequest ;
 use App\Http\Requests\UpdateRetraitActeRequest ;
 use App\Repositories\ActeAcademiqueRepository;
-use App\Repositories\CategorieActeRepository;
-use App\Repositories\InstitutionRepository;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class RetraitActeController extends Controller
 {
@@ -73,25 +74,14 @@ class RetraitActeController extends Controller
      */
     public function store(StoreRetraitActeRequest $request, string $acte_id)
     {
-        $acte = $this->acteAcademiqueRepository->find($acte_id);
-        if(empty($acte)){
-            return back()->with('reponse', 'Acte non trouvé');
-        }
+        //$validated = $request->validated();
 
-        $validated = $request->validated();
+        $user_id = Auth::id(); 
         $input = $request->all();
-        $input_retrait = [];
-        $input_retrait['acteAcademique_id'] = $acte->id;
-        $input_retrait['user_id'] = Auth::user()->id;
-        $input_retrait['dateRetrait'] = $input['dateRetrait'];
-        $input_retrait['reference'] = $acte->reference.''.count($acte->retraits) +1;
-        $input_retrait['retirant'] = $input['retirant'];
+        $input['user_id'] = $user_id; 
+        $retrait = $this->modelRepository->create($input);
         
-        $retrait = $this->modelRepository->create($input_retrait);
-
-        $acte->statutRemise = true;
-        $acte->update();
-        return redirect(route('actes.provisoires.retrait'));
+        return redirect(route('retrait_actes.index'));
     }
 
     /**

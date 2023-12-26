@@ -25,7 +25,7 @@ class StoreRetraitActeRequest extends FormRequest
             'dateRetrait' => 'required|string',
             'retirant' => 'required|string',
             'acteAcademique_id' => 'required|string',
-            
+            //'user_id' => 'required',
         ];
     }
 }
