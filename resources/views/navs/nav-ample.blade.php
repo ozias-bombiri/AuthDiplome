@@ -115,6 +115,13 @@
                 <span class="hide-menu">Diplômes</span>
             </a>
         </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('authentification.provisoires.index', ['insitution_id' =>  Auth::user()->institution->id]) }}" aria-expanded="false">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Authentification</span>
+            </a>
+        </li>
     </ul>
 
 </nav>

@@ -33,32 +33,32 @@ class VerificationController extends Controller
 
     public function index(){
 
-        return view('metiers.authentification.recherche');
+        return view('metiers.authentification.index');
     }
 
     public function rechercher(Request $request){
         $input = $request->all();
         $reference = $input['reference'];
         $categorie = $input['categorie'];
-        $document =null;
+        $acte =null;
         if ($categorie === "provisoire") {
-            $document  = $this->acteAcademiqueRepository->findByReference($reference);
+            $acte  = $this->acteAcademiqueRepository->findByReference($reference);
         }
         else if($categorie === "definitive"){
-            $document = $this->acteAcademiqueRepository->findByReference($reference);
+            $acte = $this->acteAcademiqueRepository->findByReference($reference);
         }
         else if($categorie === "diplome"){
-            $document = $this->acteAcademiqueRepository->findByReference($reference);
+            $acte = $this->acteAcademiqueRepository->findByReference($reference);
         }
         else {
 
         }
-        if(empty($document)){
+        if(empty($acte)){
             $message = "Aucun document trouvé !";
-            return view('metiers.authentification.recherche', compact('message'));
+            return view('metiers.authentification.index', compact('message'));
         }
 
-        return view('metiers.authentification.recherche', compact('categorie', 'document'));
+        return view('metiers.authentification.index', compact('categorie', 'acte'));
     }
     /**
      * Visualiser après la recherche

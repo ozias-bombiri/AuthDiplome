@@ -58,7 +58,7 @@ Recherche
                             <button type=" submit button" class="btn btn-success">Rechercher</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('metiers.auth.index') }}"> <button type="button" class="btn btn-secondary">Retour</button> </a>
+                            <a href="{{ route('authentification.provisoires.index') }}"> <button type="button" class="btn btn-secondary">Retour</button> </a>
                         </div>
                     </div>
                 </form>
@@ -68,7 +68,7 @@ Recherche
                 <p class="text-danger"> {{ $message }}</p>
                 @endif
 
-                @if(isset($document))
+                @if(isset($acte))
 
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
@@ -85,18 +85,18 @@ Recherche
                     <tbody>
                         <tr>
 
-                            <td> {{ $document->resultat_academique->annee_academique->intitule }}</td>
-                            <td>{{ $document->reference }}</td>
-                            <td>{{ $document->intitule }}</td>
-                            <td>{{ $document->resultat_academique->impetrant->identifiant }} </td>
-                            <td>{{ $document->resultat_academique->impetrant->nom }} {{ $document->resultat_academique->impetrant->prenom }}</td>
-                            <td>{{ $document->resultat_academique->parcours->intitule }} ({{ $document->resultat_academique->parcours->niveau_etude->intitule }})</td>
+                            <td> {{ $acte->resultatAcademique->procesVerbal->anneeAcademique->intitule }}</td>
+                            <td>{{ $acte->reference }}</td>
+                            <td>{{ $acte->intitule }}</td>
+                            <td>{{ $acte->resultatAcademique->inscription->etudiant->identifiant }} </td>
+                            <td>{{ $acte->resultatAcademique->inscription->etudiant->nom. ' '.$acte->resultatAcademique->inscription->etudiant->prenom }}</td>
+                            <td>{{ $acte->resultatAcademique->procesVerbal->parcours->intitule }} ({{ $acte->resultatAcademique->procesVerbal->parcours->niveauEtude->intitule }})</td>
                             <td>
-                                <button id="{{ $document->id }}" class="btn btn-info view-btn" data="{{ $categorie }}" title="Détails">
+                                <button id="{{ $acte->id }}" class="btn btn-info view-btn" data="{{ $categorie }}" title="Détails">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
                                 
-                                <button class="btn btn-primary pdf-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $document->id) }}">
+                                <button class="btn btn-primary pdf-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </button>
                                 

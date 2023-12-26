@@ -227,10 +227,10 @@ Route::group(['middleware' => ['auth', 'role:direction']], function() {
     
     
 });
-//ROUTES FOR AUTHENTICATION PROFILE
-Route::group(['middleware' =>['auth', 'role:authentification']], function(){
+//ROUTES FOR AUTHENTICATION
+Route::group(['middleware' =>['auth']], function(){
     Route::get('recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'index'])
-    ->name('metiers.auth.index');
+    ->name('authentification.provisoires.index');
     Route::post('recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'rechercher'])
     ->name('metiers.auth.recherche');
     Route::get('/authentification/view/{categorie}/{id}', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'visualiser'])
