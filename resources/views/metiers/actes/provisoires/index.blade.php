@@ -134,6 +134,13 @@ Attestations provisoires
                                 <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.provisoires.generer', $attestation->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
+                                
+                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="#">
+                                    <i class="bi bi-file-pdf"></i>
+                                </a>
+                                <a class="btn btn-primary action-btn" title="Etablir attestation définitive" href="#">
+                                    <i class="bi bi-file-pdf"></i>
+                                </a>
                             </td>
                         </tr>
                         @endforeach

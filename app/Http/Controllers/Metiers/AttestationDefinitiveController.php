@@ -166,7 +166,7 @@ class AttestationDefinitiveController extends Controller
         $signataires = $institution->signataires;
         
         $annees = $this->anneeRepository->all();
-        $etudiant = $this->impetrantRepository->find($impetrant);
+        $etudiant = $this->etudiantRepository->find($impetrant);
         /*
         if ($request->ajax()) {
             $data = [];
