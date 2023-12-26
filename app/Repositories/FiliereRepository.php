@@ -42,20 +42,20 @@ class FiliereRepository extends BaseRepository
     }
 
     public function findByEtablissement($institution_id){
-        $impetrants = Filiere::join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+        $filieres = Filiere::join('institutions', 'filieres.institution_id', '=', 'institutions.id')
                         ->where('institutions.id', '=', $institution_id)
                         ->select('filieres.*')
                         ->get();
-        return $impetrants;
+        return $filieres;
         
     }
 
     public function findByIesr($institution_id){
-        $impetrants = Filiere::join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+        $filieres = Filiere::join('institutions', 'filieres.institution_id', '=', 'institutions.id')
                         ->where('institutions.parent_id', '=', $institution_id)
                         ->select('filieres.*')
                         ->get();
-        return $impetrants;
+        return $filieres;
         
     }
 }

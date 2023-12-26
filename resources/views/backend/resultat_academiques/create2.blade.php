@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('proces_verbaux.resultats.store', $procesVerbal->id) }}">
+                <form method="post" action="{{ route('proces_verbaux.resultats.store2', $procesVerbal->id) }}">
                     @csrf                   
 
                     <div class="form-group row py-2">
@@ -45,28 +45,58 @@
                             <input type="text" class="form-control form-control" id="annee" name="annee" value="{{ $procesVerbal->anneeAcademique->intitule }}" disabled>
                         </div>
                     </div>
-                    @foreach( $inscriptions as $inscription)
-                        <div class="form-group row py-2">
-                            <div class="col-6">
-                                <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
-                                <div class="col">
-                                    <input type="text" class="form-control form-control" id="etudiant" name="etudiant" value="{{ $inscription->etudiant->nom.' '.$inscription->etudiant->prenom }}" disabled>
-                                    <input type="hidden" id="{{ 'inscription'.$inscription->id }}" name="inscriptions[]" value="{{ $inscription->id }}">  
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <label for="moyenne" class="col-sm-2 col-form-label">Moyenne</label>
-                                <div class="col">
-                                    <input type="number" class="form-control form-control" id="{{ 'moyenne'.$inscription->id }}" name="moyenne[]" step="0.01" max="20" min="0" required>
-                                </div>
-                            </div>                            
-                        </div>
-                        
-                    @endforeach
-                    <div class="row py-4">
-                        <label class="col-sm-2 col-form-label"></label>
+                    <table id="example1" class="table table-head-fixed text-nowrap table-bordered
+                            table-hover">
+                                <thead>
+                                <tr style="background-color:gainsboro">
+                                    <th>N°</th>
+                                    <th style="text-align: center; width:20%";>Matricule</th>
+                                    <th style="text-align: center">Nom et prénoms</th>
+                                    <th style="text-align: center; width:10%">Moyenne</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                    @php
+                                        $index = 1
+                                    @endphp
+                                    @foreach($inscriptions as $inscription)
+                                        @if ($inscription->moyenne($inscription->id) == null)
+                                        <tr>
+                                            <td style=" width:5%">{{($index)}}</td>
+                                            <td style=" width:20%">{{ $inscription->etudiant->identifiant}}</td>
+                                            <td>{{ $inscription->etudiant->nom.' '.$inscription->etudiant->prenom}}</td>
+                                            <td style="text-align: center; width:10%">
+                                                <input type="number" class="form-control form-control" 
+                                                id="{{ 'moyenne'.$inscription->id }}" name="moyenne[{{$inscription->id}}]" 
+                                                value="{{$inscription->moyenne($inscription->id)}}"
+                                                step="0.01" max="20" min="10">       
+                                            </td>
+                                        </tr>
+
+                                        {{ $index++ }}
+                                        @else
+                                            <tr hidden>
+                                                <td style=" width:5%">{{($index)}}</td>
+                                                <td style=" width:20%">{{ $inscription->etudiant->identifiant}}</td>
+                                                <td>{{ $inscription->etudiant->nom.' '.$inscription->etudiant->prenom}}</td>
+                                                <td style="text-align: center; width:10%">
+                                                    <input type="number" class="form-control form-control" 
+                                                    id="{{ 'moyenne'.$inscription->id }}" name="moyenne[{{$inscription->id}}]" 
+                                                    value="{{$inscription->moyenne($inscription->id)}}"
+                                                    step="0.01" max="20" min="0">       
+                                                </td>
+                                            </tr>
+                                        @endif
+                                    
+                                    @endforeach
+                                </tbody>
+                            </table>
+                    <div class="row py-4" >
+                        <!-- <label class="col-sm-2 col-form-label"></label> -->
                         <div class="col">
-                            <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                            <button type=" submit button" class="btn btn-success" style="float:right">
+                                Enregsitrer
+                            </button>
                         </div>
                         <div class="col">
                             <a href="{{ route('resultat_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>

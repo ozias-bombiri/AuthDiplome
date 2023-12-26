@@ -30,6 +30,16 @@
                 <a class="btn btn-success" href="{{ route('parcours.inscriptions.create', $parcours->id) }}"> Ajouter </a>
             </div>
             <div class="table-responsive">
+                <div class="form-group row py-2">
+                    <input type="hidden" id="parcours" value="{{ $parcours->id }}">
+                        <label for="anneeAcademique" class="col-sm-2 col-form-label">Année académique</label>
+                        <div class="col">
+                            @foreach( $annees as $annee)
+                                <a class="btn btn-link btn-secondary" href="{{ route('parcours.inscriptions.index', ['id'=>$parcours->id, 'annee' =>$annee->id]) }}">{{ $annee->intitule }}</a>
+                            @endforeach                            
+                        </div>
+                        
+                    </div>
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
                         <tr>
@@ -83,6 +93,15 @@
 <script type="module">
     $(document).ready(function() {
         $('#data').DataTable();
+
+        $(document).on('change', '#annee', function() {
+            var selectedAnnee = this.options[this.selectedIndex].value;
+            var parcours = $('#parcours').attr('value');
+            console.log(selectedAnnee+'  '+parcours);
+            
+            
+            
+        });
     });
 </script>
 @endpush

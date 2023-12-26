@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Ajouter un visa pour institution') }}
+{{ __('Ajouter des visas') }}
 @endsection
 
 @section('content')
@@ -23,7 +23,7 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Visas pour une institution') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Ajouter des visas') }}</h3>
                 <div class="">
 
                 </div> 
@@ -49,32 +49,36 @@
             </div>
 
             <div class="table-responsive">
-            <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('visa_institutions.configvisas', $visaInstitution->id) }}"> Ajouter des visas</a>
-            </div>
-                <table id="data" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Intitule</th>
-                            <th>Texte</th>                            
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($visas as $visa)
-                        <tr>  
-                            <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $visa->intitule }}</td>
-                            <td>{{ $visa->texte }}</td>
-                            
-                            <td>
-                                
-                            </td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+            <form method="post" action="{{ route('visa_institutions.storeconfigvisas') }}">
+                    @csrf
+                    <input type="hidden" id="visaInstitution" name="visaInstitution_id"  value="{{ $visaInstitution->id }}">
+                        
+                    
+                    <div class="form-group row py-2">
+                        <label for="institution" class="col-sm-2 col-form-label">Visas </label>  
+                        <div class="col">                  
+                            @foreach($visas as $visa)
+                                <div class="row">
+                                    <input type="checkbox" class="col-sm-1 mb-3" id="categorie" name="visas[]" value="{{ $visa->id }}">
+                                    <input type="text" class="col mb-3" id="categorie" value="{{ $visa->texte }}" disabled>
+                                </div>
+                            @endforeach
+                        </div>
+                    
+                    </div>
+                    
+                    <div class="row py-4">
+                        <label class="col-sm-2 col-form-label"></label>
+                        <div class="col">
+                            <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                        </div>
+                        <div class="col">
+                            <a href="{{ route('visa_institutions.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                        </div>
+
+                    </div>
+
+                </form>
             </div>
         </div>
     </div>

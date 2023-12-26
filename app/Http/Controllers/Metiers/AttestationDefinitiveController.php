@@ -18,6 +18,8 @@ use App\Repositories\TimbreRepository;
 use App\Models\ResultatAcademique;
 use App\Models\Parcours;
 use App\Repositories\ActeAcademiqueRepository;
+use App\Repositories\CategorieActeRepository;
+use App\Repositories\FiliereRepository;
 use App\Utils\DocumentCreate;
 use App\Utils\DocumentCreator;
 
@@ -29,62 +31,74 @@ use Illuminate\Support\Facades\Auth;
 
 class AttestationDefinitiveController extends Controller
 {
-    protected $institutionRepository;
+    protected $attestationRepository ;
+    protected $filiereRepository ;
     protected $parcoursRepository;
     protected $niveauRepository;
+    protected $signataireRepository;
+    protected $institutionRepository ;
+    protected $etudiantRepository;
     protected $anneeRepository;
-    protected $attestationRepository;
-    protected $resultatRepository;
-    protected $impetrantRepository;
-    protected $numeroteuRepository;
+    protected $resultatRepository ;
+    protected $categorieActeRepository;
+    protected $timbreRepository;
     protected $pdfCreator;
 
 
 
-    public function __construct(InstitutionRepository $institutionRepo, 
-                                ParcoursRepository $parcoursRepo, 
-                                NiveauEtudeRepository $niveauRepo,
-                                AnneeAcademiqueRepository $anneeRepo,
-                                ActeAcademiqueRepository $attestationRepo,
-                                ResultatAcademiqueRepository $resultatRepo,
-                                EtudiantRepository $impetrantRepo,
-                                NumeroteurRepository $numeroteurRepo,
-                                DocumentCreator $pdfCreator)
-
+    public function __construct(
+        
+        FiliereRepository $filiereRepo,
+        ParcoursRepository $parcoursRepo,
+        ActeAcademiqueRepository $attestationRepo,
+        NiveauEtudeRepository $niveauRepo,
+        SignataireRepository $signataireRepo,
+        InstitutionRepository $institutionRepo,
+        EtudiantRepository $etudtiantRepo,
+        AnneeAcademiqueRepository $anneeRepo,
+        ResultatAcademiqueRepository $resultatRepo,
+        CategorieActeRepository $categorieRepo,
+        TimbreRepository $timbreRepo,
+        DocumentCreator $pdfCreator
+         )
     {
-        $this->institutionRepository = $institutionRepo;
+        $this->attestationRepository = $attestationRepo;
+        $this->filiereRepository = $filiereRepo ;
         $this->parcoursRepository = $parcoursRepo;
         $this->niveauRepository = $niveauRepo;
+        $this->signataireRepository = $signataireRepo;
+        $this->institutionRepository = $institutionRepo;
+        $this->etudiantRepository = $etudtiantRepo;
         $this->anneeRepository = $anneeRepo;
-        $this->attestationRepository = $attestationRepo;
         $this->resultatRepository = $resultatRepo;
-        $this->impetrantRepository = $impetrantRepo;
-        $this->numeroteuRepository = $numeroteurRepo;
+        $this->categorieActeRepository = $categorieRepo;
+        $this->timbreRepository = $timbreRepo;
         $this->pdfCreator = $pdfCreator;
-        
     }
-
     public function index()
-    {
-        if(isset($_GET['institution_id'])){
-            $institution_id = $_GET['institution_id'];
-        }else{
-            $institution_id = 1;
+    {        
+        $institution = Auth::user()->institution;
+        //dd($institution);
+        if(empty($institution->id)) {
+            $institution = $this->institutionRepository->find(1);
+        }        
+        $parcours = null;
+        $attestations = null;
+        
+        $categorieActeProvisoire = $this->categorieActeRepository->findByIntitule("DEFINITIVE");
+
+        if($institution->type =="IESR") {
+            $parcours = $this->parcoursRepository->findByIesr($institution->id);
+            $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorieActeProvisoire->id );        
         }
-        if(isset($_GET['categorie_id'])){
-            $categorie_id = $_GET['categorie_id'];
-        }else{
-            $categorie_id = 2;
+        else {
+            $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+            $attestations = $this->attestationRepository->findByEtablissementAndCategorieActe($institution->id, $categorieActeProvisoire->id );       
+        
         }
-        //$institution = Auth::user()->institution;
-        $institution = $this->institutionRepository->find($institution_id);
+        
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
-        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
-        
-        $attestations = $this->attestationRepository->findByEtablissement($institution->id, $categorie_id);
-        // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
-
         return view("metiers.actes.definitives.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
@@ -102,14 +116,14 @@ class AttestationDefinitiveController extends Controller
         if(isset($_GET['categorie_id'])){
             $categorie_id = $_GET['categorie_id'];
         }else{
-            $categorie_id = 3;
+            $categorie_id = 2;
         }
         //$institution = Auth ::user()->institution;
         $institution = $this->institutionRepository->find($institution_id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByIesr($institution->id);
-        $attestations = $this->attestationRepository->findByIesr($institution->id, $categorie_id);
+        $attestations = $this->attestationRepository->findByIesrAndCategorieActe($institution->id, $categorie_id);
         return view('metiers.daoi.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
@@ -152,7 +166,7 @@ class AttestationDefinitiveController extends Controller
         $signataires = $institution->signataires;
         
         $annees = $this->anneeRepository->all();
-        $etudiant = $this->impetrantRepository->find($impetrant);
+        $etudiant = $this->etudiantRepository->find($impetrant);
         /*
         if ($request->ajax()) {
             $data = [];

@@ -34,8 +34,9 @@
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Intitule</th>
+                            <th>Institution</th>                            
                             <th>Catégorie</th>
-                            <th>Institution</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -43,17 +44,17 @@
                         @foreach ($visaInstitutions as $visaInstitution)
                         <tr>  
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $visaInstitution->categorieActe->intitule }}</td>
-                            <td>{{ $visaInstitution->institution->sigle }}</td>
                             <td>{{ $visaInstitution->intitule }}</td>
-
+                            <td>{{ $visaInstitution->institution->sigle }}</td>
+                            <td>{{ $visaInstitution->categorieActe->intitule }}</td>           
                             
                             <td>
-                                <form action="{{ route('visa_institutions.destroy',$visa_institution->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('visa_institutions.show',$visa_institution->id) }}">
+                                <form action="{{ route('visa_institutions.destroy',$visaInstitution->id) }}" method="POST">
+
+                                    <a class="btn btn-info" title="Voir les visas" href="{{ route('visa_institutions.show',$visaInstitution->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('visa_institutions.edit',$visa_institution->id) }}">
+                                    <a class="btn btn-primary" title="Modifier" href="{{ route('visa_institutions.edit',$visaInstitution->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 

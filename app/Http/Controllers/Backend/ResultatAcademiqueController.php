@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Repositories\ResultatAcademiqueRepository;
 use App\Http\Requests\StoreResultatAcademiqueRequest;
 use App\Http\Requests\UpdateResultatAcademiqueRequest;
+use App\Models\ResultatAcademique;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\EtudiantRepository;
 use App\Repositories\InscriptionRepository;
 use App\Repositories\ParcoursRepository;
 use App\Repositories\ProcesVerbalRepository;
+use Illuminate\Http\Request;
 
 class ResultatAcademiqueController extends Controller
 {
@@ -51,8 +53,12 @@ class ResultatAcademiqueController extends Controller
     public function create($id)
     {
         $procesVerbal = $this->procesVervalRepository->find($id);
-        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
+        $inscriptions = $this->procesVervalRepository->findByNoResultats($procesVerbal->id);
+        
+        $reponse = "Aucune inscription à ce parcours ou tout déja saisie" ;        
+        if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
+
         return view('backend.resultat_academiques.create', compact('inscriptions', 'procesVerbal', 'anneeAcademiques')) ;
     }
 
@@ -62,8 +68,15 @@ class ResultatAcademiqueController extends Controller
     public function create2($id)
     {
         $procesVerbal = $this->procesVervalRepository->find($id);
-        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
+        $inscriptions = $this->procesVervalRepository->findByNoResultats($procesVerbal->id);
+        
+        $reponse = "Aucune inscription à ce parcours ou tout déja saisie" ;        
+        if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
+
+        $reponse = "Aucune inscription à ce parcours" ;
+        if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
+
         return view('backend.resultat_academiques.create2', compact('inscriptions', 'procesVerbal', 'anneeAcademiques')) ;
     }
 
@@ -86,6 +99,40 @@ class ResultatAcademiqueController extends Controller
         
         return redirect(route('proces_verbaux.resultats.index', $procesVerbal->id));
     }
+
+    public function store2(Request $request, $id)
+    {
+        $procesVerbal = $this->procesVervalRepository->find($id);  
+        $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);      
+
+        $moyenne = $request->input('moyenne');
+
+        foreach ($inscriptions as $i => $inscription){
+            $data = array(
+                'inscription_id' => $inscription->id,
+                'procesVerbal_id' => $id,
+                'moyenne' => $moyenne[$inscription->id],
+                'reference' => $inscription->id.''.$id,
+                'user_id' => 1
+            );
+
+            $resul = ResultatAcademique::where('inscription_id',$inscription->id)
+                ->where('procesVerbal_id',$id)
+                ->get()->first();
+
+            if ($resul != null){
+                ResultatAcademique::where('id',$resul->id)->update($data);
+            }else{
+                if($moyenne[$inscription->id] != null){
+                    ResultatAcademique::create($data);
+                }    
+            }
+        }
+        
+        return redirect(route('proces_verbaux.resultats.index', $id));
+    }
+
+
 
     /**
      * Display the specified resource.

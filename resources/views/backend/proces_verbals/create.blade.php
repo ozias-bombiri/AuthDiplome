@@ -63,9 +63,13 @@
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
+                        <label for="type" class="col-sm-2 col-form-label">Type (EXEMEN/ SOUTENANCE)</label>
                         <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
+                        <select class="form-control" id="type" name="type" required>
+                            <option value="" selected disabled hidden>Choisir </option>                            
+                            <option value="EXAMEN">EXAMEN</option> 
+                            <option value="SOUTENANCE">SOUTENANCE</option>                               
+                            </select>
                         </div>
                     </div>
 
@@ -98,13 +102,9 @@
                         <div class="col">
                             <textarea name="description" class="form-control" id="" cols="5" rows="3"></textarea>
                         </div>
-                    </div>
-
-                    
+                    </div>    
                     
 
-
-                   
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">

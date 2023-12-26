@@ -9,29 +9,38 @@ use App\Http\Requests\StoreVisaInstitutionRequest ;
 use App\Http\Requests\UpdateVisaInstitutionRequest ;
 use App\Repositories\CategorieActeRepository;
 use App\Repositories\InstitutionRepository;
+use App\Repositories\VisaDiplomeRepository;
+use App\Repositories\VisaRepository;
+use Illuminate\Http\Request;
 
 class VisaInstitutionController extends Controller
 {
     /** @var  modelRepository */ 
     private $modelRepository;
-    private $categorieRepository;
+    private $categorieActeRepository;
     private $institutionRepository;
+    private $visaRepository;
+    private $visaDiplomeRepository;
 
     public function __construct(
         VisaInstitutionRepository $visaInstitutionRepo,
         CategorieActeRepository $categorieRepo,
-        InstitutionRepository $institutionRepo
+        InstitutionRepository $institutionRepo,
+        VisaRepository $visaRepo,
+        VisaDiplomeRepository $visaDiplomeRepo
         )
     {
         $this->modelRepository = $visaInstitutionRepo;
-        $this->categorieRepository = $categorieRepo;
+        $this->categorieActeRepository = $categorieRepo;
         $this->institutionRepository = $institutionRepo;
+        $this->visaRepository = $visaRepo;
+        $this->visaDiplomeRepository = $visaDiplomeRepo;
     }
 
     public function index()
     {
-        $visa_institutions = $this->modelRepository->all();
-        return view('backend.visa_institutions.index', compact('visa_institutions'));
+        $visaInstitutions = $this->modelRepository->all();
+        return view('backend.visa_institutions.index', compact('visaInstitutions'));
     }
     
     /**
@@ -39,9 +48,39 @@ class VisaInstitutionController extends Controller
      */
     public function create() 
     {
-        $categories = $this->categorieRepository->all();
-        $institutions = $this->institutionRepository->all();
-        return view('backend.visa_institutions.create', compact('categories', 'institutions'));
+        $categorieActe = $this->categorieActeRepository->findByIntitule('DIPLOME');
+        $institutions = $this->institutionRepository->findByType('IESR');
+        return view('backend.visa_institutions.create', compact('categorieActe', 'institutions'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function configVisas($id) 
+    {
+        $visaInstitution = $this->modelRepository->find($id);
+        $visas = $this->visaRepository->all();
+        return view('backend.visa_institutions.configVisas', compact('visaInstitution', 'visas'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function storeConfigVisas(Request $request) 
+    {
+        $input = $request->all();
+        $visaInstitution = $this->modelRepository->find($input['visaInstitution_id']);
+        $visasChecked = $input['visas'];
+        //dd($visasChecked);
+        $ordre = 1;
+        foreach($visasChecked as $visaId){
+            $visadiplome = [];
+            $visadiplome['visaInstitution_id'] =  $visaInstitution->id;
+            $visadiplome['visa_id'] = $visaId;
+            $visadiplome['ordre'] = $ordre ++;
+            $this->visaDiplomeRepository->create($visadiplome);
+        }
+        return redirect(route('visa_institutions.show', $visaInstitution->id));
     }
 
     /**
@@ -62,13 +101,14 @@ class VisaInstitutionController extends Controller
      */
     public function show($id)
     {
-        $visa_institution = $this->modelRepository->find($id);
-
-        if (empty($visa_institution)) {
+        $visaInstitution = $this->modelRepository->find($id);
+        $visas = $this->visaRepository->findByVisaInstitution($visaInstitution->id);
+        //dd($visas);
+        if (empty($visaInstitution)) {
             return redirect(route('visa_institutions.index'));
         }
 
-        return view('backend.visa_institutions.show')->with('visa_institution', $visa_institution);
+        return view('backend.visa_institutions.show', compact('visaInstitution', 'visas'));
 
     }
 

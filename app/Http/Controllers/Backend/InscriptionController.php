@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateInscriptionRequest;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\EtudiantRepository;
 use App\Repositories\ParcoursRepository;
+use Illuminate\Http\Request;
 
 class InscriptionController extends Controller
 {
@@ -33,11 +34,31 @@ class InscriptionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index(Request $request, $id)
     {
         $parcours = $this->parcoursRepository->find($id);
         $inscriptions = $this->modelRepository->findByParcours($parcours->id);
-        return view('backend.inscriptions.index', compact('parcours', 'inscriptions'));
+        $annees = $this->anneeAcademiqueRepository->all();   
+        
+        if(isset($_GET['annee'])){
+            $annee_id = $_GET['annee'];
+            $inscriptions = $this->modelRepository->findByParcoursandAnnee($parcours->id, $annee_id);        
+        }
+        if ($request->ajax()) {
+            $data = [];
+            if(empty($inscriptions)){
+                $data = "Nothing";
+            }
+            else {
+            $data = [
+                'parcours' => $parcours,
+                'inscriptions' => $inscriptions,
+                'annees' => $annees,
+            ];
+        }
+            return response()->json(['result' =>$data]);
+        }
+        return view('backend.inscriptions.index', compact('parcours', 'inscriptions', 'annees'));
     }
 
     /**

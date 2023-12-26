@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('visa_id')->constrained('visas')->onDelete('cascade')->onUpdate('cascade');    
             $table->foreignId('visaInstitution_id')->constrained('visas_institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('ordre');   
+            $table->integer('ordre');  
+            $table->unique(['visa_id', 'visaInstitution_id']) ;
             $table->timestamps();
         });
     }

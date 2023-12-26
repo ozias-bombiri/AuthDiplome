@@ -20,6 +20,11 @@
             </ul>
         </div>
         @endif
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+            @endif
     </div>
 </div>
 <div class="row">
@@ -59,10 +64,11 @@
                                     <a class="btn btn-primary" title="corriger la moyenne" href="{{ route('resultat_academiques.edit',$resultat->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+                                    @if(empty($resultat->getActeByCategorie(1)))
                                     <a class="btn btn-primary" title="Etablir une attestation provisoire" href="{{ route('proces_verbaux.provisoires.create',$resultat->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
-                                    
+                                    @endif
                                     @csrf
                                     @method('DELETE')
 

@@ -31,8 +31,8 @@ class Visa extends Model
 		'texte'
 	];
 
-	public function visaInstitutions()
+	public function visaDiplomes() 
 	{
-		return $this->belongsToMany(Institution::class, 'visa_diplomes', 'visa_id', 'institution_id');
+		return $this->hasMany(VisaDiplome::class, 'visa_id', 'visas_diplomes', 'id');
 	}
 }

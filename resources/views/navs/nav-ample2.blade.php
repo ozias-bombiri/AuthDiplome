@@ -1,6 +1,5 @@
 <nav class="sidebar-nav">
     <ul id="sidebarnav">
-        <!-- User Profile-->
         <li class="sidebar-item pt-2">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('dashboard') }}" aria-expanded="false">
                 <i class="far fa-clock" aria-hidden="true"></i>

@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\ActeAcademique;
+use App\Models\ResultatAcademique;
 use App\Repositories\BaseRepository;
 
 /**
@@ -54,10 +55,12 @@ class ActeAcademiqueRepository extends BaseRepository
         
     }
 
-    public function findByEtablissement($institution_id, $categorie_id){
-        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
-                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
-                        ->where('institutions.id', '=', $institution_id)
+    public function findByEtablissementAndCategorieActe($institution_id, $categorie_id){
+        $attestations = ActeAcademique::join('resultat_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
+                		->join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+                        ->join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                        ->where('filieres.institution_id', '=', $institution_id)
                         ->where('acte_academiques.categorieActe_id', '=',$categorie_id)
                         ->select('acte_academiques.*')
                         ->get();
@@ -66,7 +69,7 @@ class ActeAcademiqueRepository extends BaseRepository
         
     }
 
-    public function findByIesr($iesr_id, $categorie_id){
+    public function findByIesrAndCategorieActe($iesr_id, $categorie_id){
         $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
                 		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
                         ->where('institutions.id', '=', $iesr_id)
@@ -107,4 +110,17 @@ class ActeAcademiqueRepository extends BaseRepository
                         ->first();
         return $attestation;
     }
+
+    public function findByPvCategorie($procesVerbal_id, $categorieActe_id)
+	{
+		$actesProvisoires = ResultatAcademique::join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+					->join('acte_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
+					->where('proces_verbaux.id', $procesVerbal_id)
+                    ->where('acte_academiques.categorieActe_id', $categorieActe_id)
+					->select('acte_academiques.*')
+					->get();
+		
+		return $actesProvisoires ;
+	
+	}
 }

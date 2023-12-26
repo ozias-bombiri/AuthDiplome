@@ -31,7 +31,21 @@ class ParcoursController extends Controller
      */
     public function index()
     {
-        $parcours = $this->modelRepository->all();
+        $parcours = [];
+        
+        if(isset($_GET['etablissement_id'])){
+            $institution_id = $_GET['etablissement_id'];
+            $parcours = $this->modelRepository->findByInstitution($institution_id);
+        
+        }
+        else if(isset($_GET['iesr_id'])){
+            $institution_id = $_GET['iesr_id'];
+            $parcours = $this->modelRepository->findByIesr($institution_id);
+        }
+        else{
+            $parcours = $this->modelRepository->all();
+        }
+
         return view('backend.parcours.index', compact('parcours'));
     }
 

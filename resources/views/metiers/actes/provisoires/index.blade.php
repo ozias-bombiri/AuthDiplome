@@ -20,6 +20,12 @@ Attestations provisoires
             </ul>
         </div>
         @endif
+
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+        @endif
     </div>
 </div>
 <div class="row">
@@ -126,6 +132,13 @@ Attestations provisoires
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
                                 <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.provisoires.generer', $attestation->id) }}">
+                                    <i class="bi bi-file-pdf"></i>
+                                </a>
+                                
+                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="#">
+                                    <i class="bi bi-file-pdf"></i>
+                                </a>
+                                <a class="btn btn-primary action-btn" title="Etablir attestation définitive" href="#">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                             </td>

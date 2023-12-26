@@ -50,4 +50,13 @@ class InscriptionRepository extends BaseRepository
                         ->get();
         return $insctiptions;        
     }
+    /**
+     * Selectionner par filiere et niveau
+     **/
+    public function findByParcoursandAnnee($parcours_id, $annee_id)
+    {
+        return Inscription::where('parcours_id', '=', $parcours_id)
+                ->where('anneeAcademique_id', '=', $annee_id)
+                ->get();
+    }
 }

@@ -40,4 +40,12 @@ class VisaRepository extends BaseRepository
     {
         return Visa::class;
     }
+
+    public function findByVisaInstitution($visaInstitution_id){
+        return Visa::join('visas_diplomes', 'visas.id', '=', 'visas_diplomes.visa_id')
+                ->join('visas_institutions', 'visas_diplomes.visaInstitution_id', '=', 'visas_institutions.id')
+                ->where('visas_institutions.id', $visaInstitution_id)
+                ->select('visas.*')
+                ->get();
+    }
 }

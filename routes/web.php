@@ -68,9 +68,35 @@ Route::resource('proces_verbals', App\Http\Controllers\Backend\ProcesVerbalContr
 Route::resource('retrait_actes', App\Http\Controllers\Backend\RetraitActeController::class);
 Route::resource('signataire_actes', App\Http\Controllers\Backend\SignataireActeController::class);
 Route::resource('visa_diplomes', App\Http\Controllers\Backend\VisaDiplomeController::class);
-Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
+//Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
 Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::class);
 //Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
+
+//ROUTES POUR LES VISAS DES DIPLOMES
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('visas', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'index'])
+    ->name('visa_institutions.index');
+    Route::get('/institutions/visas/add', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'create'])
+    ->name('visa_institutions.create');
+    Route::post('/institutions/visas/add', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'store'])
+    ->name('visa_institutions.store');
+    Route::get('/institutions/visas/{id}', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'show'])
+    ->name('visa_institutions.show');
+
+    Route::get('/institutions/visas/{id}/configVisa', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'configVisas'])
+    ->name('visa_institutions.configvisas');
+
+    Route::post('/institutions/visas/configVisa', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'storeConfigVisas'])
+    ->name('visa_institutions.storeconfigvisas');
+
+    Route::get('/institutions/visas/{id}/edit', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'edit'])
+    ->name('visa_institutions.edit');
+    
+    Route::delete('/institutions/visas/{id}/delete', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'store'])
+    ->name('visa_institutions.destroy');
+    
+});
+
 
 //ROUTES POUR LES PARCOURS DE FORMATIONS
 Route::group(['middleware' => ['auth']], function(){
@@ -128,11 +154,18 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.provisoires.create');
     Route::get('proces_verbaux/{id}/provisoires/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire2'])
     ->name('proces_verbaux.provisoires.create2');
+    Route::post('proces_verbaux/provisoires/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
+    ->name('proces_verbaux.provisoires.store2');
     Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
     ->name('proces_verbaux.resultats.store'); 
-    
+    Route::post('parcours/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store2'])
+    ->name('proces_verbaux.resultats.store2');
     Route::get('resultats/{resultat_id}/definitives/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive'])
     ->name('proces_verbaux.definitives.create');
+    Route::get('proces_verbaux/{id}/definitives/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive2'])
+    ->name('proces_verbaux.definitives.create2');
+    Route::post('proces_verbaux/definitives/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
+    ->name('proces_verbaux.definitives.store');
     Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
     ->name('proces_verbaux.diplomes.create');
     
@@ -140,7 +173,7 @@ Route::group(['middleware' => ['auth']], function(){
 
 //ROUTES POUR LA GENERATION DES PDF
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('actes/provisoires//{id}/generate', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'generer'])
+    Route::get('actes/provisoires/{id}/generate', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'generer'])
     ->where('id', '[0-9]+')->name('metiers.actes.provisoires.generer'); 
     
 });

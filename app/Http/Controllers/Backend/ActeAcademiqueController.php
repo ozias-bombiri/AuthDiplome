@@ -8,13 +8,12 @@ use App\Repositories\ActeAcademiqueRepository;
 use App\Http\Requests\StoreActeAcademiqueRequest ;
 use App\Http\Requests\UpdateActeAcademiqueRequest ;
 use App\Models\CategorieActe;
+use App\Models\ProcesVerbal;
 use App\Repositories\CategorieActeRepository;
 use App\Repositories\NumeroteurRepository;
 use App\Repositories\ResultatAcademiqueRepository;
 use App\Repositories\SignataireActeRepository;
-
-
-
+use Illuminate\Support\Facades\Auth;
 
 class ActeAcademiqueController extends Controller
 {
@@ -47,8 +46,18 @@ class ActeAcademiqueController extends Controller
         $institution = $resultat->procesVerbal->parcours->filiere->institution;
         $etudiant = $resultat->inscription->etudiant;
         $categorieActe = $this->categorieRepository->findByIntitule("PROVISOIRE");
+
         $signataireActe = $this->signataireActeRepository->findByActiveInstitution($institution->id); 
-        
+        $reponse = "Aucun Signataire configuré" ;        
+
+        if (empty($signataireActe)) return back()->with('reponse', $reponse);
+
+        $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
+        $reponse = "Aucun Numéroteur associé" ;
+
+        if (empty($numeroteur)) return back()->with('reponse', $reponse); 
+
+
         return view('backend.acte_academiques.create', compact('resultat','categorieActe', 'signataireActe', 'etudiant'));
     }
 
@@ -56,9 +65,21 @@ class ActeAcademiqueController extends Controller
     public function provisoire2($procesVerbal_id)
     {
         $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
+
+        $reponse = "Aucun résultat académique associé à ce PV" ;
+
+        if ($resultats->isEmpty()) return back()->with('reponse', $reponse); 
+
         $categorieActe = $this->categorieRepository->findByIntitule("PROVISOIRE");
+      
+        $institution = $resultats->first()->procesVerbal->parcours->filiere->institution;
         
-        return view('backend.acte_academiques.create2', compact('resultat','categorieActe', 'signataireActe', 'etudiant'));
+        $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id); 
+
+        $pv = ProcesVerbal::find($procesVerbal_id) ;
+
+        
+        return view('backend.acte_academiques.create2', compact('categorieActe', 'signataireActe', 'procesVerbal_id', 'pv'));
     
     }
 
@@ -72,6 +93,36 @@ class ActeAcademiqueController extends Controller
         $signataireActe = $this->signataireActeRepository->findByActiveInstitution($institution->id); 
         
         return view('backend.acte_academiques.create', compact('resultat','categorieActe', 'signataireActe', 'etudiant'));
+    
+    }
+
+    public function definitive2($procesVerbal_id)
+    {
+
+        $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
+
+        $categorieActeProvisoire = $this->categorieRepository->findByIntitule("PROVISOIRE");
+
+        $categorieActe = $this->categorieRepository->findByIntitule("DEFINITIVE");
+
+        $actesProvisoires = $this->modelRepository->findByPvCategorie($procesVerbal_id, $categorieActeProvisoire->id);
+
+        $reponse = "Aucun résultat académique associé à ce PV" ;
+
+        if ($resultats->isEmpty()) return back()->with('reponse', $reponse); 
+
+        if ($actesProvisoires->isEmpty()){
+            $reponse = "Les actes provisoires du PV choisi n'ont pas encore été crées";
+            return back()->with('reponse', $reponse); 
+        }
+      
+        $institution = $resultats->first()->procesVerbal->parcours->filiere->institution;
+        
+        $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id); 
+
+        $pv = ProcesVerbal::find($procesVerbal_id) ;
+        
+        return view('backend.acte_academiques.create3', compact('categorieActe', 'signataireActe', 'procesVerbal_id', 'pv'));
     
     }
 
@@ -123,6 +174,7 @@ class ActeAcademiqueController extends Controller
         $signataireActe = $this->signataireActeRepository->findByActiveInstitution($institution->id);
         
         $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
+        
         $numeroteur->compteur +=1;
         $input_acte = [];
         $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant;
@@ -139,6 +191,46 @@ class ActeAcademiqueController extends Controller
         $numeroteur->update();
         
         $acte = $this->modelRepository->create($input_acte);
+
+        return redirect(route('acte_academiques.index'));
+    }
+
+    public function store2(StoreActeAcademiqueRequest $request)
+    {
+
+        $resultats = $this->resultatRepository->findByProcesVerbal($request->procesVerbal_id);
+
+        //dd($resultats);
+
+        $validated = $request->validated();
+        $input = $request->all();
+
+        foreach ($resultats as $key => $resultat) {
+            $institution = $resultat->procesVerbal->parcours->filiere->institution;
+            $etudiant = $resultat->inscription->etudiant;
+            $parcours = $resultat->inscription->parcours;
+            $categorieActe = $this->categorieRepository->find( $request->categorieActe_id);
+            $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id); 
+            $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
+            $numeroteur->compteur +=1;
+            $input_acte = [];
+            $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant.'_'.$categorieActe->id ;$resultat->procesVerbal->anneeAcademique->intitule.'_'.$etudiant->identifiant;
+            $input_acte['numero'] = $numeroteur->compteur;
+            $input_acte['dateSignature'] = $input['dateSignature'];
+            $input_acte['statutSignaure'] = false;
+            $input_acte['statutRemise'] = false;
+            $input_acte['lieu'] = $input['lieu'];
+            $input_acte['resultatAcademique_id'] = $resultat->id;
+            $input_acte['signataireActe_id'] = $signataireActe->id;
+            $input_acte['categorieActe_id'] = $categorieActe->id;
+            $input_acte['intitule'] = strtoupper($categorieActe->intitule.' de '.$parcours->niveauEtude->intitule);
+            $input_acte['user_id'] = Auth::id();
+            $numeroteur->update();
+            
+            $acte = $this->modelRepository->create($input_acte);
+        }
+
+       
 
         return redirect(route('acte_academiques.index'));
     }

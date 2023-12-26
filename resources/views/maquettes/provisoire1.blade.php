@@ -288,18 +288,18 @@
                 @endif
 
                     à {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance }}) <br />
-                {{$impetrant->typeIdentifiant }} : {{ $impetrant->identifiant }} Sexe : {{ $impetrant->sexe }} <br />
+                {{$impetrant->typeIdentifiant }} : <b>{{ $impetrant->identifiant }}</b> Sexe : {{ $impetrant->sexe }} <br />
                 a acquis les {{ $parcours->niveauEtude->credit }} crédits du parcours {{ $parcours->intitule }} à l’issue
                 @if($parcours->soutenance) 
                     de la soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
                 @else 
-                de la session {{ $resultat->session}}
-                de l’année académique {{ $resultat->anneeAcademique->intitule }} 
+                de la session {{ $resultat->procesVerbal->session}}
+                de l’année académique {{ $resultat->procesVerbal->anneeAcademique->intitule }} 
                 @endif                    
                 <br />
-                Domaine : {{ $parcours->domaine }} <br />
-                Mention : {{ $parcours->mention }} <br />
-                Spécialité : {{ $parcours->specialite }} <br />
+                Domaine : <b>{{ $parcours->domaine }}</b> <br />
+                Mention : <b>{{ $parcours->mention }} </b><br />
+                Spécialité : <b>{{ $parcours->specialite }}</b> <br />
                 et a obtenu la moyenne générale de {{ $resultat->moyenne}} sur 20, 
                 côte @if($resultat->moyenne >= 16 ) A @elseif($resultat->moyenne < 16 && $resultat->moyenne >=14) B @elseif($resultat->moyenne < 14 && $resultat->moyenne >=12) C @elseif($resultat->moyenne < 12 && $resultat->moyenne >=10) @endif.
             </p>
@@ -320,7 +320,7 @@
 
         <div id="nine" class="zone">
 
-            Fait le {{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }} à {{ $acte->lieu}} <br /><br /><br />
+            Fait le <b>{{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }} </b> à <b>{{ $acte->lieu}}</b> <br /><br /><br />
         
         </div>
 
@@ -343,7 +343,7 @@
             <p class="text-center">
                 <br /><br />
                 @if($signataireActe->signataire->grade) {{ $signataireActe->signataire->grade }}@endif
-                {{ $signataireActe->signataire->prenom }} {{ $signataireActe->signataire->nom }}<br />
+                <b>{{ $signataireActe->signataire->prenom }} {{ $signataireActe->signataire->nom }} </b><br />
                 <em>{{ $signataireActe->signataire->titreAcademique }}<br /> {{ $signataireActe->signataire->titreHonorifique }}</em>
             </p>
             

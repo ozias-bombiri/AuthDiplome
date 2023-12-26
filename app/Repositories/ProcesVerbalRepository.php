@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Inscription;
 use App\Models\ProcesVerbal;
 use App\Repositories\BaseRepository;
 
@@ -55,17 +56,52 @@ class ProcesVerbalRepository extends BaseRepository
                 ->get();
     }
 
+
+    /**
+     * Selectionner les inscrits au parcours qui non pas encore de résultats
+     **/
+    public function findByNoResultats($procesVerbal_id)
+    {
+        
+        $resultats = ProcesVerbal::join('resultat_academiques', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+                ->where('proces_verbaux.id', $procesVerbal_id)
+                ->select('resultat_academiques.inscription_id')
+                ->get();
+
+        $noResultats = Inscription::join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
+                ->join('proces_verbaux', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                ->whereNotIn('inscriptions.id', $resultats)
+                ->select('inscriptions.*')
+                ->get();
+
+        return $noResultats;
+
+    }
+
     
 
     /**
-     * Selectionner les pv d'une institution
+     * Selectionner les pv d'un établissement
      **/
     public function findByInstitution($institution_id)
     {
         return ProcesVerbal::join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
                 ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                 ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
-                ->where('parcours.id', $institution_id)
+                ->where('institutions.id', $institution_id)
+                ->select('proces_verbaux.*')
+                ->get();
+    }
+
+    /**
+     * Selectionner les pv d'une institution (iesr)
+     **/
+    public function findByIesr($iesr_id)
+    {
+        return ProcesVerbal::join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                ->where('institutions.parent_id', $iesr_id)
                 ->select('proces_verbaux.*')
                 ->get();
     }
