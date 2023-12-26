@@ -37,7 +37,7 @@
                             <th>Acte academique</th>
                             <th>Reference</th>
                             <th>Date retrait</th>
-                            <th>REtirant</th>
+                            <th>Retirant</th>
                             <th>Action</th>
                         </tr>
                     </thead>

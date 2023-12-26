@@ -8,6 +8,9 @@ use App\Repositories\RetraitActeRepository;
 use App\Http\Requests\StoreRetraitActeRequest ;
 use App\Http\Requests\UpdateRetraitActeRequest ;
 use App\Repositories\ActeAcademiqueRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+use App\Models\User;
 
 
 class RetraitActeController extends Controller
@@ -45,11 +48,13 @@ class RetraitActeController extends Controller
      */
     public function store(StoreRetraitActeRequest $request)
     {
-        $validated = $request->validated();
+        //$validated = $request->validated();
+
+        $user_id = Auth::id(); 
         $input = $request->all();
-
+        $input['user_id'] = $user_id; 
         $retrait = $this->modelRepository->create($input);
-
+        
         return redirect(route('retrait_actes.index'));
     }
 
