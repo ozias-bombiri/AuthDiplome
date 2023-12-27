@@ -91,8 +91,8 @@ class ActeAcademiqueRepository extends BaseRepository
     }
 
     public function findByNiveauParcoursAnnee($niveau,  $parcours, $annee){
-        if(isset($_GET['categorie_id'])){
-            $categorie_id = $_GET['categorie_id'];
+        if(isset($_GET['categorieActe_id'])){
+            $categorie_id = $_GET['categorieActe_id'];
         }else{
             $categorie_id = 3;
         }
