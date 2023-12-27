@@ -41,15 +41,6 @@ Recherche
                             <input type="text" class="form-control form-control" id="reference" name="reference" required>
                         </div>
 
-                        <label for="categorie" class="col-sm-2 col-form-label">Catégorie</label>
-                        <div class="col">
-                            <select class="form-control" id="categorie" name="categorie" required>
-                                <option value="provisoire">Attestation provisoire</option>
-                                <option value="definitive">Attestation définitive</option>
-                                <option value="diplome">Diplôme</option>
-
-                            </select>
-                        </div>
                     </div>
 
                     <div class="row py-4">
@@ -92,13 +83,17 @@ Recherche
                             <td>{{ $acte->resultatAcademique->inscription->etudiant->nom. ' '.$acte->resultatAcademique->inscription->etudiant->prenom }}</td>
                             <td>{{ $acte->resultatAcademique->procesVerbal->parcours->intitule }} ({{ $acte->resultatAcademique->procesVerbal->parcours->niveauEtude->intitule }})</td>
                             <td>
-                                <button id="{{ $acte->id }}" class="btn btn-info view-btn" data="{{ $categorie }}" title="Détails">
+                                <button id="{{ $acte->id }}" class="btn btn-info view-btn" title="Détails">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
                                 
-                                <button class="btn btn-primary pdf-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $acte->id) }}">
+                                <a class="btn btn-primary pdf-btn" title="Voir pdf" href="{{ route('metiers.actes.provisoires.generer', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
-                                </button>
+                                </a>
+
+                                <a class="btn btn-primary pdf-btn" title="Générer un rapport" href="#">
+                                    <i class="bi bi-file-earmark-check"></i>
+                                </a>
                                 
                             </td>
                         </tr>

@@ -39,43 +39,24 @@ class VerificationController extends Controller
     public function rechercher(Request $request){
         $input = $request->all();
         $reference = $input['reference'];
-        $categorie = $input['categorie'];
-        $acte =null;
-        if ($categorie === "provisoire") {
-            $acte  = $this->acteAcademiqueRepository->findByReference($reference);
-        }
-        else if($categorie === "definitive"){
-            $acte = $this->acteAcademiqueRepository->findByReference($reference);
-        }
-        else if($categorie === "diplome"){
-            $acte = $this->acteAcademiqueRepository->findByReference($reference);
-        }
-        else {
-
-        }
+        $acte =null;        
+        $acte  = $this->acteAcademiqueRepository->findByReference($reference);        
+        
         if(empty($acte)){
             $message = "Aucun document trouvé !";
             return view('metiers.authentification.index', compact('message'));
         }
 
-        return view('metiers.authentification.index', compact('categorie', 'acte'));
+        return view('metiers.authentification.index', compact('acte'));
     }
     /**
      * Visualiser après la recherche
      */
 
-    public function visualiser(Request $request, $categorie, $id){
-        $document =null;
-        if( $categorie ==="provisoire"){
-            $document = $this->acteAcademiqueRepository->find($id);
-        }
-        elseif( $categorie ==="definitive" ){
-            $document = $this->acteAcademiqueRepository->find($id);
-        }
-        elseif( $categorie ==="diplome" ){
-            $document = $this->acteAcademiqueRepository->find($id);
-        }        
-        //$document = $this->attestationProvisoireRepository->find($id);
+    public function visualiser(Request $request, $id){
+        $acte =null;
+        
+        $acte = $this->acteAcademiqueRepository->find($id);
         
         if ($request->ajax()) {
             $data = [];
@@ -171,18 +152,11 @@ class VerificationController extends Controller
 
     }
 
-    public function pdfDocument($categorie, $id)
+    public function pdfDocument($id)
     {
         $document =null;
-        if( $categorie ==="provisoire"){
-            $document = $this->acteAcademiqueRepository->find($id);
-        }
-        elseif( $categorie ==="definitive" ){
-            $document = $this->acteAcademiqueRepository->find($id);
-        }
-        elseif( $categorie ==="diplome" ){
-            $document = $this->acteAcademiqueRepository->find($id);
-        }  
+        
+        $document = $this->acteAcademiqueRepository->find($id);
 
         $document = $this->acteAcademiqueRepository->find($id);
         $attestation= $document;
