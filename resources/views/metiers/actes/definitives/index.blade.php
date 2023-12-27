@@ -125,7 +125,7 @@ Attestations provisoires
                                 <button id="{{ $attestation->id }}" class="btn btn-info view action-btn" title="Détails">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
-                                <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.etablissements.attestation-pdf', $attestation->id) }}">
+                                <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.definitives.generer', $attestation->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                             </td>

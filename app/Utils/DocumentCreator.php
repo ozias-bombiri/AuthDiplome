@@ -100,7 +100,7 @@ class DocumentCreator
         
         $logo = $this->getLogoBase64($institution);
         $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$document->id;
-        $qr_infos = $acte->intitule."\nRef :".$acte->reference."\n \n ".$lien ;
+        $qr_infos = "Ref :".$acte->reference."\n\n".$acte->intitule."\n ".strtoupper($impetrant->nom. ' '.$impetrant->prenom)."\n \n ".$lien ;
         $qrcode = $this->createQrcode($qr_infos, $acte->reference);
        
         $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])

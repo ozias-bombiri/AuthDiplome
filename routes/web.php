@@ -178,7 +178,9 @@ Route::group(['middleware' => ['auth']], function(){
 //ROUTES POUR LA GENERATION DES PDF
 Route::group(['middleware' => ['auth']], function(){
     Route::get('actes/provisoires/{id}/generate', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'generer'])
-    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.generer'); 
+    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.generer');
+    Route::get('actes/definivites/{id}/generate', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'generer'])
+    ->where('id', '[0-9]+')->name('metiers.actes.definitives.generer');  
     
 });
 

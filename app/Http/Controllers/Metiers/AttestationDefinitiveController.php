@@ -235,6 +235,34 @@ class AttestationDefinitiveController extends Controller
     /**
      * Afficher le doucment pdf 
      **/
+
+     public function generer($acte_id){
+
+        $attestation = $this->attestationRepository->find($acte_id);        
+        $document_path = null;
+        if(isset($attestation->documents) && count($attestation->documents) >0) {
+            $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
+        }
+        else {
+            $institution = $attestation->signataireActe->institution;
+            $etudiant = $attestation->resultatAcademique->inscription->etudiant;
+            $parcours = $attestation->resultatAcademique->procesVerbal->parcours;
+            $resultat = $attestation->resultatAcademique ;
+            $signataireActe = $attestation->signataireActe;
+            
+            $reponse = "Aucun timbre associé" ;
+            if (count($institution->timbres) <1 ) return back()->with('reponse', $reponse); 
+            $timbre = $institution->timbres[0] ;
+
+            $document_path = $this->pdfCreator->createAttestationDefinitive($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
+        
+        }
+        
+        return Response::make(file_get_contents(public_path($document_path)), 200, [
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'inline; filename="'.$attestation->reference.'"'
+            ]);
+    }
     
     public function pdfAttestation($id)
     {
