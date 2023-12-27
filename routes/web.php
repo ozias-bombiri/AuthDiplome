@@ -302,7 +302,9 @@ Route::group(['middleware' =>['auth']], function(){
 
     
 
-    Route::get('actes/remise/{id}/', [App\Http\Controllers\Metiers\RetraitActeController::class, 'store'])
-    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.remise'); 
+    
 
 });
+
+Route::post('actes/remise/{id}/', [App\Http\Controllers\Backend\RetraitActeController::class, 'saveRemiseActe'])
+    ->where('id', '[0-9]+')->name('metiers.actes.provisoires.remise'); 
