@@ -80,17 +80,14 @@ Attestations provisoires
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
 
+                                <button id="{{ $attestation->id }}" class="btn btn-info remise action-btn" data-bs-toggle="modal" data-bs-target="#modalRemiseActe"  title="{{ $attestation->id }}">
+                                    <i class="bi bi-file-pdf"></i>
+                                </button>
                                 
-                                <a class="btn btn-primary action-btn" data-bs-toggle="modal" data-bs-target="#modalRemiseActe"  title="Remise de l'acte">
+                               
+                                <a class="btn btn-primary action-btn" title="Etablir attestation définitive" href="#">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
-
-                                <a class="{{ $acte->resultatAcademique->existActe('DEFINITIVE') ? 'btn btn-secondary' : 'btn btn-warning' }}"
-                                    title="Etablir l'attestation définitive"
-                                    href="{{ $acte->resultatAcademique->existActe('DEFINITIVE') ? '#' : route('proces_verbaux.definitives.definitiveSolo', [ 'resultat_id' => $acte->resultatAcademique->id]) }}">
-                                    <i class="bi bi-clipboard-plus-fill"></i>
-                                </a>                                
-    
                             </td>
                         </tr>
                         @endforeach
@@ -104,7 +101,7 @@ Attestations provisoires
 
 <!-- Modal REmise actes-->
 
-<div class="modal fade" id="modalRemiseActe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade RemiseActe" id="modalRemiseActe" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
@@ -112,7 +109,7 @@ Attestations provisoires
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="post" action="{{ route('retrait_actes.store') }}">
+            <form method="post" action="{{ route('metiers.actes.provisoires.remise', $attestation->id) }}">
                 @csrf
 
                 <div class="mb-3">
@@ -318,6 +315,7 @@ Attestations provisoires
                 // Function to call when to
                 // request is ok 
                 success: function(data) {
+                    console.log(data);
                     $("#reference1").text(data.result.reference);
                     $("#intitule1").text(data.result.intitule);
                     $("#identifiant1").text(data.result.impetrant);
@@ -337,6 +335,47 @@ Attestations provisoires
         });
     });
 </script>
+
+
+<script type="module">
+
+    $(document).ready(function() {
+
+        $(document).on('click', '.remise', function() {
+            $.ajaxSetup({
+                headers: {
+                    
+                    'X_CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
+                }
+            });
+            var id = $(this).attr('id');
+            console.log(id);
+            $.ajax({
+                // Our sample url to make request 
+                url: "http://127.0.0.1:8000/actes/remise/" + id,
+                method: "POST",
+                data: {  },
+
+                // Function to call when to
+                // request is ok 
+                success: function(data) {
+                    console.log('data');
+                    $("#reference2").text(data.result.reference);
+                    $("#intitule2").text(data.result.intitule);
+                    
+                    var myModalRemise = new bootstrap.Modal($("#modalRemiseActe"), {});
+                    myModalRemise.show();
+                },
+
+                // Error handling 
+                error: function(error) {
+                    console.log("Error ${error}");
+                }
+            });
+        });
+    });
+</script>
+
 
 
 @endpush

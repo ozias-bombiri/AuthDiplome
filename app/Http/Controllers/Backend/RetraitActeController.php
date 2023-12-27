@@ -84,6 +84,18 @@ class RetraitActeController extends Controller
         return redirect(route('retrait_actes.index'));
     }
 
+    public function saveRemiseActe(StoreRetraitActeRequest $request, $id)
+    {
+        //$validated = $request->validated();
+
+        $user_id = Auth::id(); 
+        $input = $request->all();
+        $input['user_id'] = $user_id; 
+        $retrait = $this->modelRepository->create($input);
+        
+        return redirect(route('actes.provisoires.index'));
+    }
+
     /**
      * Display the specified resource.
      */
