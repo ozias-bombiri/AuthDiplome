@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\ActeAcademique;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 
 /**
  * Class ActeAcademiqueRepository
@@ -90,13 +91,26 @@ class ActeAcademiqueRepository extends BaseRepository
     }
 
     public function findByNiveauParcoursAnnee($niveau,  $parcours, $annee){
-        $attestations = ActeAcademique::join('resultat_academiques', 'actes_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
-                		->join('parcours', 'resultat_academiques.parcours_id', '=', 'parcours.id')
-                        ->where('parcours.niveauEtude_id', '=', $niveau)
-                        ->where('parcours.id', '=', $parcours)
-                        ->where('resultat_academiques.anneeAcademique_id', '=', $annee)
+        if(isset($_GET['categorie_id'])){
+            $categorie_id = $_GET['categorie_id'];
+        }else{
+            $categorie_id = 3;
+        }
+        $institution = Auth::user()->institution;
+        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
+                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+                        ->join('filieres', 'filieres.institution_id', '=', 'institutions.id')
+                        ->join('parcours', 'parcours.filiere_id', '=', 'filieres.id')
+                        ->join('inscriptions', 'inscriptions.parcours_id', '=', 'parcours.id')
+                        ->where('institutions.id', '=', $institution->id)
+                        ->where('acte_academiques.categorieActe_id', '=',$categorie_id)
+                        ->where('parcours.niveauEtude_id', '=',$niveau)
+                        ->where('parcours.id', '=',$parcours)
+                        ->where('inscriptions.anneeAcademique_id', '=',$annee)
                         ->select('acte_academiques.*')
-                        ->get();
+                        ->get();    
+                        
+                        //dd($attestations->toArray());
 
         return $attestations;
         

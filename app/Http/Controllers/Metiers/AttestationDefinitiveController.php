@@ -76,12 +76,12 @@ class AttestationDefinitiveController extends Controller
         }else{
             $categorie_id = 2;
         }
-        //$institution = Auth::user()->institution;
-        $institution = $this->institutionRepository->find($institution_id);
+        $institution = Auth::user()->institution;
+        $institution = $this->institutionRepository->find($institution->id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByInstitution($institution->id);
-        
+        $parcours = $this->parcoursRepository->findByInstitution($institution->id);
         $attestations = $this->attestationRepository->findByEtablissement($institution->id, $categorie_id);
         // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
 

@@ -80,8 +80,8 @@ class AttestationProvisoireController extends Controller
         }else{
             $categorie_id = 1;
         }
-        //$institution = Auth::user()->institution;
-        $institution = $this->institutionRepository->find($institution_id);
+        $institution = Auth::user()->institution;
+        $institution = $this->institutionRepository->find($institution->id);
         $annees = $this->anneeRepository->all();
         $niveaux = $this->niveauRepository->all();
         $parcours = $this->parcoursRepository->findByInstitution($institution->id);

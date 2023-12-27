@@ -28,7 +28,7 @@
         <div class="white-box">            
             <h3 class="box-title">Filtres</h3>
             <div class="table">
-                <form method="post" action="{{ route('metiers.daoi.attestationdef-filtre') }}">
+                <form method="post" action="{{ route('metiers.daoi.attestation-filtre', ['categorieActe_id' => $_GET['categorieActe_id']]) }}">
                     @csrf
                     <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
 

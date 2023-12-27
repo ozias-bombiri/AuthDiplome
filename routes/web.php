@@ -231,7 +231,7 @@ Route::group(['middleware' =>['auth']], function(){
 
 
 
-    Route::post('definitives/filtre/', [App\Http\Controllers\Daoi\AttestationController::class, 'filtreAttestation'])
+    Route::post('definitives/filtre/', [App\Http\Controllers\Metiers\DiplomeController::class, 'filtreAttestation'])
     ->name('metiers.daoi.attestation-filtre');
    
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Metiers;
 
 use App\Http\Controllers\Controller;
+use App\Models\CategorieActe;
 use App\Repositories\ActeAcademiqueRepository;
 use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\AttestationDefinitiveRepository;
@@ -75,6 +76,7 @@ class DiplomeController extends Controller
         // return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
 
         return view("metiers.daoi.list_diplomes", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+        
     }
 
 
@@ -104,15 +106,18 @@ class DiplomeController extends Controller
 
     public function filtreAttestation(Request $request)
     {
+        //dd($request->toArray());
+        $institution = Auth::user()->institution;
         $data = [];
         $inputs = $request->all();
         $niveau = $inputs['niveau'];
         $annee = $inputs['annee'];
-        $parcours = $inputs['parcours']; 
+        $parcour = $inputs['parcours']; 
         $institution = $this->institutionRepository->find($inputs['institution_id']);
         $annees = $this->anneeRepository->all();
-        $niveaux = $this->niveauRepository->all();           
-        $attestations = $this->attestationRepository->findByNiveauParcoursAnnee($niveau, $parcours, $annee); 
+        $niveaux = $this->niveauRepository->all();   
+        $parcours = $this->parcoursRepository->findByInstitution($institution->id);        
+        $attestations = $this->attestationRepository->findByNiveauParcoursAnnee($niveau, $parcour, $annee); 
 
         if ($request->ajax()) {            
             if(empty($attestations)){
@@ -126,7 +131,17 @@ class DiplomeController extends Controller
             return response()->json(['result' =>$data]);
         }
         
-        return view('metiers.etablissements.list_attestations', compact('attestations', 'institution', 'annees', 'niveaux'));
+        if($_GET['categorieActe_id'] == CategorieActe::findByIntitule('DIPLOME')){
+            return view("metiers.daoi.list_diplomes", compact('attestations', 'institution', 'annees', 'niveaux','parcours'));
+        }
+
+        if($_GET['categorieActe_id'] == CategorieActe::findByIntitule('DEFINITIVE')){
+            return view("metiers.actes.definitives.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+        }
+
+        if($_GET['categorieActe_id'] == CategorieActe::findByIntitule('PROVISOIRE')){
+            return view("metiers.actes.provisoires.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+        }
     }
 
     /**

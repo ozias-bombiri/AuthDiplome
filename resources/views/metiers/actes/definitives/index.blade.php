@@ -5,7 +5,7 @@
 @endpush
 
 @section('page-title')
-Attestations provisoires
+Attestations définitives
 @endsection
 
 @section('content')
@@ -36,7 +36,7 @@ Attestations provisoires
         <div class="white-box">
             <h3 class="box-title">Filtres</h3>
             <div class="table">
-                <form method="post" action="{{ route('metiers.etablissements.attestation-filtre') }}">
+                <form method="post" action="{{ route('metiers.daoi.attestation-filtre', ['categorieActe_id' => $_GET['categorieActe_id']]) }}">
                     @csrf
                     <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
 
