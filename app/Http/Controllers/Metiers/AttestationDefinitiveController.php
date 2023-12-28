@@ -240,7 +240,7 @@ class AttestationDefinitiveController extends Controller
 
         $attestation = $this->attestationRepository->find($acte_id);        
         $document_path = null;
-        if(isset($attestation->documents) && count($attestation->documents) >0) {
+        if(isset($attestation->documents) && count($attestation->documents) >10) {
             $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
         }
         else {

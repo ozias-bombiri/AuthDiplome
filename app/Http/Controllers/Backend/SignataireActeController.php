@@ -35,25 +35,64 @@ class SignataireActeController extends Controller
 
     public function index()
     {
-        $sign_actes = $this->modelRepository->all();
-        return view('backend.signataire_actes.index', compact('sign_actes'));
+        $signataireActes = $this->modelRepository->all();
+        return view('backend.signataire_actes.index', compact(('signataireActes')));
     }
     
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create1()
+    {
+        $categorie = $this->categorieRepository->findByIntitule('PROVISOIRE');
+        $institutions = $this->institutionRepository->findEtablissement();
+        return view('backend.signataire_actes.create', compact('categorie','institutions'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create2()
     {
         $categories = $this->categorieRepository->all();
+        unset($categories[0]);
         $signataires = $this->signataireRepository->all();
-        $institutions = $this->institutionRepository->all();
-        return view('backend.signataire_actes.create', compact('categories','signataires','institutions'));
+        $institutions = $this->institutionRepository->findByType('IESR');
+        return view('backend.signataire_actes.create2', compact('categories','signataires','institutions'));
     }
 
     /** 
      * Store a newly created resource in storage.
      */
-    public function store(StoreSignataireActeRequest $request)
+    public function store1(StoreSignataireActeRequest $request)
+    {
+        $validated = $request->validated();
+        $input = $request->all();
+
+        $signataire = $this->signataireRepository->create($input);
+        $signataireActe = [];
+        $signataireActe['statut']  = true;
+        $signataireActe['debut']  = $input['debut'];
+        $signataireActe['fonction']  = $input['fonction'];
+        $signataireActe['mention']  = $input['mention'];
+        $signataireActe['categorieActe_id']  = $input['categorieActe_id'];
+        $signataireActe['institution_id']  = $input['institution_id'];
+        $signataireActe['signataire_id']  = $signataire->id;
+        $existants = $this->modelRepository->findByInstitutionandCategorie($input['institution_id'], $input['categorieActe_id']);
+        foreach($existants as $existant) {
+            $existant->statut = false;
+            $existant->update();
+        }
+        
+        $sign_acte = $this->modelRepository->create($signataireActe);
+
+        return redirect(route('signataire_actes.index'));
+    }
+
+    /** 
+     * Store a newly created resource in storage.
+     */
+    public function store2(StoreSignataireActeRequest $request)
     {
         $validated = $request->validated();
         $input = $request->all();
@@ -71,7 +110,7 @@ class SignataireActeController extends Controller
         $sign_acte = $this->modelRepository->find($id);
 
         if (empty($sign_acte)) {
-            return redirect(route('signataire_actes.index'));
+            return back()-with("response", "Signataire introuvable");
         }
 
         return view('backend.signataire_actes.show')->with('sign_acte', $sign_acte);
@@ -86,7 +125,7 @@ class SignataireActeController extends Controller
         $sign_acte = $this->modelRepository->find($id);
 
         if (empty($sign_acte)) {
-            return redirect(route('signataire_actes.index'));
+            return back()->with("response", "Signataire non trouvé !");
         }
 
         return view('backend.signataire_actes.edit')->with('sign_acte', $sign_acte);
@@ -102,8 +141,27 @@ class SignataireActeController extends Controller
         $sign_acte = $this->modelRepository->find($id);
 
         if (empty($sign_acte)) {
-            return redirect(route('signataire_actes.index'));
+            return back()->with("response", "Signataire non trouvé !");
         }
+        $signataire = $this->signataireRepository->update($input,$input['signataire_id']);
+        $signataireActe = [];
+        $signataireActe['statut']  = (isset($input['statut'])) ? true : false ;
+        $signataireActe['debut']  = $input['debut'];
+        $signataireActe['fonction']  = $input['fonction'];
+        $signataireActe['mention']  = $input['mention'];
+        $signataireActe['categorieActe_id']  = $input['categorieActe_id'];
+        $signataireActe['institution_id']  = $input['institution_id'];
+        $signataireActe['signataire_id']  = $signataire->id;
+        $existants = $this->modelRepository->findByInstitutionAndCategorie($input['institution_id'], $input['categorieActe_id']);
+        if($signataireActe['statut']){
+            foreach($existants as $existant) {
+                $existant->statut = false;
+                $existant->update();
+            }
+        }
+        
+        $sign_acte = $this->modelRepository->update($signataireActe, $input['signataireActe_id']);
+
         
         $sign_acte = $this->modelRepository->update($input, $id);
         return redirect(route('signataire_actes.index'));
@@ -118,13 +176,13 @@ class SignataireActeController extends Controller
 
         if (empty($sign_acte)) {
             $message = "Signataire acte introuvable";
-            return $this->sendResponse($message);
+            return back()->with("response", $message);
         }
 
         $this->modelRepository->delete($id);
 
         $message = "Signataire acte supprimé avec succès";
-        return redirect(route('signataire_actes.index'));
+        return redirect(route('signataire_actes.index', compact("message")));
     }
 
 }

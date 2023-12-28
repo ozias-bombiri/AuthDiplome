@@ -35,7 +35,11 @@
                     @endif
                 </h3>
                 <div class="col-2 offset-10 mb-5">
+                @if (isset($parcours))
+                    <a class="btn btn-success" href="{{ route('proces_verbaux.create', ['parcours_id' => $parcours->id]) }}"> Ajouter </a>
+                @else 
                     <a class="btn btn-success" href="{{ route('proces_verbals.create') }}"> Ajouter </a>
+                @endif
                 </div>
                 <div class="table-responsive">
                     <table id="data" class="table table-striped table-bordered">

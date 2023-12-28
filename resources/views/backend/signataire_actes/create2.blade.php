@@ -29,7 +29,7 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('signataires.store') }}">
+                <form method="post" action="{{ route('signataires.store1') }}">
                     @csrf
                     <div class="form-group row py-2">
                         <label for="categorie" class="col-sm-2 col-form-label">Categorie d'acte</label>
@@ -46,7 +46,7 @@
                         <label for="institution" class="col-sm-2 col-form-label">Institution</label>
                         <div class="col">
                             <select class="form-control" id="institution" name="institution_id" required>
-                                <option value="">Choisir</option>
+                                <option value=""selected disabled hidden>Choisir</option>
                                 @foreach( $institutions as $institution)
                                 <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>
                                 @endforeach
@@ -79,7 +79,7 @@
                         <label for="type" class="col-sm-2 col-form-label">Sexe</label>
                         <div class="col">
                             <select class="form-control" id="sexe" name="sexe">
-                                <option value="" disabled selected>choisir ...</option>
+                                <option value="" disabled selected hidden>choisir ...</option>
                                 <option value="Masculin">Masculin</option>
                                 <option value="Féminin">Féminin</option>
                             </select>
@@ -90,7 +90,7 @@
                         <label for="grade" class="col-sm-2 col-form-label">Grade</label>
                         <div class="col">
                             <select class="form-control" id="grade" name="grade">
-                                <option value="" disabled selected>choisir ...</option>
+                                <option value="" disabled selected hidden>choisir ...</option>
                                 <option value="Dr">Dr</option>
                                 <option value="Pr">Pr</option>
 

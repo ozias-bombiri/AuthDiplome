@@ -68,9 +68,14 @@ class ProcesVerbalController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create($parcours_id)
     {
-        $parcours = $this->parcoursRepository->all();
+        $parcours = $this->parcoursRepository->find($parcours_id);
+        if(empty($parcours)) {
+            $reponse = "Parcours non trouvé !";
+            return back()->with('reponse', $reponse);
+        }
+
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
         return view('backend.proces_verbals.create', compact('parcours','anneeAcademiques'));
     }
@@ -154,8 +159,8 @@ class ProcesVerbalController extends Controller
         $proces_verbal = $this->modelRepository->find($id);
 
         if (empty($proces_verbal)) {
-            $message = "Procès verbal introuvable";
-            return $this->sendResponse($message);
+            $reponse = "Procès verbal introuvable";
+            return back()->with('reponse', $reponse);
         }
 
         $this->modelRepository->delete($id);

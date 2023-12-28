@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Modifier un résultat académique') }}
+{{ __('Ajouter un signataire') }}
 @endsection
 
 @section('content')
@@ -23,104 +23,123 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Modifier un résultat académique') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Modfier un signataire') }}</h3>
                 <div class="">
 
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('resultat_academiques.store') }}">
+                <form method="post" action="{{ route('signataires.update', $sign_acte->id) }}">
                     @csrf
+                    <input type="hidden" id="signataireActe_id" name="signataireActe_id" value=" {{$sign_acte->id}}">
+                    <input type="hidden" id="signataire_id" name="signataire_id" value=" {{$sign_acte->signataire->id}}">
+                    <input type="hidden" id="institution_id" name="institution_id" value=" {{$sign_acte->institution->id}}">
+                    <input type="hidden" id="categorieActe_id" name="categorieActe_id" value=" {{$sign_acte->categorieActe->id}}">
+                         
                     <div class="form-group row py-2">
-                        <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
+                        <label for="categorie" class="col-sm-2 col-form-label">Categorie d'acte</label>
                         <div class="col">
-                            <select class="form-control" id="etablissement" name="etudiant_id" required>
-                                @foreach( $etudiants as $etudiant)
-                                <option value="{{ $etudiant->id}}">{{ $etudiant->sigle }}</option>
-                                @endforeach
+                            <input type="text" class="form-control" id="nom" name="categorieActe_id" value=" {{$sign_acte->categorieActe->intitule}}" disabled>                            
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="institution" class="col-sm-2 col-form-label">Institution</label>
+                        <div class="col">
+                        <input type="text" class="form-control" id="nom" name="institution" value=" {{$sign_acte->institution->sigle}}" disabled>
+                        
+                        </div>
+                    </div>
+
+                    
+                    <div class="form-group row py-2">
+                        <label for="nom" class="col-sm-2 col-form-label">Nom</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="nom" name="nom" value="{{ $sign_acte->signataire->nom }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="prenom" class="col-sm-2 col-form-label">Prénom</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="prenom" name="prenom" value="{{ $sign_acte->signataire->prenom }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="nip" class="col-sm-2 col-form-label">NIP (CNIB)</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="nip" name="nip" value="{{ $sign_acte->signataire->nip }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="type" class="col-sm-2 col-form-label">Sexe</label>
+                        <div class="col">
+                            <select class="form-control" id="sexe" name="sexe">
+                                <option value="" disabled selected hidden>choisir ...</option>
+                                <option value="Masculin">Masculin</option>
+                                <option value="Féminin">Féminin</option>
+                            </select>
+                        </div>
+                    </div>                    
+
+                    <div class="form-group row py-2">
+                        <label for="grade" class="col-sm-2 col-form-label">Grade</label>
+                        <div class="col">
+                            <select class="form-control" id="grade" name="grade">
+                                <option value="" disabled selected hidden>choisir ...</option>
+                                <option value="Dr">Dr</option>
+                                <option value="Pr">Pr</option>
+
                             </select>
                         </div>
                     </div>
-
+                    
                     <div class="form-group row py-2">
-                        <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="debut" class="col-sm-2 col-form-label">Date de début de signature </label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="parcours_id" required>
-                                @foreach( $parcours as $parcour)
-                                <option value="{{ $parcour->id}}">{{ $parcour->intitule }}</option>
-                                @endforeach
-                            </select>
+                            <input type="date" class="form-control" id="debut" name="debut" value="{{ $sign_acte->debut }}" required>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="statut" class="col-sm-2 col-form-label">Statut </label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="anneeAcademique_id" required>
-                                @foreach( $anneeAcademiques as $anneeAcademique)
-                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->sigle }}</option>
-                                @endforeach
-                            </select>
+                            <input type="checkbox" id="statut" name="statut" @if($sign_acte->statut) checked @endif  >
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="fonction" class="col-sm-2 col-form-label">Fonction</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="fonction" name="fonction" value="{{ $sign_acte->fonction }}" required>
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="mention" class="col-sm-2 col-form-label">Mention</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="mention" name="mention" value="{{ $sign_acte->mention }}" required>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
+                        <label for="titreAcademique" class="col-sm-2 col-form-label">Titre academique</label>
                         <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="soutenance" class="col-sm-2 col-form-label">Soutenu</label>
-                        <div class="col">
-                            <input type="radio" value="1" id="soutenance" name="soutenance"> Oui <br>
-                            <input type="radio" value="0" id="soutenance" name="soutenance"> Non
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="dateSignaure" class="col-sm-2 col-form-label">Date de signature</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSignaure" name="dateSignaure" placeholder="..." required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="moyenne" class="col-sm-2 col-form-label">La moyenne</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" placeholder="..." required>
+                            <input type="text" class="form-control" id="titreAcademique" name="titreAcademique" value="{{ $sign_acte->signataire->titreAcademique }}">
                         </div>
                     </div>
                     <div class="form-group row py-2">
-                        <label for="cote" class="col-sm-2 col-form-label">Cote</label>
+                        <label for="titreHonorifique" class="col-sm-2 col-form-label">Titre honorifique</label>
                         <div class="col">
-                            <input type="number" class="form-control form-control" id="cote" name="cote" required>
+                            <input type="text" class="form-control" id="titreHonorifique" name="titreHonorifique" value="{{ $sign_acte->signataire->titreHonorifique }}">
                         </div>
                     </div>
 
-
-                    <div class="form-group row py-2">
-                        <label for="session" class="col-sm-2 col-form-label">La session</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="session" name="session" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="dateSoutenance" class="col-sm-2 col-form-label">Date de soutenance</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" required>
-                        </div>
-                    </div>
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
                         <div class="col">
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('resultat_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('signataires.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>
@@ -135,5 +154,15 @@
 @endsection
 
 @push('costum-scripts')
+<script type="module">
+    $(document).ready(function() {
+        //Categorie par type institution
+        $(document).on('change', '#institution', function() {
+            var myModal = new bootstrap.Modal($("#exampleModal1"), {});
+            myModal.show();
+
+        });
+    });
+</script>
 
 @endpush

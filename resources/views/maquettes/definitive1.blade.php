@@ -314,7 +314,7 @@
 
             <div id="four" class="zone text-center w-full py-1 t1">
 
-                ATTESTATION DEFINITIVE
+                {{ $acte->intitule }}
 
             </div>
 
@@ -322,7 +322,7 @@
 
             <div id="five" class="zone text-center w-full py-2">
 
-                Le Vice-Président chargé des Enseignements et des Innovations Pédagogiques ou le Directeur académique de l’IESR (ou équivalent), soussigné, atteste que : </p>
+                Le {{ $signataireActe->fonction }} de {{ $institution->denomination.' ('.$institution->sigle.')' }} , soussigné, atteste que : </p>
 
             </div>
 
@@ -358,7 +358,7 @@
                     soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
                 @else 
                     session {{ $resultat->session}}
-                    de l’année académique {{ $resultat->annee_academique->intitule }} 
+                    de l’année académique {{ $resultat->procesVerbal->anneeAcademique->intitule }} 
                 @endif 
                  <br />
                 et a ainsi obtenu la :
@@ -367,16 +367,16 @@
 
             <!-- PARCOURS -->
             <div id="eight" class="zone text-center w-full t1">
-                LICENCE {{ strtoupper($parcours->intitule) }}
+                 {{ strtoupper($parcours->intitule) }}
             </div>
 
             <!-- INFORMATIONS DETAILLEES DIPLOME-->
 
             <div id="nine" class="zone w-full px-0">
-                Domaine : {{ $parcours->domaine }} <br />
-                Mention : {{ $parcours->mention }} <br />
-                Spécialité : {{ $parcours->specialite }} <br />
-                Côte {{ $resultat->cote }}.
+                Domaine : <b>{{ $parcours->domaine }}</b> <br/>
+                Mention : <b>{{ $parcours->mention }} </b><br/>
+                Spécialité : <b>{{ $parcours->specialite }}</b> <br/>
+                Côte <b>{{ $resultat->cote }}</b>.
 
             </div>
 
@@ -395,7 +395,7 @@
 
             <div id="eleven" class="zone">
 
-                Fait le {{ \Carbon\Carbon::parse($document->dateSignature)->translatedFormat('d F Y') }} à {{ $document->lieuCreation}} 
+                Fait le <b>{{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }}</b> à <b>{{ $acte->lieu}}</b> 
 
             </div>
         </div>
@@ -412,13 +412,13 @@
 
             <div id="threeteen" class="zone text-center w-1_3 px-1_3">
 
-                <p class="text-center"> <u>Pour le Responsable et par délégation le {{ $signataire->fonction }}</u> </p> <br />
+                <p class="text-center"> <u> {{ $signataireActe->mention }} {{ $signataireActe->fonction }}</u> </p> <br />
 
                 <p class="text-center">
                     <br /><br /> <br /> <br />
-                    @if($signataire->grade) {{ $signataire->grade }}@endif
-                    {{ $signataire->prenom }} {{ $signataire->nom }}<br />
-                    <em>{{ $signataire->titreAcademique }}<br /> {{ $signataire->titreHonorifique }}</em>
+                    @if($signataireActe->signataire->grade) {{ $signataireActe->signataire->grade }}@endif
+                    <b>{{ $signataireActe->signataire->prenom.' '.$signataireActe->signataire->nom }}<br />
+                    <em>{{ $signataireActe->signataire->titreAcademique }}<br /> {{ $signataireActe->signataire->titreHonorifique }}</em>
                 </p>
 
             </div>

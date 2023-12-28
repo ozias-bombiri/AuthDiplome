@@ -54,7 +54,7 @@ Route::resource('institutions', App\Http\Controllers\Backend\InstitutionControll
 Route::resource('demande_authentifications', App\Http\Controllers\Backend\DemandeAuthentificationController::class);
 Route::resource('documents', App\Http\Controllers\Backend\DocumentController::class);
 Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAcademiqueController::class);
-Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
+//Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
 Route::resource('parcours', App\Http\Controllers\Backend\ParcoursController::class);
@@ -112,6 +112,25 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('parcours.inscriptions.show');
     
 });
+// ROUTS POUR LA GESTION DES SIGNATAIRES
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('signataires', [App\Http\Controllers\Backend\SignataireActeController::class, 'index'])
+    ->name('signataires.index');
+    Route::get('signataires/add1', [App\Http\Controllers\Backend\SignataireActeController::class, 'create1'])
+    ->name('signataires.create1');    
+    Route::post('signataires/add1', [App\Http\Controllers\Backend\SignataireActeController::class, 'store1'])
+    ->name('signataires.store1');
+    Route::get('signataires/add2', [App\Http\Controllers\Backend\SignataireActeController::class, 'create2'])
+    ->name('signataires.create2');
+    Route::delete('signataires/delete', [App\Http\Controllers\Backend\SignataireActeController::class, 'destroy'])
+    ->name('signataires.destroy');
+    Route::get('signataires/{id}/edit', [App\Http\Controllers\Backend\SignataireActeController::class, 'edit'])
+    ->name('signataires.edit');
+    Route::get('signataires/{id}/show', [App\Http\Controllers\Backend\SignataireActeController::class, 'show'])
+    ->name('signataires.show');
+    Route::post('signataires/{id}/edit', [App\Http\Controllers\Backend\SignataireActeController::class, 'update'])
+    ->name('signataires.update');
+});
 
 
 Route::group(['middleware' => ['auth']], function(){
@@ -138,6 +157,15 @@ Route::group(['middleware' => ['auth']], function(){
 Route::group(['middleware' => ['auth']], function(){
     Route::get('actes/diplomes', [App\Http\Controllers\Metiers\DiplomeController::class, 'index'])
     ->name('actes.diplomes.index'); 
+    
+});
+
+//ROUTES POUR LES PROCES VERBAUX
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('proces_verbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index'])
+    ->name('proces_verbaux.index'); 
+    Route::get('proces_verbaux/{parcours_id}/create', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index'])
+    ->name('proces_verbaux.create');
     
 });
 

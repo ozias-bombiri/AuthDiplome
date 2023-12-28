@@ -5,7 +5,7 @@
 @endpush
 
 @section('page-title')
-{{ __('Signataire actes') }}
+Signataires
 @endsection
 
 @section('content')
@@ -25,42 +25,42 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Signataire actes') }} </h3>
-            <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('signataire_actes.create') }}"> Ajouter </a>
+            <h3 class="box-title">Signataires </h3>
+            <div class="col-4 offset-6 mb-5">
+                 <a class="btn btn-success" href="{{ route('signataires.create1') }}"> Ajouter pour un établissement </a> 
+                <a class="btn btn-success" href="{{ route('signataires.create2') }}"> Ajouter pour une IESR </a>
+
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Categorie</th>
                             <th>Institution</th>
-                            <th>Signatire</th>
-                            <th>Date debut</th>
-                            <th>Date fin</th>
+                            <th>Actes signés</th>
                             <th>Statut</th>
-                            <th>Action</th>
+                            <th>Nom Prénom</th>
+                            <th>Fonction</th>
+                            <th>Mention</th>                            
+                            <th width="200px">Action</th>
                         </tr>
                     </thead>
-                    <tbody>   
-                        @foreach ($sign_actes as $sign_acte)
+                    <tbody>
+                        @foreach ($signataireActes as $signataireActe)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $sign_acte->categorieActe->intitule }}</td>
-                            <td>{{ $sign_acte->institution->sigle }}</td>
-                            <td>{{ $sign_acte->signataire->nom }} {{ $sign_acte->signataire->prenom }}</td>
-                            <td>{{ $sign_acte->debut }}</td>
-                            <td>{{ $sign_acte->fin }}</td>
-                            <td>{{ $sign_acte->statut }}</td>
-
-                           
+                            <td> {{ $signataireActe->institution->sigle }} @if($signataireActe->institution->parent) ({{ $signataireActe->institution->parent->sigle }}) @endif </td>
+                            <td> {{ $signataireActe->categorieActe->intitule }}</td>  
+                            <td> @if($signataireActe->statut)  Activé @else  Désactivé @endif</td>                          
+                            <td>{{ $signataireActe->signataire->grade.' '.$signataireActe->signataire->nom.' '.$signataireActe->signataire->prenom }}</td>
+                            <td>{{ $signataireActe->fonction }}</td>
+                            <td>{{ $signataireActe->mention }}</td>
                             <td>
-                                <form action="{{ route('signataire_actes.destroy',$sign_acte->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('signataire_actes.show',$sign_acte->id) }}">
+                                <form action="{{ route('signataires.destroy',$signataireActe->id) }}" method="POST">
+                                    <a class="btn btn-info" title="Détails" href="{{ route('signataires.show',$signataireActe->id) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('signataire_actes.edit',$sign_acte->id) }}">
+                                    <a class="btn btn-primary" title="Modifier" href="{{ route('signataires.edit',$signataireActe->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
 
@@ -80,7 +80,6 @@
             </div>
         </div>
     </div>
-</div>
 </div>
 
 @endsection

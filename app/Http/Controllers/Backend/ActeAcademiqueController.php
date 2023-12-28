@@ -114,7 +114,7 @@ class ActeAcademiqueController extends Controller
             return back()->with('reponse', $reponse);
         }
 
-        $institution = $resultats->first()->procesVerbal->parcours->filiere->institution;
+        $institution = $resultats->first()->procesVerbal->parcours->filiere->institution->parent;
 
         $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id);
 
@@ -146,9 +146,12 @@ class ActeAcademiqueController extends Controller
             return back()->with('reponse', $reponse);
         }
 
-        $institution = $resultat->procesVerbal->parcours->filiere->institution;
+        $institution = $resultat->procesVerbal->parcours->filiere->institution->parent;
 
         $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id);
+        if(empty($signataireActe)){
+            return back()->with('reponse', "Aucun signataire configuré pour les ".$categorieActe->intitule);
+        }
 
         $pv = ProcesVerbal::find($procesVerbal_id);
 

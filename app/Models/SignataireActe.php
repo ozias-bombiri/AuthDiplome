@@ -22,6 +22,7 @@ class SignataireActe extends Model
 		'institution_id' => 'int',
 		'signataire_id' => 'int',
 		'categorieActe_id' => 'int',
+		'statut' => 'bool',
 		
 	];
 
