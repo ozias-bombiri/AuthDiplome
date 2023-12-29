@@ -49,7 +49,7 @@ class FiliereController extends Controller
     public function create()
     {
        
-        $institutions = $this->institutionRepository->all();
+        $institutions = $this->institutionRepository->findEtablissement();
         return view('backend.filieres.create', compact('institutions'));
     }
 
@@ -63,7 +63,7 @@ class FiliereController extends Controller
 
         $filiere = $this->modelRepository->create($input);
 
-        return redirect(route('les_filieres.index'));
+        return redirect(route('filieres.index'));
     }
 
     /**
@@ -105,11 +105,11 @@ class FiliereController extends Controller
         $filiere = $this->modelRepository->find($id);
 
         if (empty($filiere)) {
-            return redirect(route('les_filieres.index'));
+            return redirect(route('filieres.index'));
         }
         
         $filiere = $this->modelRepository->update($input, $id);
-        return redirect(route('les_filieres.index'));
+        return redirect(route('filieres.index'));
     }
 
     /**

@@ -57,7 +57,7 @@ Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAca
 //Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 //Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
-Route::resource('parcours', App\Http\Controllers\Backend\ParcoursController::class);
+//Route::resource('parcours', App\Http\Controllers\Backend\ParcoursController::class);
 Route::resource('etudiants', App\Http\Controllers\Backend\EtudiantController::class);
 
 Route::resource('numeroteurs', App\Http\Controllers\Backend\NumeroteurController::class);
@@ -69,7 +69,7 @@ Route::resource('retrait_actes', App\Http\Controllers\Backend\RetraitActeControl
 Route::resource('signataire_actes', App\Http\Controllers\Backend\SignataireActeController::class);
 Route::resource('visa_diplomes', App\Http\Controllers\Backend\VisaDiplomeController::class);
 //Route::resource('visa_institutions', App\Http\Controllers\Backend\VisaInstitutionController::class);
-Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::class);
+//Route::resource('filieres', App\Http\Controllers\Backend\FiliereController::class);
 //Route::resource('inscriptions', App\Http\Controllers\Backend\InscriptionController::class);
 
 //ROUTES POUR LES VISAS DES DIPLOMES
@@ -108,8 +108,30 @@ Route::group(['middleware' => ['auth']], function(){
 });
 
 
-//ROUTES POUR LES PARCOURS DE FORMATIONS
+//ROUTES POUR LES FILIERES ET LES PARCOURS DE FORMATIONS
 Route::group(['middleware' => ['auth']], function(){
+    Route::get('filieres/', [App\Http\Controllers\Backend\FiliereController::class, 'index'])
+    ->name('filieres.index');
+    Route::get('filieres/add', [App\Http\Controllers\Backend\FiliereController::class, 'create'])
+    ->name('filieres.create');
+    Route::post('filieres/add', [App\Http\Controllers\Backend\FiliereController::class, 'store'])
+    ->name('filieres.store');
+    Route::get('filieres/{id}/edit', [App\Http\Controllers\Backend\FiliereController::class, 'edit'])
+    ->name('filieres.edit');
+    Route::put('filieres/{id}/edit', [App\Http\Controllers\Backend\FiliereController::class, 'update'])
+    ->name('filieres.update');
+    Route::get('parcours/', [App\Http\Controllers\Backend\ParcoursController::class, 'index'])
+    ->name('parcours.index');
+    Route::get('parcours/add', [App\Http\Controllers\Backend\ParcoursController::class, 'create'])
+    ->name('parcours.create');
+    Route::post('parcours/add', [App\Http\Controllers\Backend\ParcoursController::class, 'store'])
+    ->name('parcours.store');
+    Route::get('parcours/{id}/edit', [App\Http\Controllers\Backend\ParcoursController::class, 'edit'])
+    ->name('parcours.edit');
+    Route::put('parcours/{id}/edit', [App\Http\Controllers\Backend\ParcoursController::class, 'update'])
+    ->name('parcours.update');
+    Route::delete('parcours/{id}/delete', [App\Http\Controllers\Backend\ParcoursController::class, 'destroy'])
+    ->name('parcours.destroy');
     Route::get('parcours/{id}/inscriptions', [App\Http\Controllers\Backend\InscriptionController::class, 'index'])
     ->name('parcours.inscriptions.index');
     Route::get('parcours/{id}/inscriptions/add', [App\Http\Controllers\Backend\InscriptionController::class, 'create'])
@@ -182,11 +204,11 @@ Route::group(['middleware' => ['auth']], function(){
 
 //ROUTES POUR LES RESULTATS ACADEMIQUES ET ACTES ACADEMIQUES
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('parcours/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
+    Route::get('proces_verbaux/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
     ->name('proces_verbaux.resultats.index');
-    Route::get('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
+    Route::get('proces_verbaux/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
     ->name('proces_verbaux.resultats.create');
-    Route::get('parcours/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create2'])
+    Route::get('proces_verbaux/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create2'])
     ->name('proces_verbaux.resultats.create2');
     Route::get('resultats/{resultat_id}/provisoires/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire1'])
     ->name('proces_verbaux.provisoires.create');
@@ -194,9 +216,9 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.provisoires.create2');
     Route::post('proces_verbaux/provisoires/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
     ->name('proces_verbaux.provisoires.store2');
-    Route::post('parcours/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
+    Route::post('proces_verbaux/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store'])
     ->name('proces_verbaux.resultats.store'); 
-    Route::post('parcours/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store2'])
+    Route::post('proces_verbaux/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store2'])
     ->name('proces_verbaux.resultats.store2');
     Route::get('resultats/{resultat_id}/definitives/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive'])
     ->name('proces_verbaux.definitives.create');
@@ -221,7 +243,7 @@ Route::group(['middleware' => ['auth']], function(){
     ->where('id', '[0-9]+')->name('metiers.actes.definitives.generer');  
     
 });
-
+/*
 Route::group(['middleware' => ['auth', 'role:directeur']], function() {
 
     Route::get('filieres/{institution_id}', [App\Http\Controllers\Etablissement\FiliereController::class, 'listFiliere'])
@@ -271,6 +293,8 @@ Route::group(['middleware' => ['auth', 'role:directeur']], function() {
     
     
 });
+
+*/
 //ROUTES FOR AUTHENTICATION
 Route::group(['middleware' =>['auth']], function(){
     Route::get('recherche', [App\Http\Controllers\Metiers\Authentification\VerificationController::class, 'index'])

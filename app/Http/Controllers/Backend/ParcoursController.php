@@ -54,6 +54,7 @@ class ParcoursController extends Controller
      */
     public function create()
     {
+        
         $filieres = $this->filiereRepository->all();
         $niveaux = $this->niveauEtudeRepository->all();
         return view('backend.parcours.create', compact('filieres', 'niveaux')) ;

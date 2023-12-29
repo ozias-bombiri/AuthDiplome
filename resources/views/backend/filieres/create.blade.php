@@ -29,7 +29,7 @@
                 </div>   
             </div>
             <div class="">
-                <form method="post" action="{{ route('les_filieres.store') }}">
+                <form method="post" action="{{ route('filieres.store') }}">
                     @csrf
                     
                     <div class="form-group row py-2">
@@ -37,7 +37,7 @@
                         <div class="col">
                             <select class="form-control" id="institution" name="institution_id" required>
                                 @foreach( $institutions as $institution)
-                                <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>
+                                <option value="{{ $institution->id}}">{{ $institution->sigle.' | '.$institution->parent->sigle }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -71,7 +71,7 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('les_filieres.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('filieres.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

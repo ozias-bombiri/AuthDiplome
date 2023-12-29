@@ -5,7 +5,7 @@
 @endpush
 
 @section('page-title')
-Parcours
+Parcours de formations
 @endsection
 
 @section('content')
@@ -25,9 +25,10 @@ Parcours
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">Parcours </h3>
-            <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('parcours.create') }}"> Ajouter </a>
+            <h3 class="box-title">Parcours  de formations</h3>
+            <div class="col-4 offset-8 mb-5">
+                <a class="btn btn-success" href="{{ route('filieres.index') }}"> Voir les filières </a>
+                <a class="btn btn-success" href="{{ route('parcours.create') }}"> Ajouter un parcours</a>
 
             </div>
             <div class="table-responsive">
