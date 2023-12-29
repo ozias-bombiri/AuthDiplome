@@ -56,7 +56,7 @@ Route::resource('documents', App\Http\Controllers\Backend\DocumentController::cl
 Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAcademiqueController::class);
 //Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
-Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
+//Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
 Route::resource('parcours', App\Http\Controllers\Backend\ParcoursController::class);
 Route::resource('etudiants', App\Http\Controllers\Backend\EtudiantController::class);
 
@@ -74,25 +74,35 @@ Route::resource('les_filieres', App\Http\Controllers\Backend\FiliereController::
 
 //ROUTES POUR LES VISAS DES DIPLOMES
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('visas', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'index'])
+    Route::get('visas', [App\Http\Controllers\Backend\VisaController::class, 'index'])
+    ->name('visas.index');
+    Route::get('visas/add', [App\Http\Controllers\Backend\VisaController::class, 'create'])
+    ->name('visas.create');
+    Route::post('visas/add', [App\Http\Controllers\Backend\VisaController::class, 'store'])
+    ->name('visas.store');
+    Route::get('visas/{id}/edit', [App\Http\Controllers\Backend\VisaController::class, 'edit'])
+    ->name('visas.edit');
+    Route::post('visas/{id}/edit', [App\Http\Controllers\Backend\VisaController::class, 'update'])
+    ->name('visas.update');
+    Route::get('visas_diplomes', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'index'])
     ->name('visa_institutions.index');
-    Route::get('/institutions/visas/add', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'create'])
+    Route::get('visas_diplomes/add', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'create'])
     ->name('visa_institutions.create');
-    Route::post('/institutions/visas/add', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'store'])
+    Route::post('visas_diplomes/add', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'store'])
     ->name('visa_institutions.store');
-    Route::get('/institutions/visas/{id}', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'show'])
+    Route::get('visas_diplomes{id}', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'show'])
     ->name('visa_institutions.show');
 
-    Route::get('/institutions/visas/{id}/configVisa', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'configVisas'])
+    Route::get('visas_diplomes/{id}/configVisa', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'configVisas'])
     ->name('visa_institutions.configvisas');
 
-    Route::post('/institutions/visas/configVisa', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'storeConfigVisas'])
+    Route::post('visas_diplomes/configVisa', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'storeConfigVisas'])
     ->name('visa_institutions.storeconfigvisas');
 
-    Route::get('/institutions/visas/{id}/edit', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'edit'])
+    Route::get('visas_diplomes/{id}/edit', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'edit'])
     ->name('visa_institutions.edit');
     
-    Route::delete('/institutions/visas/{id}/delete', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'store'])
+    Route::delete('visas_diplomes/{id}/delete', [App\Http\Controllers\Backend\VisaInstitutionController::class, 'store'])
     ->name('visa_institutions.destroy');
     
 });

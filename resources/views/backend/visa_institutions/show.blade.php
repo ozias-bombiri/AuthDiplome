@@ -23,7 +23,7 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Visas pour une institution') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Visas pour ').$visaInstitution->institution->sigle }}</h3>
                 <div class="">
 
                 </div> 
@@ -55,22 +55,20 @@
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th>No</th>
+                            <th>Ordre</th>
                             <th>Intitule</th>
                             <th>Texte</th>                            
-                            <th>Action</th>
+                            
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($visas as $visa)
+                        @foreach ($visasDiplomes as $visasDiplome)
                         <tr>  
-                            <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $visa->intitule }}</td>
-                            <td>{{ $visa->texte }}</td>
+                            <td>{{ $visasDiplome->ordre }}</td>
+                            <td>{{ $visasDiplome->visa->intitule }}</td>
+                            <td>{{ $visasDiplome->visa->texte }}</td>
                             
-                            <td>
-                                
-                            </td>
+                            
                         </tr>
                         @endforeach
                     </tbody>

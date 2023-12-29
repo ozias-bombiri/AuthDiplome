@@ -24,8 +24,8 @@ class VisaController extends Controller
      */
     public function index()
     {
-        $visaInstitutions = $this->visaInstitutionRepository->all();
-        return view('backend.visa_institutions.index', compact('visaInstitutions'));
+        $visas = $this->modelRepository->all();
+        return view('backend.visas.index', compact('visas'));
     }
 
     /**
