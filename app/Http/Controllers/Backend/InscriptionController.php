@@ -116,9 +116,8 @@ class InscriptionController extends Controller
         $inscription = $this->modelRepository->find($id);
 
         if (empty($inscription)) {
-            //Flash::error('resultat not found');
-
-            return redirect(route('inscriptions.index'));
+            return back()->with("response", "Inscriptions non trouvée !") ;
+            //return redirect(route('inscriptions.index'));
         }
 
         return view('backend.inscriptions.show')->with('inscription', $inscription);

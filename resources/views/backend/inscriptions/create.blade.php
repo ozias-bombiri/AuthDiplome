@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Ajouter un résultat académique') }}
+{{ __('Inscrire une étudiant') }}
 @endsection
 
 @section('content')
@@ -31,6 +31,24 @@
             <div class="">
                 <form method="post" action="{{ route('parcours.inscriptions.store', $parcours->id) }}">
                     @csrf
+                    <div class="form-group row py-2">
+                        <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
+                        <div class="col">
+                            <input type="text" class="form-control form-control" id="parcours" name="parcours_id" value="{{ $parcours->intitule }}" required disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Année académique</label>
+                        <div class="col">
+                            <select class="form-control" id="parcour" name="anneeAcademique_id" required>
+                                <option value="" selected disabled hidden>Choisir </option>
+                                @foreach( $annees as $annee)
+                                <option value="{{ $annee->id}}">{{ $annee->intitule }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
                     <div>
                         <div class="form-group row py-2">
                             <label for="typeIdentifiant" class="col-sm-2 col-form-label">Type de l'identifiant </label>
@@ -99,25 +117,6 @@
                             </div>
                         </div>
 
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="parcours" name="parcours_id" value="{{ $parcours->intitule }}" required disabled>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Année académique</label>
-                        <div class="col">
-                            <select class="form-control" id="parcour" name="anneeAcademique_id" required>
-                                <option value="" selected disabled hidden>Choisir </option>
-                                @foreach( $annees as $annee)
-                                <option value="{{ $annee->id}}">{{ $annee->intitule }}</option>
-                                @endforeach
-                            </select>
-                        </div>
                     </div>
 
                     <div class="row py-4">

@@ -60,7 +60,7 @@
 
                             <td>
                                 <form action="{{ route('parcours.inscriptions.destroy',$inscription->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('parcours.inscriptions.show',[$parcours->id, $inscription->id]) }}">
+                                    <a class="btn btn-info" title="Détails" href="{{ route('parcours.inscriptions.show',[$inscription->id]) }}">
                                         <i class="bi bi-eye-fill"></i>
                                     </a>
                                     

@@ -33,20 +33,29 @@
                     @csrf
                     
                     <div class="form-group row py-2">
-                        <label for="institution" class="col-sm-2 col-form-label">Institution </label>
+                        <label for="institution" class="col-sm-2 col-form-label">Institution </label>                        
                         <div class="col">
-                            <select class="form-control" id="institution" name="institution_id" required>
-                                @foreach( $institutions as $institution)
-                                <option value="{{ $institution->id}}">{{ $institution->sigle.' | '.$institution->parent->sigle }}</option>
-                                @endforeach
-                            </select>
+                            @if(isset($etablissement))
+                            <input type="hidden"  id="institution_id" name="institution_id" value="{{ $etablissement->id }}">
+                        
+                            <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $etablissement->sigle.' | '.$etablissement->parent->sigle }}" disabled>
+                        
+                            @else
+                                <select class="form-control" id="institution" name="institution_id" required>
+                                    <option value="" selected disabled hidden> Choisir</option>
+                                    @foreach( $etablissements as $institution)
+                                        <option value="{{ $institution->id}}">{{ $institution->sigle.' | '.$institution->parent->sigle }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
+                            
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
                         <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>
                         <div class="col">
-                            <input type="text" class="form-control form-control" id="intitule" name="intitule" placeholder="Intitulé" required>
+                            <input type="text" class="form-control" id="intitule" name="intitule" placeholder="Intitulé" required>
                         </div>
                     </div>
 

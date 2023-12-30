@@ -54,7 +54,10 @@
                                 
                                 <a class="btn btn-primary" title="Modifier" href="{{ route('filieres.edit',$filiere->id) }}">
                                     <i class="bi bi-pencil"></i>
-                                </a> 
+                                </a>
+                                <a class="btn btn-primary" title="Ajouter un parcours" href="{{ route('parcours.create',['filiere_id' =>$filiere->id]) }}">
+                                    <i class="bi bi-plus"></i>
+                                </a>  
                                 <a class="btn btn-info" title="Voir les parcours" href="{{ route('parcours.index',['filiere_id' =>$filiere->id]) }}">
                                     <i class="bi bi-eye-fill"></i>
                                 </a>                                   

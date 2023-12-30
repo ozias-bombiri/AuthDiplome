@@ -140,7 +140,7 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('parcours.inscriptions.store');
     Route::delete('parcours/{id}/inscriptions/delete', [App\Http\Controllers\Backend\InscriptionController::class, 'destroy'])
     ->name('parcours.inscriptions.destroy');
-    Route::get('parcours/{id}/inscriptions/{inscription}/show', [App\Http\Controllers\Backend\InscriptionController::class, 'show'])
+    Route::get('parcours/inscriptions/{inscription}/show', [App\Http\Controllers\Backend\InscriptionController::class, 'show'])
     ->name('parcours.inscriptions.show');
     
 });
@@ -166,7 +166,7 @@ Route::group(['middleware' => ['auth']], function(){
 
 
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('parcours/{id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
+    Route::get('parcours/{parcours_id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
     ->name('parcours.proces_verbaux.index');    
     
 });

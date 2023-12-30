@@ -103,15 +103,30 @@ class ParcoursRepository extends BaseRepository
     }
 
     /**
-     * Selectionner par filiere et niveau
+     * Selectionner par iesr et niveau
      **/
-    public function findByFiliereAndNiveau($filiere, $niveau)
+    public function findByIesrAndNiveau($iesr, $niveau)
     {
         return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                 ->join('niveau_etudes', 'parcours.niveauEtude_id', '=', 'niveau_etudes.id')
-                ->where('filieres.id', $filiere)
+                ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+                ->where('institutions.parent_id', $iesr)
                 ->where('niveau_etudes.id', $niveau)
                 ->select('parcours.*')
                 ->get();
+    }
+
+    /**
+     * Selectionner par etablissement et niveau
+     **/
+    public function findByInstitutionAndNiveau($etablissement, $niveau)
+    {
+        return Parcours::join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+        ->join('niveau_etudes', 'parcours.niveauEtude_id', '=', 'niveau_etudes.id')
+        ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+        ->where('institutions.id', $etablissement)
+        ->where('niveau_etudes.id', $niveau)
+        ->select('parcours.*')
+        ->get();
     }
 }

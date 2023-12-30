@@ -56,7 +56,6 @@ class ProcesVerbalRepository extends BaseRepository
                 ->get();
     }
 
-
     /**
      * Selectionner les inscrits au parcours qui non pas encore de résultats
      **/
@@ -83,7 +82,7 @@ class ProcesVerbalRepository extends BaseRepository
     /**
      * Selectionner les pv d'un établissement
      **/
-    public function findByInstitution($institution_id)
+    public function findByEtablissement($institution_id)
     {
         return ProcesVerbal::join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
                 ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
