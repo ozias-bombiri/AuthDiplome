@@ -20,6 +20,11 @@ Signataires
             </ul>
         </div>
         @endif
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+            @endif
     </div>
 </div>
 <div class="row">
@@ -38,6 +43,7 @@ Signataires
                             <th>No</th>
                             <th>Institution</th>
                             <th>Actes signés</th>
+                            <th>Pédiode</th>
                             <th>Statut</th>
                             <th>Nom Prénom</th>
                             <th>Fonction</th>
@@ -50,7 +56,8 @@ Signataires
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
                             <td> {{ $signataireActe->institution->sigle }} @if($signataireActe->institution->parent) ({{ $signataireActe->institution->parent->sigle }}) @endif </td>
-                            <td> {{ $signataireActe->categorieActe->intitule }}</td>  
+                            <td> {{ $signataireActe->categorieActe->intitule }}</td> 
+                            <td>  {{ $signataireActe->debut.' - '.$signataireActe->fin}}</td> 
                             <td> @if($signataireActe->statut)  Activé @else  Désactivé @endif</td>                          
                             <td>{{ $signataireActe->signataire->grade.' '.$signataireActe->signataire->nom.' '.$signataireActe->signataire->prenom }}</td>
                             <td>{{ $signataireActe->fonction }}</td>

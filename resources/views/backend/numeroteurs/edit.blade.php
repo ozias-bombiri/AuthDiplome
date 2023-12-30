@@ -24,7 +24,7 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Modifier une academique') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Modifier un numeroteur') }}</h3>
                 <div class="">
 
                 </div>
@@ -37,6 +37,11 @@
                     <div class="form-group row py-2">
                         <label for="intitution" class="col-sm-2 col-form-label">Institution</label>
                         <div class="col">
+                        @if(isset($institution))
+                            <input type="hidden"  id="institution_id" name="institution_id" value="{{ $institution->id }}">
+                            <input type="texte" class="form-control" id="institution" name="institution" value="{{ $institution->sigle.' | '.$institution->denomination }}" disabled>
+                        
+                            @else
                             <select class="form-control" id="institution" name="institution_id" required>
                                 <option value="" selected disabled hidden> Choisir </option>
                                 @foreach($institutions as $institution)
@@ -45,11 +50,17 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row py-2">
                         <label for="categorie" class="col-sm-2 col-form-label">Catégorie de document</label>
                         <div class="col">
+                        @if(isset($categorie))
+                            <input type="hidden"  id="categorie_id" name="categorie_id" value="{{ $categorie->id }}">
+                            <input type="texte" class="form-control" id="categorie" name="categorie" value="{{ $categorie->intitule }}" disabled>
+                        
+                            @else
                             <select class="form-control" id="categorie" name="categorieActe_id" required >
                                 <option value="" selected disabled hidden> Choisir </option>
                                 
@@ -59,6 +70,7 @@
                                     </option>
                                 @endforeach
                             </select>
+                            @endif
                         </div>
                     </div>
 

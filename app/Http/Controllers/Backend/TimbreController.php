@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateTimbreRequest;
 use App\Repositories\InstitutionRepository;
 use App\Repositories\MinistereRepository;
 use App\Repositories\SignataireRepository;
+use Illuminate\Support\Facades\Auth;
 
 class TimbreController extends Controller
 {
@@ -33,8 +34,21 @@ class TimbreController extends Controller
      */
     public function index()
     {
-        $timbres = $this->modelRepository->all();
-
+        $timbres = null;
+        $institution = Auth::user()->institution;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $timbres = $this->modelRepository->findByIesr($institution->id); 
+            }
+            else{
+                $timbres = $this->modelRepository->findByEtablissement($institution->id);            
+            }
+        }
+        
+        else {
+            $timbres = $this->modelRepository->all();
+        }
+        
         return view('backend.timbres.index', compact('timbres'));
     }
 
@@ -43,9 +57,28 @@ class TimbreController extends Controller
      */
     public function create()
     {
+        $institution = Auth::user()->institution;
         $ministeres = $this->ministereRepository->all();
-        $institutions = $this->institutionRepository->all();
-        return view('backend.timbres.create', compact('ministeres', 'institutions')) ;
+        
+        $institutions = null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $institutions = $this->institutionRepository->findEtablissement($institution->id); 
+            }
+            else{
+                $institutions = null;            
+            }
+        }
+        
+        else {
+            $institutions = $this->institutionRepository->all();
+        }
+        if($institutions == null){
+            return view('backend.timbres.create', compact('institution', 'ministeres'));
+        }
+        else {
+            return view('backend.timbres.create', compact('institutions','ministeres'));
+        }
     }
 
     /**
@@ -84,17 +117,34 @@ class TimbreController extends Controller
     public function edit(string $id)
     {
 
-        $ministeres = $this->ministereRepository->all();
-        $institutions = $this->institutionRepository->all();
         $timbre = $this->modelRepository->find($id);
 
         if (empty($timbre)) {
-            //Flash::error('timbre not found');
-
-            return redirect(route('timbres.index'));
+            
+            return back()->with('reponse', 'Timbre non trouvé !');
         }
-        $institutions = $this->institutionRepository->all();
-        return view('backend.timbres.edit', compact('timbre', 'institutions','ministeres'));
+        $institution = Auth::user()->institution;
+        $ministeres = $this->ministereRepository->all();
+        
+        $institutions = null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $institutions = $this->institutionRepository->findEtablissement($institution->id); 
+            }
+            else{
+                $institutions = null;            
+            }
+        }
+        
+        else {
+            $institutions = $this->institutionRepository->all();
+        }
+        if($institutions == null){
+            return view('backend.timbres.edit', compact('timbre', 'institution', 'ministeres'));
+        }
+        else {
+            return view('backend.timbres.edit', compact('timbre', 'institutions','ministeres'));
+        }        
     }
 
     /**

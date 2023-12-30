@@ -10,7 +10,7 @@ use App\Http\Requests\UpdateSignataireActeRequest ;
 use App\Repositories\CategorieActeRepository;
 use App\Repositories\SignataireRepository;
 use App\Repositories\InstitutionRepository;
-
+use Illuminate\Support\Facades\Auth;
 
 class SignataireActeController extends Controller
 {
@@ -35,7 +35,21 @@ class SignataireActeController extends Controller
 
     public function index()
     {
-        $signataireActes = $this->modelRepository->all();
+        $signataireActes = null;
+        $institution = Auth::user()->institution;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $signataireActes = $this->modelRepository->findByIesr($institution->id); 
+            }
+            else{
+                $signataireActes = $this->modelRepository->findByEtablissement($institution->id);            
+            }
+        }
+        
+        else {
+            $signataireActes = $this->modelRepository->all();
+        
+        }
         return view('backend.signataire_actes.index', compact(('signataireActes')));
     }
     
@@ -45,8 +59,27 @@ class SignataireActeController extends Controller
     public function create1()
     {
         $categorie = $this->categorieRepository->findByIntitule('PROVISOIRE');
-        $institutions = $this->institutionRepository->findEtablissement();
-        return view('backend.signataire_actes.create', compact('categorie','institutions'));
+        $institution = Auth::user()->institution;
+        $etablissements = null;
+        $etablissement =null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $etablissements = $institution->etablissements; 
+            }
+            else{
+                $etablissement = $institution;
+            }
+        }
+        
+        else {
+            $etablissements = $this->institutionRepository->findEtablissement();        
+        }
+        if($etablissements == null){
+            return view('backend.signataire_actes.create', compact('categorie','etablissement'));
+        }
+        else {
+            return view('backend.signataire_actes.create', compact('categorie','etablissements'));
+        }        
     }
 
     /**
@@ -54,11 +87,31 @@ class SignataireActeController extends Controller
      */
     public function create2()
     {
-        $categories = $this->categorieRepository->all();
+
+        $categories = $this->categorieRepository->all();        
         unset($categories[0]);
-        $signataires = $this->signataireRepository->all();
-        $institutions = $this->institutionRepository->findByType('IESR');
-        return view('backend.signataire_actes.create2', compact('categories','signataires','institutions'));
+        $institution = Auth::user()->institution;
+        $iesrs = null;
+        $iesr =null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $iesr = $institution; 
+            }
+            else {
+                return back()->with('reponse', 'Opération non permise !');
+            }
+        }
+        
+        else {
+            $iesrs = $this->institutionRepository->findByType('IESR');        
+        }
+        if($iesrs == null){
+            return view('backend.signataire_actes.create2', compact('categories','iesr'));
+        }
+        else {
+            return view('backend.signataire_actes.create2', compact('categories','iesrs'));
+        }
+        //return view('backend.signataire_actes.create2', compact('categories','signataires','institutions'));
     }
 
     /** 

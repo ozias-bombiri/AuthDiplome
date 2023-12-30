@@ -32,22 +32,6 @@
             <form method="post" action="{{ route('timbres.store') }}">
                         @csrf
                         <div class="form-group row py-2">
-                            <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
-                            <div class="col">
-                                <input type="text" class="form-control" id="intitule" name="intitule" placeholder="..." required />
-                            </div>
-                        </div>
-
-                        <div class="form-group row py-2">
-                            <label for="type" class="col-sm-2 col-form-label">Type</label>
-                            <div class="col">
-                                <input type="text" class="form-control form-control" id="type" name="type"  required>
-                            </div>
-                        </div>
-
-
-
-                        <div class="form-group row py-2">
                             <label for="ministere" class="col-sm-2 col-form-label">ministere</label>
                             <div class="col">
                                 <select  class="form-control" id="ministere" name="ministere_id" required>
@@ -61,12 +45,31 @@
                         <div class="form-group row py-2">
                             <label for="institution" class="col-sm-2 col-form-label">Institution</label>
                             <div class="col">
+                            @if(isset($institution))
+                            <input type="hidden"  id="institution_id" name="institution_id" value="{{ $institution->id }}">
+                            <input type="texte" class="form-control" id="institution" name="institution" value="{{ $institution->sigle.' | '.$institution->denomination }}" disabled>
+                        
+                            @else
                                 <select  class="form-control" id="institution" name="institution_id" required>
                                     <option value="" selected hidden disabled>Choisir</option> 
                                     @foreach( $institutions as $institution)
                                         <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>                                    
                                     @endforeach
                                 </select>
+                             @endif
+                            </div>
+                        </div>
+                        <div class="form-group row py-2">
+                            <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
+                            <div class="col">
+                                <input type="text" class="form-control" id="intitule" name="intitule" placeholder="..." required />
+                            </div>
+                        </div>
+
+                        <div class="form-group row py-2">
+                            <label for="type" class="col-sm-2 col-form-label">Type</label>
+                            <div class="col">
+                                <input type="text" class="form-control form-control" id="type" name="type"  required>
                             </div>
                         </div>
 

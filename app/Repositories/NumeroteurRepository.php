@@ -45,4 +45,17 @@ class NumeroteurRepository extends BaseRepository
                             ->where('categorieActe_id', '=', $categorie)
                             ->first();
     }
+
+    public function findByIesr($iesr_id)
+    {
+        return Numeroteur::join('institutions', 'numeroteurs.institution_id', '=', 'institutions.id')
+                            ->where('institutions.parent_id', '=', $iesr_id)
+                            ->get();
+    }
+
+    public function findByEtablissement($etablissement_id)
+    {
+        return Numeroteur::where('institution_id', '=', $etablissement_id)
+                            ->get();
+    }
 }

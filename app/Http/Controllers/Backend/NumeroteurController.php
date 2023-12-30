@@ -7,6 +7,7 @@ use App\Repositories\InstitutionRepository;
 use App\Repositories\CategorieActeRepository;
 use App\Repositories\NumeroteurRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class NumeroteurController extends Controller
 {
@@ -30,7 +31,20 @@ class NumeroteurController extends Controller
      */
     public function index()
     {
-        $numeroteurs = $this->modelRepository->all();
+        $numeroteurs = null;
+        $institution = Auth::user()->institution;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $numeroteurs = $this->modelRepository->findByIesr($institution->id); 
+            }
+            else{
+                $numeroteurs = $this->modelRepository->findByEtablissement($institution->id);            
+            }
+        }
+        
+        else {
+            $numeroteurs = $this->modelRepository->all();
+        }
         return view('backend.numeroteurs.index', compact('numeroteurs'));
     }
 
@@ -39,9 +53,29 @@ class NumeroteurController extends Controller
      */
     public function create()
     {
-        $categories = $this->categorieRepository->all();
-        $institutions = $this->institutionRepository->all();
-        return view('backend.numeroteurs.create', compact('institutions','categories'));
+        $institution = Auth::user()->institution;
+        $institutions = null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $institutions = $this->institutionRepository->findEtablissement($institution->id); 
+            }
+            else{
+                $institutions = null;            
+            }
+        }
+        
+        else {
+            $institutions = $this->institutionRepository->all();
+        }
+        if($institutions == null){
+            $categorie = $this->categorieRepository->findByIntitule('PROVISOIRE');
+            return view('backend.numeroteurs.create', compact('institution','categorie'));
+        }
+        else {
+            $categories = $this->categorieRepository->all();        
+            return view('backend.numeroteurs.create', compact('institutions','categories'));
+        }
+        
     }
 
     /**
@@ -70,17 +104,34 @@ class NumeroteurController extends Controller
      */
     public function edit(string $id)
     {
-        $categories = $this->categorieRepository->all();
-        $institutions = $this->institutionRepository->all();
-        
         $numeroteur = $this->modelRepository->find($id);
 
         if (empty($numeroteur)) {
-            return redirect(route('numeroteurs.index'));
+            return back()->with('reponse', 'Numeroteur non trouvé !');
+        }
+        $institution = Auth::user()->institution;
+        $institutions = null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $institutions = $this->institutionRepository->findEtablissement($institution->id); 
+            }
+            else{
+                $institutions = null;            
+            }
+        }
+        
+        else {
+            $institutions = $this->institutionRepository->all();
+        }
+        if($institutions == null){
+            $categorie = $this->categorieRepository->findByIntitule('PROVISOIRE');
+            return view('backend.numeroteurs.edit', compact('numeroteur', 'institution','categorie'));
+        }
+        else {
+            $categories = $this->categorieRepository->all();        
+            return view('backend.numeroteurs.edit', compact('numeroteur', 'institutions','categories'));
         }
 
-        return view('backend.numeroteurs.edit', compact('categories','institutions'))
-        ->with('numeroteur', $numeroteur);
     }
 
     /**

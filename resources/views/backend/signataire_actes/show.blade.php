@@ -103,7 +103,7 @@
                         <label class="col-sm-2 col-form-label"></label>
                         
                         <div class="col">
-                            <a href="{{ route('signataires.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('signataires.index') }}"> <button type="button" class="btn btn-secondary">Retour</button> </a>
                         </div>
 
                     </div>

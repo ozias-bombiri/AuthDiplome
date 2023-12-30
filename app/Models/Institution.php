@@ -43,6 +43,11 @@ class Institution extends Model
 		return $this->belongsTo(Institution::class, 'parent_id');
 	}
 
+	public function etablissements()
+	{
+		return $this->hasMany(Institution::class, 'parent_id');
+	}
+
 	public function filieres()
 	{
 		return $this->hasMany(Filiere::class);

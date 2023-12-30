@@ -17,6 +17,11 @@
             </ul>
         </div>
         @endif
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+            @endif
     </div>
 </div>
 <div class="row">
@@ -45,12 +50,19 @@
                     <div class="form-group row py-2">
                         <label for="institution" class="col-sm-2 col-form-label">Institution</label>
                         <div class="col">
+                            @if(isset($etablissement))
+                                <input type="hidden"  id="institution_id" name="institution_id" value="{{ $iesr->id }}">
+                        
+                                <input type="text" class="form-control" id="institution" name="institution" value="{{ $iesr->sigle.' | '.$iesr->parent->sigle }}" disabled>
+                        
+                            @else
                             <select class="form-control" id="institution" name="institution_id" required>
                                 <option value=""selected disabled hidden>Choisir</option>
-                                @foreach( $institutions as $institution)
+                                @foreach( $iesrs as $institution)
                                 <option value="{{ $institution->id}}">{{ $institution->sigle }}</option>
                                 @endforeach
                             </select>
+                            @endif
                         </div>
                     </div>
 
