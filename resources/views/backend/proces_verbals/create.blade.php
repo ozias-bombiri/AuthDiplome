@@ -36,11 +36,18 @@
                     <div class="form-group row py-2">
                         <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="parcours_id" required>
-                                @foreach( $parcours as $parcour)
-                                <option value="{{ $parcour->id}}">{{ $parcour->intitule }}</option>
-                                @endforeach
-                            </select>
+                            @if(isset($parcour))
+                                <input type="hidden"  id="parcours_id" name="parcours_id" value="{{ $parcour->id }}">
+                            
+                                <input type="text" class="form-control" id="parcour" name="parcour" value="{{ '('.$parcour->filiere->institution->sigle.') | '.$parcour->filiere->sigle.' | '.$parcour->intitule }}" disabled>
+
+                            @else                            
+                                <select class="form-control" id="parcour" name="parcours_id" required>
+                                    @foreach( $parcours as $par)
+                                    <option value="{{ $par->id}}">{{ '('.$par->filiere->institution->sigle.') | '.$par->filiere->sigle.' | '.$par->intitule }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
                         </div>
                     </div>
 

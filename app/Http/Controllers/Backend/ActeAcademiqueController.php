@@ -208,7 +208,7 @@ class ActeAcademiqueController extends Controller
 
         $numeroteur->compteur += 1;
         $input_acte = [];
-        $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule . '_' . $etudiant->identifiant;
+        $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule . '' . $etudiant->identifiant. ''.$categorieActe->id;
         $input_acte['numero'] = $numeroteur->compteur;
         $input_acte['dateSignature'] = $input['dateSignature'];
         $input_acte['statutSignaure'] = false;
@@ -244,7 +244,7 @@ class ActeAcademiqueController extends Controller
             $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
             $numeroteur->compteur += 1;
             $input_acte = [];
-            $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule . '_' . $etudiant->identifiant . '_' . $categorieActe->id;
+            $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule . '' . $etudiant->identifiant . '' . $categorieActe->id;
             $resultat->procesVerbal->anneeAcademique->intitule . '_' . $etudiant->identifiant;
             $input_acte['numero'] = $numeroteur->compteur;
             $input_acte['dateSignature'] = $input['dateSignature'];

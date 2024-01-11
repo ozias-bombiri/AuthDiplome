@@ -22,15 +22,8 @@ class UpdateResultatAcademiqueRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reference' => 'required|string',
-            'dateSignature' => 'required|string',
             'moyenne' => 'required|string',
-            'cote' => 'required|string',
-            'session' => 'required|string',
-            'dateSoutenance' => 'required',
-            'etudiant_id' => 'required|string',
-            'parcours_id' => 'required|string',
-            'anneeAcademique_id' => 'required|string',
+            
         ];
     }
 }

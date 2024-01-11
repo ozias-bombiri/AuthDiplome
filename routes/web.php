@@ -53,7 +53,7 @@ Route::resource('niveau_etudes', App\Http\Controllers\Backend\NiveauEtudeControl
 Route::resource('institutions', App\Http\Controllers\Backend\InstitutionController::class);
 Route::resource('demande_authentifications', App\Http\Controllers\Backend\DemandeAuthentificationController::class);
 Route::resource('documents', App\Http\Controllers\Backend\DocumentController::class);
-Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAcademiqueController::class);
+//Route::resource('resultat_academiques', App\Http\Controllers\Backend\ResultatAcademiqueController::class);
 //Route::resource('signataires', App\Http\Controllers\Backend\SignataireController::class);
 Route::resource('timbres', App\Http\Controllers\Backend\TimbreController::class);
 //Route::resource('visas', App\Http\Controllers\Backend\VisaController::class);
@@ -165,15 +165,12 @@ Route::group(['middleware' => ['auth']], function(){
 });
 
 
-Route::group(['middleware' => ['auth']], function(){
-    Route::get('parcours/{parcours_id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
-    ->name('parcours.proces_verbaux.index');    
-    
-});
 //ROUTES POUR ATTESTATIONS PROVISOIRES
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('actes/provisoire', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'index'])
-    ->name('actes.provisoires.index');    
+    Route::get('actes/provisoires', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'index'])
+    ->name('actes.provisoires.index');
+    Route::get('actes/provisoires/{niveau}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'index2'])
+    ->name('actes.provisoires.niveau');    
     
     
 });
@@ -194,9 +191,11 @@ Route::group(['middleware' => ['auth']], function(){
 
 //ROUTES POUR LES PROCES VERBAUX
 Route::group(['middleware' => ['auth']], function(){
+    Route::get('parcours/{parcours_id}/procesverbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index2'])
+    ->name('parcours.proces_verbaux.index');    
     Route::get('proces_verbaux', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index'])
     ->name('proces_verbaux.index'); 
-    Route::get('proces_verbaux/{parcours_id}/create', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'index'])
+    Route::get('proces_verbaux/create', [App\Http\Controllers\Backend\ProcesVerbalController::class, 'create'])
     ->name('proces_verbaux.create');
     
 });
@@ -204,12 +203,18 @@ Route::group(['middleware' => ['auth']], function(){
 
 //ROUTES POUR LES RESULTATS ACADEMIQUES ET ACTES ACADEMIQUES
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('proces_verbaux/{id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
+    Route::get('proces_verbaux/{pv_id}/resultats', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'index'])
     ->name('proces_verbaux.resultats.index');
-    Route::get('proces_verbaux/{id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
+    Route::get('proces_verbaux/{pv_id}/resultats/add', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create'])
     ->name('proces_verbaux.resultats.create');
-    Route::get('proces_verbaux/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create2'])
+    Route::get('proces_verbaux/{pv_id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'create2'])
     ->name('proces_verbaux.resultats.create2');
+    Route::get('proces_verbaux/{pv_id}/resultats/{res_id}/edit', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'edit'])
+    ->name('proces_verbaux.resultats.edit');
+    Route::put('proces_verbaux/{pv_id}/resultats/{res_id}/edit', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'update'])
+    ->name('proces_verbaux.resultats.update');
+    Route::delete('proces_verbaux/{pv_id}/resultats/{res_id}/delete', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'destroy'])
+    ->name('proces_verbaux.resultats.destroy');    
     Route::get('resultats/{resultat_id}/provisoires/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire1'])
     ->name('proces_verbaux.provisoires.create');
     Route::get('proces_verbaux/{id}/provisoires/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'provisoire2'])

@@ -29,89 +29,35 @@
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('resultat_academiques.store') }}">
+                <form method="post" action="{{ route('proces_verbaux.resultats.update', [$resultat->procesVerbal->id, $resultat->id]) }}">
                     @csrf
+                    @method('PUT')
                     <div class="form-group row py-2">
                         <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
                         <div class="col">
-                            <select class="form-control" id="etablissement" name="etudiant_id" required>
-                                @foreach( $etudiants as $etudiant)
-                                <option value="{{ $etudiant->id}}">{{ $etudiant->sigle }}</option>
-                                @endforeach
-                            </select>
+                            <input type="hidden"  id="inscription_id" name="inscription_id" value="{{ $resultat->inscription->id }}">
+                            <input type="text" class="form-control" id="inscription" name="inscription" value = "{{ $resultat->inscription->etudiant->identifiant.' | '.$resultat->inscription->etudiant->nom.' '.$resultat->inscription->etudiant->prenom }}" disabled>
+                        
                         </div>
                     </div>
-
                     <div class="form-group row py-2">
                         <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="parcours_id" required>
-                                @foreach( $parcours as $parcour)
-                                <option value="{{ $parcour->id}}">{{ $parcour->intitule }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control form-control" id="parcours" name="parcours" value="{{ $resultat->procesVerbal->parcours->intitule }}" disabled>                        
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="annee" class="col-sm-2 col-form-label">Année académique</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="anneeAcademique_id" required>
-                                @foreach( $anneeAcademiques as $anneeAcademique)
-                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->sigle }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control form-control" id="annee" name="annee" value="{{ $resultat->procesVerbal->anneeAcademique->intitule }}" disabled>
                         </div>
-                    </div>
+                    </div>                    
 
                     <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
+                        <label for="moyenne" class="col-sm-2 col-form-label">Moyenne</label>
                         <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="soutenance" class="col-sm-2 col-form-label">Soutenu</label>
-                        <div class="col">
-                            <input type="radio" value="1" id="soutenance" name="soutenance"> Oui <br>
-                            <input type="radio" value="0" id="soutenance" name="soutenance"> Non
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="dateSignaure" class="col-sm-2 col-form-label">Date de signature</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSignaure" name="dateSignaure" placeholder="..." required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="moyenne" class="col-sm-2 col-form-label">La moyenne</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" placeholder="..." required>
-                        </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="cote" class="col-sm-2 col-form-label">Cote</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="cote" name="cote" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="session" class="col-sm-2 col-form-label">La session</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="session" name="session" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="dateSoutenance" class="col-sm-2 col-form-label">Date de soutenance</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" required>
+                            <input type="number" class="form-control" id="moyenne" name="moyenne" value="{{ $resultat->moyenne }}" step="0.01" max="20" min="10" required>
                         </div>
                     </div>
                     <div class="row py-4">
@@ -120,10 +66,11 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('resultat_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('proces_verbaux.resultats.index', $resultat->procesVerbal->id) }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>
+                    
 
                 </form>
 
