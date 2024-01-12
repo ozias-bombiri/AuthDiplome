@@ -250,6 +250,29 @@ Route::group(['middleware' => ['auth']], function(){
     ->where('id', '[0-9]+')->name('metiers.actes.definitives.generer');  
     
 });
+
+//ROUTES POUR LES CONFIGURATIONS
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('metiers/{institution}/config', [App\Http\Controllers\Metiers\ConfigurationController::class, 'index'])
+    ->where('institution', '[0-9]+')->name('metiers.config.index');
+    
+});
+
+//ROUTES POUR LES REMISE D'ACTES
+Route::group(['middleware' => ['auth']], function(){
+    Route::get('provisoires/retraits', [App\Http\Controllers\Backend\RetraitActeController::class, 'index1'])
+    ->name('actes.provisoires.retrait');
+    Route::get('provisoires/{acte_id}/retrait', [App\Http\Controllers\Backend\RetraitActeController::class, 'create'])
+    ->name('actes.provisoires.retirer');
+    Route::post('provisoires/{acte_id}/retrait', [App\Http\Controllers\Backend\RetraitActeController::class, 'store'])
+    ->name('actes.provisoires.retirer.store');
+    
+    Route::get('actes/definitives/retrait', [App\Http\Controllers\Backend\RetraitActeController::class, 'index2'])
+    ->name('actes.definitives.retrait');
+    
+});
+
+
 /*
 Route::group(['middleware' => ['auth', 'role:directeur']], function() {
 

@@ -36,7 +36,6 @@ Etudiants
                             <th>No</th>
                             <th>Identifiant</th>
                             <th>Nom </th>
-                            <th>Prénom</th>
                             <th>Date de naissance</th>
                             <th>Lien de naissance</th>
                             <th>Action</th>
@@ -47,9 +46,8 @@ Etudiants
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
                             <td>{{ $impetrant->identifiant }}</td>
-                            <td>{{ $impetrant->nom }}</td>
-                            <td>{{ $impetrant->prenom }}</td>
-
+                            <td>{{ $impetrant->nom. ' '.$impetrant->prenom }}</td>
+                            
                             <td>{{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('d F Y') }}</td>
                             <td> {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance}}) </td>
                             <td>

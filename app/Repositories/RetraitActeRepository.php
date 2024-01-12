@@ -46,13 +46,35 @@ class RetraitActeRepository extends BaseRepository
     /**
      * Selectionner les parcours d'une institution
      **/
-    public function findByInstitution($institution_id)
+    public function findByEtablissementAndCategorie($institution_id, $categorie_id)
     {
-        return RetraitActe::join('acte_academiques', 'retrait_actes.filiere_id', '=', 'acte_academiques.id')
+        return RetraitActe::join('acte_academiques', 'retrait_actes.acteAcademique_id', '=', 'acte_academiques.id')
+                ->join('resultat_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
+                ->join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+                ->join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
                 ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
                 ->where('institutions.id', $institution_id)
+                ->where('acte_academiques.categorieActe_id', $categorie_id)
                 ->select('retrait_actes.*')
                 ->get();
+    }
+
+    /**
+     * Selectionner les parcours d'une institution
+     **/
+    public function findByIesrAndCategorie($institution_id, $categorie_id)
+    {
+        return RetraitActe::join('acte_academiques', 'retrait_actes.acteAcademique_id', '=', 'acte_academiques.id')
+        ->join('resultats_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultats_academiques.id')
+        ->join('proces_verbaux', 'resultats_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+        ->join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+        ->join('filieres', 'parcours.filiere_id', '=', 'filiere.id')
+        ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
+        ->where('institutions.parent_id', $institution_id)
+        ->where('acte_academiques.categorieActe_id', $$categorie_id)
+        ->select('retrait_actes.*')
+        ->get();
     }
 
     

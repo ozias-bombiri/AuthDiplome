@@ -80,7 +80,7 @@ Attestations provisoires
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                                 
-                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="#">
+                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="{{ route('actes.provisoires.retirer', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                                 

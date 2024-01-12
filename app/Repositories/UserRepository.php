@@ -75,5 +75,12 @@ class UserRepository extends BaseRepository
         return $user;
     }
 
+    public function findByEtablissement($etablissement_id){
+        return User::join('institutions', 'users.institution_id', '=', 'institutions.id')
+                ->where('institutions.id', '=', $etablissement_id)
+                ->select('users.*')
+                ->get();
+    }
+
 
 }

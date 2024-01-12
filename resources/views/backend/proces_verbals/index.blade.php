@@ -69,7 +69,7 @@
                         @foreach ($proces_verbals as $proces_verbal)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
-                            <td>{{ $proces_verbal->parcours->intitule }}</td>
+                            <td>{{ $proces_verbal->parcours->code.' | '.$proces_verbal->parcours->intitule }}</td>
                             <td>{{ $proces_verbal->anneeAcademique->intitule }}</td>
                             <td>{{ $proces_verbal->intitule }}</td>
                             <td>{{ $proces_verbal->session }}</td>

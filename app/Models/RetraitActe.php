@@ -32,6 +32,6 @@ class RetraitActe extends Model
 
 	public function acteAcademique()
 	{
-		return $this->belongsTo(ActeAcademique::class);
+		return $this->belongsTo(ActeAcademique::class, 'acteAcademique_id');
 	}
 }
