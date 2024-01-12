@@ -170,15 +170,17 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('actes/provisoires', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'index'])
     ->name('actes.provisoires.index');
     Route::get('actes/provisoires/{niveau}', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'index2'])
-    ->name('actes.provisoires.niveau');    
+    ->name('actes.provisoires.niveaux');    
     
     
 });
 
 //ROUTES POUR LES ATTESTATION DEFINITIVES
 Route::group(['middleware' => ['auth']], function(){
-    Route::get('actes/definitive', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'index'])
+    Route::get('actes/definitives', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'index'])
     ->name('actes.definitives.index');
+    Route::get('actes/definitives/{niveau}', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'index2'])
+    ->name('actes.definitives.niveaux');
     
 });
 

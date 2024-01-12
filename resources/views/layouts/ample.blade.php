@@ -165,7 +165,18 @@
                     <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
                         <div class="d-md-flex">
                             <ol class="breadcrumb ms-auto">
-                                <li><a href="#" class="fw-normal">Dashboard</a></li>
+                                <li>
+                                    <a href="{{ route('dashboard') }}" class="fw-normal">
+                                        @auth 
+                                            @if(auth()->user()->institution) 
+                                                @if(auth()->user()->institution->parent)
+                                                    {{ auth()->user()->institution->parent->sigle }} |
+                                                @endif
+                                                {{ auth()->user()->institution->sigle }} 
+                                            @endif
+                                        @endauth
+                                    </a>
+                                </li>
                             </ol>
 
                         </div>

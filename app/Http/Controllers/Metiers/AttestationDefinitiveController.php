@@ -42,6 +42,7 @@ class AttestationDefinitiveController extends Controller
     protected $resultatRepository ;
     protected $categorieActeRepository;
     protected $timbreRepository;
+    protected $numeroteurRepository;
     protected $pdfCreator;
 
 
@@ -59,6 +60,7 @@ class AttestationDefinitiveController extends Controller
         ResultatAcademiqueRepository $resultatRepo,
         CategorieActeRepository $categorieRepo,
         TimbreRepository $timbreRepo,
+        NumeroteurRepository $numeroteurRepo,
         DocumentCreator $pdfCreator
          )
     {
@@ -73,6 +75,7 @@ class AttestationDefinitiveController extends Controller
         $this->resultatRepository = $resultatRepo;
         $this->categorieActeRepository = $categorieRepo;
         $this->timbreRepository = $timbreRepo;
+        $this->numeroteurRepository = $numeroteurRepo;
         $this->pdfCreator = $pdfCreator;
     }
     public function index()
@@ -101,6 +104,35 @@ class AttestationDefinitiveController extends Controller
         $niveaux = $this->niveauRepository->all();
         return view("metiers.actes.definitives.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
+
+    public function index2($niveau)
+
+    {        
+        $institution = Auth::user()->institution;
+        //dd($institution);
+        if(empty($institution->id)) {
+            $institution = $this->institutionRepository->find(1);
+        }        
+        $parcours = null;
+        $attestations = null;
+        
+        $categorieActeProvisoire = $this->categorieActeRepository->findByIntitule("DEFINITIVE");
+
+        if($institution->type =="IESR") {
+            $parcours = $this->parcoursRepository->findByIesr($institution->id);
+            $attestations = $this->attestationRepository->findByIesrAndCategorieActeAndNiveau($institution->id, $categorieActeProvisoire->id, $niveau);        
+        }
+        else {
+            $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+            $attestations = $this->attestationRepository->findByEtablissementAndCategorieActeAndNiveau($institution->id, $categorieActeProvisoire->id, $niveau);       
+        
+        }
+        
+        $annees = $this->anneeRepository->all();
+        $niveaux = $this->niveauRepository->all();
+        return view("metiers.actes.definitives.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+    }
+
 
 
     /**
@@ -195,7 +227,7 @@ class AttestationDefinitiveController extends Controller
     {
         $institution = Auth ::user()->institution;
         $inputs = $request->all();
-        $numeroteur = $this->numeroteuRepository->findByInstitutionandCategorie($institution->id, 'provisoire');
+        $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, 'provisoire');
         //Enregistrement du résultat académique
         $input_resultat = [];
         $input_resultat['reference'] = "RES".time();

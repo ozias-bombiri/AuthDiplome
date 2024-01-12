@@ -28,21 +28,18 @@ Attestations provisoires
         @endif
     </div>
 </div>
-<div class="row">
-    <ul class="nav nav-tabs">
-        @foreach($niveaux as $niveau)
-        <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{ route('actes.provisoires.niveau', $niveau->id) }}">{{ $niveau->intitule}}</a>
-        </li>
-        @endforeach
-    </ul>
-</div>
+
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <h3 class="box-title">Filtres</h3>
-            <div class="table">
-                
+            <div class="form-group row py-2">
+                <label for="niveau" class="col-sm-2 col-form-label">Niveaux d'étude</label>
+                <div class="col">
+                    @foreach( $niveaux as $niveau)
+                        <a class="btn btn-link btn-secondary" aria-current="page" href="{{ route('actes.provisoires.niveaux', $niveau->id) }}">{{ $niveau->intitule}}</a>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
