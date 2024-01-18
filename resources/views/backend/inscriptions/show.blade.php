@@ -45,17 +45,7 @@
                     </div>
 
                     <div>
-                        <div class="form-group row py-2">
-                            <label for="typeIdentifiant" class="col-sm-2 col-form-label">Type de l'identifiant </label>
-                            <div class="col">
-                                <select class="form-control" id="typeIdentifiant" name="typeIdentifiant" required>
-                                    <option value="" selected disabled hidden>Choisir </option>
-                                    <option value="INE">INE</option>
-                                    <option value="Matricule">Matricule</option>
-                                    <option value="Autres">Autres</option>
-                                </select>
-                            </div>
-                        </div>
+                        
                         <div class="form-group row py-2">
                             <label for="identifiant" class="col-sm-2 col-form-label">Identifiant</label>
                             <div class="col">
