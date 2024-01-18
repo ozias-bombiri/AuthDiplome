@@ -142,7 +142,7 @@
             <!-- Sidebar scroll-->
             <div class="scroll-sidebar">
                 <!-- Sidebar navigation-->
-                @include('navs.nav-ample')
+                @include('navs.navs')
                 <!-- End Sidebar navigation -->
             </div>
             <!-- End Sidebar scroll-->

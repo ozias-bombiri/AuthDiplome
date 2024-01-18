@@ -30,12 +30,13 @@ class ConfigurationController extends Controller
     public function index(){
         $institution = Auth::user()->institution;
 
-        $signataires = $this->signataireRepository->findByEtablissement($institution->id);
+        $signataireActes = $this->signataireRepository->findByEtablissement($institution->id);
         $numeroteurs = $this->numeroteurRepository->findByEtablissement($institution->id);
-        $timbre = $this->timbreRepository->findByEtablissement($institution->id);
-        $utilisateurs = $this->userRepository->findByEtablissement($institution->id);
+        //$timbre = $this->timbreRepository->findByEtablissement($institution->id);
+        //$utilisateurs = $this->userRepository->findByEtablissement($institution->id);
 
-        return view("metiers.config.index", compact('signataires', 'numeroteurs', 'timbre', 'utilisateurs'));
+        return view("metiers.config.index", compact('signataireActes', 'numeroteurs'));
+        //return view("metiers.config.index", compact('signataireActes', 'numeroteurs', 'timbre', 'utilisateurs'));
    
     }
 }

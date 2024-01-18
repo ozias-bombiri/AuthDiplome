@@ -36,6 +36,13 @@
                 <span class="hide-menu">Remise d'attestations</span>
             </a>
         </li>
+
+        <li class="sidebar-item">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('authentification.provisoires.index') }}" aria-expanded="false">
+                <i class="fa fa-info-circle" aria-hidden="true"></i>
+                <span class="hide-menu">Authentification</span>
+            </a>
+        </li>
         
         <li class="sidebar-item">
             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('etudiants.index', ['etablissement_id' =>auth()->user()->institution_id]) }}" aria-expanded="false">

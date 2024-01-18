@@ -59,7 +59,7 @@
                         <label for="categorie" class="col-sm-2 col-form-label">Catégorie de document</label>
                         <div class="col">
                             @if(isset($categorie))
-                            <input type="hidden"  id="categorie_id" name="categorie_id" value="{{ $categorie->id }}">
+                            <input type="hidden"  id="categorie_id" name="categorieActe_id" value="{{ $categorie->id }}">
                             <input type="texte" class="form-control" id="categorie" name="categorie" value="{{ $categorie->intitule }}" disabled>
                         
                             @else

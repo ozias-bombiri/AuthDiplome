@@ -32,7 +32,7 @@ Signataires
         <div class="white-box">
             <h3 class="box-title">Signataires </h3>
             <div class="col-4 offset-6 mb-5">
-                 <a class="btn btn-success" href="{{ route('signataires.create1') }}"> Ajouter pour un établissement </a> 
+                <a class="btn btn-success" href="{{ route('signataires.create1') }}"> Ajouter pour un établissement </a> 
                 <a class="btn btn-success" href="{{ route('signataires.create2') }}"> Ajouter pour une IESR </a>
 
             </div>
