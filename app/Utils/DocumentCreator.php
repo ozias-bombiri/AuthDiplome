@@ -99,7 +99,7 @@ class DocumentCreator
         $categorie = $acte->categorieActe->intitule;
         
         $logo = $this->getLogoBase64($institution);
-        $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$document->id;
+        $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$acte->id;
         $qr_infos = "Ref :".$acte->reference."\n\n".$acte->intitule."\n ".strtoupper($impetrant->nom. ' '.$impetrant->prenom)."\n \n ".$lien ;
         $qrcode = $this->createQrcode($qr_infos, $acte->reference);
        

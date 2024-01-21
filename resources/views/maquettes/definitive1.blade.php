@@ -358,7 +358,7 @@
                     soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
                 @else 
                     session {{ $resultat->session}}
-                    de l’année académique {{ $resultat->annee_academique->intitule }} 
+                    de l’année académique {{ $resultat->procesVerbal->anneeAcademique->intitule }} 
                 @endif 
                  <br />
                 et a ainsi obtenu la :
@@ -395,7 +395,7 @@
 
             <div id="eleven" class="zone">
 
-                Fait le {{ \Carbon\Carbon::parse($document->dateSignature)->translatedFormat('d F Y') }} à {{ $document->lieuCreation}} 
+                Fait le {{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }} à {{ $acte->lieu}} 
 
             </div>
         </div>
@@ -412,13 +412,13 @@
 
             <div id="threeteen" class="zone text-center w-1_3 px-1_3">
 
-                <p class="text-center"> <u>Pour le Responsable et par délégation le {{ $signataire->fonction }}</u> </p> <br />
+                <p class="text-center"> <u>Pour le Responsable et par délégation le {{ $signataireActe->signataire->fonction }}</u> </p> <br />
 
                 <p class="text-center">
                     <br /><br /> <br /> <br />
-                    @if($signataire->grade) {{ $signataire->grade }}@endif
-                    {{ $signataire->prenom }} {{ $signataire->nom }}<br />
-                    <em>{{ $signataire->titreAcademique }}<br /> {{ $signataire->titreHonorifique }}</em>
+                    @if($signataireActe->signataire->grade) {{ $signataireActe->signataire->grade }}@endif
+                    {{ $signataireActe->signataire->prenom }} {{ $signataireActe->signataire->nom }}<br />
+                    <em>{{ $signataireActe->signataire->titreAcademique }}<br /> {{ $signataireActe->signataire->titreHonorifique }}</em>
                 </p>
 
             </div>
