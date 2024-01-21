@@ -37,7 +37,7 @@ class VisaInstitution extends Model
 
 	public function visaDiplomes() 
 	{
-		return $this->hasMany(VisaDiplome::class, 'visaInstitution_id', 'visas_diplomes', 'id');
+		return $this->hasMany(VisaDiplome::class, 'visaInstitution_id');
 	}
 
 	public function categorieActe()

@@ -8,7 +8,7 @@ use App\Repositories\FiliereRepository;
 use App\Http\Requests\StoreFiliereRequest ;
 use App\Http\Requests\UpdateFiliereRequest ;
 use App\Repositories\InstitutionRepository;
-
+use Illuminate\Support\Facades\Auth;
 
 class FiliereController extends Controller
 {
@@ -28,15 +28,16 @@ class FiliereController extends Controller
     public function index()
     {
         $filieres = null;
-        if(isset($_GET['etablissement_id'])){
-            $institution_id = $_GET['etablissement_id'];
-            $filieres = $this->modelRepository->findByEtablissement($institution_id);
+        $institution = Auth::user()->institution;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $filieres = $this->modelRepository->findByIesr($institution->id); 
+            }
+            else{
+                $filieres = $this->modelRepository->findByEtablissement($institution->id);            
+            }
+        }
         
-        }
-        else if(isset($_GET['iesr_id'])){
-            $institution_id = $_GET['iesr_id'];
-            $filieres = $this->modelRepository->findByIesr($institution_id);
-        }
         else {
             $filieres = $this->modelRepository->all();
         }
@@ -48,9 +49,27 @@ class FiliereController extends Controller
      */
     public function create()
     {
-       
-        $institutions = $this->institutionRepository->all();
-        return view('backend.filieres.create', compact('institutions'));
+        $institution = Auth::user()->institution;
+        $etablissements = null;
+        $etablissement =null;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $$etablissements = $this->institutionRepository->findEtablissementByIesr($institution->id); 
+            }
+            else{
+                $etablissement = $institution;            
+            }
+        }
+        
+        else {
+            $etablissements = $this->institutionRepository->findEtablissement();        
+        }
+        if($etablissement != null) {
+            return view('backend.filieres.create', compact('etablissement'));
+        }
+        else {
+            return view('backend.filieres.create', compact('etablissements'));
+        }
     }
 
     /** 
@@ -63,7 +82,7 @@ class FiliereController extends Controller
 
         $filiere = $this->modelRepository->create($input);
 
-        return redirect(route('les_filieres.index'));
+        return redirect(route('filieres.index'));
     }
 
     /**
@@ -105,11 +124,11 @@ class FiliereController extends Controller
         $filiere = $this->modelRepository->find($id);
 
         if (empty($filiere)) {
-            return redirect(route('les_filieres.index'));
+            return redirect(route('filieres.index'));
         }
         
         $filiere = $this->modelRepository->update($input, $id);
-        return redirect(route('les_filieres.index'));
+        return redirect(route('filieres.index'));
     }
 
     /**

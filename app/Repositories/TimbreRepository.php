@@ -53,4 +53,25 @@ class TimbreRepository extends BaseRepository
                         ->first();
         return $timbre;
     }
+
+    /**
+     * FindByIntitution and type
+     **/
+    public function findByEtablissement($institution_id)
+    {
+       $timbres = Timbre::where('institution_id', '=', $institution_id)
+                        ->get();
+        return $timbres;
+    }
+
+    /**
+     * FindByIntitution and type
+     **/
+    public function findByIesr($iesr_id)
+    {
+       $timbres = Timbre::join('institutions', 'timbres.institution_id', '=', 'institution.id')
+                        ->where('institutions.parent_id', '=', $iesr_id)
+                        ->get();
+        return $timbres;
+    }
 }

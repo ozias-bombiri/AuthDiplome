@@ -35,8 +35,7 @@ Etudiants
                         <tr>
                             <th>No</th>
                             <th>Identifiant</th>
-                            <th>Nom </th>
-                            <th>Prénom</th>
+                            <th>Nom prénom</th>
                             <th>Date de naissance</th>
                             <th>Lien de naissance</th>
                             <th>Action</th>
@@ -47,28 +46,17 @@ Etudiants
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
                             <td>{{ $impetrant->identifiant }}</td>
-                            <td>{{ $impetrant->nom }}</td>
-                            <td>{{ $impetrant->prenom }}</td>
-
+                            <td>{{ $impetrant->nom. ' '.$impetrant->prenom }}</td>
+                            
                             <td>{{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('d F Y') }}</td>
                             <td> {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance}}) </td>
                             <td>
-                                <form action="{{ route('etudiants.destroy',$impetrant->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('etudiants.show',$impetrant->id) }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('etudiants.edit',$impetrant->id) }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit" class="btn btn-danger" title="Supprimer">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                </form>
+                                <a class="btn btn-info" title="Détails" href="{{ route('etudiants.show',$impetrant->id) }}">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>
+                                <a class="btn btn-primary" title="Modifier" href="{{ route('etudiants.edit',$impetrant->id) }}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>                                    
                             </td>
                         </tr>
                         @endforeach

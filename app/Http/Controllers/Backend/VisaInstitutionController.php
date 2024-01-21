@@ -70,14 +70,20 @@ class VisaInstitutionController extends Controller
     {
         $input = $request->all();
         $visaInstitution = $this->modelRepository->find($input['visaInstitution_id']);
+        //dd(count($visaInstitution->visaDiplomes));
+        if(count($visaInstitution->visaDiplomes) >0){
+            foreach($visaInstitution->visaDiplomes as $visaDiplome){
+                $this->visaDiplomeRepository->delete($visaDiplome->id);
+            }
+        }
         $visasChecked = $input['visas'];
         //dd($visasChecked);
-        $ordre = 1;
-        foreach($visasChecked as $visaId){
+        $ordres = $input['ordres'];
+        for($i=0; $i < count($visasChecked); $i++){
             $visadiplome = [];
             $visadiplome['visaInstitution_id'] =  $visaInstitution->id;
-            $visadiplome['visa_id'] = $visaId;
-            $visadiplome['ordre'] = $ordre ++;
+            $visadiplome['visa_id'] = $visasChecked[$i];
+            $visadiplome['ordre'] = $ordres[$i];
             $this->visaDiplomeRepository->create($visadiplome);
         }
         return redirect(route('visa_institutions.show', $visaInstitution->id));
@@ -102,13 +108,13 @@ class VisaInstitutionController extends Controller
     public function show($id)
     {
         $visaInstitution = $this->modelRepository->find($id);
-        $visas = $this->visaRepository->findByVisaInstitution($visaInstitution->id);
+        $visasDiplomes = $visaInstitution->visaDiplomes;
         //dd($visas);
         if (empty($visaInstitution)) {
             return redirect(route('visa_institutions.index'));
         }
 
-        return view('backend.visa_institutions.show', compact('visaInstitution', 'visas'));
+        return view('backend.visa_institutions.show', compact('visaInstitution', 'visasDiplomes'));
 
     }
 

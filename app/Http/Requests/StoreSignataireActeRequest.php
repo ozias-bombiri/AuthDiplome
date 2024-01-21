@@ -22,12 +22,9 @@ class StoreSignataireActeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'statut' => 'required|string',
-		    'debut' => 'required|string',
-            'fin' => 'required|string',
-            'categorieActe_id' => 'required|string',
-            'institution_id' => 'required|string',
-            'signataire_id' => 'required|string',
+            'debut' => 'required',
+            'categorieActe_id' => 'required',
+            'institution_id' => 'required',
         ];
     }
 }

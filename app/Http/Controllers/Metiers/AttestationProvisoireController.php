@@ -100,6 +100,34 @@ class AttestationProvisoireController extends Controller
         return view("metiers.actes.provisoires.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
     }
 
+    public function index2($niveau)
+
+    {        
+        $institution = Auth::user()->institution;
+        //dd($institution);
+        if(empty($institution->id)) {
+            $institution = $this->institutionRepository->find(1);
+        }        
+        $parcours = null;
+        $attestations = null;
+        
+        $categorieActeProvisoire = $this->categorieActeRepository->findByIntitule("PROVISOIRE");
+
+        if($institution->type =="IESR") {
+            $parcours = $this->parcoursRepository->findByIesr($institution->id);
+            $attestations = $this->attestationRepository->findByIesrAndCategorieActeAndNiveau($institution->id, $categorieActeProvisoire->id, $niveau);        
+        }
+        else {
+            $parcours = $this->parcoursRepository->findByInstitution($institution->id);
+            $attestations = $this->attestationRepository->findByEtablissementAndCategorieActeAndNiveau($institution->id, $categorieActeProvisoire->id, $niveau);       
+        
+        }
+        
+        $annees = $this->anneeRepository->all();
+        $niveaux = $this->niveauRepository->all();
+        return view("metiers.actes.provisoires.index", compact('attestations', 'institution', 'annees', 'niveaux', 'parcours'));
+    }
+
     public function generer($acte_id){
 
         $attestation = $this->attestationRepository->find($acte_id);        

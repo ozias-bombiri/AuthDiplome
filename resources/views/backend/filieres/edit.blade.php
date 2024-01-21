@@ -1,7 +1,7 @@
 @extends('layouts.ample')
 
 @section('page-title')
-{{ __('Modifier un résultat académique') }}
+{{ __('Modifier une filière') }}
 @endsection
 
 @section('content')
@@ -23,95 +23,41 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Modifier un résultat académique') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Modifier une filière') }}</h3>
                 <div class="">
 
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('resultat_academiques.store') }}">
+                <form method="post" action="{{ route('filieres.update', $filiere->id) }}">
                     @csrf
+                    @method('PUT')
+                    <input type="hidden"  id="institution_id" name="institution_id" value="{{ $filiere->institution->id }}">
+                        
                     <div class="form-group row py-2">
-                        <label for="etudiant" class="col-sm-2 col-form-label">Etudiant</label>
+                        <label for="institution" class="col-sm-2 col-form-label">Institution </label>
                         <div class="col">
-                            <select class="form-control" id="etablissement" name="etudiant_id" required>
-                                @foreach( $etudiants as $etudiant)
-                                <option value="{{ $etudiant->id}}">{{ $etudiant->sigle }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control form-control" id="institution" name="institution" value="{{ $filiere->institution->sigle.' | '.$filiere->institution->parent->sigle  }}" disabled>                        
+                        </div>
+                    </div>
+                    <div class="form-group row py-2">
+                        <label for="intitule" class="col-sm-2 col-form-label">Intitulé</label>
+                        <div class="col">
+                            <input type="text" class="form-control form-control" id="intitule" name="intitule" value="{{ $filiere->intitule }}" required>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="parcours" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="sigle" class="col-sm-2 col-form-label">Sigle</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="parcours_id" required>
-                                @foreach( $parcours as $parcour)
-                                <option value="{{ $parcour->id}}">{{ $parcour->intitule }}</option>
-                                @endforeach
-                            </select>
+                            <input type="text" class="form-control" id="sigle" name="sigle" value="{{ $filiere->sigle }}" required>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="anneeAcademiques" class="col-sm-2 col-form-label">Parcours</label>
+                        <label for="code" class="col-sm-2 col-form-label">Code</label>
                         <div class="col">
-                            <select class="form-control" id="parcour" name="anneeAcademique_id" required>
-                                @foreach( $anneeAcademiques as $anneeAcademique)
-                                <option value="{{ $anneeAcademique->id}}">{{ $anneeAcademique->sigle }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="soutenance" class="col-sm-2 col-form-label">Soutenu</label>
-                        <div class="col">
-                            <input type="radio" value="1" id="soutenance" name="soutenance"> Oui <br>
-                            <input type="radio" value="0" id="soutenance" name="soutenance"> Non
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="dateSignaure" class="col-sm-2 col-form-label">Date de signature</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSignaure" name="dateSignaure" placeholder="..." required>
-                        </div>
-                    </div>
-
-                    <div class="form-group row py-2">
-                        <label for="moyenne" class="col-sm-2 col-form-label">La moyenne</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="moyenne" name="moyenne" placeholder="..." required>
-                        </div>
-                    </div>
-                    <div class="form-group row py-2">
-                        <label for="cote" class="col-sm-2 col-form-label">Cote</label>
-                        <div class="col">
-                            <input type="number" class="form-control form-control" id="cote" name="cote" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="session" class="col-sm-2 col-form-label">La session</label>
-                        <div class="col">
-                            <input type="text" class="form-control form-control" id="session" name="session" required>
-                        </div>
-                    </div>
-
-
-                    <div class="form-group row py-2">
-                        <label for="dateSoutenance" class="col-sm-2 col-form-label">Date de soutenance</label>
-                        <div class="col">
-                            <input type="date" class="form-control form-control" id="dateSoutenance" name="dateSoutenance" required>
+                            <input type="text" class="form-control" id="code" name="code" value="{{ $filiere->code }}" required>
                         </div>
                     </div>
                     <div class="row py-4">
@@ -120,7 +66,7 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('resultat_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('filieres.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

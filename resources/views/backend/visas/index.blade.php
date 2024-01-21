@@ -50,23 +50,10 @@ Visas
                             <td>{{ $visa->intitule }}</td>
                             <td> {{ $visa->dateSignature->format('d m Y') }}</td>
                             <td> {{ $visa->texte }}</td>
-                            <td>
-                                <form action="{{ route('visas.destroy',$visa->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('visas.show',$visa->id) }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('visas.edit',$visa->id) }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit" class="btn btn-danger" title="Supprimer">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                </form>
+                            <td>                                   
+                                <a class="btn btn-primary" title="Modifier" href="{{ route('visas.edit',$visa->id) }}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>                                    
                             </td>
                         </tr>
                         @endforeach

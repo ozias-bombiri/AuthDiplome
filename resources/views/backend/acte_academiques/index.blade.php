@@ -34,11 +34,11 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Résultats</th>
-                            <th>Signataire</th>
-                            <th>Catégorie</th>
+                            <th>Référence</th>
                             <th>Intitulé</th>
-                            <th>Validite</th>
+                            <th>Parcours</th>
+                            <th>Impétrant</th>
+                            <th>Date de signataure</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -46,11 +46,11 @@
                         @foreach ($actes as $acte)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $acte->resultatAcademique->reference }}</td>
-                            <td>{{ $acte->signataireActe->statut }}</td>
-                            <td>{{ $acte->categorieActe->intitule }}</td>
+                            <td>{{ $acte->reference }}</td>
                             <td>{{ $acte->intitule }}</td>
-                            <td>{{ $acte->validite }}</td>
+                            <td>{{ $acte->resultatAcademique->procesVerbal->parcours->code.' | '.$acte->resultatAcademique->procesVerbal->parcours->intitule }}</td>
+                            <td> {{ $acte->resultatAcademique->inscription->etudiant->identifiant.' | '.$acte->resultatAcademique->inscription->etudiant->nom.' '.$acte->resultatAcademique->inscription->etudiant->prenom }}</td>
+                            <td>{{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }}</td>
 
                             
                             <td>

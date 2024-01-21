@@ -22,12 +22,10 @@ class StoreRetraitActeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'reference' => 'required|string',
             'dateRetrait' => 'required|string',
             'retirant' => 'required|string',
-            'description' => 'required|string',
             'acteAcademique_id' => 'required|string',
-            'user_id' => 'required|string',
+            
         ];
     }
 }

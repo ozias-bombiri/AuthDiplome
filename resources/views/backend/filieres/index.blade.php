@@ -27,7 +27,7 @@
         <div class="white-box">
             <h3 class="box-title">{{ __('Filieres') }} </h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('les_filieres.create') }}"> Ajouter </a>
+                <a class="btn btn-success" href="{{ route('filieres.create') }}"> Ajouter </a>
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
@@ -35,9 +35,9 @@
                         <tr>
                             <th>No</th>
                             <th>Institution</th>
-                            <th>Intitulé</th>
-                            <th>Sigle</th>
                             <th>Code</th>
+                            <th>Sigle</th>
+                            <th>Intitulé</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -45,29 +45,22 @@
                         @foreach ($filieres as $filiere)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $filiere->institution->sigle }}</td>
-                            <td>{{ $filiere->intitule }}</td>
-                            <td>{{ $filiere->sigle }}</td>
+                            <td>{{ $filiere->institution->sigle.' | '.$filiere->institution->parent->sigle}}</td>
                             <td>{{ $filiere->code }}</td>
-
+                            <td>{{ $filiere->sigle }}</td>
+                            <td>{{ $filiere->intitule }}</td>                    
                            
                             <td>
-                                <form action="{{ route('les_filieres.destroy',$filiere->id) }}" method="POST">
-                                    <a class="btn btn-info" title="Détails" href="{{ route('les_filieres.show',$filiere->id) }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
-                                    <a class="btn btn-primary" title="Modifier" href="{{ route('les_filieres.edit',$filiere->id) }}">
-                                        <i class="bi bi-pencil"></i>
-                                    </a>
-
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit" class="btn btn-danger" title="Supprimer">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-
-                                </form>
+                                
+                                <a class="btn btn-primary" title="Modifier" href="{{ route('filieres.edit',$filiere->id) }}">
+                                    <i class="bi bi-pencil"></i>
+                                </a>
+                                <a class="btn btn-primary" title="Ajouter un parcours" href="{{ route('parcours.create',['filiere_id' =>$filiere->id]) }}">
+                                    <i class="bi bi-plus"></i>
+                                </a>  
+                                <a class="btn btn-info" title="Voir les parcours" href="{{ route('parcours.index',['filiere_id' =>$filiere->id]) }}">
+                                    <i class="bi bi-eye-fill"></i>
+                                </a>                                   
                             </td>
                         </tr>
                         @endforeach

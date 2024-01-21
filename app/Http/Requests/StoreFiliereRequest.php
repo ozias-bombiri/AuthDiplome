@@ -25,7 +25,6 @@ class StoreFiliereRequest extends FormRequest
             'sigle' => 'required|string',
 		    'code' => 'required|max:20',
 		    'institution_id' => 'required',
-            'description' => 'required|string',
         ];
     }
 }

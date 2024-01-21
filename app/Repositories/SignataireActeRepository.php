@@ -44,11 +44,21 @@ class SignataireActeRepository extends BaseRepository
         return SignataireActe::class;
     }
 
-    public function findByInstitution($institution_id)
+    public function findByEtablissement($institution_id)
     {
-        $signatairesActes = SignataireActe::join('institutions', 'signataire_actes.institution_id', '=', 'institution.id')
+        $signatairesActes = SignataireActe::join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
         ->where('institutions.id', $institution_id)
-        ->select('signataire_actes.*')
+        ->select('signataires_actes.*')
+        ->get();
+
+        return $signatairesActes;
+    }
+
+    public function findByIesr($iesr_id)
+    {
+        $signatairesActes = SignataireActe::join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+        ->where('institutions.parent_id', $iesr_id)
+        ->select('signataires_actes.*')
         ->get();
 
         return $signatairesActes;
@@ -87,4 +97,17 @@ class SignataireActeRepository extends BaseRepository
 
         return $signataireActe;
     }
+
+    public function findByInstitutionAndCategorie($institution_id, $categorie_id)
+    {
+        $signataireActe = SignataireActe::join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+        ->where('institutions.id', $institution_id)
+        ->where('signataires_actes.categorieActe_id', $categorie_id)
+        ->select('signataires_actes.*')
+        ->get();
+
+        return $signataireActe;
+    }
 }
+
+

@@ -28,72 +28,18 @@ Attestations provisoires
         @endif
     </div>
 </div>
-<div class="row">
-    <ul class="nav nav-tabs">
-        @foreach($niveaux as $niveau)
-        <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="{{ route('metiers.etablissements.attestation-niveaux', $niveau->id) }}">{{ $niveau->intitule}}</a>
-        </li>
-        @endforeach
-    </ul>
-</div>
+
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <h3 class="box-title">Filtres</h3>
-            <div class="table">
-                <form method="post" action="{{ route('metiers.etablissements.attestation-filtre') }}">
-                    @csrf
-                    <input type="hidden" id="institution" name="institution_id" value="{{ $institution->id }}">
-
-                    <div class="row border border-secondary">
-
-                        <div class="form-group col-4 py-2">
-                            <label for="niveau" class="col-sm-10 col-form-label">Niveau </label>
-                            <div class="col">
-                                <select class="form-control" id="niveau" name="niveau" required>
-                                    <option value="">Choisir</option>
-                                    @foreach ($niveaux as $niveau)
-                                    <option value="{{ $niveau->id}}">{{ $niveau->intitule}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group col-4 py-2">
-                            <label for="parcours" class="col-sm-10 col-form-label">Parcours </label>
-                            <div class="col">
-                                <select class="form-control" id="parcours" name="parcours" required>
-                                    <option value="">Choisir</option>
-                                    @foreach ($parcours as $parc)
-                                    <option value="{{ $parc->id}}">{{ $parc->intitule}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group col-4 py-2">
-                            <label for="annee" class="col-sm-10 col-form-label">Année acedémique</label>
-                            <div class="col">
-                                <select class="form-control" id="annee" name="annee" required>
-                                    <option value="">Choisir</option>
-                                    @foreach ($annees as $annee)
-                                    <option value="{{ $annee->id}}">{{ $annee->intitule}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="row py-4">
-                            <label class="col-sm-2 col-form-label"></label>
-                            <div class="col-sm-3">
-                                <button id="filtre" type="submit" class="btn btn-success">Afficher</button>
-                            </div>
-                            <div class="col-sm-3">
-                                <a class="btn btn-danger" href="{{ route('metiers.etablissements.attestation-list', $institution->id) }}"> Annuler filtre </a>
-                            </div>
-
-                        </div>
-                    </div>
-                </form>
+            <div class="form-group row py-2">
+                <label for="niveau" class="col-sm-2 col-form-label">Niveaux d'étude</label>
+                <div class="col">
+                    @foreach( $niveaux as $niveau)
+                        <a class="btn btn-link btn-secondary" aria-current="page" href="{{ route('actes.provisoires.niveaux', $niveau->id) }}">{{ $niveau->intitule}}</a>
+                    @endforeach
+                </div>
             </div>
         </div>
     </div>
@@ -108,40 +54,39 @@ Attestations provisoires
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Année</th>
                             <th>Référence</th>
-                            <th>Intitule</th>
-                            <th>Identifiant</th>
-                            <th>Nom Prénom </th>
-                            <th>Parcours (Niveau d'étude)</th>
+                            <th>Intitulé</th>
+                            <th>Parcours</th>
+                            <th>Impétrant</th>
+                            <th>Date de signataure</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($attestations as $attestation)
+                        @foreach ($attestations as $acte)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td> {{ $attestation->resultatAcademique->procesVerbal->anneeAcademique->intitule }}</td>
-                            <td>{{ $attestation->reference }}</td>
-                            <td>{{ $attestation->intitule }}</td>
-                            <td>{{ $attestation->resultatAcademique->inscription->etudiant->identifiant }} </td>
-                            <td>{{ $attestation->resultatAcademique->inscription->etudiant->nom }} {{ $attestation->resultatAcademique->inscription->etudiant->prenom }}</td>
-                            <td>{{ $attestation->resultatAcademique->procesVerbal->parcours->intitule }} ({{ $attestation->resultatAcademique->procesVerbal->parcours->niveauEtude->intitule }})</td>
+                            <td>{{ $acte->reference }}</td>
+                            <td>{{ $acte->intitule }}</td>
+                            <td>{{ $acte->resultatAcademique->procesVerbal->parcours->code.' | '.$acte->resultatAcademique->procesVerbal->parcours->intitule }}</td>
+                            <td> {{ $acte->resultatAcademique->inscription->etudiant->identifiant.' | '.$acte->resultatAcademique->inscription->etudiant->nom.' '.$acte->resultatAcademique->inscription->etudiant->prenom }}</td>
+                            <td>{{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }}</td>
+
                             <td>
-                                <button id="{{ $attestation->id }}" class="btn btn-info view action-btn" title="Détails">
+                                <button id="{{ $acte->id }}" class="btn btn-info view action-btn" title="Détails">
                                     <i class="bi bi-eye-fill"></i>
                                 </button>
-                                <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.provisoires.generer', $attestation->id) }}">
+                                <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.provisoires.generer', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                                 
-                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="#">
+                                <a class="btn btn-primary action-btn" title="Remise de l'acte" href="{{ route('actes.provisoires.retirer', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
                                 
-                                <a class="{{ $attestation->resultatAcademique->procesVerbal->actesDefinitifExiste($attestation->resultatAcademique->procesVerbal->id, "DEFINITIVE", $attestation->resultatAcademique->inscription->etudiant->identifiant) ? 'btn btn-secondary' : 'btn btn-warning' }}"
+                                <a class="{{ $acte->resultatAcademique->procesVerbal->actesDefinitifExiste($acte->resultatAcademique->procesVerbal->id, "DEFINITIVE", $acte->resultatAcademique->inscription->etudiant->identifiant) ? 'btn btn-secondary' : 'btn btn-warning' }}"
                                     title="Etablir l'attestation définitive"
-                                    href="{{ $attestation->resultatAcademique->procesVerbal->actesDefinitifExiste($attestation->resultatAcademique->procesVerbal->id, "DEFINITIVE", $attestation->resultatAcademique->inscription->etudiant->identifiant) ? '#' : route('proces_verbaux.definitives.definitiveSolo', [ 'id' => $attestation->resultatAcademique->procesVerbal->id, 'ident' => $attestation->resultatAcademique->inscription->etudiant->identifiant ]) }}">
+                                    href="{{ $acte->resultatAcademique->procesVerbal->actesDefinitifExiste($acte->resultatAcademique->procesVerbal->id, "DEFINITIVE", $acte->resultatAcademique->inscription->etudiant->identifiant) ? '#' : route('proces_verbaux.definitives.definitiveSolo', [ 'id' => $acte->resultatAcademique->procesVerbal->id, 'ident' => $acte->resultatAcademique->inscription->etudiant->identifiant ]) }}">
                                     <i class="bi bi-clipboard-plus-fill"></i>
                                 </a>
                             </td>

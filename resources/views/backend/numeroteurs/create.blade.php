@@ -17,6 +17,12 @@
             </ul>
         </div>
         @endif
+
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+            @endif
     </div>
 </div>
 <div class="row">
@@ -34,17 +40,29 @@
                     <div class="form-group row py-2">
                         <label for="intitution" class="col-sm-2 col-form-label">Institution</label>
                         <div class="col">
+                            @if(isset($institution))
+                            <input type="hidden"  id="institution_id" name="institution_id" value="{{ $institution->id }}">
+                            <input type="texte" class="form-control" id="institution" name="institution" value="{{ $institution->sigle.' | '.$institution->denomination }}" disabled>
+                        
+                            @else
+                            
                             <select class="form-control" id="institution" name="institution_id" required>
                                 <option value="" selected disabled hidden> Choisir </option>
                                 @foreach($institutions as $institution)
                                     <option value="{{ $institution->id }}" > {{ $institution->sigle }} </option>
                                 @endforeach
                             </select>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row py-2">
                         <label for="categorie" class="col-sm-2 col-form-label">Catégorie de document</label>
                         <div class="col">
+                            @if(isset($categorie))
+                            <input type="hidden"  id="categorie_id" name="categorieActe_id" value="{{ $categorie->id }}">
+                            <input type="texte" class="form-control" id="categorie" name="categorie" value="{{ $categorie->intitule }}" disabled>
+                        
+                            @else
                             <select class="form-control" id="categorie" name="categorieActe_id" required >
                                 <option value="" selected disabled hidden> Choisir </option>
                                 
@@ -52,6 +70,7 @@
                                     <option value="{{ $categorie->id }}" > {{ $categorie->intitule }} </option>
                                 @endforeach
                             </select>
+                            @endif
                         </div>
                     </div>
                     <div class="form-group row py-2">
@@ -74,7 +93,7 @@
             </div>
         </div>
     </div>
-</div>8
+</div>
 
 @endsection
 

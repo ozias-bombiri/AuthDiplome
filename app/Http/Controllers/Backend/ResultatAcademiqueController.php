@@ -19,7 +19,7 @@ class ResultatAcademiqueController extends Controller
     /** @var  modelRepository */
     private $modelRepository;
     private $etudiantRepository;
-    private $procesVervalRepository;
+    private $procesVerbalRepository;
     private $anneeAcademiqueRepository;
     private $inscriptionRepository;
 
@@ -33,16 +33,16 @@ class ResultatAcademiqueController extends Controller
     {
         $this->modelRepository = $resultatAcademiqueRepo;
         $this->etudiantRepository = $etudiantRepo;
-        $this->procesVervalRepository = $porcesVerbalRepo;
+        $this->procesVerbalRepository = $porcesVerbalRepo;
         $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
         $this->inscriptionRepository = $inscriptionRepo;
     }
     /**
      * Display a listing of the resource.
      */
-    public function index($id)
+    public function index($procesVerbal_id)
     {
-        $procesVerbal = $this->procesVervalRepository->find($id);
+        $procesVerbal = $this->procesVerbalRepository->find($procesVerbal_id);
         $resultats = $this->modelRepository->findByProcesVerbal($procesVerbal->id);
         return view('backend.resultat_academiques.index', compact('procesVerbal', 'resultats'));
     }
@@ -52,9 +52,9 @@ class ResultatAcademiqueController extends Controller
      */
     public function create($id)
     {
-        $procesVerbal = $this->procesVervalRepository->find($id);
+        $procesVerbal = $this->procesVerbalRepository->find($id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
-        $inscriptions = $this->procesVervalRepository->findByNoResultats($procesVerbal->id);
+        $inscriptions = $this->procesVerbalRepository->findByNoResultats($procesVerbal->id);
         
         $reponse = "Aucune inscription à ce parcours ou tout déja saisie" ;        
         if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
@@ -67,9 +67,9 @@ class ResultatAcademiqueController extends Controller
      */
     public function create2($id)
     {
-        $procesVerbal = $this->procesVervalRepository->find($id);
+        $procesVerbal = $this->procesVerbalRepository->find($id);
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
-        $inscriptions = $this->procesVervalRepository->findByNoResultats($procesVerbal->id);
+        $inscriptions = $this->procesVerbalRepository->findByNoResultats($procesVerbal->id);
         
         $reponse = "Aucune inscription à ce parcours ou tout déja saisie" ;        
         if (count($inscriptions) < 1) return back()->with('reponse', $reponse);
@@ -85,7 +85,7 @@ class ResultatAcademiqueController extends Controller
      */
     public function store(StoreResultatAcademiqueRequest $request, $id)
     {
-        $procesVerbal = $this->procesVervalRepository->find($id);        
+        $procesVerbal = $this->procesVerbalRepository->find($id);        
         $input = $request->all();
 
         $input_resultat = [];
@@ -102,7 +102,7 @@ class ResultatAcademiqueController extends Controller
 
     public function store2(Request $request, $id)
     {
-        $procesVerbal = $this->procesVervalRepository->find($id);  
+        $procesVerbal = $this->procesVerbalRepository->find($id);  
         $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);      
 
         $moyenne = $request->input('moyenne');
@@ -153,14 +153,12 @@ class ResultatAcademiqueController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $pv_id, string $res_id)
     {
-        $resultat = $this->modelRepository->find($id);
+        $resultat = $this->modelRepository->find($res_id);
 
         if (empty($resultat)) {
-            //Flash::error('resultat not found');
-
-            return redirect(route('resultat_academiques.index'));
+            return back()->with('reponse', 'Résultat non trouvé !');
         }
 
         return view('backend.resultat_academiques.edit')->with('resultat', $resultat);
@@ -169,21 +167,18 @@ class ResultatAcademiqueController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateResultatAcademiqueRequest $request, string $id)
+    public function update(UpdateResultatAcademiqueRequest $request, string $pv_id, string $res_id)
     {
-        $resultat = $this->modelRepository->find($id);
+        $resultat = $this->modelRepository->find($res_id);
 
         if (empty($resultat)) {
             //Flash::error('resultat not found');
 
-            return redirect(route('resultat_academiques.index'));
+            return back()->with('reponse', 'Résultat non trouvé !');
         }
 
-        $resultat = $this->modelRepository->update($request->all(), $id);
-
-        //Flash::success('resultat modifié avec succès.');
-
-        return redirect(route('resultat_academiques.index'));
+        $resultat = $this->modelRepository->update($request->all(), $res_id);
+        return redirect(route('proces_verbaux.resultats.index', $resultat->procesVerbal->id));
     }
 
     /**

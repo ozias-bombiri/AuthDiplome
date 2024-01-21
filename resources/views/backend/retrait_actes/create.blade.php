@@ -23,29 +23,33 @@
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
             <div class="d-md-flex mb-3">
-                <h3 class="box-title mb-0">{{ __('Ajouter un rétrait d\'acte') }}</h3>
+                <h3 class="box-title mb-0">{{ __('Remettre un acte') }}</h3>
                 <div class="">
 
                 </div>
             </div>
             <div class="">
-                <form method="post" action="{{ route('retrait_actes.store') }}">
+                <form method="post" action="{{ route('actes.provisoires.retirer.store', $acte->id) }}">
                     @csrf
                     <div class="form-group row py-2">
-                        <label for="acteAcademique" class="col-sm-2 col-form-label">Acte academique</label>
+                        <label for="acte_id" class="col-sm-2 col-form-label">Acte academique</label>
                         <div class="col">
-                            <select class="form-control" id="acteAcademique_id" name="acteAcademique_id" required>
-                                @foreach( $acteAcademiques as $acteAcademique)
-                                <option value="{{ $acteAcademique->id}}">{{ $acteAcademique->intitule }}</option>
-                                @endforeach
-                            </select>
+                            <input type="hidden" id="acte_id" name="acteAcademique_id" value="{{ $acte->id }}" >
+                            <input type="text" class="form-control" id="acte" name="acte" value="{{ $acte->reference }}" disabled>
                         </div>
                     </div>
 
                     <div class="form-group row py-2">
-                        <label for="reference" class="col-sm-2 col-form-label">Reference</label>
+                        <label for="intitule" class="col-sm-2 col-form-label">Intitule</label>
                         <div class="col">
-                            <input type="text" class="form-control form-control" id="reference" name="reference" placeholder="Reference" required>
+                            <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $acte->intitule }}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="impetrant" class="col-sm-2 col-form-label">Iméptrant</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="impetrant" name="impetrant" value="{{ $acte->resultatAcademique->inscription->etudiant->identifiant. ' | '.$acte->resultatAcademique->inscription->etudiant->nom.' '.$acte->resultatAcademique->inscription->etudiant->prenom }}" disabled>
                         </div>
                     </div>
 
@@ -64,13 +68,6 @@
                         </div>
                     </div>
 
-                    <div class="form-group row py-2">
-                        <label for="description" class="col-sm-2 col-form-label">Description</label>
-                        <div class="col">
-                            <textarea name="description" class="form-control" id="" cols="5" rows="3"></textarea>
-                        </div>
-                    </div>
-
                   
                     <div class="row py-4">
                         <label class="col-sm-2 col-form-label"></label>
@@ -78,7 +75,7 @@
                             <button type=" submit button" class="btn btn-success">Enregsitrer</button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('retrait_actes.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('actes.provisoires.retrait') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

@@ -65,4 +65,9 @@ class ActeAcademique extends Model
 	{
 		return $this->belongsTo(SignataireActe::class, 'signataireActe_id');
 	}
+
+	public function retraits()
+	{
+		return $this->hasMany(RetraitActe::class, 'acteAcademique_id');
+	}
 }

@@ -37,7 +37,7 @@
                         <div class="col">
                             <select class="form-control" id="filiere" name="filiere_id" required>
                                 @foreach( $filieres as $filiere)
-                                <option value="{{ $filiere->id}}">{{ $filiere->intitule }}</option>
+                                <option value="{{ $filiere->id}}">{{ $filiere->sigle.' | '.$filiere->intitule }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -46,6 +46,13 @@
                         <label for="intitule" class="col-sm-2 col-form-label">Intitulé du parcours</label>
                         <div class="col">
                             <input type="text" class="form-control" id="intitule" name="intitule" value="{{ $parcours->intitule }}" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="code" class="col-sm-2 col-form-label">Code du parcours</label>
+                        <div class="col">
+                            <input type="text" class="form-control" id="code" name="code" value="{{ $parcours->code }}" required>
                         </div>
                     </div>
                     <div class="form-group row py-2">

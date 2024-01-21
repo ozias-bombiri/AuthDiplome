@@ -11,7 +11,7 @@ use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\ParcoursRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-
+use App\Repositories\NiveauEtudeRepository;
 
 class ProcesVerbalController extends Controller
 {
@@ -19,49 +19,76 @@ class ProcesVerbalController extends Controller
     private $modelRepository;
     private $parcoursRepository;
     private $anneeAcademiqueRepository;
+    private $niveauRepository;
 
     public function __construct(
         ProcesVerbalRepository $procesRepo,
         ParcoursRepository $parcoursRepo,
-        AnneeAcademiqueRepository $anneeAcademiqueRepo
+        AnneeAcademiqueRepository $anneeAcademiqueRepo,
+        NiveauEtudeRepository $niveauRepo
         )
     {
         $this->modelRepository = $procesRepo;
         $this->parcoursRepository = $parcoursRepo;
         $this->anneeAcademiqueRepository = $anneeAcademiqueRepo;
+        $this->niveauRepository = $niveauRepo;
     }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
+        $institution = Auth::user()->institution;        
         $proces_verbals = [];
+        $annee_id = null;
+        if(isset($_GET['annee'])){
+            $annee_id = $_GET['annee'];                            
+        }        
         
-        if(isset($_GET['etablissement_id'])){
-            $institution_id = $_GET['etablissement_id'];
-            $proces_verbals = $this->modelRepository->findByInstitution($institution_id);
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                if($annee_id!=null){
+                    $proces_verbals = $this->modelRepository->findByIesrAndAnnee($institution->id, $annee_id);                    
+                }
+                else {
+                    $proces_verbals = $this->modelRepository->findByIesr($institution->id);
+                }
+                 
+            }
+            else{
+                if($annee_id!=null){
+                    $proces_verbals = $this->modelRepository->findByEtablissementAndAnnee($institution->id, $annee_id);                    
+                }
+                else {
+                    $proces_verbals = $this->modelRepository->findByEtablissement($institution->id);
+                }
+            }
+        }
         
+        else {
+            if($annee_id!=null){
+                $proces_verbals = $this->modelRepository->findByAnnee($annee_id);                    
+            }
+            else {
+                $proces_verbals = $this->modelRepository->all();
+            }
+            
         }
-        else if(isset($_GET['iesr_id'])){
-            $institution_id = $_GET['iesr_id'];
-            $proces_verbals = $this->modelRepository->findByIesr($institution_id);
-        }
-        else{
-            $proces_verbals = $this->modelRepository->all();
-        }
-        $proces_verbals = $this->modelRepository->all();
-        return view('backend.proces_verbals.index', compact('proces_verbals'));
+        $annees = $this->anneeAcademiqueRepository->all();        
+        return view('backend.proces_verbals.index', compact('proces_verbals', 'annees'));
         
     }
 
     /**
      * Display a listing of the resource for a given parcours.
      */
-    public function index2($id)
+    public function index2($parcours_id)
     {
-        $parcours = $this->parcoursRepository->find($id);
+        $parcours = $this->parcoursRepository->find($parcours_id);        
+        
         $proces_verbals = $this->modelRepository->findByParcours($parcours->id);
-        return view('backend.proces_verbals.index', compact('proces_verbals', 'parcours'));
+        $annees = $this->anneeAcademiqueRepository->all();        
+        return view('backend.proces_verbals.index', compact('proces_verbals', 'parcours', 'annees'));
         
     }
     
@@ -70,10 +97,32 @@ class ProcesVerbalController extends Controller
      */
     public function create()
     {
-        $parcours = $this->parcoursRepository->all();
+        $institution = Auth::user()->institution;        
         $anneeAcademiques = $this->anneeAcademiqueRepository->all();
-        return view('backend.proces_verbals.create', compact('parcours','anneeAcademiques'));
-    }
+        $parcour = null;
+        $parcours = null;
+        if(isset($_GET['parcours_id'])){
+            $parcour = $this->parcoursRepository->find($_GET['parcours_id']);                  
+        }
+        if(!empty($parcour)) {
+            
+            return view('backend.proces_verbals.create', compact('parcour','anneeAcademiques'));
+        }
+        else {
+            if(!empty($institution)){
+                $parcours = $this->parcoursRepository->findByInstitution($institution->id); 
+                          
+            }
+            else {
+                $parcours = $this->parcoursRepository->all();
+            
+            }
+            //dd($parcours); 
+            return view('backend.proces_verbals.create', compact('parcours','anneeAcademiques'));
+    
+        }
+
+        }
 
     /**
      * Store a newly created resource in storage.
@@ -154,8 +203,8 @@ class ProcesVerbalController extends Controller
         $proces_verbal = $this->modelRepository->find($id);
 
         if (empty($proces_verbal)) {
-            $message = "Procès verbal introuvable";
-            return $this->sendResponse($message);
+            $reponse = "Procès verbal introuvable";
+            return back()->with('reponse', $reponse);
         }
 
         $this->modelRepository->delete($id);

@@ -99,7 +99,7 @@
                             </button>
                         </div>
                         <div class="col">
-                            <a href="{{ route('resultat_academiques.index') }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
+                            <a href="{{ route('proces_verbaux.resultats.index', $procesVerbal->id) }}"> <button type="button" class="btn btn-danger">Annuler</button> </a>
                         </div>
 
                     </div>

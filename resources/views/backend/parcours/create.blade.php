@@ -34,11 +34,19 @@
                     <div class="form-group row py-2">
                         <label for="filiere" class="col-sm-2 col-form-label">Filiere</label>
                         <div class="col">
-                            <select class="form-control" id="filiere" name="filiere_id" required>
-                                @foreach( $filieres as $filiere)
-                                <option value="{{ $filiere->id}}">{{ $filiere->intitule }}</option>
-                                @endforeach
-                            </select>
+                        @if(isset($etablissement))
+                            <input type="hidden"  id="filiere_id" name="filiere_id" value="{{ $filiere->id }}">
+                        
+                            <input type="text" class="form-control" id="filiere" name="filiere" value="{{ $filiere->sigle.' | '.$filiere->intitule }}" disabled>
+                        
+                            @else
+                                <select class="form-control" id="filire_id" name="filiere_id" required>
+                                    <option value="" selected disabled hidden> Choisir</option>
+                                    @foreach( $filieres as $filiere)
+                                        <option value="{{ $filiere->id}}">{{ $filiere->sigle.' | '.$filiere->intitule }}</option>
+                                    @endforeach
+                                </select>
+                            @endif
                         </div>
                     </div>
 

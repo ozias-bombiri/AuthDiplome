@@ -20,6 +20,12 @@ Timbres
             </ul>
         </div>
         @endif
+
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+            @endif
     </div>
 </div>
 <div class="row">

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\EtudiantRepository;
 use App\Http\Requests\StoreEtudiantRequest;
 use App\Http\Requests\UpdateEtudiantRequest;
+use Illuminate\Support\Facades\Auth;
 
 class EtudiantController extends Controller
 {
@@ -21,7 +22,20 @@ class EtudiantController extends Controller
      */
     public function index()
     {
-        $etudiants = $this->modelRepository->all();
+        $etudiants = null;
+        $institution = Auth::user()->institution;
+        if(!empty($institution)){
+            if($institution->type === "IESR"){
+                $etudiants = $this->modelRepository->findByIesr($institution->id); 
+            }
+            else{
+                $etudiants = $this->modelRepository->findByEtablissement($institution->id);            
+            }
+        }
+        
+        else {
+            $etudiants = $this->modelRepository->all();
+        }
         return view('backend.etudiants.index', compact('etudiants'));
     }
     

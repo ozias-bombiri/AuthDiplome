@@ -30,7 +30,7 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Résultats académiques') }} @if(isset($procesVerbal)) {{ $procesVerbal->reference }} @endif</h3>
+            <h3 class="box-title">{{ __('Résultats académiques') }} @if(isset($procesVerbal)) {{ $procesVerbal->intitule }} @endif</h3>
             <div class="col-4 offset-8 mb-5">
                 <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create', $procesVerbal->id) }}"> Saisie individuelle </a>
                 <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create2', $procesVerbal->id) }}"> Saisie groupée </a>
@@ -59,14 +59,14 @@
                             <td>{{ $resultat->moyenne }}</td>
 
                             <td>
-                                <form action="{{ route('resultat_academiques.destroy',$resultat->id) }}" method="POST">
+                                <form action="{{ route('proces_verbaux.resultats.destroy',[$resultat->procesVerbal->id, $resultat->id]) }}" method="POST">
                                     
-                                    <a class="btn btn-primary" title="corriger la moyenne" href="{{ route('resultat_academiques.edit',$resultat->id) }}">
+                                    <a class="btn btn-primary" title="corriger la moyenne" href="{{ route('proces_verbaux.resultats.edit',[$resultat->procesVerbal->id, $resultat->id]) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
                                     @if(empty($resultat->getActeByCategorie(1)))
-                                    <a class="btn btn-primary" title="Etablir une attestation provisoire" href="{{ route('proces_verbaux.provisoires.create',$resultat->id) }}">
-                                        <i class="bi bi-pencil"></i>
+                                    <a class="btn btn-secondary" title="Etablir une attestation provisoire" href="{{ route('proces_verbaux.provisoires.create',$resultat->id) }}">
+                                        <i class="bi bi-file-pdf"></i>
                                     </a>
                                     @endif
                                     @csrf

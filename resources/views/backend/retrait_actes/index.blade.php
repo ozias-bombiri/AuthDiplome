@@ -25,19 +25,20 @@
 <div class="row">
     <div class="col-md-12 col-lg-12 col-sm-12">
         <div class="white-box">
-            <h3 class="box-title">{{ __('Rétrait actes') }} </h3>
+            <h3 class="box-title">{{ __('Rétrait d\'actes') }} </h3>
             <div class="col-2 offset-10 mb-5">
-                <a class="btn btn-success" href="{{ route('retrait_actes.create') }}"> Ajouter </a>
+                
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
                     <thead>
                         <tr>
                             <th>No</th>
+                            <th>Référence</th>
                             <th>Acte academique</th>
-                            <th>Reference</th>
+                            <th>Impétrant</th>
                             <th>Date retrait</th>
-                            <th>REtirant</th>
+                            <th>Retirant</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -45,8 +46,9 @@
                         @foreach ($retraits as $retrait)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td>{{ $retrait->acteAcademique->intitule }}</td>
                             <td>{{ $retrait->reference }}</td>
+                            <td>{{ $retrait->acteAcademique->intitule }}</td>
+                            <td> {{ $retrait->acteAcademique->resultatAcademique->inscription->etudiant->identifiant.' | '.$retrait->acteAcademique->resultatAcademique->inscription->etudiant->nom. ' '.$retrait->acteAcademique->resultatAcademique->inscription->etudiant->prenom }}</td>
                             <td>{{ $retrait->dateRetrait }}</td>
                             <td>{{ $retrait->retirant }}</td>
 

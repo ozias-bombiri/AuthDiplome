@@ -97,7 +97,7 @@
         
 
         <li class="sidebar-item">
-            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('actes.provisoires.index', ['categorieActe_id' =>  \App\Models\CategorieActe::findByIntitule('PROVISOIRE')]) }}" aria-expanded="false">
+            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('actes.provisoires.index') }}" aria-expanded="false">
                 <i class="fa fa-info-circle" aria-hidden="true"></i>
                 <span class="hide-menu">Attestations provisoires</span>
             </a>
