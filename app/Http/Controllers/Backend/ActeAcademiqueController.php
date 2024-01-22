@@ -172,6 +172,36 @@ class ActeAcademiqueController extends Controller
         return view('backend.acte_academiques.create', compact('resultat', 'categorieActe', 'signataireActe', 'etudiant'));
     }
 
+    public function diplome2($procesVerbal_id)
+    {
+        $resultats = $this->resultatRepository->findByProcesVerbal($procesVerbal_id);
+
+        $categorieActeDefinitifs = $this->categorieRepository->findByIntitule('DEFINITIVE');
+
+        $categorieActe = $this->categorieRepository->findByIntitule('DIPLOME');
+
+        $actesDefinitifs = $this->modelRepository->findByPvCategorie($procesVerbal_id, $categorieActeDefinitifs->id);
+
+        $reponse = 'Aucun résultat académique associé à ce PV';
+
+        if ($resultats->isEmpty()) {
+            return back()->with('reponse', $reponse);
+        }
+
+        if ($actesDefinitifs->isEmpty()) {
+            $reponse = "Les actes définitifs du PV choisi n'ont pas encore été crées";
+            return back()->with('reponse', $reponse);
+        }
+
+        $institution = $resultats->first()->procesVerbal->parcours->filiere->institution->parent;
+
+        $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id);
+
+        $pv = ProcesVerbal::find($procesVerbal_id);
+
+        return view('backend.acte_academiques.create4', compact('categorieActe', 'signataireActe', 'procesVerbal_id', 'pv'));
+    }
+
     public function index()
     {
         $actes = $this->modelRepository->all();

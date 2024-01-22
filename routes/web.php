@@ -223,6 +223,12 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.definitives.storeSolo');
     Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
     ->name('proces_verbaux.diplomes.create');
+
+    Route::get('proces_verbaux/{id}/diplomes/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome2'])
+    ->name('proces_verbaux.diplomes.create2');
+
+    Route::post('proces_verbaux/diplomes/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
+    ->name('proces_verbaux.diplomes.store');
     
 });
 

@@ -94,6 +94,10 @@
                                         <i class="bi bi-clipboard-plus-fill"></i>
                                     </a>
 
+                                    <a class="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "DIPLOME") ? 'btn btn-secondary' : 'btn btn-warning' }}" title="Etablir les diplômes" href="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "DIPLOME") ? '#' : route('proces_verbaux.diplomes.create2', $proces_verbal->id) }}">
+                                        <i class="bi bi-mortarboard-fill"></i>
+                                    </a>
+
                                     @csrf
                                     @method('DELETE')
 
