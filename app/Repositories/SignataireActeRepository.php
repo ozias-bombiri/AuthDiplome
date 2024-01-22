@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Models\Institution;
 use App\Models\SignataireActe;
 use App\Repositories\BaseRepository;
 
@@ -97,6 +98,7 @@ class SignataireActeRepository extends BaseRepository
 
         return $signataireActe;
     }
+
 
     public function findByInstitutionAndCategorie($institution_id, $categorie_id)
     {
