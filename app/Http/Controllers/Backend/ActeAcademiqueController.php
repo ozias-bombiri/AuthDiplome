@@ -242,6 +242,9 @@ class ActeAcademiqueController extends Controller
             $categorieActe = $this->categorieRepository->find($request->categorieActe_id);
             $signataireActe = $this->signataireActeRepository->findByActiveInstitutionAndCategorieActe($institution->id, $categorieActe->id);
             $numeroteur = $this->numeroteurRepository->findByInstitutionandCategorie($institution->id, $categorieActe->id);
+            if($numeroteur == null){
+                return back()->with('reponse', "Créer d'abord un numéroteur associé à l'institution et à la catégorie du document");
+            }
             $numeroteur->compteur += 1;
             $input_acte = [];
             $input_acte['reference'] = $resultat->procesVerbal->anneeAcademique->intitule . '' . $etudiant->identifiant . '' . $categorieActe->id;

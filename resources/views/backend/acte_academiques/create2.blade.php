@@ -19,6 +19,11 @@
             @endif
         </div>
     </div>
+    @if (session('reponse'))
+        <div class="alert alert-danger">
+            {{ session('reponse') }}
+        </div>
+    @endif
     <div class="row">
         <div class="col-md-12 col-lg-12 col-sm-12">
             <div class="white-box">
@@ -82,7 +87,7 @@
                             <label class="col-sm-2 col-form-label"></label>
                             <div class="col">
                                 @if ($signataireActe != null)
-                                    <button type=" submit button" class="btn btn-success">Enregsitrer</button>
+                                    <button type=" submit button" class="btn btn-success">Enregistrer</button>
                                 @endif
 
                             </div>
