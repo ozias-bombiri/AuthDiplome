@@ -53,9 +53,16 @@
                         </div>
                     </div>
                     <div class="form-group row py-2">
-                        <label for="prenom" class="col-sm-2 col-form-label">Email</label>
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
                         <div class="col">
-                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email}}" required>
+                            <input type="email" class="form-control" id="email" name="email" value="{{ $user->email}}" disabled>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="statut" class="col-sm-2 col-form-label">Statut</label>
+                        <div class="col">
+                            <input type="checkbox"  id="statut" name="statut" value="{{ $user->statut}}" @if($user->statut == 'Active') checked @endif }}" > Active
                         </div>
                     </div>
                     <div class="form-group row py-2">
@@ -71,6 +78,16 @@
                             @endif
                             @endforeach
                         </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group row py-2">
+                        <label for="prenom" class="col-sm-2 col-form-label">Attributions</label>
+                        <div class="col">
+                            @foreach($permissions as $permission)
+                            <input type="checkbox" class=""  name="permissions[]" value="{{ $permission->id }}"> {{ $permission->name }} <br/>
+                        
+                            @endforeach
                         </div>
                     </div>
                     <div class="row py-4">

@@ -32,8 +32,10 @@
         <div class="white-box">
             <h3 class="box-title">{{ __('Résultats académiques') }} @if(isset($procesVerbal)) {{ $procesVerbal->intitule }} @endif</h3>
             <div class="col-4 offset-8 mb-5">
+                @hasrole(['scolarite'])
                 <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create', $procesVerbal->id) }}"> Saisie individuelle </a>
                 <a class="btn btn-success" href="{{ route('proces_verbaux.resultats.create2', $procesVerbal->id) }}"> Saisie groupée </a>
+                @endhasrole
             </div>
             <div class="table-responsive">
                 <table id="data" class="table table-striped table-bordered">
@@ -60,22 +62,29 @@
 
                             <td>
                                 <form action="{{ route('proces_verbaux.resultats.destroy',[$resultat->procesVerbal->id, $resultat->id]) }}" method="POST">
-                                    
+                                    @hasrole(['scolarite'])
                                     <a class="btn btn-primary" title="corriger la moyenne" href="{{ route('proces_verbaux.resultats.edit',[$resultat->procesVerbal->id, $resultat->id]) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
+                                    
                                     @if(empty($resultat->getActeByCategorie(1)))
                                     <a class="btn btn-secondary" title="Etablir une attestation provisoire" href="{{ route('proces_verbaux.provisoires.create',$resultat->id) }}">
                                         <i class="bi bi-file-pdf"></i>
                                     </a>
                                     @endif
+                                    @endhasrole
+                                    @hasrole(['daoi'])
+                                    <a class="btn btn-secondary" title="Etablir une attestation définitive" href="{{ route('proces_verbaux.definitives.create', $resultat->id) }}">
+                                        <i class="bi bi-clipboard-plus-fill"></i>
+                                    </a>
+                                    @endhasrole
                                     @csrf
                                     @method('DELETE')
-
+                                    @hasrole(['scolarite'])
                                     <button type="submit" class="btn btn-danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>
                                     </button>
-
+                                    @endhasrole
                                 </form>
                             </td>
                         </tr>

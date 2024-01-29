@@ -97,8 +97,11 @@ class ActeAcademiqueRepository extends BaseRepository
     }
 
     public function findByIesrAndCategorieActeAndNiveau($iesr_id, $categorie_id, $niveau){
-        $attestations = ActeAcademique::join('signataires_actes', 'acte_academiques.signataireActe_id', '=', 'signataires_actes.id')
-                		->join('institutions', 'signataires_actes.institution_id', '=', 'institutions.id')
+        $attestations = ActeAcademique::join('resultat_academiques', 'acte_academiques.resultatAcademique_id', '=', 'resultat_academiques.id')
+                        ->join('proces_verbaux', 'resultat_academiques.procesVerbal_id', '=', 'proces_verbaux.id')
+                        ->join('parcours', 'proces_verbaux.parcours_id', '=', 'parcours.id')
+                        ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
+                		->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
                         ->where('institutions.id', '=', $iesr_id)
                         ->where('parcours.niveauEtude_id', '=', $niveau)
                         ->where('acte_academiques.categorieActe_id', '=',$categorie_id)                        

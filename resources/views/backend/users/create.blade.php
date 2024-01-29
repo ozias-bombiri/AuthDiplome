@@ -33,15 +33,14 @@
                     @csrf
 
                     <div class="form-group row py-2">
-                        <label for="type" class="col-sm-2 col-form-label">Type d'utilisateur</label>
+                        <label for="type" class="col-sm-2 col-form-label">Role</label>
                         <div class="col">
-                            <select class="form-control" id="type" name="type"  required>
+                            <select class="form-control" id="role" name="role"  required>
                                 <option value="" selected  hidden disabled>Choisir</option>
                                 
-                                <option value="1">Gestion d'attestations provisoires</option>
-                                <option value="2">Gestion d'attestations définitives et diplomes</option>
-                                <option value="3">Gestion des authentifications</option>
-                                <option value="4">Administrateur</option>                                
+                                @foreach($roles as $role)    
+                                 <option value="{{ $role->name }}">{{ $role->name }}</option>  
+                                 @endforeach                          
                             </select>
                         </div>
                     </div>
@@ -51,7 +50,7 @@
                             <select class="form-control" id="institution" name="institution_id" required>
                                 <option value="" selected hidden disabled>Choisir</option>
                                 @foreach( $institutions as $institution)
-                                <option value="{{ $institution->id}}" class="institutionOption {{ $institution->type}}">{{ $institution->sigle }}</option>
+                                <option value="{{ $institution->id}}" class="institutionOption {{ $institution->type}}">{{ $institution->sigle }} @if(!empty($institution->parent))  | {{$institution->parent->sigle }} @endif</option>
                                 @endforeach
                             </select>
                         </div>
@@ -106,34 +105,27 @@
 @push('costum-scripts')
 
 <script type="module">
-    $(document).on('change', '#type', function () {
-        var selecthtml = $('#type');
+    $(document).on('change', '#role', function () {
+        var selecthtml = $('#role');
         var selected = this.options[this.selectedIndex].value;
-        if (selected == '1') {
+        if (selected == 'SCOLARITE') {
             $('#institution').val = "";
             $('#institution').prop('disabled', false) ;
             $('.institutionOption').prop('hidden', false) ;
             $('.IESR').prop('hidden', true);
             
-        } else if (selected ==2)
+        } else if (selected =='DAOI' || selected =='ADMIN')
         {
             $('.institutionOption').prop('hidden', false);
             
             $('.Ecole, .Institut, .UFR').prop('hidden', true);
         }
-        else if (selected ==3)
+        else if (selected =='SUPERADMIN')
         {
             $('.institutionOption').prop('hidden', false);
             $('.IESR').prop('hidden', false);
             $('#institution').prop('disabled', true);
             //$('#institution').prop('required', true);
-        }
-        else if (selected ==4)
-        {
-            $('.institutionOption').prop('hidden', false);
-            $('.IESR').prop('hidden', false);
-            $('#institution').prop('disabled', true);
-            //$('#parent').prop('required', true);
         }
 
     });

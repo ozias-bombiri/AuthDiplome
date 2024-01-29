@@ -69,7 +69,7 @@
                         @foreach ($proces_verbals as $proces_verbal)
                         <tr>
                             <td>{{ $loop->index + 1 }}</td>
-                            <td>{{ $proces_verbal->parcours->code.' | '.$proces_verbal->parcours->intitule }}</td>
+                            <td>{{ $proces_verbal->parcours->code.' | '.$proces_verbal->parcours->intitule. ' ('.$proces_verbal->parcours->filiere->institution->sigle.')' }}</td>
                             <td>{{ $proces_verbal->anneeAcademique->intitule }}</td>
                             <td>{{ $proces_verbal->intitule }}</td>
                             <td>{{ $proces_verbal->session }}</td>
@@ -85,22 +85,23 @@
                                     <a class="btn btn-primary" title="Résultats academiques" href="{{ route('proces_verbaux.resultats.index', $proces_verbal->id) }}">
                                         <i class="bi bi-card-list"></i>
                                     </a>
-
+                                    @hasrole(['scolarite'])
                                     <a class="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "PROVISOIRE") ? 'btn btn-secondary' : 'btn btn-warning' }}" title="Etablir des attestations provisoires" href="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "PROVISOIRE") ? '#' : route('proces_verbaux.provisoires.create2', $proces_verbal->id) }}">
                                         <i class="bi bi-clipboard-minus-fill"></i>
                                     </a>
-
+                                    @endhasrole
+                                    @hasrole(['daoi'])
                                     <a class="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "DEFINITIVE") ? 'btn btn-secondary' : 'btn btn-warning' }}" title="Etablir des attestations définitives" href="{{ $proces_verbal->actesEnregistres($proces_verbal->id, "DEFINITIVE") ? '#' : route('proces_verbaux.definitives.create2', $proces_verbal->id) }}">
                                         <i class="bi bi-clipboard-plus-fill"></i>
                                     </a>
-
+                                    @endhasrole
                                     @csrf
                                     @method('DELETE')
-
+                                    @hasrole(['scolarite'])
                                     <button type="submit" class="btn btn-danger" title="Supprimer">
                                         <i class="bi bi-trash"></i>
                                     </button>
-
+                                    @endhasrole
                                 </form>
                             </td>
                         </tr>

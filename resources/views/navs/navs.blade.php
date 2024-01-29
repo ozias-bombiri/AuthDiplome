@@ -1,11 +1,11 @@
-@hasrole(['scolarite'])
+@hasrole(['SCOLARITE'])
 <hr>
     @include('navs.nav-direction')
 @endhasrole
 
 
 
-@hasrole(['daoi'])
+@hasrole(['DAOI'])
 <hr>
     @include('navs.nav-daoi')
 @endhasrole
@@ -18,7 +18,7 @@
 @endhasrole
 
 
-@hasrole(['admin', 'superAdmin'])
+@hasrole(['admin', 'SUPERADMIN'])
 <hr>
     @include('navs.nav-admin')
 @endhasrole
