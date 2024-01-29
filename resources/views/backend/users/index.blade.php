@@ -41,7 +41,7 @@
                             <th>Statut</th>                            
                             <th>Roles</th>
                             <th>Attributions</th>
-                            <th width="200px">Action</th>
+                            <th width="100px">Action</th>
                         </tr>
                     </thead>
                     <tbody>

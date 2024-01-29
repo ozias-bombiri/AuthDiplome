@@ -62,7 +62,7 @@
                             <th>Intitule</th>
                             <th>Session</th>
                             <th>Date deliberation</th>
-                            <th>Action</th>
+                            <th width="200px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
