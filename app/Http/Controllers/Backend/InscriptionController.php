@@ -10,6 +10,7 @@ use App\Repositories\AnneeAcademiqueRepository;
 use App\Repositories\EtudiantRepository;
 use App\Repositories\ParcoursRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class InscriptionController extends Controller
 {
@@ -76,6 +77,7 @@ class InscriptionController extends Controller
      */
     public function store(StoreInscriptionRequest $request, $id)
     {
+        $user = Auth::user();
         $parcours = $this->parcoursRepository->find($id);
         $input = $request->all();
         $input_etudiant =[];
@@ -100,7 +102,7 @@ class InscriptionController extends Controller
         $input_inscription['referenceInscription'] = $annee->intitule.'-'.$etudiant->identifiant ;
         $input_inscription['parcours_id'] = $parcours->id;
         $input_inscription['etudiant_id'] = $etudiant->id;
-        $input_inscription['user_id'] = 1;
+        $input_inscription['user_id'] = $user->id;
         $inscription = $this->modelRepository->create($input_inscription);
 
         //Flash::success('resultat enregistré avec succès.');

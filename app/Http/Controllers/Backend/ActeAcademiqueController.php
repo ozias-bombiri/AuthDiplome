@@ -195,6 +195,7 @@ class ActeAcademiqueController extends Controller
      */
     public function store(StoreActeAcademiqueRequest $request)
     {
+        $user = Auth::user();
         $validated = $request->validated();
         $input = $request->all();
         $resultat = $this->resultatRepository->find($input['resultat_id']);
@@ -218,7 +219,7 @@ class ActeAcademiqueController extends Controller
         $input_acte['signataireActe_id'] = $signataireActe->id;
         $input_acte['categorieActe_id'] = $categorieActe->id;
         $input_acte['intitule'] = strtoupper($categorieActe->intitule . ' de ' . $parcours->niveauEtude->intitule);
-        $input_acte['user_id'] = 1;
+        $input_acte['user_id'] = $user->id;
         $numeroteur->update();
 
         $acte = $this->modelRepository->create($input_acte);
@@ -255,7 +256,7 @@ class ActeAcademiqueController extends Controller
             $input_acte['signataireActe_id'] = $signataireActe->id;
             $input_acte['categorieActe_id'] = $categorieActe->id;
             $input_acte['intitule'] = strtoupper($categorieActe->intitule . ' de ' . $parcours->niveauEtude->intitule);
-            $input_acte['user_id'] = Auth::id();
+            $input_acte['user_id'] = Auth::user()->id;
             $numeroteur->update();
 
             $acte = $this->modelRepository->create($input_acte);
@@ -266,6 +267,7 @@ class ActeAcademiqueController extends Controller
 
     public function storeSolo(StoreActeAcademiqueRequest $request)
     {
+        $user = Auth::user();
         $resultat = $this->resultatRepository->findByProcesVerbalIdentifiant($request->procesVerbal_id, $request->identifiant);
 
         //dd($resultats);
@@ -292,7 +294,7 @@ class ActeAcademiqueController extends Controller
         $input_acte['signataireActe_id'] = $signataireActe->id;
         $input_acte['categorieActe_id'] = $categorieActe->id;
         $input_acte['intitule'] = strtoupper($categorieActe->intitule . ' de ' . $parcours->niveauEtude->intitule);
-        $input_acte['user_id'] = Auth::id();
+        $input_acte['user_id'] = $user->id;
         $numeroteur->update();
 
         $acte = $this->modelRepository->create($input_acte);

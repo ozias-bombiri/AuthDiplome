@@ -51,13 +51,13 @@
                         <!-- Logo icon -->
                         <b class="logo-icon">
                             <!-- Dark Logo icon -->
-                            <img src="{{URL::asset('/ample/plugins/images/logo-icon.png')}}" alt="homepage" />
+                            <img class="arm-bf" src="{{URL::asset('/ample/plugins/images/auth_dip1.png')}}" alt="Accueil" />
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span class="logo-text">
                             <!-- dark Logo text -->
-                            <img src="{{URL::asset('/ample/plugins/images/logo-text.png')}}" alt="homepage" />
+                            <!--<img src="{{URL::asset('/ample/plugins/images/logo-text.png')}}" alt="homepage" /> -->
                         </span>
                     </a>
                     <!-- ============================================================== -->
