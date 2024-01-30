@@ -13,6 +13,7 @@ use App\Repositories\InscriptionRepository;
 use App\Repositories\ParcoursRepository;
 use App\Repositories\ProcesVerbalRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ResultatAcademiqueController extends Controller
 {
@@ -85,6 +86,7 @@ class ResultatAcademiqueController extends Controller
      */
     public function store(StoreResultatAcademiqueRequest $request, $id)
     {
+        $user = Auth::user();
         $procesVerbal = $this->procesVerbalRepository->find($id);        
         $input = $request->all();
 
@@ -93,7 +95,7 @@ class ResultatAcademiqueController extends Controller
         $input_resultat['procesVerbal_id'] = $procesVerbal->id;
         $input_resultat['moyenne'] = $input['moyenne'];
         $input_resultat['reference'] = $input['inscription_id'].''.$procesVerbal->id;
-        $input_resultat['user_id'] = 1;
+        $input_resultat['user_id'] = $user->id;
         $resultat = $this->modelRepository->create($input_resultat);
 
         
@@ -102,30 +104,33 @@ class ResultatAcademiqueController extends Controller
 
     public function store2(Request $request, $id)
     {
+        $user = Auth::user();
         $procesVerbal = $this->procesVerbalRepository->find($id);  
         $inscriptions = $this->inscriptionRepository->findByParcours($procesVerbal->parcours->id);      
 
         $moyenne = $request->input('moyenne');
-
+        //dd($moyenne);
         foreach ($inscriptions as $i => $inscription){
-            $data = array(
-                'inscription_id' => $inscription->id,
-                'procesVerbal_id' => $id,
-                'moyenne' => $moyenne[$inscription->id],
-                'reference' => $inscription->id.''.$id,
-                'user_id' => 1
-            );
+            if(isset($moyenne[$inscription->id])) {
+                $data = array(
+                    'inscription_id' => $inscription->id,
+                    'procesVerbal_id' => $id,
+                    'moyenne' => $moyenne[$inscription->id],
+                    'reference' => $inscription->id.''.$id,
+                    'user_id' => $user->id
+                );
 
-            $resul = ResultatAcademique::where('inscription_id',$inscription->id)
-                ->where('procesVerbal_id',$id)
-                ->get()->first();
+                $resul = ResultatAcademique::where('inscription_id',$inscription->id)
+                    ->where('procesVerbal_id',$id)
+                    ->get()->first();
 
-            if ($resul != null){
-                ResultatAcademique::where('id',$resul->id)->update($data);
-            }else{
-                if($moyenne[$inscription->id] != null){
-                    ResultatAcademique::create($data);
-                }    
+                if ($resul != null){
+                    ResultatAcademique::where('id',$resul->id)->update($data);
+                }else{
+                    if($moyenne[$inscription->id] != null){
+                        ResultatAcademique::create($data);
+                    }    
+                }
             }
         }
         

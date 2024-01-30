@@ -198,7 +198,7 @@ class UserController extends Controller
      {
          $this->modelRepository->delete($id);
          return redirect()->route('users.index')
-                         ->with('success','User deleted successfully');
+                         ->with('reponse','User deleted successfully');
      }
 
 
