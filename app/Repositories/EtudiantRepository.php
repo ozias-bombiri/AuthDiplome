@@ -66,7 +66,7 @@ class EtudiantRepository extends BaseRepository
         $impetrants = Etudiant::join('inscriptions', 'inscriptions.etudiant_id', '=', 'etudiants.id')
                         ->join('parcours', 'inscriptions.parcours_id', '=', 'parcours.id')
                         ->join('filieres', 'parcours.filiere_id', '=', 'filieres.id')
-                        ->join('institutions', 'filieres.institution_id', '=', 'institution.id')
+                        ->join('institutions', 'filieres.institution_id', '=', 'institutions.id')
                 		->where('institutions.parent_id', '=', $iesr_id)
                         ->select('etudiants.*')
                         ->get();

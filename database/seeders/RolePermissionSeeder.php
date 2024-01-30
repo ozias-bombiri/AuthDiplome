@@ -18,55 +18,29 @@ class RolePermissionSeeder extends Seeder
     {
         //Création des permissions
 
-        $permissions = [ 
-            'create-proces-verbal',
-            'view-proces-verbal', 
-            'edit-proces-verbal', 
-            'delete-proces-verbal',
-            'view-all-proces-verbal',
-            'view-resultat-proces-verbal', 
-            'add-resultat-proces-verbal',
-            'create-parcours',
-            'edit-parcours',
-            'delete-parcours',
-            'add-proces-verbal',
-            'create-users',
-            'edit-users',
-            'delete-users',
-            'disable-users',
-            'create-institutions',
-            'edit-institutions',
-            'delete-institutions',
-            'create-annees',
-            'edit-annees',
-            'delete-annees',
-            'create-niveaux',
-            'edit-niveaux',
-            'delete-niveaux',
-            'create-signataires',
-            'edit-signataires',
-            'delete-signataires',
-            'disable-signataires',
+        $permissions = [
+            'GESTION_PARCOURS',            
+            'GESTION_INSCRIPTION',
+            'GESTION_RESULTAT_ACADEMIQUE',
+            'GESTION_RETRAIT_ACTE', 
+            'GESTION_PV',
+            'CREATION_ATTESTATION_PROVISOIRE', 
+            'CONSULTATION_ATTESTATION_PROVISOIRE', 
+            'CONSULTATION_PV',
+            'CONSULTATION_ATTESTATION_DEFINITIVE',
+            'CREATION_ATTESTATION_DEFINITIVE', 
+            'CREATION_DIPLOME',
+            'CONSULTATION_DIPLOME',            
+            'GESTION_SIGNATAIRE',
+            'GESTION_TIMBRE',
+            'GESTION_NUMEROTEUR',
+            'GESTION_ANNEE_ACADEMIQUE',
+            'GESTION_UTILISATEUR',
+            'GESTION_INSTITUTION',
+            'GESTION_VISA',
+            'GESTION_NIVEAU_ETUDE',
+            'AUTHENTIFICATION',
             
-            'create-resultats',
-            'edit-resultats',
-            'delete-resultats',
-            'create-attestation-provisoires',
-            'edit-attestation-provisoires',
-            'delete-attestation-provisoires',
-            'generate-attestation-provisoires',
-            'create-attestation-definitives',
-            'edit-attestation-definitives',
-            'delete-attestation-definitives',
-            'generate-attestation-definitives',
-            'create-diplomes',
-            'edit-diplomes',
-            'delete-diplomes',
-            'generate-diplomes',
-            'check-attestation-provisoires',
-            'check-attestation-definitives',
-            'check-attestation-diplome',
-            'generate-rapport'
          ];
       
          foreach ($permissions as $permission) {
@@ -74,82 +48,55 @@ class RolePermissionSeeder extends Seeder
          }
         
         $roles = [
-            'superAdmin',
-            'admin',
-            'scolarite',
-            'directeur',
-            'std',
-            'daoi',
-            'vpeip',
-            'president',
-            'authentification'
+            'ADMIN',
+            'SCOLARITE',
+            'DAOI',
+            'SUPERADMIN'
         ];
         foreach ($roles as $role) {
             Role::create(['name' => $role]);
        }
 
         //Role admin         
-        $adminRole = Role::where('name', 'admin')->first();
+        $adminRole = Role::where('name', 'ADMIN')->first();
         $adminRole->givePermissionTo([
-            'create-users',
-            'edit-users',
-            'delete-users',
-            'disable-users',
-            'create-institutions',
-            'edit-institutions',
-            'delete-institutions',
-            'create-annees',
-            'edit-annees',
-            'delete-annees',
-            'create-niveaux',
-            'edit-niveaux',
-            'delete-niveaux',
-            'create-signataires',
-            'edit-signataires',
-            'delete-signataires',
-            'disable-signataires',
+            'GESTION_ANNEE_ACADEMIQUE',
+            'GESTION_INSTITUTION',
+            'GESTION_UTILISATEUR',
+            'GESTION_SIGNATAIRE',
+            'GESTION_TIMBRE',
+            'GESTION_NUMEROTEUR',
+            'GESTION_NIVEAU_ETUDE',
         ]);
 
         //Role scolarite pour l'émission des attestation provisoires
-        $directionRole = Role::where('name', 'scolarite')->first();
+        $directionRole = Role::where('name', 'SCOLARITE')->first();
         $directionRole->givePermissionTo([
-            'create-parcours',
-            'edit-parcours',
-            'delete-parcours',
-            'create-resultats',
-            'edit-resultats',
-            'delete-resultats',
-            'create-attestation-provisoires',
-            'edit-attestation-provisoires',
-            'delete-attestation-provisoires',
-            'generate-attestation-provisoires'
+            'GESTION_PARCOURS',            
+            'GESTION_INSCRIPTION',
+            'GESTION_RESULTAT_ACADEMIQUE',
+            'GESTION_RETRAIT_ACTE', 
+            'GESTION_PV',
+            'CREATION_ATTESTATION_PROVISOIRE', 
+            'CONSULTATION_ATTESTATION_PROVISOIRE', 
+            'CONSULTATION_PV',
+            'AUTHENTIFICATION',
         ]);
 
         //Role daoi pour l'émission des attestations définitives et des diplômes
-        $daoiRole = Role::where('name', 'std')->first();
+        $daoiRole = Role::where('name', 'DAOI')->first();
         $daoiRole->givePermissionTo([
-            'create-attestation-definitives',
-            'edit-attestation-definitives',
-            'delete-attestation-definitives',
-            'generate-attestation-definitives',
-            'create-diplomes',
-            'edit-diplomes',
-            'delete-diplomes',
-            'generate-diplomes'
-        ]);
-
-        // Role authentification pour l'authentification des documents
-        $authentificationRole = Role::where('name', 'authentification')->first();
-        $authentificationRole->givePermissionTo([
-
-            'check-attestation-provisoires',
-            'check-attestation-definitives',
-            'check-attestation-diplome',
-            'generate-rapport'
+            'CONSULTATION_ATTESTATION_PROVISOIRE', 
+            'CONSULTATION_PV',
+            'CREATION_ATTESTATION_DEFINITIVE', 
+            'CREATION_DIPLOME',            
+            'CONSULTATION_ATTESTATION_DEFINITIVE',
+            'CONSULTATION_DIPLOME',
+            'AUTHENTIFICATION',
         ]);
         
         
-        $role_superadmin = Role::where('name', 'superAdmin')->first();
+        $role_superadmin = Role::where('name', 'SUPERADMIN')->first();
      
         $all_permissions = Permission::pluck('id','id')->all();
    

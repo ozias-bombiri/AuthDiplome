@@ -51,7 +51,7 @@ Parcours de formations
                                 <th>Domaine</th>
                                 <th>Mention</th>
                                 <th>Spécialité</th>
-                                <th>Action</th>
+                                <th width="200px">Action</th>
                             </tr>
                         </thead>
                         <tbody>

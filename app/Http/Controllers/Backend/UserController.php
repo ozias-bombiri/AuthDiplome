@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Repositories\InstitutionRepository;
+use Spatie\Permission\Models\Permission;
 
 class UserController extends Controller
 {
@@ -40,7 +41,7 @@ class UserController extends Controller
     public function create()
     {
         $institutions = $this->institutionRepository->all();
-        $roles = Role::pluck('name','name')->all();
+        $roles = Role::all();
         return view('backend.users.create',compact('roles', 'institutions'));
     }
 
@@ -60,21 +61,25 @@ class UserController extends Controller
          $validated =  $request->validated();     
          $input = $request->all();
          $user = $this->modelRepository->create($input);
-         $type = $input['type'];
-         if($type == 1){
-            $user->assignRole('direction');
+         $type = $input['role'];
+         if($type == 'SCOLARITE'){
+            $user->assignRole('SCOLARITE');
          }
-         elseif($type ==2){
-            $user->assignRole('daoi');
+         elseif($type =='DAOI'){
+            $user->assignRole('DAOI');
          }
-         elseif($type ==3){
-            $user->assignRole('authentification');
+         elseif($type =='ADMIN'){
+            //$user->assignRole('SCOLARITE');
+            //$user->assignRole('DAOI');
+            $user->assignRole('ADMIN');
          }
-         elseif($type ==4){
-            $user->assignRole('admin');
+         elseif($type =='SUPERADMIN'){
+            $user->assignRole('SCOLARITE');
+            $user->assignRole('DAOI');
+            $user->assignRole('ADMIN');
          }
          return redirect()->route('users.index')
-                         ->with('success','User created successfully');
+                         ->with('reponse','User created successfully');
      }
      
 
@@ -121,11 +126,13 @@ class UserController extends Controller
     {
 
         $user = User::find($id);
-        $roles = Role::pluck('name','name')->all();
-        $userRole = $user->roles->pluck('name','name')->all();
+        $roles = Role::pluck('name','name')->all();        
+        $userRole = $user->roles[0];
+        //$permissions = Permission::pluck('name','name')->all();
+        $permissions = $userRole->permissions;
         $institutions = $this->institutionRepository->all();
         
-        return view('backend.users.edit',compact('user','roles','userRole', 'institutions'));
+        return view('backend.users.edit',compact('user','roles','userRole', 'institutions', 'permissions'));
     }
 
 
@@ -155,12 +162,12 @@ class UserController extends Controller
      
          $user = $this->modelRepository->update($input, $id);
          
-         DB::table('model_has_roles')->where('model_id',$id)->delete();
+         DB::table('model_has_permissions')->where('model_id',$id)->delete();
      
-         $user->assignRole($request->input('roles'));
+         $user->givePermissionTo($request->input('permissions'));
      
          return redirect()->route('users.index')
-                         ->with('success','User updated successfully');
+                         ->with('reponse','User updated successfully');
      }
 
 

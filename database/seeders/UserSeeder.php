@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_direction = Role::where('name', 'scolarite')->first();
+        $role_direction = Role::where('name', 'SCOLARITE')->first();
         $user->assignRole([$role_direction->id]);
 
         $user = User::create([
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_direction = Role::where('name', 'directeur')->first();
+        $role_direction = Role::where('name', 'SCOLARITE')->first();
         $user->assignRole([$role_direction->id]);
 
         $user = User::create([
@@ -52,7 +52,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_daoi = Role::where('name', 'std')->first();
+        $role_daoi = Role::where('name', 'DAOI')->first();
         $user->assignRole([$role_daoi->id]);
 
         $user = User::create([
@@ -65,7 +65,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_daoi = Role::where('name', 'daoi')->first();
+        $role_daoi = Role::where('name', 'DAOI')->first();
         $user->assignRole([$role_daoi->id]);
 
 
@@ -79,7 +79,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_daoi = Role::where('name', 'vpeip')->first();
+        $role_daoi = Role::where('name', 'DAOI')->first();
         $user->assignRole([$role_daoi->id]);
 
 
@@ -93,22 +93,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('admin'),
 
         ]);
-        $role_auth = Role::where('name', 'president')->first();
-        $user->assignRole([$role_auth->id]);
-
-        $user = User::create([
-            'nom' => 'User 5',
-            'prenom'=> 'AUTH',
-            'telephone' => '0000000',
-            'email' => 'user5@exemple.com',
-            'statut' => 'Active',
-            'institution_id' => 2,
-            'password' => Hash::make('admin'),
-
-        ]);
-        $role_auth = Role::where('name', 'authentification')->first();
-        $user->assignRole([$role_auth->id]);
-
-    
+        $role_auth = Role::where('name', 'DAOI')->first();
+        $user->assignRole([$role_auth->id]);    
     }
 }

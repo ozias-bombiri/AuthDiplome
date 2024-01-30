@@ -38,9 +38,10 @@
                             <th>Nom Prénom</th>
                             <th>Email</th>
                             <th>Institution</th>
+                            <th>Statut</th>                            
                             <th>Roles</th>
-                            <th>Statut</th>
-                            <th width="200px">Action</th>
+                            <th>Attributions</th>
+                            <th width="100px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -50,24 +51,29 @@
                             <td>{{ $utilisateur->nom }} {{ $utilisateur->prenom }}</td>
                             <td>{{ $utilisateur->email }}</td>
                             <td> @if(!empty($utilisateur->institution)) {{ $utilisateur->institution->sigle }} @else - @endif
+                            <td>{{ $utilisateur->statut }}</td>
                             
                             <td>
 
                                 @if(!empty($utilisateur->getRoleNames()))
-                                @foreach($utilisateur->getRoleNames() as $v)
-
-                                <label class="bg-success badge">{{ $v }}</label>
-                                @endforeach
+                                    @foreach($utilisateur->getRoleNames() as $v)
+                                        <label class="bg-success badge">{{ $v }}</label>
+                                    @endforeach
                                 @endif
                             </td>
-                            <td>{{ $utilisateur->statut }}</td>
+                            <td>
+
+                                @if(!empty($utilisateur->permissions))
+                                    @foreach($utilisateur->permissions as $v)
+                                        <label class="bg-secondary badge">{{ $v->name }}</label> <br/>
+                                    @endforeach
+                                @endif
+                            </td>
                             <td>
                                 <form action="{{ route('users.destroy',$utilisateur->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <a class="btn btn-info" title="Détails" href="{{ route('users.show',$utilisateur->id) }}">
-                                        <i class="bi bi-eye-fill"></i>
-                                    </a>
+                                    
                                     <a class="btn btn-primary" title="Modifier" href="{{ route('users.edit',$utilisateur->id) }}">
                                         <i class="bi bi-pencil"></i>
                                     </a>
