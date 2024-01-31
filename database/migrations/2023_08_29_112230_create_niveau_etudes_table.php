@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('intitule')->unique();
             $table->string('credit', 10)->nullable();
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

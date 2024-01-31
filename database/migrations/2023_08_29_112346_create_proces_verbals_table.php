@@ -20,7 +20,7 @@ return new class extends Migration
             $table->date('dateDeliberation');
             $table->enum('type', ['EXAMEN', 'SOUTENANCE', 'AUTRE']);
             $table->integer('nombreEtudiants')->nullable();
-            $table->string('description');
+            $table->string('description')->nullable();
             $table->foreignId('parcours_id')->constrained('parcours')->onDelete('cascade')->onUpdate('cascade'); 
             $table->foreignId('anneeAcademique_id')->constrained('annee_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
