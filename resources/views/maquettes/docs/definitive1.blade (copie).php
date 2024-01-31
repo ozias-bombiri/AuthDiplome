@@ -46,7 +46,6 @@
 
         .w-full {
             width: 1036px;
-            
         }
 
         .w-1_2 {
@@ -155,19 +154,17 @@
         #five {
             left: inherit;
             width: inherit;
-            top: 12.5em;
+            top: 14em;
             height: 1em;
-            font-size: 16px;
         }
 
         /* Nom prénom impetrant */
         #six {
             left: inherit;
             width: inherit;
-            top: 13em;
+            top: 15em;
             height: 1.5em;
             border-color: yellowgreen;
-            font-size: 16px;
 
         }
 
@@ -175,10 +172,9 @@
         #seven {
             left: inherit;
             width: inherit;
-            top: 16em;
+            top: 17em;
             height: 5em;
             border-color: green;
-            font-size: 16px;
 
         }
 
@@ -189,8 +185,6 @@
             top: 21em;
             height: 2em;
             border-color: cyan;
-            font-size: 25px;
-            font-weight: bold;
         }
 
         /* INFORMATIONS DETAILLEES DIPLOME */
@@ -199,7 +193,6 @@
             width: inherit;
             top: 23em;
             height: 5em;
-            font-size: 16px;
 
         }
 
@@ -209,16 +202,7 @@
             width: inherit;
             top: 28em;
             height: 1.5em;
-            font-size: 16px;
             /*width: 20em;*/
-        }
-
-        #date {
-            left: inherit;
-            width: inherit;
-            top: 31em;
-            height: 1.5em;
-            font-size: 16px;
         }
 
         /* DATE DE CREATION */
@@ -238,9 +222,8 @@
         }
         /* Qr code */
         #twelve {
-            top: 35em;
-            height: 8em;
-            width: 12em;
+            top: 32em;
+            height: 12em;
 
         }
 
@@ -248,8 +231,7 @@
         #threeteen {
             left: 40em;
             top: 32em;
-            height: 11em;
-            font-size: 15px;
+            height: 12em;
         }
 
         /* Nota BENE */
@@ -262,7 +244,7 @@
         }
 
         #logo {
-            width: 55%;
+            width: 70%;
             height: 100%;
 
         }
@@ -283,12 +265,6 @@
 
         .t1 {
             font-size: 1em;
-            font-weight: bold;
-        }
-
-        .titre {
-            top: 50%;
-            font-size: 25px;
             font-weight: bold;
         }
     </style>
@@ -335,8 +311,8 @@
         </div>
         <div id="main1">
             <!-- INTITULE DU DOCUMENT -->
- 
-            <div id="four" class="titre text-center">
+
+            <div id="four" class="zone text-center w-full py-1 t1">
 
                 {{ $acte->intitule }}
 
@@ -344,7 +320,7 @@
 
             <!-- ANNONE RESPONSABLE -->
 
-            <div id="five" class="zone text-center">
+            <div id="five" class="zone text-center w-full py-2">
 
                 Le {{ $signataireActe->fonction }} de {{ $institution->denomination.' ('.$institution->sigle.')' }} , soussigné, atteste que : </p>
 
@@ -413,8 +389,6 @@
                 </div>
             </div>
 
-            
-
 
 
             <!-- DATE DE CREATION -->
@@ -430,19 +404,11 @@
 
             <div id="twelve" class="zone text-center w-1_3">
 
-                 <img id="qrcode" src="{{ $qrcode }}" alt="qr code">
+                <img id="qrcode" src="{{ $qrcode }}" alt="qr code">
 
             </div>
 
-            <!-- DATE -->
-            <div id="date" class="zone">
-
-                <div class="row">
-                    Fait à …., le …..
-                </div>
-            </div>
-
-            
+            <!-- SIGNATAIRE ET SIGNATURE -->
 
             <div id="threeteen" class="zone text-center w-1_3 px-1_3">
 

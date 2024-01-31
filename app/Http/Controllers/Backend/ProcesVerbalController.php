@@ -12,6 +12,7 @@ use App\Repositories\ParcoursRepository;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Repositories\NiveauEtudeRepository;
+use PDF;
 
 class ProcesVerbalController extends Controller
 {
@@ -151,6 +152,7 @@ class ProcesVerbalController extends Controller
         return redirect(route('proces_verbals.index'));
     }
 
+
     /**
      * Display the specified resource.
      */
@@ -158,11 +160,14 @@ class ProcesVerbalController extends Controller
     {
         $proces_verbal = $this->modelRepository->find($id);
 
-        if (empty($proces_verbal)) {
-            return redirect(route('proces_verbals.index'));
-        }
+        $nom_fichier_proces = $proces_verbal->nomFichierPdf;
+        $path = 'uploads/PDFs/'.$nom_fichier_proces;        
+        return response()->file($path);
+        // if (empty($proces_verbal)) {
+        //     return redirect(route('proces_verbals.index'));
+        // }
 
-        return view('backend.proces_verbals.show')->with('proces_verbal', $proces_verbal);
+         //return view('backend.proces_verbals.show', compact('path'))->with('proces_verbal', $proces_verbal);
 
     }
 

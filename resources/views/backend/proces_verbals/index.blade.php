@@ -80,7 +80,7 @@
                                 <form action="{{ route('proces_verbals.destroy', $proces_verbal->id) }}" method="POST">
                                     <a class="btn btn-info" title="voir pdf" href="{{ route('proces_verbals.show', $proces_verbal->id) }}">
                                         <i class="bi bi-eye-fill"></i>
-                                    </a>
+                                    </a>           
 
                                     <a class="btn btn-primary" title="Résultats academiques" href="{{ route('proces_verbaux.resultats.index', $proces_verbal->id) }}">
                                         <i class="bi bi-card-list"></i>
