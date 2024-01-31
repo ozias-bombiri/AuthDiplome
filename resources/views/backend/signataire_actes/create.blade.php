@@ -122,7 +122,7 @@
                     <div class="form-group row py-2">
                         <label for="mention" class="col-sm-2 col-form-label">Mention</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="mention" name="mention" placeholder=" ..." required>
+                            <input type="text" class="form-control" id="mention" name="mention" placeholder="Pour le Président et par délégation">
                         </div>
                     </div>
 

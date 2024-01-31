@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('specialite', 100);
             $table->foreignId('filiere_id')->constrained('filieres')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('niveauEtude_id')->constrained('niveau_etudes')->onDelete('cascade')->onUpdate('cascade');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

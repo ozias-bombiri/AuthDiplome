@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('reference', 100);
             $table->string('reponse', 100);
             $table->date('dateDemande');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

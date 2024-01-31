@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('reference', 50)->unique();
             $table->date('dateRetrait');
             $table->string('retirant');
-            $table->string('description');            
+            $table->string('description')->nullable();            
             $table->foreignId('acteAcademique_id')->constrained('acte_academiques')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

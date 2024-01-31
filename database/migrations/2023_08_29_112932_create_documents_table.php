@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('reference', 50);
             $table->string('numero', 50);
             $table->date('dateGeneration');
-            $table->integer('nombreGeneration');
+            $table->integer('nombreGeneration')->default(0);
             $table->foreignId('acteAcademique_id')->constrained('acte_academiques')->onDelete('cascade')->onUpdate('cascade');            
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();

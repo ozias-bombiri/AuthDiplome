@@ -133,5 +133,48 @@ class DocumentCreator
         
     }
 
+    public function createDiplome($institution, $timbre, $parcours, $impetrant, $signataireActe, $acte, $resultat) {
+
+        $user_id = Auth::user()->id;        
+        
+        $categorie = $acte->categorieActe->intitule;
+        
+        $logo = $this->getLogoBase64($institution);
+        $lien = "http://192.168.135.81:8081/authentification/details/".$categorie."/".$acte->id;
+        $qr_infos = "Ref :".$acte->reference."\n\n".$acte->intitule."\n ".strtoupper($impetrant->nom. ' '.$impetrant->prenom)."\n \n ".$lien ;
+        $qrcode = $this->createQrcode($qr_infos, $acte->reference);
+
+        $visas = $institution->visaInstitutions[0]->visaDiplomes;
+       
+        $pdf = PDF::setOptions(['isHtml5ParserEnabled' => true, 'isRemoteEnabled' => true])
+                    ->loadView('maquettes.diplome', 
+                        compact('institution', 'timbre', 'parcours', 'impetrant', 'signataireActe', 'acte', 'resultat', 'logo', 'qrcode', 'visas'));
+        
+        // set the PDF rendering options
+        //$customPaper = array(0,0,600.00,310.80);
+        $pdf->setPaper('A4', 'landscape');
+        $pdf->output();
+
+        $canvas = $pdf->getDomPDF()->getCanvas();
+        $height = $canvas->get_height();
+        $width = $canvas->get_width();
+        $canvas->set_opacity(.2,"Multiply");
+        $canvas->set_opacity(.2);
+        $canvas->page_text($width/5, $height/2, $categorie, null, 30, array(0,0,0),2,2,-30);
+        $filename = config("custom.url_document").'/'.$acte->reference.'.pdf';
+        file_put_contents(public_path($filename), $pdf->output());
+        $document_data = [];
+        $document_data['acteAcademique_id'] = $acte->id;
+        $document_data['user_id'] = $user_id;
+        $document_data['reference'] = $acte->reference;
+        $document_data['numero'] = $acte->numero;
+        $document_data['nombreGeneration'] =1;
+        $document_data['dateGeneration'] = date('Y-m-d');
+        $document = $this->documentRepository->create($document_data);
+        return $filename;      
+        
+        
+    }
+
 
 }

@@ -116,7 +116,7 @@
                     <div class="form-group row py-2">
                         <label for="mention" class="col-sm-2 col-form-label">Mention</label>
                         <div class="col">
-                            <input type="text" class="form-control" id="mention" name="mention" value="{{ $sign_acte->mention }}" required>
+                            <input type="text" class="form-control" id="mention" name="mention" value="{{ $sign_acte->mention }}">
                         </div>
                     </div>
 

@@ -83,12 +83,13 @@ Attestations provisoires
                                 <a class="btn btn-primary action-btn" title="Remise de l'acte" href="{{ route('actes.provisoires.retirer', $acte->id) }}">
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
-                                
-                                <a class="{{ $acte->resultatAcademique->procesVerbal->actesDefinitifExiste($acte->resultatAcademique->procesVerbal->id, "DEFINITIVE", $acte->resultatAcademique->inscription->etudiant->identifiant) ? 'btn btn-secondary' : 'btn btn-warning' }}"
+
+                                <a class="{{ $acte->resultatAcademique->existActe('DEFINITIVE') ? 'btn btn-secondary' : 'btn btn-warning' }}"
                                     title="Etablir l'attestation définitive"
-                                    href="{{ $acte->resultatAcademique->procesVerbal->actesDefinitifExiste($acte->resultatAcademique->procesVerbal->id, "DEFINITIVE", $acte->resultatAcademique->inscription->etudiant->identifiant) ? '#' : route('proces_verbaux.definitives.definitiveSolo', [ 'id' => $acte->resultatAcademique->procesVerbal->id, 'ident' => $acte->resultatAcademique->inscription->etudiant->identifiant ]) }}">
+                                    href="{{ $acte->resultatAcademique->existActe('DEFINITIVE') ? '#' : route('proces_verbaux.definitives.definitiveSolo', [ 'resultat_id' => $acte->resultatAcademique->id]) }}">
                                     <i class="bi bi-clipboard-plus-fill"></i>
-                                </a>
+                                </a>                                
+    
                             </td>
                         </tr>
                         @endforeach

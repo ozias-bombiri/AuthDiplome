@@ -63,7 +63,7 @@ class Institution extends Model
 		return $this->hasMany(Timbre::class,);
 	}
 
-	public function visaInstitution()
+	public function visaInstitutions()
 	{
 		return $this->hasMany(VisaInstitution::class);
 	}

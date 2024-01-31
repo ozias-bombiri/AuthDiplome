@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('type', 50)->default('etablissement');
             $table->foreignId('ministere_id')->constrained('ministeres')->onDelete('cascade')->onUpdate('cascade');
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
