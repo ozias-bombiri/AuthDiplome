@@ -20,6 +20,11 @@ Attestations définitives
             </ul>
         </div>
         @endif
+        @if (session('reponse'))
+                <div class="alert alert-danger">
+                    {{ session('reponse') }}
+                </div>
+        @endif
     </div>
 </div>
 <div class="row">
@@ -72,6 +77,11 @@ Attestations définitives
                                 </button>
                                 <a class="btn btn-primary action-btn" title="Voir pdf" href="{{ route('metiers.actes.definitives.generer', $attestation->id) }}">
                                     <i class="bi bi-file-pdf"></i>
+                                </a>
+                                <a class="{{ $attestation->resultatAcademique->existActe('DIPLOME') ? 'btn btn-secondary' : 'btn btn-warning' }}"
+                                    title="Etablir le diplôme"
+                                    href="{{ $attestation->resultatAcademique->existActe('DIPLOME') ? '#' : route('proces_verbaux.diplomes.create', [ 'resultat_id' => $attestation->resultatAcademique->id]) }}">
+                                    <i class="bi bi-clipboard-plus-fill"></i>
                                 </a>
                             </td>
                         </tr>

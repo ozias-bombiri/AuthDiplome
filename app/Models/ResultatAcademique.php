@@ -63,4 +63,29 @@ class ResultatAcademique extends Model
 
 	}
 
+	public function existActe($categorie)
+	{
+		$actes = ActeAcademique::join('categorie_actes', 'acte_academiques.categorieActe_id', '=', 'categorie_actes.id')
+								->where('resultatAcademique_id', '=', $this->id)
+								->where('categorie_actes.intitule','like', '%'.$categorie.'%')
+								->select('acte_academiques.*')
+								->get();
+
+		return (count($actes) > 0);
+	}
+
+
+	public function getActe($categorie)
+	{
+		return ActeAcademique::join('categorie_actes', 'acte_academiques.categorieActe_id', '=', 'categorie_actes.id')
+								->where('resultatAcademique_id', '=', $this->id)
+								->where('categorie_actes.intitule','like', '%'.$categorie.'%')
+								->select('acte_academiques.*')
+								->first();
+
+		
+	}
+
+
+
 }

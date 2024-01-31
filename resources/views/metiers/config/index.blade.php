@@ -39,21 +39,17 @@ Configurations
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Pédiode</th>
-                            <th>Statut</th>
                             <th>Nom Prénom</th>
-                            <th>Fonction</th>
-                            <th width="200px">Action</th>
+                            <th>Categorie d'acte</th>
+                            <th width="150px">Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($signataireActes as $signataireActe)
                         <tr>
                             <td>{{ $loop->index +1 }}</td>
-                            <td> {{ $signataireActe->debut.' - '.$signataireActe->fin}}</td>
-                            <td> @if($signataireActe->statut) Activé @else Désactivé @endif</td>
                             <td>{{ $signataireActe->signataire->grade.' '.$signataireActe->signataire->nom.' '.$signataireActe->signataire->prenom }}</td>
-                            <td>{{ $signataireActe->fonction }}</td>
+                            <td>{{ $signataireActe->categorieActe->intitule }}</td>
                             <td>
                                 <a class="btn btn-info" title="Détails" href="{{ route('signataires.show',$signataireActe->id) }}">
                                     <i class="bi bi-eye-fill"></i>
@@ -75,20 +71,19 @@ Configurations
             <h3 class="box-title">Compteur</h3>
             @if(count($numeroteurs) < 1)
                 <a class="btn btn-success" href="{{ route('numeroteurs.create') }}"> Ajouter </a>
-
             @else
                 <div class="table-responsive">
                     <table id="data" class="table table-striped table-bordered">
                         <thead>
                             <tr>
-                                <th>Texte</th>
+                                <th>Categorie d'acte</th>
                                 <th>Valeur actuel</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($numeroteurs as $numeroteur)
                             <tr>
-                                <td>{{ $numeroteur->chaine }}</td>
+                                <td>{{ $numeroteur->categorieActe->intitule }}</td>
                                 <td>{{ $numeroteur->compteur }}</td>
                                 
                             </tr>

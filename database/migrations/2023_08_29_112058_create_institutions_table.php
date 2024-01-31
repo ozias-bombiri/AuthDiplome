@@ -22,9 +22,8 @@ return new class extends Migration
             $table->string('email', 30);
             $table->string('siteWeb', 50)->nullable();
             $table->string('logo', 50)->nullable();
-            $table->text('description');
-            $table->timestamps();
-            
+            $table->text('description')->nullable();
+            $table->timestamps();            
             $table->foreignId('parent_id')
             ->nullable()->constrained('institutions')
             ->onDelete('cascade')

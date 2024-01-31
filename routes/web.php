@@ -215,14 +215,16 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.definitives.create');
     Route::get('proces_verbaux/{id}/definitives/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive2'])
     ->name('proces_verbaux.definitives.create2');
-    Route::get('proces_verbaux/{id}/definitives/add_acte_solo/{ident}', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitiveSolo'])
+    Route::get('proces_verbaux/{id}/definitives/add_acte_solo/{ident}', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive1'])
     ->name('proces_verbaux.definitives.definitiveSolo');
     Route::post('proces_verbaux/definitives/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
     ->name('proces_verbaux.definitives.store');
-    Route::post('proces_verbaux/definitives/storeSolo', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'storeSolo'])
+    Route::post('proces_verbaux/definitives/storeSolo', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'storeDefinitive'])
     ->name('proces_verbaux.definitives.storeSolo');
     Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
     ->name('proces_verbaux.diplomes.create');
+    Route::post('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'storeDiplome'])
+    ->name('proces_verbaux.diplomes.store');
     
 });
 
@@ -230,8 +232,11 @@ Route::group(['middleware' => ['auth']], function(){
 Route::group(['middleware' => ['auth']], function(){
     Route::get('actes/provisoires/{id}/generate', [App\Http\Controllers\Metiers\AttestationProvisoireController::class, 'generer'])
     ->where('id', '[0-9]+')->name('metiers.actes.provisoires.generer');
-    Route::get('actes/definivites/{id}/generate', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'generer'])
-    ->where('id', '[0-9]+')->name('metiers.actes.definitives.generer');  
+    Route::get('actes/definitives/{id}/generate', [App\Http\Controllers\Metiers\AttestationDefinitiveController::class, 'generer'])
+    ->where('id', '[0-9]+')->name('metiers.actes.definitives.generer'); 
+    Route::get('actes/diplomes/{id}/generate', [App\Http\Controllers\Metiers\DiplomeController::class, 'generer'])
+    ->where('id', '[0-9]+')->name('metiers.actes.diplomes.generer');  
+     
     
 });
 

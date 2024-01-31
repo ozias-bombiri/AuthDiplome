@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('sigle', 100);
             $table->string('code', 20)->unique()->nullable();
             $table->foreignId('institution_id')->constrained('institutions')->onDelete('cascade')->onUpdate('cascade');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

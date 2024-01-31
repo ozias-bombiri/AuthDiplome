@@ -9,10 +9,10 @@
     <meta name="keywords" content="template">
     <meta name="description" content="">
     <meta name="robots" content="noindex,nofollow">
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>{{ config('app.name', 'AUTHDIPLOME') }}</title>
     <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('/ample/plugins/images/favicon.png')}}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{URL::asset('/ample/plugins/images/armoiries-bf1.png')}}">
     <!-- Custom CSS -->
     <link href="{{URL::asset('/ample/plugins/bower_components/chartist/dist/chartist.min.css')}}" rel="stylesheet">
     <link href="{{URL::asset('/ample/plugins/bower_components/chartist-plugin-tooltips/dist/chartist-plugin-tooltip.css')}}" rel="stylesheet">

@@ -1,7 +1,20 @@
-<!DOCTYPE html>
-<html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
-    <title>Title From OnlineWebTutorBlog</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+    <!-- CSRF Token -->
+
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+
+
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
     
     <style>
@@ -76,7 +89,7 @@
         .contenu-numero-date {    
             margin-top: 10px;
             margin-right: 10px;
-            top: 15px; 
+            bottom : 50px; 
             right: 10px;
             margin-left: 65%;
             
@@ -87,66 +100,70 @@
 <body>
 
     <div class="contenu-haut-img">
-        <img class="logo" src="{{ (public_path('images/logo-unz.jpeg')) }}" alt="">
+        <img class="logo" src="{{ $logo }}" alt="logo">
     </div>
 
     
      <div class="contenu-haut-gauche">
         <!-- Votre contenu ici -->
-        Dénomination du Ministère <br>
-        ----------------<br>
-        Dénomination de l’IESR<br>
-        ----------------<br>
-        Adresses (BP, téléphone, Email officielle,
-        Site web)
+        {{ $timbre->ministere->denomination }} <br />
+        --------------- <br />
+        @if($institution->parent)
+        {{ $institution->parent->denomination }} <br />
+        ---------<br />
+        @endif
+        {{ $institution->denomination }} <br />
+        --------------- <br />
+        {{ $institution->adresse.'  '.$institution->telephone }} <br />
+        {{ $institution->email.'  '.$institution->siteWeb}}
     </div>
 
     <div class="contenu-haut-droite">
         <!-- Votre contenu ici -->
-        BURKINA FASO<br>
-        -----------<br>
-        Unité - Progrès - Justice
+        BURKINA FASO <br />
+        ------------- <br />
+        Unité-Progrès-Justice
     </div>
 
     
 
     <div class="contenu-haut-titre">
-        DIPLOME DE LICENCE
+        {{ strtoupper($acte->intitule) }}
     </div>
 
 
     <div class="contenu-visa">
-        Vu la loi n° 013-2007/AN du 30 juillet 2007 portant loi d’orientation de l’éducation ;<br>
-        Vu la loi n° 038-2013/AN du 26 novembre 2013 portant loi d'orientation de la recherche scientifique et de l’innovation ;<br>
-        Vu le décret n°2018-1271/PRES/PM/MESRSI/MINEFID du 31 décembre 2018 portant organisation de l’Enseignement Supérieur ;<br>
-        Vu le décret portant création de l’IESR ou l’arrêté d’ouverture pour les IPES ;<br>
-        Vu le décret n°………. du …………. portant changement de dénomination de l’IESR ou l’arrêté portant changement de dénomination de l’IPES ;<br>
-        Vu le décret 2021-0265/PRE/PM/MINEFID/MESRSI/MFPTS du 20 avril 2021 portant universitarisation d’offres de formation dans les Ecoles et
-        Centres de Formation Professionnelle de l’Etat (ECFPE) ;<br>
-        Vu la convention Cadre de partenariat entre l’Institution d’Enseignement Supérieur et de Recherche (IESR) et l’Ecole et Centre de Formation
-        Professionnelle de l’Etat (ECFPE) ;<br>
-        Vu l’arrrêté portant autorisation d’universitariser des offres de formation à (le nom de l’ECFPE) ;
-        Vu l’arrêté portant extension de l’IESR ;<br>
-        Vu l’arrêté nº2019-073/MESRSI/SG/DGESup du 25 février 2019 portant régime général des études du diplôme de Licence dans les institutions publiques
-        et privées d’enseignement supérieur et de recherche ;<br>
-        Vu le procès-verbal de délibération du jury d’examen en date du ……………………… …………………………………<br>
+        @foreach($visas as $visa)
+            {{ $visa->visa->texte }} <br/>
+        @endforeach
     </div>
 
     <div class="contenu-infos">
-        Le diplôme de <strong>LICENCE</strong><br>
-        Domaine …………………………………………………………<br>
-        Mention…………………………………………………..<br>
-        Spécialité………………………………………………………………………..<br>
-        est délivré à ………………………………………………………………………………………………………...<br>
-        né (e) le ………………………………à ……………………………………………………………………….Sexe …………………….<br>
-        matricule ou INE…………..……………………………………………………<br>
-        au titre de l’année académique ……………………avec la côte ..................................<br>
+        Le <strong>{{ strtoupper($acte->intitule) }}</strong><br>
+        Domaine : <b>{{ $parcours->domaine }}</b> <br />
+        Mention : <b>{{ $parcours->mention }} </b><br />
+        Spécialité : <b>{{ $parcours->specialite }}</b> <br />
+        est délivré à {{ strtoupper($impetrant->nom).' '.$impetrant->prenom }}<br>
+        @if(! $impetrant->nevers) 
+            @if($impetrant->sexe == "Masculin") né le 
+            @else née le 
+            @endif
+            {{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('d F Y') }}
+        @else
+            @if($impetrant->sexe == "Masculin") né en 
+            @else née en 
+            @endif
+            {{ \Carbon\Carbon::parse($impetrant->dateNaissance)->translatedFormat('Y') }}
+        @endif 
+        à {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance }}) Sexe {{ $impetrant->sexe }}.<br>
+        {{$impetrant->typeIdentifiant }} : <b>{{ $impetrant->identifiant }}</b><br/>
+        au titre de l’année académique {{ $resultat->procesVerbal->anneeAcademique->intitule }} avec la côte @if($resultat->moyenne >= 16 ) A @elseif($resultat->moyenne < 16 && $resultat->moyenne >=14) B @elseif($resultat->moyenne < 14 && $resultat->moyenne >=12) C @elseif($resultat->moyenne < 12 && $resultat->moyenne >=10) @endif<br>
         pour en jouir avec les droits et prérogatives qui y sont attachés.<br>
     </div>
 
     
     <div class="contenu-qrcode">
-        <strong>QR CODE</strong>
+        <img id="qrcode" src="{{ $qrcode }}" alt="qr code">
     </div>
     
 
@@ -154,16 +171,21 @@
         <strong>Le Titulaire</strong>
     </div>
 
-    <div class="contenu-signataire">
-        <strong>Le Président/Recteur ou Directeur académique</strong>
-    </div>
-    
-
     <div class="contenu-numero-date">
         Enregistré sous le N°<strong>«num_enr»</strong> <br>
-            Fait à ………., le ……….
+            Fait à {{ $acte->lieu}}, le {{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }}
     </div>
 
+    <div class="contenu-signataire">
+        <p class="text-center"> <u> @if($signataireActe->mention) {{$signataireActe->mention}} @endif {{ $signataireActe->fonction }}</u> </p> <br /> <br />
+
+            <p class="text-center">
+                <br /><br />
+                @if($signataireActe->signataire->grade) {{ $signataireActe->signataire->grade }}@endif
+                <b>{{ $signataireActe->signataire->prenom }} {{ $signataireActe->signataire->nom }} </b><br />
+                <em>{{ $signataireActe->signataire->titreAcademique }}<br /> {{ $signataireActe->signataire->titreHonorifique }}</em>
+            </p>
+    </div>
 
 </body>
 </html>
