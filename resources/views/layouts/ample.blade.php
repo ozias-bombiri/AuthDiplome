@@ -72,7 +72,8 @@
                 <!-- End Logo -->
                 <!-- ============================================================== -->
                 <div class="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin5">
-
+                    <a id="color-nav" class="nav-link text-white mx-3" href="{{route('dashboard')}}">PLATEFORME D'AUTHENTICATION DES DIPLOMES ET ATTESTATIONS</a>
+                        
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
@@ -81,13 +82,7 @@
                         <!-- ============================================================== -->
                         <!-- Search -->
                         <!-- ============================================================== -->
-                        <li class=" in">
-                            <form role="search" class="app-search d-none d-md-block me-3">
-                                <input name="expression" type="text" placeholder="Search..." class="form-control mt-0">
-                                <a href="" class="active">
-                                    <i class="fa fa-search"></i>
-                                </a>
-                            </form>
+                        <li class="nav-item">
                         </li>
                         <!-- ============================================================== -->
                         <!-- User profile and search -->
@@ -100,7 +95,8 @@
                         @auth
                         <li class="dropdown">
                             <button class=" profile-pic nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <img src="{{URL::asset('/ample/plugins/images/users/varun.jpg')}}" alt="user-img" width="36" class="img-circle">
+                                <!-- <img src="{{URL::asset('/ample/plugins/images/users/varun.jpg')}}" alt="user-img" width="36" class="img-circle"> -->
+                                <i class="bi bi-person-circle"></i>
                                 <span class="text-white font-medium">{{ auth()->user()->nom.' '.auth()->user()->prenom}}</span>
                             </button>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

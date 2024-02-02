@@ -53,7 +53,7 @@ class EtudiantController extends Controller
     public function store(StoreEtudiantRequest $request)
     {
         $input = $request->all();
-
+        $input['nom'] = strtoupper($input['nom']);
         $etudiant = $this->modelRepository->create($input);
 
         return redirect(route('etudiants.index'));
@@ -98,8 +98,9 @@ class EtudiantController extends Controller
         if (empty($etudiant)) {
             return redirect(route('etudiants.index'));
         }
-
-        $etudiant = $this->modelRepository->update($request->all(), $id);
+        $input = $request->all();
+        $input['nom'] = strtoupper($input['nom']);
+        $etudiant = $this->modelRepository->update($input, $id);
         return redirect(route('etudiants.index'));
     }
 

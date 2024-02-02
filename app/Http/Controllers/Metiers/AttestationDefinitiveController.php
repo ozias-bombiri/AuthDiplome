@@ -144,17 +144,17 @@ class AttestationDefinitiveController extends Controller
             $document_path = config("custom.url_document").'/'.$attestation->reference.'.pdf';
         }
         else {
-            $institution = $attestation->signataireActe->institution;
+            $iesr = $attestation->signataireActe->institution;
             $etudiant = $attestation->resultatAcademique->inscription->etudiant;
             $parcours = $attestation->resultatAcademique->procesVerbal->parcours;
             $resultat = $attestation->resultatAcademique ;
             $signataireActe = $attestation->signataireActe;
-            
+            $etablissement = $resultat->procesVerbal->parcours->filiere->institution;
             $reponse = "Aucun timbre associé" ;
-            if (count($institution->timbres) <1 ) return back()->with('reponse', $reponse); 
-            $timbre = $institution->timbres[0] ;
+            if (count($iesr->timbres) <1 ) return back()->with('reponse', $reponse); 
+            $timbre = $iesr->timbres[0] ;
 
-            $document_path = $this->pdfCreator->createAttestationDefinitive($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
+            $document_path = $this->pdfCreator->genererDocument($etablissement, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
         
         }
         

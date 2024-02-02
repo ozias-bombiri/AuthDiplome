@@ -60,6 +60,7 @@ class UserController extends Controller
      {
          $validated =  $request->validated();     
          $input = $request->all();
+         $input['nom'] = strtoupper($input['nom']);
          $user = $this->modelRepository->create($input);
          $type = $input['role'];
          if($type == 'SCOLARITE'){
@@ -83,18 +84,6 @@ class UserController extends Controller
      }
      
 
-
-    // public function store(StoreUserRequest $request)
-    // {
-    //     $input = $request->all();
-
-    //     $User = $this->modelRepository->create($input);
-
-    //     //Flash::success('User enregistré avec succès.');
-
-    //     return redirect(route('users.index'));
-    // }
-
     /**
      * Display the specified resource.
      */
@@ -105,22 +94,6 @@ class UserController extends Controller
     }
 
 
-    // public function show(string $id)
-    // {
-    //     $User = $this->modelRepository->find($id);
-
-    //     if (empty($User)) {
-    //         //Flash::error('User not found');
-
-    //         return redirect(route('users.index'));
-    //     }
-
-    //     return view('backend.users.show')->with('User', $User);
-    // }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
 
     public function edit($id)
     {
@@ -136,30 +109,14 @@ class UserController extends Controller
     }
 
 
-    // public function edit(string $id)
-    // {
-    //     $User = $this->modelRepository->find($id);
-
-    //     if (empty($User)) {
-    //         //Flash::error('User not found');
-
-    //         return redirect(route('users.index'));
-    //     }
-
-    //     return view('backend.users.edit')->with('User', $User);
-    // }
-
-    /**
-     * Update the specified resource in storage.
-     */
+    
 
      public function update(UpdateUserRequest $request, $id)
      {
         $validated =  $request->validated(); 
      
          $input = $request->all(); 
-                 
-     
+         $input['nom'] = strtoupper($input['nom']);     
          $user = $this->modelRepository->update($input, $id);
          
          DB::table('model_has_permissions')->where('model_id',$id)->delete();

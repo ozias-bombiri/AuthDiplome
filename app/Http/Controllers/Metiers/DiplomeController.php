@@ -108,7 +108,7 @@ class DiplomeController extends Controller
 
             if(count($institution->visaInstitutions) < 1) return back()->with('reponse', 'Visas pour le diplôme non configuré');
 
-            $document_path = $this->pdfCreator->createDiplome($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
+            $document_path = $this->pdfCreator->genererDocument($institution, $timbre, $parcours, $etudiant, $signataireActe, $attestation, $resultat);
         
         }
         

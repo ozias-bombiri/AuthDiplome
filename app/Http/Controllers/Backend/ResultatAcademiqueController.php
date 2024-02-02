@@ -94,7 +94,7 @@ class ResultatAcademiqueController extends Controller
         $input_resultat['inscription_id'] = $input['inscription_id'];
         $input_resultat['procesVerbal_id'] = $procesVerbal->id;
         $input_resultat['moyenne'] = $input['moyenne'];
-        $input_resultat['reference'] = $input['inscription_id'].''.$procesVerbal->id;
+        $input_resultat['reference'] = $procesVerbal->id.''.$input['inscription_id'];
         $input_resultat['user_id'] = $user->id;
         $resultat = $this->modelRepository->create($input_resultat);
 
@@ -116,7 +116,7 @@ class ResultatAcademiqueController extends Controller
                     'inscription_id' => $inscription->id,
                     'procesVerbal_id' => $id,
                     'moyenne' => $moyenne[$inscription->id],
-                    'reference' => $inscription->id.''.$id,
+                    'reference' => $id.''.$inscription->id,
                     'user_id' => $user->id
                 );
 

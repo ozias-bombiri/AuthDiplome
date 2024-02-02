@@ -30,9 +30,11 @@
                     </div>
                 </div>
                 <div class="">
-                    <form method="post" action="{{ route('proces_verbaux.definitives.storeSolo') }}">
+                    <form method="post" action="{{ route('proces_verbaux.definitives.store') }}">
                         @csrf
-                        <input type="hidden" id="procesVerbal_id" name="procesVerbal_id" value="{{ $procesVerbal_id }}">
+                        <input type="hidden" id="procesVerbal_id" name="procesVerbal_id" value="{{ $pv->id }}">
+                        <input type="hidden" id="resultat_id" name="resultat_id" value="{{ $resultat->id }}">
+                        
                         <input type="hidden" id="categorieActe_id" name="categorieActe_id" value="{{ $categorieActe->id }}">
                         <input type="hidden" id="identifiant" name="identifiant" value="{{$etudiant->identifiant}}">
 

@@ -80,14 +80,14 @@ Attestations provisoires
                                     <i class="bi bi-file-pdf"></i>
                                 </a>
 
-                                <button id="{{ $attestation->id }}" class="btn btn-info remise action-btn" data-bs-toggle="modal" data-bs-target="#modalRemiseActe"  title="{{ $attestation->id }}">
+                                <button id="{{ $acte->id }}" class="btn btn-info remise action-btn" data-bs-toggle="modal" data-bs-target="#modalRemiseActe"  title="Remise de l'attestation">
                                     <i class="bi bi-file-pdf"></i>
-                                </button>
-                                
-                               
-                                <a class="btn btn-primary action-btn" title="Etablir attestation définitive" href="#">
-                                    <i class="bi bi-file-pdf"></i>
-                                </a>
+                                </button>                          
+                               @hasrole('DAOI')
+                                    <a class="btn btn-primary action-btn" title="Etablir attestation définitive" href="{{ route('proces_verbaux.definitives.create', ['resultat_id' => $acte->resultatAcademique->id]) }}">
+                                        <i class="bi bi-file-pdf"></i>
+                                    </a>
+                                @endhasrole
                             </td>
                         </tr>
                         @endforeach
@@ -109,21 +109,21 @@ Attestations provisoires
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="post" action="{{ route('metiers.actes.provisoires.remise', $attestation->id) }}">
+            <form method="post" action="{{ route('metiers.actes.provisoires.remise', $acte->id) }}">
                 @csrf
 
                 <div class="mb-3">
                     <label for="acteAcademique" class="col-sm-2 col-form-label">Acte academique</label>
                     <div class="col">
-                        <input type="hidden"  name="acteAcademique_id" value="{{ $attestation->id }}">
-                        <input type="text" class="form-control form-control" id="intitule2" value="{{ $attestation->intitule }}" readonly>
+                        <input type="hidden"  name="acteAcademique_id" value="{{ $acte->id }}">
+                        <input type="text" class="form-control form-control" id="intitule2" value="{{ $acte->intitule }}" readonly>
                     </div> 
                 </div>
 
                 <div class="mb-3">
                     <label for="reference" class="col-sm-2 col-form-label">Reference</label>
                     <div class="col">
-                        <input type="text" class="form-control form-control" id="reference2" name="reference"  value="{{ $attestation->reference }}" readonly>
+                        <input type="text" class="form-control form-control" id="reference2" name="reference"  value="{{ $acte->reference }}" readonly>
                     </div>
                 </div>
 
@@ -157,85 +157,6 @@ Attestations provisoires
     </div>
   </div>
 
-
-<!-- Modal Details-->
-<div class="row my-3">
-
-    <div class="modal fade" id="exampleModal1" data-bs-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel1">Détails attestation</h5>
-                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <div class="col-10 offset-1">
-                        <table id="data" class="table table-striped table-bordered">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>#</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Référence </td>
-                                    <td id="reference1"></td>
-                                </tr>
-                                <tr>
-                                    <td>Intitulé</td>
-                                    <td id="intitule1"></td>
-                                </tr>
-                                <tr>
-                                    <td>Impétrant</td>
-                                    <td id="identifiant1"></td>
-                                </tr>
-
-                                <tr>
-                                    <td>Parcours de formation </td>
-                                    <td id="parcours1"></td>
-                                </tr>
-                                <tr>
-                                    <td>Niveau d'étude </td>
-                                    <td id="niveau1"></td>
-                                </tr>
-                                <tr>
-                                    <td>Institution </td>
-                                    <td id="institution1"> </td>
-                                </tr>
-                                <tr>
-                                    <td>Résultats académiques </td>
-                                    <td id="sessionr1">
-                                        Année académique : <br />
-                                        Session : <br />
-                                        Moyenne : <br />
-                                        Cote : <br />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td> </td>
-                                    <td>
-                                        <a class="btn btn-info" title="Voir pdf" href="#">
-                                            <i class="bi bi-file-pdf"></i>
-                                        </a>
-
-                                    </td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 @endsection
 @push('costum-scripts')
@@ -299,48 +220,6 @@ Attestations provisoires
 
     $(document).ready(function() {
 
-        $(document).on('click', '.view', function() {
-            $.ajaxSetup({
-                headers: {
-                    'X_CSRF-TOKEN': $("meta[name='csrf-token']").attr("content")
-                }
-            });
-            var id = $(this).attr('id');
-            $.ajax({
-                // Our sample url to make request 
-                url: "/d/provisoires/view/" + id,
-                method: "GET",
-                dataType: "json",
-
-                // Function to call when to
-                // request is ok 
-                success: function(data) {
-                    console.log(data);
-                    $("#reference1").text(data.result.reference);
-                    $("#intitule1").text(data.result.intitule);
-                    $("#identifiant1").text(data.result.impetrant);
-                    $("#parcours1").text(data.result.parcours);
-                    $("#niveau1").text(data.result.niveau);
-                    $("#institution1").text(data.result.institution);
-                    $("#sessionr1").text(data.result.sessionr);
-                    var myModal = new bootstrap.Modal($("#exampleModal1"), {});
-                    myModal.show();
-                },
-
-                // Error handling 
-                error: function(error) {
-                    console.log("Error ${error}");
-                }
-            });
-        });
-    });
-</script>
-
-
-<script type="module">
-
-    $(document).ready(function() {
-
         $(document).on('click', '.remise', function() {
             $.ajaxSetup({
                 headers: {
@@ -375,7 +254,4 @@ Attestations provisoires
         });
     });
 </script>
-
-
-
 @endpush

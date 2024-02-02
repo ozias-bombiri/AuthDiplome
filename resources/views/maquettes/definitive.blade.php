@@ -268,7 +268,7 @@
         }
 
         #qrcode {
-            width: 60%;
+            width: 80%;
             height: 90%;
 
         }
@@ -302,16 +302,13 @@
         <!-- Timbre de l'institution -->
         <div id="entete">
             <div id="one" class="zone w-1_2 h-1 px-0 py-0">
-                {{ $timbre->denomMinistere }} <br />
-                --------------- <br />
-                @if($institution->parent)
-                {{ $institution->parent->denomination }} <br />
-                ---------<br />
-                @endif
-                {{ $institution->denomination }} <br />
-                --------------- <br />
-                {{ $institution->adresse }} {{ $institution->telephone }} <br />
-                {{ $institution->email }} {{ $institution->siteWeb}}
+            {{ $timbre->ministere->denomination }} <br />
+            --------------- <br />
+            
+            {{ $signataireActe->institution->denomination }} <br />
+            --------------- <br />
+            {{ $signataireActe->institution->adresse.'  '.$signataireActe->institution->telephone }} <br />
+            {{ $signataireActe->institution->email.'  '.$signataireActe->institution->siteWeb}}
             </div>
 
 
@@ -333,6 +330,11 @@
 
             </div>
         </div>
+        <div>
+            <div>
+                N° {{ $acte->numero. ' '. $numeroteur->chaine}}
+            </div>
+        </div>
         <div id="main1">
             <!-- INTITULE DU DOCUMENT -->
  
@@ -346,7 +348,7 @@
 
             <div id="five" class="zone text-center">
 
-                Le {{ $signataireActe->fonction }} de {{ $institution->denomination.' ('.$institution->sigle.')' }} , soussigné, atteste que : </p>
+                Le {{ $signataireActe->fonction }} de {{ $signataireActe->institution->denomination.' ('.$signataireActe->institution->sigle.')' }} , soussigné, atteste que : </p>
 
             </div>
 
@@ -377,7 +379,7 @@
                 @endif
                 à {{ $impetrant->lieuNaissance }} ({{ $impetrant->paysNaissance }}), sexe {{ $impetrant->sexe }}<br />
                 {{$impetrant->typeIdentifiant }} : {{ $impetrant->identifiant }} <br />
-                a acquis l'ensemble des crédits du parcours Licence {{ $parcours->intitule }} de l'établissement à l’issue de la
+                a acquis l'ensemble des crédits du parcours {{ $parcours->intitule }} de {{ $institution->denomination. '('.$institution->sigle.')'}} à l’issue de la
                 @if($parcours->soutenance) 
                     soutenance en date du {{ \Carbon\Carbon::parse($resultat->dateSouteance)->translatedFormat('d F Y') }}
                 @else 
@@ -400,7 +402,7 @@
                 Domaine : <b>{{ $parcours->domaine }}</b> <br/>
                 Mention : <b>{{ $parcours->mention }} </b><br/>
                 Spécialité : <b>{{ $parcours->specialite }}</b> <br/>
-                Côte <b>{{ $resultat->cote }}</b>.
+                Côte <b>@if($resultat->moyenne >= 16 ) A @elseif($resultat->moyenne < 16 && $resultat->moyenne >=14) B @elseif($resultat->moyenne < 14 && $resultat->moyenne >=12) C @elseif($resultat->moyenne < 12 && $resultat->moyenne >=10) @endif</b>.
 
             </div>
 
@@ -438,7 +440,7 @@
             <div id="date" class="zone">
 
                 <div class="row">
-                    Fait à …., le …..
+                    Fait à <b>{{ $acte->lieu}}</b>, le <b>{{ \Carbon\Carbon::parse($acte->dateSignature)->translatedFormat('d F Y') }}</b>
                 </div>
             </div>
 
@@ -463,10 +465,10 @@
             <div class="cw-full px-0">
                 <b><u>Important : </u></b>
                 <ul>
-                    <li> l’attestation provisoire est valable un (1) an à partir de sa date de signature ;</li>
                     <li> toute surcharge ou rature annule la présente attestation ; </li>
-                    <li> il n’est délivré qu’un seul exemplaire de la présente attestation. Il appartient à l’intéressé (e) d’en faire des copies certifiées conformes.</li>
+                    <li> il n’est délivré qu’un seul exemplaire de la présente attestation.</li>
                 </ul>
+                Il appartient à l’intéressé (e) d’en faire des copies certifiées conformes.
             </div>
 
         </div>

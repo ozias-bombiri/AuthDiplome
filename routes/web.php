@@ -211,16 +211,16 @@ Route::group(['middleware' => ['auth']], function(){
     ->name('proces_verbaux.resultats.store'); 
     Route::post('proces_verbaux/{id}/resultats/add2', [App\Http\Controllers\Backend\ResultatAcademiqueController::class, 'store2'])
     ->name('proces_verbaux.resultats.store2');
-    Route::get('resultats/{resultat_id}/definitives/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive'])
+    Route::get('resultats/{resultat_id}/definitives/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive1'])
     ->name('proces_verbaux.definitives.create');
     Route::get('proces_verbaux/{id}/definitives/add2', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive2'])
     ->name('proces_verbaux.definitives.create2');
     Route::get('proces_verbaux/{id}/definitives/add_acte_solo/{ident}', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'definitive1'])
-    ->name('proces_verbaux.definitives.definitiveSolo');
+    ->name('proces_verbaux.definitives.create3');
     Route::post('proces_verbaux/definitives/store', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'store2'])
-    ->name('proces_verbaux.definitives.store');
+    ->name('proces_verbaux.definitives.store1');
     Route::post('proces_verbaux/definitives/storeSolo', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'storeDefinitive'])
-    ->name('proces_verbaux.definitives.storeSolo');
+    ->name('proces_verbaux.definitives.store');
     Route::get('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'diplome'])
     ->name('proces_verbaux.diplomes.create');
     Route::post('resultats/{resultat_id}/diplomes/add', [App\Http\Controllers\Backend\ActeAcademiqueController::class, 'storeDiplome'])

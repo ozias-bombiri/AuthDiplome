@@ -11,7 +11,8 @@ use App\Repositories\ActeAcademiqueRepository;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
-
+use App\Repositories\CategorieActeRepository;
+use App\Repositories\InstitutionRepository;
 
 class RetraitActeController extends Controller
 {

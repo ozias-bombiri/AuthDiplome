@@ -58,7 +58,7 @@ class SignataireController extends Controller
     public function store(StoreSignataireRequest $request)
     {
         $input = $request->all();
-
+        $input['nom'] = strtoupper($input['nom']);
         $signataire = $this->modelRepository->create($input);
         $signataireActe = [];
         $signataireActe['statut']  = true;
@@ -132,8 +132,9 @@ class SignataireController extends Controller
 
             return redirect(route('signataires.index'));
         }
-
-        $signataire = $this->modelRepository->update($request->all(), $id);
+        $input = $request->all();
+        $input['nom'] = strtoupper($input['nom']);
+        $signataire = $this->modelRepository->update($input, $id);
 
         //Flash::success('signataire modifié avec succès.');
 
